@@ -1,0 +1,1651 @@
+<html>
+	<head>
+		<title id="pageElement_PageTitle">
+			Doodle Launcher Public
+		</title>
+		
+		<style>
+			.ErrorScreen_CSSFileMissing{
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			background-color: #101122;
+			padding: 30px;
+			z-index: 500;
+			margin: 0;
+			}
+			.ErrorScreen_CSSFileMissing_Text{
+			font-family: Arial;
+			color: white;
+			
+			}
+		</style>
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet.css">
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Animations.css">
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Reference.css">
+		<link rel="icon" type="image/png" href="Assets/Icons/favicon.png" sizes="96x96">
+		<!-- Default intended fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;800&family=Roboto&display=swap" rel="stylesheet">
+	</head>
+	<body class="MainPage" onload="OnloadTasks(), Onboarding_CheckVersion()">
+		<script src="Scripts/DL_Javascript.js"></script>
+		<div class="ErrorScreen_CSSFileMissing">
+			<h1 class="ErrorScreen_CSSFileMissing_Text">
+				Error - CSS file missing
+			</h1>
+			<p class="ErrorScreen_CSSFileMissing_Text">
+				You are seeing this screen because the launcher is unable to load the .css file properly. Here's some of the possible causes:
+				<ul class="ErrorScreen_CSSFileMissing_Text">
+					<li>
+						The file has been moved.
+					</li>
+					<li>
+						The file has been deleted.
+					</li>
+					<li>
+						The file has been corrupted.
+					</li>
+				</ul>
+			</p>
+			<p class="ErrorScreen_CSSFileMissing_Text">
+				The launcher will not function properly without the following files:
+				<ul class="ErrorScreen_CSSFileMissing_Text">
+					<li>
+						Scripts/DL_Stylesheet.css
+					</li>
+					<li>
+						Scripts/DL_Stylesheet_Animations.css
+					</li>
+					<li>
+						Scripts/DL_Stylesheet_Reference.css
+					</li>
+					<li>
+						Scripts/DL_Javascript.js
+					</li>
+				</ul>
+			</p>
+			<p class="ErrorScreen_CSSFileMissing_Text">
+				Please download a fresh copy of the launcher. <br>If you think there is a mistake, contact Elmer through any social medias in <a href="https://cbelmerf.wixsite.com/content/socials" target="_blank"> his website. </a>
+			</p>
+		</div>
+		<div class="LoadingScreen" id="LoadingScreen">
+			<div class="LoadingScreen_UpperSection" id="LoadingScreen_UpperSection">
+				<img class="LoadingScreen_Icon" src="Assets/Icons/iconNew_edit.png"></img>
+				<h2 class="LoadingScreen_VersionTitle" id="versionTitle">
+					Doodle Launcher
+				</h2>
+				<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+			</div>
+			<div class="LoadingScreen_CopyrightSection" id="LoadingScreen_CopyrightSection">
+				
+				<!-- <h4 class="LoadingScreen_Text" id="LoadingScreen_Text"> -->
+					<!-- Building page... -->
+				<!-- </h4> -->
+				<div style="display: flex; justify-content: center; align-items: center;">
+					<img class="LoadingScreen_Copyright_Logo" src="Assets/Icons/ContentByElmerF.png"></img>
+					<h4 class="LoadingScreen_Copyright" id="copyrightTitle">
+						Content By ElmerF
+					</h4>
+				</div>
+			</div>
+		</div>
+		<div class="SessionScreen" id="pageElement_SessionScreen" onclick="close_SessionScreen()">
+			<h1 class="SessionScreen_Time" id="Clock_Time_SessionScreen">
+				
+			</h1>
+			<h3 class="SessionScreen_Date" id="Clock_Date_SessionScreen">
+				
+			</h3>
+			<p class="SessionScreen_Instruction">
+				Click anywhere to start
+			</p>
+			<div class="SessionScreen_Copyright">
+				<p class="SessionScreen_Copyright_Text" id="pageElement_SessionScreen_Copyright">
+					Doodle Launcher Public Beta | Content By ElmerF 2022
+				</p>
+			</div>
+		</div>
+		<div class="ToggleableSearchBar" id="pageElement_Toggleable_SearchBar">
+			<div class="ToggleableSearchBar_SearchBar">
+				<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3"></input>
+				<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
+			</div>
+			<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
+		</div>
+		
+		<!-- Blurs the background -->
+		<div class="General_BlurBG">
+			a
+		</div>
+		<!-- All content goes inside the PageGrid -->
+		<div class="PageGrid">
+			<div class="Header" id="pageElement_Header">
+				<!--<img class="Sidebar_CategoryNavigation_Toggle" id="toggle_Sidebar_CategoryNavigation" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar_CategoryNavigation()"></img>
+				<!-- For loading purposes only -->
+				<img class="Sidebar_CategoryNavigation_Toggle" id="toggle_Sidebar" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar_CategoryNavigation()"></img>
+				<!-- -->
+				<div class="Header_PageNavi" id="button_PageNavi" onclick="toggle_Navigator(this.id)">
+					<h2 class="Header_PageNavi_Title" id="Header_PageNavi_Title">
+						Changelogs
+					</h2>
+				</div>
+				<div class="Header_Buttons" id="pageElement_Header_Buttons">
+					<!--<div class="Header_QuickSearchBar" id="pageElement_QuickSearchBar">
+						<input class="Header_QuickSearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery"></input>
+						<img src="Assets/Icons/icon_search.png" class="Header_QuickSearchBar_Search" id="headerMain" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
+					</div>-->
+					<!--<a href="DL_ShortcutEditor.html">
+						<h3 class="Header_Buttons_Item">
+						Shortcut editor
+						</h3>
+						</a>
+						<h3 class="Header_Buttons_Item">
+						Settings
+						</h3>
+						<h3 class="Header_Buttons_Item">
+						Public Beta Information
+						</h3>
+						<a href="../Elmer's School Launcher/Main.html">
+						<h3 class="Header_Buttons_Item">
+						Old UI
+						</h3>
+					</a>-->
+				</div>
+				<div class="Header_Clock" id="pageElement_Header_Clock">
+					<h1 class="Header_Clock_Time" id="Clock_Time">
+						id="Clock_Time"
+					</h1>
+					<h1 class="Header_Clock_Date" id="Clock_Date">
+						id="Clock_Date"
+					</h1>
+				</div>
+				<div class="Header_Battery" id="pageElement_Header_Battery">
+					<h1 class="Header_Battery" id="Battery_Level">
+						%
+					</h1>
+				</div>
+				<div class="Header_RightMenu">
+					<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_softwareUpdate.png"  id="button_Update" onclick="toggle_Textbox(this.id)"></img>
+					<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_wifi_online.png"  id="button_Wifi" onclick="toggle_Textbox(this.id)"></img>
+				</div>
+			</div>
+			<div class="Header_Menu" id="pageElement_Header_Menu">
+				<div class="Header_Menu_Top">
+					<div class="Header_Menu_Top_Clock">
+						<h1 class="Header_Menu_Top_Clock_Time" id="Clock_Time_2">
+							id="Clock_Time"
+						</h1>
+						<h1 class="Header_Menu_Top_Clock_Date" id="Clock_Date_2">
+							id="Clock_Date"
+						</h1>
+					</div>
+					<h1 class="Header_Menu_Top_Battery" id="Battery_Level_2">
+						%
+					</h1>
+				</div>
+				
+				<div class="Header_PageNavi_Textbox_Title">
+					Launcher Navigation
+				</div>
+				<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageNaviList">
+					
+				</div>
+				<div class="Header_PageNavi_Textbox_Title">
+					Page Actions
+				</div>
+				<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageActions">
+					<a href="DL_ShortcutEditor.html">
+						<p class="Header_PageNavi_Textbox_List_Item">
+							Shortcut editor
+						</p>
+					</a>
+					<p class="Header_PageNavi_Textbox_List_Item">
+						Settings
+					</p>
+				</div>
+			</div>
+			<div class="Header_PageNavi_Textbox" id="button_PageNavi_textbox">
+				<div class="Header_PageNavi_Textbox_Title">
+					Launcher Navigation
+				</div>
+				<div class="Header_PageNavi_Textbox_List" id="pageElement_PageNaviList">
+					
+				</div>
+			</div>
+			<div class="Header_Right_Textbox"  id="button_Wifi_textbox">
+				<div class="Header_Right_Textbox_Title" id="textboxElement_Wifi">
+					No Connection
+				</div>				
+				<p class="Header_Right_Textbox_Text" id="pageElement_Connection">
+					Since you're not connected to the internet, links will not open properly. Connect to a Wi-Fi network and refresh the page.
+				</p>
+				<a href="https://fast.com/" target="_blank" id="pageElement_Connection_Speedtest">
+					<p class="Header_Right_Textbox_Text">
+						<u>Speedtest</u>
+					</p>
+				</a>
+			</div>
+			<div class="Header_Right_Textbox" id="button_Update_textbox">
+				<div class="Header_Right_Textbox_Title">
+					Update is available
+				</div>				
+				<p class="Header_Right_Textbox_Text">
+					A launcher update is available for you to download.
+				</p>
+				<a href="DL_Settings.html#LauncherUpdate">
+					<p class="Header_Right_Textbox_Text">
+						<u>Check for updates</u>
+					</p>
+				</a>
+			</div>
+			<div class="Sidebar_CategoryNavigation" id="pageElement_Sidebar_CategoryNavigation">
+				<p class="Sidebar_CategoryNavigation_Title">
+					Category Navigation
+					<img src="Assets/Icons/icon_close.png" class="Sidebar_CategoryNavigation_Title_Close" onclick="toggle_Sidebar_CategoryNavigation()"></img>
+				</p>
+				<a href="#anchor_category_1.14">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.14 - September 14, 2022
+					</p>
+				</a>
+				<a href="#anchor_category_1.13">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.13 - July 1, 2022
+					</p>
+				</a>
+				<a href="#anchor_category_1.12.1">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.12.1 - June 17, 2022
+					</p>
+				</a>
+				<a href="#anchor_category_1.12">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.12 - June 10, 2022
+					</p>
+				</a>
+				<a href="#anchor_category_1.11">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.11 - February 2, 2022
+					</p>
+				</a>
+				<a href="#anchor_category_1.10">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.10 - December 18, 2021
+					</p>
+				</a>
+				<a href="#anchor_category_1.9">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.9 - November 12, 2021
+					</p>
+				</a>
+				<a href="#anchor_category_1.8">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.8 - October 11, 2021
+					</p>
+				</a>
+				<a href="#anchor_category_1.7">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.7 - October 1, 2021
+					</p>
+				</a>
+				<a href="#anchor_category_1.6">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.6 - September 22, 2021
+					</p>
+				</a>
+				<a href="#anchor_category_1.5">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.5 - September 17, 2021
+					</p>
+				</a>
+				<a href="#anchor_category_1.4">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.4 - September 13, 2021
+					</p>
+				</a>
+				<a href="#anchor_category_1.3">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.3 - September 7, 2021
+					</p>
+				</a>
+				<a href="#anchor_category_1.2">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.2 - September 5, 2021
+					</p>
+				</a>
+				<a href="#anchor_category_1.1">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.1 - August 26, 2021
+					</p>
+				</a>
+				<a href="#anchor_category_1.0">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.0 - August 15, 2021
+					</p>
+				</a>
+			</div>
+			
+			
+			
+			
+			
+			<div class="MainContent" id="pageElement_MainContent">
+				<div class="CornerButtons" id="pageElement_CornerButtons">
+					<img src="Assets/Icons/icon_hamburgermenu.png" class="CornerButtons_Button CategoryNavigation" onclick="toggle_Sidebar_CategoryNavigation()"></img>
+					<a href="#pageElement_Bottom" id="pageElement_GoToBottom"> <img src="Assets/Icons/icon_downArrow.png" class="CornerButtons_Button GoToBottom"></img> </a>
+					<a href="#pageElement_Top" id="pageElement_BackToTop"> <img src="Assets/Icons/icon_upArrow.png" class="CornerButtons_Button GoToTop"></img> </a>
+				</div>
+				<span class="anchor" id="pageElement_Top"></span>
+				<h1 class="Greeting_Text" id="pageElement_Greeting">
+					Changelogs
+				</h1>
+				<a href="DL_Settings.html">
+					<h1 class="General_Button">
+						Go back to Settings
+					</h1>
+				</a>
+				<div id="pageElement_ContentContainer">
+					<p class="General_Paragraph">
+						To navigate through the changelog, press Ctrl + Right Arrow to open the navigator.
+					</p>
+					
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.14"></span>
+						<div class="Category_Label" id="category_1.14" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.14 - September 14, 2022
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.14"></img>		
+						</div>
+						<div id="content_category_1.14" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Additions
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Added a way to re-order categories and shortcuts in Shortcut Editor. This is still experimental and may break unexpectedly. Please report any bug you may encounter.
+								</li>
+								<li>
+									Added the preset "Garden of Words" and "Underwater".
+								</li>
+								<li>
+									Added wallpaper previews and a better preset selector tab on Settings > Appearance.
+								</li>
+								<li>
+									Added a "Go to Bottom" button that appears when the "Back to Top" button is hovered.
+								</li>
+								<li>
+									Added an "Open Category Navigation" button that appears when the "Back to Top" button is hovered.
+								</li>
+								<li>
+									Added a behavior setting for Shortcut Editor that lets you choose how windows are closed and how input fields are cleared.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Changes
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Reworked the shortcut generation system and the home page should start a little bit faster now.
+								</li>
+								<li>
+									Shortcut Editor Add Item subwindow will automatically close after creating an item by default.
+								</li>
+								<li>
+									Shortcut Editor input fields will automatically clear content after creating an item by default.
+								</li>
+								<li>
+									The 6 checkboxes at the top of the Behavior tab in Settings > Behaviors had been moved to its own "Display" category.
+								</li>
+								<li>
+									Presets now includes the wallpaper.
+								</li>
+								<li>
+									Launcher will now check for internet connection every second instead of at every session.
+								</li>
+								<li>
+									Removed the version and copyright text from the Session Screen.
+								</li>
+								<li>
+									Removed the backdrop filter on the loading screen and will now display a solid color instead of a blurred background.
+								</li>
+								<li>
+									The Category Navigation Sidebar now has a close button.
+								</li>
+								<li>
+									Changed the Information tab icon in Settings > Information
+								</li>
+								<li>
+									Fixed toggleable elements not showing up on first click.
+								</li>
+								<li>
+									Fixed a bug where the opening animation doesn't play or bugs out.
+								</li>
+								<li>
+									Fixed a bug where more than one item is deleted at a time in some occasions on Shortcut Editor.
+								</li>
+								<li>
+									Fixed a bug where the default wallpaper doesn't show up when loading the default setting values.
+								</li>
+								<li>
+									Fixed a bug where default behaviors doesn't set properly when loading the launcher for the first time.
+								</li>
+							</ul>
+							
+						</div>
+					</div>
+					
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.13"></span>
+						<div class="Category_Label" id="category_1.13" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.13 - July 1, 2022
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.13"></img>		
+						</div>
+						<div id="content_category_1.13" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Additions
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Added buttons that lead to the feedback form and the bug report form in Settings > Information > Version.
+								</li>
+								<li>
+									Added an option to hide toast notifications in Settings > Behaviors.
+								</li>
+								<li>
+									Added a confirmation box when deleting an item in Shortcut Editor.
+								</li>
+								<li>
+									Added a "How to use" button and help window in Shortcut Editor.
+								</li>
+								<li>
+									Added a button that links to the version list in the website through Settings > Launcher Update.
+								</li>
+								<li>
+									Added an option to display a greeting message in the home page on Settings > Behaviors > Greetings.
+								</li>
+								<li>
+									Added an option to display your name in the greeting in the home page on Settings > Behaviors > Greetings.
+								</li>
+								<li>
+									Added a Use of Content Guidelines button in Settings > Information > Version.
+								</li>
+								<li>
+									Added a How Data is Stored button in Settings > Information > Version.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Changes
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									The Launcher Update Image is now clickable and will open a full-sized version of the image.
+								</li>
+								<li>
+									The Quick Search Bar will now show the search engine used in its placeholder text.
+								</li>
+								<li>
+									The "Add Item" subwindow in Shortcut Editor will now close when Ctrl + Space is pressed again.
+								</li>
+								<li>
+									Subwindows will now close when Esc is pressed.
+								</li>
+								<li>
+									The icon of the specific page will now display in the loading screen and as the favicon instead of the default logo.
+								</li>
+								<li>
+									The tab name will now change depending on the page you are on.
+								</li>
+								<li>
+									The "Shortcut" tab is now visible by default when first opening the "Add Item" subwindow in Shortcut Editor
+								</li>
+								<li>
+									Changed the design of the tab buttons in the "Add Item" subwindow.
+								</li>
+								<li>
+									Tweaked the layouts for the subwindows that mostly contains input boxes.
+								</li>
+								<li>
+									Fixed divider lines not following the "Divider Color" setting.
+								</li>
+								<li>
+									Fixed a bug where the date doesn't appear in the session screen when it is re-triggered using Ctrl + B.
+								</li>
+								<li>
+									Fixed a bug where the Category Navigation sidebar still appears even if the "Display a navigation bar in the home page that lets you easily jump to a specific category" setting is disabled.
+								</li>
+								<li>
+									Fixed a bug where the page greeting remains to display "Good Evening" regardless of the time of day.
+								</li>
+								<li>
+									Fixed console error regarding Shortcut Editor tabs.
+								</li>
+								<li>
+									Fixed console error regarding Battery Percentages.
+								</li>
+								<li>
+									Removed the "Notify if an update is available" checkbox in Settings > Behaviors.
+								</li>
+								<li>
+									Removed the extra description on the "Add Item" subwindow in Shortcut Editor.
+								</li>
+							</ul>
+							
+						</div>
+					</div>
+					
+					
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.12.1"></span>
+						<div class="Category_Label" id="category_1.12.1" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.12.1 - June 17, 2022
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.12.1"></img>		
+						</div>
+						<div id="content_category_1.12.1" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Additions
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Added an update window that shows up when you first start up an updated version of the launcher.
+								</li>
+								<li>
+									Added a Light Mode preset.
+								</li>
+								<li>
+									Added an option to use the intended fonts for the launcher using Google Fonts (requires internet connection).
+								</li>
+								<li>
+									Added an "Enable Wallpaper" checkox in Settings > Appearance > Wallpaper.
+								</li>
+								<li>
+									Added fallback fonts in case that the default fonts aren't available.
+								</li>
+								<li>
+									Added an error screen that shows up when any of the important files are missing.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Changes
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									The footer text no longer shows a counter.
+								</li>
+								<li>
+									The footer text is now dynamic, and will change depending on the version number.
+								</li>
+								<li>
+									The version strings on Settings > Information > Version is now dynamic, and will change depending on the version number.
+								</li>
+								<li>
+									The search bar no longer attempts a search when there is no query typed inside.
+								</li>
+								<li>
+									The Wi-Fi status icon textbox's animation has been made in parity with the textbox animation of the Page Navigation.
+								</li>
+								<li>
+									"Speedtest" button disappears on the Connection Status textbox if no internet connection is detected.
+								</li>
+								<li>
+									Page greeting now display "Good Afternoon" at the appropriate time.
+								</li>
+								<li>
+									Opening the Quick Search Bar will switch the focus to the text field.
+								</li>
+								<li>
+									Presets have been moved to its own category in Settings > Appearance > Presets.
+								</li>
+								<li>
+									Presets now also affect the text font and colors.
+								</li>
+								<li>
+									The "Dark Mode" preset now includes the text color.
+								</li>
+								<li>
+									Re-added the Changelog page in Settings > Information > Changelogs.
+								</li>
+								<li>
+									Re-added the Icon Brightness setting on Settings > Appearance > Colors.
+								</li>
+								<li>
+									Changed animations for subwindows.
+								</li>
+								<li>
+									Removed the "Notify if an update is available" textbox in Settings > Behaviors.
+								</li>
+								<li>
+									Removed all references of folders in Shortcut Editor.
+								</li>
+								<li>
+									Removed the Page Actions section on the Page Navigation Full Screen Menu on the Home Page.
+								</li>
+							</ul>
+							
+						</div>
+					</div>
+					
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.12"></span>
+						<div class="Category_Label" id="category_1.12" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.12 - June 10, 2022
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.12"></img>		
+						</div>
+						<div id="content_category_1.12" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Additions
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									An updated launcher design.
+								</li>
+								<li>
+									Added a new battery percentage indicator in the page header.
+								</li>
+								<li>
+									Added a new way of navigating through pages. A small menu will appear upon clicking the page title in the header that contains all of the pages the user can navigate into.
+								</li>
+								<li>
+									Added a new loading animation for the shortcut buttons and header buttons.
+								</li>
+								<li>
+									Added a new button in the header that will appear when a new update is available.
+								</li>
+								<li>
+									Added a new keyboard shortcut (Ctrl+Q) to quickly close/open all categories at the same time.
+								</li>
+								<li>
+									Added a new keyboard shortcut (Ctrl+Space) to open the item creation screen in "Shortcut Editor".
+								</li>
+								<li>
+									Added a new keyboard shortcut (Ctrl+B) to open the session screen.
+								</li>
+								<li>
+									Added a search bar on the home page's header for quick searches on the internet. The search engine it uses can be changed in the settings.
+								</li>
+								<li>
+									Added several new animations that runs on startup.
+								</li>
+								<li>
+									Added a "transition conversion" system that converts the user's existing links into the new system. This is automatic and can only be run once. This will also be the only version to have the functionality. [For early users only]
+								</li>
+								<li>
+									Added a toggleable search bar that can be accessed by pressing Ctrl+Shift. It appears on all pages.
+								</li>
+								<li>
+								
+								</li>
+								<li>
+								
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Changes
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Updated the launcher menu layout when the screen is small enough.
+								</li>
+								<li>
+									Updated the loading screen.
+								</li>
+								<li>
+									Updated the launcher's fonts and now uses Raleway and Roboto.
+								</li>
+								<li>
+									Updated the toast notification system that will now stack up if multiple messages is made by the launcher.
+								</li>
+								<li>
+									Updated the "Settings" page to make it easier for the user to customize the launcher's color scheme (old configurations from 1.11 and below will not work).
+								</li>
+								<li>
+									Updated the stylesheet configuration format to cope with the new design changes.
+								</li>
+								<li>
+									Updated some of the launcher's icons.
+								</li>
+								<li>
+									The "Main.html" page is now isolated in the folder, while other files such as .css, .js and other assets have been put into their own folder to avoid user confusion.
+								</li>
+								<li>
+									The time and date had been moved to the page header, and hovering over the time will show the date.
+								</li>
+								<li>
+									The time now shows AM or PM, rather than an icon.
+								</li>
+								<li>
+									The sidebar is no longer present in the home page, and will now only appear on the pages that needs it.
+								</li>
+								<li>
+									The session screen can now be closed by clicking anywhere on the screen instead of clicking a button.
+								</li>
+								<li>
+									The Back To Top button had been moved to the bottom right of the screen and will appear whenever the user has scrolled down enough.
+								</li>
+								<li>
+									Removed the "Schedules" panel.
+								</li>
+								<li>
+									Removed the "Reminders" panel.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Shortcut Editor<br>A redesigned and overhauled shortcut edition system is now available in its first iteration. Shortcut Editor (SE) has two modes, Normal View, and Table View.
+							</p>
+							<ul class="General_Paragraph">
+								Normal View
+								<li>
+									Normal View displays the shortcuts the same way it would be rendered on the home screen.
+								</li>
+								<li>
+									It displays clickable links.
+								</li>
+								Table View
+								<li>
+									Displays the shortcuts in a table manner.
+								</li>
+								<li>
+									This view will let the user preview, edit, or delete a shortcut.
+								</li>
+								<li>
+									Table View displays three controls beside each category and shortcut.
+								</li>
+								<li>
+									The eye icon lets you view the shortcut link as if it is being clicked on Normal View.
+								</li>
+								<li>
+									The pencil icon lets you edit the category or shortcut properties.
+								</li>
+								<li>
+									The trashcan icon lets you delete a category or shortcut.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Responsive Web Design
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									The main content container will now lock in 1000 pixels in width and will center on the screen if the screen is wide enough.
+								</li>
+								<li>
+									The time and date will now move to the launcher menu when the screen is small enough.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Settings
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									The settings page had been reorganized in tabs on the sidebar.
+								</li>
+								<li>
+									The "Launcher update" window had been moved to its own tab in the settings page.
+								</li>
+								<li>
+									The "Information" page had been moved to the settings page.
+								</li>
+								<li>
+									Simplified the settings for the launcher appearance.
+								</li>
+								<li>
+									Added an updated and easier to use appearance customizer.
+								</li>
+								<li>
+									Added an option for a dark mode and light mode appearance preset.
+								</li>
+								<li>
+									Added an option to toggle blur effects.
+								</li>
+								<li>
+									Added an option to toggle some page header elements like the time & date, battery percentage, the search bar, the launcher update indicator, and the internet status indicator.
+								</li>
+								<li>
+									Added a way to change the launcher's wallpaper.
+								</li>
+								<li>
+									Added a "Launcher Behavior" section that contains toggles to customize some behaviors of the launcher.
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.11"></span>
+						<div class="Category_Label" id="category_1.11" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.11 - February 2, 2022
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.11"></img>		
+						</div>
+						<div id="content_category_1.11" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Additions
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Added a session screen when first opening the launcher. This will show up once everytime you run the launcher in the browser.
+								</li>
+								<li>
+									Added example elements on the "Settings" page to make it easier to see the changes in appearances.
+								</li>
+								<li>
+									Added an updated version of the "Periodic Table" page. This is a separate project from DL and can be downloaded separately. (As of this current update, the copy of Searchable Periodic Table that comes with 1.11 is a BETA version and is currently unfinished.)
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Changes
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Several .css files have been merged back to "Page_Stylesheet.css".
+								</li>
+								<li>
+									Changed the copyright date to 2022.
+								</li>
+								<li>
+									Copyright now depends on a JS variable.
+								</li>
+								<li>
+									The date on the home page has been swapped from "date, day" to "day, date".
+								</li>
+								<li>
+									The clock now uses the 12-hour format, instead of the previously used 24-hour format.
+								</li>
+								<li>
+									Sidebar links no longer slides to the right when clicked, only slightly zooming out instead.
+								</li>
+								<li>
+									Removed the "Help on styling the launcher" page.
+								</li>
+								<li>
+									Removed the white outline on text input boxes when selected.
+								</li>
+								<li>
+									Removed the white outline on color input boxes.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Fixes
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									Fixed the "Clock" page not following the appearance settings.
+								</li>
+								<li>
+									Fixed the text input box font not following the settings.
+								</li>
+								<li>
+									Fixed the loading screen background momentarily un-opaque before being fully opaque.
+								</li>
+								<li>
+									Fixed the "Brightness" value text not appearing in the "Settings" page unless the user clicks the slider.
+								</li>
+								<li>
+									Fixed the main content container being overlapped by the header menu when the screen is small enough.
+								</li>
+								<li>
+									Fixed the scaling issues of several text elements being too small or too big depending to the screen size.
+								</li>
+								<li>
+									Fixed the spacing of sidebar elements being different when it is opened and closed.
+								</li>
+								<li>
+									Fixed the category arrows clipping when the screen size is too big.
+								</li>
+								<li>
+									Fixed the horizontal scrollbar being thick.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Responsive Web Design
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									Text and elements now use a fixed value rather than being relative to the screen size to fix scaling issues.
+								</li>
+								<li>
+									The sidebar will disappear when the screen is small enough and will become a fullscreen menu when opened via the toggle on the header.
+								</li>
+								<li>
+									Header menu buttons will move to the sidebar when the window size is less than 750px.
+								</li>
+								<li>
+									Font size of link buttons will become a little smaller when the window size is less than 750px.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Experimental
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									Added a new "Custom Shortcut Library" page. In the public release, this will be the primary page.
+								</li>
+								<li>
+									Added a deletion feature for the custom shortcut system.
+								</li>
+								<li>
+									Added a "Delete custom link" button and window on the "Custom Shortcut Library" page.
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.10"></span>
+						<div class="Category_Label" id="category_1.10" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.10 - December 16, 2021
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.10"></img>		
+						</div>
+						<div id="content_category_1.10" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Additions
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Added a new "Settings" page. This will let you change how your launcher look without modifying any file. If you have an existing configuration, you may need to re-enter them through the settings.
+								</li>
+								<li>
+									Added a new "Onboarding" page. You will be redirected here if you open "Main.html" in 1.10 for the first time.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Changes
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Re-added the animations when interacting with elements.
+								</li>
+								<li>
+									Call to action buttons are now made more obvious.
+								</li>
+								<li>
+									Favorites items now have accent colors.
+								</li>
+								<li>
+									Icons can now be toggled to be black or white to match with fit with bright backgrounds.
+								</li>
+								<li>
+									Removed small toggle icons in the "Schedules" section. The sections are also no longer toggleable.
+								</li>
+								<li>
+									Tweaked subwindows.
+								</li>
+								<li>
+									Logo has been changed to reflect the launcher's rename.
+								</li>
+								<li>
+									Elmer's Launcher has been renamed as Doodle Launcher.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Technical changes
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									For the first time ever, the launcher will now use the user's local storage to store settings.
+								</li>
+								<li>
+									The launcher now depends on the local storage to store settings and configurations.
+								</li>
+								<li>
+									If the settings file does not exist on the user's local storage, the launcher will create the file with the default values set. This will redirect you to "Onboarding.html".
+								</li>
+								<li>
+									Style configurations have been simplified and are now less redundant.
+								</li>
+								<li>
+									Several style configurations have been combined.
+								</li>
+								<li>
+									Several style configurations have been renamed.
+								</li>
+								<li>
+									Home page now refreshes every 2 hours. Other pages refreshes every hour.
+								</li>
+								<li>
+									Subwindows now depend on only two functions; one for opening and one for closing.
+								</li>
+								<li>
+									Added a new textbox system.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Experimental
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									Added a custom shortcut creator subwindow.
+								</li>
+								<li>
+									Added a system that lets you create custom shortcuts in the launcher.
+								</li>
+								<li>
+									Local storage is now used to store launcher settings.
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.9"></span>
+						<div class="Category_Label" id="category_1.9" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.9 - November 12, 2021
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.9"></img>		
+						</div>
+						<div id="content_category_1.9" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Additions
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									New fresh look and layout throughout the entire launcher.
+								</li>
+								<li>
+									New internet status icon located at the top-right corner of the screen.
+								</li>
+								<li>
+									New internet status alert that will appear when you're not connected to the internet.
+								</li>
+								<li>
+									New version notification system. The launcher will now notify you when a new update is available.
+								</li>
+								<li>
+									New way of downloading updates. Because the launcher will notify you when a new update is available, you have the option to download the new version directly from the launcher itself.
+								</li>
+								<li>
+									New grid layout system throughout the launcher. This makes everything more uniform in terms of layout and size.
+								</li>
+								<li>
+									New "Formula Card" page for Physics and Chemical formulas.
+								</li>
+								<li>
+									New icons for different purposes throughout the launcher.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Changes
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									The default font will now be Product Sans and Roboto.
+								</li>
+								<li>
+									Modal windows will now have a background blur and dim behind them to separate it from the main content.
+								</li>
+								<li>
+									Modal windows will now have a closing animation instead of disappearing instantly.
+								</li>
+								<li>
+									The icon of the specific page will now appear when that page is loading, instead of the default logo.
+								</li>
+								<li>
+									The icon of the specific page will now become the page's favicon.
+								</li>
+								<li>
+									The sidebar will once again be collapsible in other pages.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Responsive Web Design
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									Images will no longer cover the entire screen if the sidebar is collapsed
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Technical changes
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									During load times, the launcher will detect your internet connectivity and will notify you on load when you're not connected.
+								</li>
+								<li>
+									The layout for link selection has been made easier to add new links in.
+								</li>
+								<li>
+									Links are no longer held inside tables, being in a grid layout instead, cutting down the code length.
+								</li>
+								<li>
+									Link containers are now in 'templates', and is easier adjusted inside the code.
+								</li>
+								<li>
+									A new system on collapsible menus is implemented; collapsing/expanding no longer requires its own unique function, instead now relying into one function and the element's object id that is used to identify and control subsequent elements.
+								</li>
+								<li>
+									Most page elements are now tied to the stylesheet configuration file.
+								</li>
+								<li>
+									Removed old code from both the .css and .js file.
+								</li>
+								<li>
+									Added a page template to easily add more pages if necessary.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Experimental
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									Added a new breadcrumb navigation.
+								</li>
+								<li>
+									Added a new page in "Information" that will guide users into modifying the style of the launcher.
+								</li>
+								<li>
+									Loading screen can now be styled.
+								</li>
+								<li>
+									Loading screen fade animation has been changed from 0.7s to 0.5s.
+								</li>
+								<li>
+									Loading screen minimum waiting time has been changed from 2s to 3s.
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.8"></span>
+						<div class="Category_Label" id="category_1.8" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.8 - October 11, 2021
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.8"></img>		
+						</div>
+						<div id="content_category_1.8" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Additions
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									New animations when interacting with the webpage.
+								</li>
+								<li>
+									New scrolling animation when expanding/collapsing the sidebar.
+								</li>
+								<li>
+									New animation when clicking buttons.
+								</li>
+								<li>
+									New animation when clicking links.
+								</li>
+								<li>
+									New "Back To Top" button on the top menu.
+								</li>
+								<li>
+									New "Changelog" window in the "Information" page.
+								</li>
+								<li>
+									New "Changelog" page that can be accessed from the "Information" page.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Changes
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Updated the "Information" and "Calendar of Events" pages.
+								</li>
+								<li>
+									Updated the "Clock" page to become more consistent with the new theme.
+								</li>
+								<li>
+									Changed the animation when opening a category.
+								</li>
+								<li>
+									The customizable css values in the "Information" page is now presented as a table.
+								</li>
+								<li>
+									Sidebar and category toggle are now inside the top menu, instead of floating above it.
+								</li>
+								<li>
+									Sidebar will no longer collapse on other pages than "Main.html".
+								</li>
+								<li>
+									A scrollbar will now appear when the sidebar contains too many links, instead of hiding them.
+								</li>
+								<li>
+									The page will now scroll smoothly when jumping from one category to another.
+								</li>
+								<li>
+									The page will now put the category clicked from the sidebar into the approximate middle of the screen instead of putting it at the very top.
+								</li>
+								<li>
+									Removed logo in the sidebar on other pages apart from the "Main.html" and replaced with a "Back to home" button and a "Back to top" button.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Fixes
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									Fixed a bug where the tab opening animation doesn't play when toggling categories unless you click the category itself.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Technical changes
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									Theme configurations have been moved to a separate css file called "Page_Stylesheet_Configurations.css" to prevent confusion to the user on what to change.
+								</li>
+								<li>
+									Added the following new tags: Sidebar-Clock-Color, Sidebar-Link-Color, Greeting-Text-Color, Category-Title-Color, Category-Sub-Title-Color, Category-Link-Color, Reminder-Box-Title-Font, Reminder-Box-Full-BGColor, Reminder-Box-OpenDocBtn, Notif-Title-Font, Notif-Title-Color, Notif-Sub-Title-Font, Notif-Sub-Title-Color, ClockPage-Font, ClockPage-Color, OtherPages-BGColor, and Element-Transition-Delay into the "Page_Stylesheet_Configurations.css" file. For more information, go to the "Information" page.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Experimental
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									Home page now refreshes every hour to ensure that page contents are up to date.
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.7"></span>
+						<div class="Category_Label" id="category_1.7" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.7 - October 1, 2021
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.7"></img>		
+						</div>
+						<div id="content_category_1.7" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Additions
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Home page now refreshes every hour to ensure that page contents are up to date.
+								</li>
+								<li>
+									Added a loading screen when you start up the webpage. 
+								</li>
+								<li>
+									Added a new System subcategory in the Others category. This contains system buttons.
+								</li>
+								<li>
+									Added a new Calendar of Events page. This contains events for months. To access, click "Calendar of Events" in the Schedules for the Month in Schedules.
+								</li>
+								<li>
+									Added a new Open in Google Docs button in the Reminders category.
+								</li>
+								<li>
+									Added a new way of customizing the launcher. You can now change the values of elements in its .css file easily. For more information, click "Information" in the System subcategory.
+								</li>
+								<li>
+									Added new Info page. This contains information, how-to-use, and more.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Changes
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Fixed a bug where the tab opening animation doesn't play when toggling categories unless you click the category itself.
+								</li>
+								<li>
+									Changed the scrollbar.
+								</li>
+								<li>
+									Changed the spacing between buttons a little bit.
+								</li>
+								<li>
+									RWD: Sidebar will now automatically go into compact mode when the window width is less than 682 pixels; it will now automatically go into expand mode if the window width is more than 682 pixels.
+								</li>
+								<li>
+									Default theme has been changed to be a little darker. It also changed and differentiated the color of the link buttons with fixed menu elements to differentiate from each other.
+								</li>
+								<li>
+									Sidebar will now have icons when closed instead of entirely disappearing. This makes jumping from one category to another possible even when the sidebar is collapsed.
+								</li>
+								<li>
+									Removed the blur effect on the header and sidebar due to performance issues.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Fixes
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									Fixed subcategory arrow icons scaling.
+								</li>	
+							</ul>
+							<p class="General_Paragraph">
+								Technical changes
+							</p>
+							<ul class="General_Paragraph">
+								<li>
+									Fixed a bug where the tab opening animation doesn't play when toggling categories unless you click the category itself.
+								</li>
+								<li>
+									Version number is now controlled by a JavaScript function to be more consistent.
+								</li>
+								<li>
+									Rearranged the code inside the "Page_Stylesheet.css" file to be more organized.
+								</li>
+								<li>
+									Renamed different element classes to be more consistent with one another.
+								</li>
+								<li>
+									Employed the use of CSS variables to be customizable.
+								</li>
+								<li>
+									Cleaned up the folder and moved files into categorized folders. This makes it easier to navigate through the files and change files when needed.
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.6"></span>
+						<div class="Category_Label" id="category_1.6" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.6 - September 22, 2021
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.6"></img>		
+						</div>
+						<div id="content_category_1.6" class="Category_Content_Container">
+							<ul class="General_Paragraph">
+								<li>
+									Added a blur effect on the header, sidebar, and notification box (experimental).
+								</li>
+								<li>
+									Added a wallpaper background (to change the wallpaper, replace the images in the Background folder with the same file name and is in png format).
+								</li>
+								<li>
+									Added an expand button above the reminders box to expand it.
+								</li>
+								<li>
+									Added Cations and Anions button to the educational section on Other links
+								</li>
+								<li>
+									Visual fixes.
+								</li>
+								<li>
+									Changed the sidebar clock box display to flex.
+								</li>
+								<li>
+									Changed the sidebar link box display to flex.
+								</li>
+								<li>
+									Changed the top bar display to flex.
+								</li>
+								<li>
+									Changed sidebar texts to be consistent with the category titles.
+								</li>
+								<li>
+									Fixed category arrows not changing when clicking collapse all.
+								</li>
+								<li>
+									Fixed category arrows alignment problem.
+								</li>
+								<li>
+									Fixed category icon alignment problem.
+								</li>
+								<li>
+									Moved the copyright text to the bottom of the page.
+								</li>
+								<li>
+									Removed the back to top button on the sidebar. To go back to the top, click the top menu box.		
+								</li>
+								
+							</ul>
+						</div>
+					</div>
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.5"></span>
+						<div class="Category_Label" id="category_1.5" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.5 - September 17, 2021
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.5"></img>		
+						</div>
+						<div id="content_category_1.5" class="Category_Content_Container">
+							<ul class="General_Paragraph">
+								<li>
+									Added subcategories, categories inside categories that arranges similar links.
+								</li>
+								<li>
+									Added new "Quick Lookup" category. This contains Miriam Webster Dictionary and Thesaurus, APA Citation Maker, Scribbr, and Google.com.
+								</li>
+								<li>
+									Added a notification that notifies you (inside the window) to take your attendance during class periods.
+								</li>
+								<li>
+									Added a button that lets you open or close the sidebar.
+								</li>
+								<li>
+									Added a button that lets you expand/collapse all of the categories at once.
+								</li>
+								<li>
+									Added a back to top button that delivers you to the top of the page when clicked.
+								</li>
+								<li>
+									Added a small fade animation when you expand a category/subcategory to show what has shown up.
+								</li>
+								<li>
+									The greeting box no longer expand/collapse all of the categories when clicked.
+								</li>
+								<li>
+									Combined the clock and sidebar to form one sidebar.
+								</li>
+								
+							</ul>
+						</div>
+					</div>
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.4"></span>
+						<div class="Category_Label" id="category_1.4" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.4 - September 13, 2021
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.4"></img>		
+						</div>
+						<div id="content_category_1.4" class="Category_Content_Container">
+							<ul class="General_Paragraph">
+								<li>
+									Added a separate announcement element for inside the schedules category.
+								</li>
+								<li>
+									Added a new reminders category. This is pulled from a Google Docs file and requires an internet connection to access. 
+								</li>
+								<li>
+									Added a minor fading animation when being loaded.
+								</li>
+								<li>
+									Added category icons.
+								</li>
+								<li>
+									Added a favicon for both the main and clock page replacing the default paper icon to be more noticeable.
+								</li>
+								<li>
+									Categories are now collapsible. Collapse/expand categories by clicking on them.
+								</li>
+								<li>
+									Greeting box on the top of the page now collapse/expand categories when clicked.
+								</li>
+								<li>
+									Fixed a cursor bug in the greeting box where it shows the element as clickable even if it's not.
+								</li>
+								<li>
+									Fixed a horizontal misalignment on the sidebar boxes when the window is resized.
+								</li>
+								<li>
+									Replaced the top menu on the clock page with a simple back button that appears when hovered.
+								</li>
+								<li>
+									Clock text on the clock page no longer glows when being hovered.
+								</li>
+								<li>
+									Schedules no longer appear in the clock page.
+								</li>
+								<li>
+									Repeatedly clicking on elements no longer highlights them, as most elements are now clickable.
+								</li>
+								<li>
+									Clock page title updated to be consistent with the main page title.
+								</li>
+								
+							</ul>
+						</div>
+					</div>		
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.3"></span>
+						<div class="Category_Label" id="category_1.3" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.3 - September 7, 2021
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.3"></img>		
+						</div>
+						<div id="content_category_1.3" class="Category_Content_Container">
+							<ul class="General_Paragraph">
+								<li>
+									New look
+								</li>
+								<li>
+									Added a sidebar with the clock on the top portion and the jump buttons on the bottom portions
+								</li>
+								<li>
+									Introducing jump links: Navigate the page easier by click jump links to deliver you to that specific section of the page
+								</li>
+								<li>
+									Schedule images are now linked to a Google Drive document and will update remotely whenever needed; however, you need to be connected to the internet while it is loaded in order for it to be fetched into the home page.
+								</li>
+								<li>
+									Unavailable or closed image links will now disappear from the home page, removing the ugly empty boxes when it fails to load
+								</li>
+								<li>
+									Unified font family to Product Sans
+								</li>
+								<li>
+									Removed top menu bar
+								</li>
+								
+							</ul>
+						</div>
+					</div>
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.2"></span>
+						<div class="Category_Label" id="category_1.2" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.2 - September 5, 2021
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.2"></img>		
+						</div>
+						<div id="content_category_1.2" class="Category_Content_Container">
+							<ul class="General_Paragraph">
+								<li>
+									Added indicator icon on the home page to indicate whether it is day or night
+								</li>
+								<li>
+									Added the day and current date on the top menu
+								</li>
+								<li>
+									Added glowing effect on clickable items to clearly differentiate them from unclickable items
+								</li>
+								
+							</ul>
+						</div>
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.1"></span>
+						<div class="Category_Label" id="category_1.1" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.1 - August 15, 2021
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.1"></img>		
+						</div>
+						<div id="content_category_1.1" class="Category_Content_Container">
+							<ul class="General_Paragraph">
+								<li>
+									Added JavaScript .js file to folder
+								</li>
+								<li>
+									Added top bar now displaying version
+								</li>
+								<li>
+									Added 24-hour clock on the top bar
+									</li>
+									<li>
+										Credits text on the bottom of the page now brings to website
+									</li>
+									<li>
+										Hovering to non-clickable items now not change the cursor into an "I" bar
+									</li>
+									<li>
+										Welcome text now changes to "Good Morning", "Good Afternoon", and "Good Evening" depending on computer time
+									</li>
+									<li>
+										Every 11:45, 12:30, 1:30, 2:30, 3:30, 4:30, a notification sound will play signalling the end of the class.
+									</li>
+									<li>
+										Clicking on the schedule image now brings up a full window image
+									</li>
+									<li>
+										Clicking on the version number now shows the changelog file
+									</li>
+								</ul>
+								
+							</div>
+						</div>
+						<span class="anchor" id="anchor_category_1.0"></span>
+						<div class="Category_Label" id="category_1.0" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.0 - August 15, 2021
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.0"></img>		
+						</div>
+						<div id="content_category_1.0" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Added basic features
+							</p>
+							
+						</div>
+					</div>
+				</div>
+				
+				<footer class="Footer" id="pageElement_Bottom">
+					<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
+					Doodle Launcher Public Beta
+				</h1>
+				<h1 class="Footer_Text" id="pageElement_Footer_Copyright">
+					Content By ElmerF 2022
+				</h1>
+			</footer>
+		</div>
+		
+	</div>
+	
+</body>
+</html>									

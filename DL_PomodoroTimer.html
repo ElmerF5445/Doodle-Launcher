@@ -1,0 +1,281 @@
+<html>
+	<head>
+		<title id="pageElement_PageTitle">
+			Doodle Launcher Public
+		</title>
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet.css">
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Animations.css">
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Reference.css">
+		<link rel="stylesheet" href="Scripts/DL_App_Stylesheet_PomodoroTimer.css">
+		<link rel="icon" type="image/png" href="Assets/Icons/icon_schedules.png" sizes="96x96">
+		<!-- Default intended fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;800&family=Roboto&display=swap" rel="stylesheet">
+	</head>
+	<body class="MainPage" onload="OnloadTasks()">
+		
+		<div class="LoadingScreen" id="LoadingScreen">
+			<div class="LoadingScreen_UpperSection" id="LoadingScreen_UpperSection">
+				<img class="LoadingScreen_Icon" src="Assets/Icons/iconNew_edit.png"></img>
+				<h2 class="LoadingScreen_VersionTitle" id="versionTitle">
+					Doodle Launcher
+				</h2>
+				<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+			</div>
+			<div class="LoadingScreen_CopyrightSection" id="LoadingScreen_CopyrightSection">
+				
+				<!-- <h4 class="LoadingScreen_Text" id="LoadingScreen_Text"> -->
+					<!-- Building page... -->
+				<!-- </h4> -->
+				<div style="display: flex; justify-content: center; align-items: center;">
+					<img class="LoadingScreen_Copyright_Logo" src="Assets/Icons/ContentByElmerF.png"></img>
+					<h4 class="LoadingScreen_Copyright" id="copyrightTitle">
+						Content By ElmerF
+					</h4>
+				</div>
+			</div>
+		</div>
+		<div class="SessionScreen" id="pageElement_SessionScreen" onclick="close_SessionScreen()">
+			<h1 class="SessionScreen_Time" id="Clock_Time_SessionScreen">
+				
+			</h1>
+			<h3 class="SessionScreen_Date" id="Clock_Date_SessionScreen">
+				
+			</h3>
+			<p class="SessionScreen_Instruction">
+				Click anywhere to start
+			</p>
+			<div class="SessionScreen_Copyright">
+				<p class="SessionScreen_Copyright_Text" id="pageElement_SessionScreen_Copyright">
+					Doodle Launcher Public Beta | Content By ElmerF 2022
+				</p>
+			</div>
+		</div>
+		<div class="ToggleableSearchBar" id="pageElement_Toggleable_SearchBar">
+			<div class="ToggleableSearchBar_SearchBar">
+				<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3"></input>
+				<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
+			</div>
+			<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
+		</div>
+		<!-- Toast notifications -->
+		<div class="ToastNotif" id="pageElement_ToastDrawer">
+		</div>
+		
+		<!-- Blurs the background -->
+		<!--<div class="General_BlurBG">
+			a
+		</div>-->
+		
+		
+		
+		
+		<!--<div class="Subwindow_Blur" id="subwindow_SelectPresets">
+			<div class="Subwindow">
+			<div class="Subwindow_TitleBar">
+			<h1 class="Subwindow_TitleBar_Title">
+			Select Presets
+			</h1>
+			<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="SelectPresets" onclick="close_Subwindow(this.id)">
+			</img>
+			</div>
+			<div class="Subwindow_Content">
+			<p class="Subwindow_Content_Text">
+			Select a preset below.
+			</p>
+			</div>
+			<div class="Subwindow_Bottom Grid">
+			<h1 class="Subwindow_Bottom_Button_Main">
+			Select preset
+			</h1>
+			</div>
+			</div>
+			
+		</div>-->
+	</div>
+	<!-- All content goes inside the PageGrid -->
+	<div class="PageGrid">
+		<div class="Header" id="pageElement_Header">
+			<img class="Sidebar_Toggle" id="toggle_Sidebar" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar()"></img>
+			<div class="Header_PageNavi" id="button_PageNavi" onclick="toggle_Navigator(this.id)">
+				<h2 class="Header_PageNavi_Title" id="Header_PageNavi_Title">
+					Pomodoro Timer
+				</h2>
+			</div>
+			<div class="Header_Buttons" id="pageElement_Header_Buttons">
+				<!--<h3 class="Header_Buttons_Item">
+					Add task
+				</h3>-->
+				<!--<h3 class="TDL_Info_ListProgress" id="pageElement_TDL_ListProgress">
+					Tasks: 5 / 10 (50%)
+				</h3>	-->			
+					
+				
+				
+			</div>
+			<div class="Header_Clock" id="pageElement_Header_Clock">
+				<h1 class="Header_Clock_Time" id="Clock_Time">
+					id="Clock_Time"
+				</h1>
+				<h1 class="Header_Clock_Date" id="Clock_Date">
+					id="Clock_Date"
+				</h1>
+			</div>
+			<div class="Header_Battery" id="pageElement_Header_Battery">
+				<h1 class="Header_Battery" id="Battery_Level">
+					%
+				</h1>
+			</div>
+			<div class="Header_RightMenu">
+				<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_softwareUpdate.png"  id="button_Update" onclick="toggle_Textbox(this.id)"></img>
+				<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_wifi_online.png"  id="button_Wifi" onclick="toggle_Textbox(this.id)"></img>
+			</div>
+		</div>
+		<div class="Header_Menu" id="pageElement_Header_Menu">
+			<div class="Header_Menu_Top">
+				<div class="Header_Menu_Top_Clock">
+					<h1 class="Header_Menu_Top_Clock_Time" id="Clock_Time_2">
+						id="Clock_Time"
+					</h1>
+					<h1 class="Header_Menu_Top_Clock_Date" id="Clock_Date_2">
+						id="Clock_Date"
+					</h1>
+				</div>
+				<h1 class="Header_Menu_Top_Battery" id="Battery_Level_2">
+					%
+				</h1>
+			</div>
+			<div class="Header_PageNavi_Textbox_Title">
+				Launcher Navigation
+			</div>
+			<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageNaviList">
+				
+			</div>
+			<div class="Header_PageNavi_Textbox_Title">
+				Page Actions
+			</div>
+			<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageActions">
+				<p class="Header_PageNavi_Textbox_List_Item" onclick="Settings_ApplyChanges()">
+					Save settings
+				</p>
+			</div>
+		</div>
+		<div class="Header_PageNavi_Textbox" id="button_PageNavi_textbox">
+			<div class="Header_PageNavi_Textbox_Title">
+				Launcher Navigation
+			</div>
+			<div class="Header_PageNavi_Textbox_List" id="pageElement_PageNaviList">
+				
+			</div>
+		</div>
+		<div class="Header_Right_Textbox"  id="button_Wifi_textbox">
+			<div class="Header_Right_Textbox_Title" id="textboxElement_Wifi">
+				No Connection
+			</div>				
+			<p class="Header_Right_Textbox_Text" id="pageElement_Connection">
+				Since you're not connected to the internet, links will not open properly. Connect to a Wi-Fi network and refresh the page.
+			</p>
+			<a href="https://fast.com/" target="_blank" id="pageElement_Connection_Speedtest">
+				<p class="Header_Right_Textbox_Text">
+					<u>Speedtest</u>
+				</p>
+			</a>
+		</div>
+		<div class="Header_Right_Textbox" id="button_Update_textbox">
+			<div class="Header_Right_Textbox_Title">
+				Update is available
+			</div>				
+			<p class="Header_Right_Textbox_Text">
+				A launcher update is available for you to download.
+			</p>
+			<a href="DL_Settings.html#LauncherUpdate">
+				<p class="Header_Right_Textbox_Text">
+					<u>Check for updates</u>
+				</p>
+			</a>
+		</div>
+		<div class="Sidebar" id="pageElement_Sidebar">
+			<div class="Sidebar_Item" id="Tasker_Tab_ToDoList" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Tasker_Tab_ToDoList_Icon" src="Assets/Icons/favicon_old.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Pomodoro Timer
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Tasker_Tab_Scheduler" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Tasker_Tab_Scheduler_Icon"src="Assets/Icons/favicon_old.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Scheduler
+				</p>
+			</div>
+			<!--<div class="Sidebar_Item" id="Settings_Tab_Credits" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Credits_Icon"src="Assets/Icons/favicon_old.png"></img>
+				<p class="Sidebar_Icon_Text">
+				Credits
+				</p>
+			</div>-->
+		</div>
+		
+		
+		
+		
+		<div class="MainContent" id="pageElement_MainContent">
+			
+			<span class="anchor" id="pageElement_Top"></span>
+			
+			<div class="PT_MainContainer">
+				<div class="PT_PomodoroStage_Container">
+					<div class="PT_PomodoroStage" id="pageElement_PT_Stage_1">
+						1
+					</div>
+					<div class="PT_PomodoroStage" id="pageElement_PT_Stage_2">
+						2
+					</div>
+					<div class="PT_PomodoroStage" id="pageElement_PT_Stage_3">
+						3
+					</div>
+					<div class="PT_PomodoroStage" id="pageElement_PT_Stage_4">
+						4
+					</div>
+				</div>
+				<div class="PT_Timer_Container">
+					<h1 class="PT_Timer" id="pageElement_PT_Timer">
+						25:00
+					</h1>
+					<h3 class="PT_Status" id="pageElement_PT_Status">
+						Work
+					</h3>
+				</div>
+				<div>
+				</div>
+				<div class="PT_Controls_Container">
+					<div class="PT_Controls" id="pageElement_PT_Control_Start" onclick="PT_ResetTimer()">
+						Start
+					</div>
+					<!-- <div class="PT_Controls" id="pageElement_PT_Control_Pause" onclick="PT_PauseUnpauseTimer()"> -->
+						<!-- Pause -->
+					<!-- </div> -->
+					<div class="PT_Controls" id="pageElement_PT_Control_Skip" onclick="PT_UpdateStage()" style="display: none">
+						Skip
+					</div>
+				</div>
+			</div>
+			<audio id="PT_Notification_Work" src="Assets/Audio/notification1.ogg"></audio>
+			<audio id="PT_Notification_Break" src="Assets/Audio/notification2.ogg"></audio>
+			<audio id="PT_Notification_Break_Long" src="Assets/Audio/notification4.ogg"></audio>
+			
+			<footer class="Footer">
+				<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
+					Doodle Launcher Public Beta
+				</h1>
+				<h1 class="Footer_Text" id="pageElement_Footer_Copyright">
+					Content By ElmerF 2022
+				</h1>
+			</footer>
+		</div>
+		
+	</div>
+	<script src="Scripts/DL_Javascript.js"></script>
+	<script src="Scripts/DL_App_Javascript_PomodoroTimer.js"></script>
+</body>
+</html>										

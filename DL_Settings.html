@@ -1,0 +1,1413 @@
+<html>
+	<head>
+		<title id="pageElement_PageTitle">
+			Doodle Launcher Public
+		</title>
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet.css">
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Animations.css">
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Reference.css">
+		<link rel="icon" type="image/png" href="Assets/Icons/icon_settings.png" sizes="96x96">
+		<!-- Default intended fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;800&family=Roboto&display=swap" rel="stylesheet">
+	</head>
+	<body class="MainPage" onload="OnloadTasks()">
+		
+		<div class="LoadingScreen" id="LoadingScreen">
+			<div class="LoadingScreen_UpperSection" id="LoadingScreen_UpperSection">
+				<img class="LoadingScreen_Icon" src="Assets/Icons/icon_settings.png"></img>
+				<h2 class="LoadingScreen_VersionTitle" id="versionTitle">
+					Doodle Launcher
+				</h2>
+				<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+			</div>
+			<div class="LoadingScreen_CopyrightSection" id="LoadingScreen_CopyrightSection">
+				
+				<!-- <h4 class="LoadingScreen_Text" id="LoadingScreen_Text"> -->
+					<!-- Building page... -->
+				<!-- </h4> -->
+				<div style="display: flex; justify-content: center; align-items: center;">
+					<img class="LoadingScreen_Copyright_Logo" src="Assets/Icons/ContentByElmerF.png"></img>
+					<h4 class="LoadingScreen_Copyright" id="copyrightTitle">
+						Content By ElmerF
+					</h4>
+				</div>
+			</div>
+		</div>
+		<div class="SessionScreen" id="pageElement_SessionScreen" onclick="close_SessionScreen()">
+			<h1 class="SessionScreen_Time" id="Clock_Time_SessionScreen">
+				
+			</h1>
+			<h3 class="SessionScreen_Date" id="Clock_Date_SessionScreen">
+				
+			</h3>
+			<p class="SessionScreen_Instruction">
+				Click anywhere to start
+			</p>
+			<div class="SessionScreen_Copyright">
+				<p class="SessionScreen_Copyright_Text" id="pageElement_SessionScreen_Copyright">
+					Doodle Launcher Public Beta | Content By ElmerF 2022
+				</p>
+			</div>
+		</div>
+		<div class="ToggleableSearchBar" id="pageElement_Toggleable_SearchBar">
+			<div class="ToggleableSearchBar_SearchBar">
+				<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3"></input>
+				<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
+			</div>
+			<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
+		</div>
+		<!-- Toast notifications -->
+		<div class="ToastNotif" id="pageElement_ToastDrawer">
+		</div>
+		
+		<!-- Blurs the background -->
+		<div class="General_BlurBG">
+			a
+		</div>
+		
+		<div class="Subwindow_Blur" id="subwindow_ChangeWallpaper">
+			<div class="Subwindow">
+				<div class="Subwindow_TitleBar">
+					<h1 class="Subwindow_TitleBar_Title">
+						Change wallpaper
+					</h1>
+					<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="ChangeWallpaper" onclick="close_Subwindow(this.id)">
+					</img>
+				</div>
+				<div class="Subwindow_Content">
+					<p class="Subwindow_Content_Text">
+						Due to browser restriction and safety reasons, the launcher is not allowed to get the direct path of the image in your disk. Instead, you have to put the image you want as your wallpaper in <b> Assets -> Background </b>in the launcher's folder. <br>Below, specify the file name and file extension of the image. Click the "Detect" button to check if the launcher is able to detect the image through the image preview below. Once you're done, click "Done".<br>
+						Leave the input field blank if you don't want a wallpaper applied (The background color will be the general color).
+					</p>
+					<div style="display: flex; justify-content: center; padding: 10px;">
+						<img class="Settings_WallpaperImg_Preview" id="Settings_WallpaperPreview" onerror="Settings_FileNotFound()"></img>
+					</div>
+					<div>
+						<input class="Input_Text" placeholder="File name" id="form_Settings_WallpaperName" style="width: 97%"></input>
+						<p class="Input_Dropdown_SelectedItem" id="dropdownButton_ImageType" onclick="trigger_toggleDropdown(this.id)" onchange="Settings_DetectImageFile()">
+							Click to pick a file type
+						</p>
+						<div class="Input_Dropdown" id="menu_dropdownButton_ImageType">
+							<p class="Input_Dropdown_Item" id="dropdownItem_ImgTyp.jpg" onclick="trigger_dropdownItemSelected(this.id)">
+								.jpg
+							</p>
+							<p class="Input_Dropdown_Item" id="dropdownItem_ImgTyp.png" onclick="trigger_dropdownItemSelected(this.id)">
+								.png
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="Subwindow_Bottom Grid_2">
+					<h1 class="Subwindow_Bottom_Button" onclick="Settings_DetectImageFile()">
+						Detect
+					</h1>
+					<h1 class="Subwindow_Bottom_Button_Main" onclick="Settings_ApplyChanges()">
+						Apply
+					</h1>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="Subwindow_Blur" id="subwindow_SelectPresets">
+			<div class="Subwindow">
+				<div class="Subwindow_TitleBar">
+					<h1 class="Subwindow_TitleBar_Title">
+						Select Presets
+					</h1>
+					<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="SelectPresets" onclick="close_Subwindow(this.id)">
+					</img>
+				</div>
+				<div class="Subwindow_Content">
+					<p class="Subwindow_Content_Text">
+						Select a preset below. Clicking will automatically save the preset settings.
+					</p>
+					<div style="min-height: 500px; padding: 10px; width: 95%;">
+						<div class="Settings_Preset" onclick="Settings_LoadPresets('darkmode')">
+							<h1 class="Settings_Preset_Title">
+								Dark mode
+							</h1>
+							<!-- Accent Color -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #cf5520"></div><!-- Accent Color Hover -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #a03d13"></div><!-- BG Color General -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #171010"></div><!-- BG Color Hover -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #242424"></div><!-- BG Color Menus -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #171010"></div><!-- BG Color Subwindows -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #292929"></div><!-- BG Color Dropdowns -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #171010"></div><!-- BG Color Shortcut Buttons -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #1E1E24"></div>
+							<!-- BG Color General Buttons -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #1E1E24"></div>
+							<!-- BG Color Shortcut Input -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #121212"></div><!-- Dividers -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #282830"></div>
+						</div>
+						<div class="Settings_Preset" onclick="Settings_LoadPresets('lightmode')">
+							<h1 class="Settings_Preset_Title">
+								Light mode
+							</h1>
+							<!-- Accent Color -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #a2b4fb"></div><!-- Accent Color Hover -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #4664dd"></div><!-- BG Color General -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #ffffff"></div><!-- BG Color Hover -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #a6a6a6"></div><!-- BG Color Menus -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #cccccc"></div><!-- BG Color Subwindows -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #cccccc"></div><!-- BG Color Dropdowns -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #bfbfbf"></div><!-- BG Color Shortcut Buttons -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #e6e6e6"></div><!-- BG Color General Buttons -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #ffffff"></div><!-- BG Color Shortcut Input -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #c2c2c2"></div><!-- Dividers -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #878787"></div>
+						</div>
+						<div class="Settings_Preset" onclick="Settings_LoadPresets('gardenofwords')">
+							<h1 class="Settings_Preset_Title">
+								Garden of Words
+							</h1>
+							<!-- Accent Color -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #9f4f52"></div><!-- Accent Color Hover -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #9f4f52"></div><!-- BG Color General -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #171010"></div><!-- BG Color Hover -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #242424"></div><!-- BG Color Menus -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #171010"></div><!-- BG Color Subwindows -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #292929"></div><!-- BG Color Dropdowns -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #171010"></div><!-- BG Color Shortcut Buttons -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #1E1E24"></div><!-- BG Color General Buttons -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #1E1E24"></div><!-- BG Color Shortcut Input -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #121212"></div><!-- Dividers -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #282830"></div>
+						</div>
+						<div class="Settings_Preset" onclick="Settings_LoadPresets('underwater')">
+							<h1 class="Settings_Preset_Title">
+								Underwater
+							</h1>
+							<!-- Accent Color -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #bd7b87"></div><!-- Accent Color Hover -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #a05482"></div><!-- BG Color General -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #012754"></div><!-- BG Color Hover -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #03316d"></div><!-- BG Color Menus -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #012754"></div><!-- BG Color Subwindows -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #00305d"></div><!-- BG Color Dropdowns -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #004775"></div><!-- BG Color Shortcut Buttons -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #00628e"></div><!-- BG Color General Buttons -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #027cad"></div><!-- BG Color Shortcut Input -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #00305d"></div><!-- Dividers -->
+							<div class="Settings_Preset_ColorBox" style="background-color: #47c2d4"></div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="Subwindow_Bottom Grid">
+					<!--<h1 class="Subwindow_Bottom_Button_Main">
+						Select preset
+					</h1>-->
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="Subwindow_Blur" id="subwindow_CustomizeGreetingText">
+			<div class="Subwindow" style="width: 450px; margin: auto;">
+				<div class="Subwindow_TitleBar">
+					<h1 class="Subwindow_TitleBar_Title">
+						Customize greeting text
+					</h1>
+					<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="CustomizeGreetingText" onclick="close_Subwindow(this.id)">
+					</img>
+				</div>
+				<div class="Subwindow_Content">
+					<p class="Subwindow_Content_Text">
+						Type your name that will be displayed in the greeting text in the home page.
+					</p>
+					<input class="Input_Text" placeholder="Type your name here" id="form_Settings_GreetingName"style="width: 97%;margin: 5px;"></input>
+				</div>
+				<div class="Subwindow_Bottom Grid">
+					<h1 class="Subwindow_Bottom_Button_Main" id="CustomizeGreetingText" onclick="Settings_DisplayGreetingName_Check()">
+						Save changes
+					</h1>
+				</div>
+			</div>
+		</div>
+		
+		<div class="Subwindow_Blur" id="subwindow_UCG">
+			<div class="Subwindow" style="width: 650px; margin: auto;">
+				<div class="Subwindow_TitleBar">
+					<h1 class="Subwindow_TitleBar_Title">
+						Use Of Content Guidelines
+					</h1>
+					<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="UCG" onclick="close_Subwindow(this.id)">
+					</img>
+				</div>
+				<div class="Subwindow_Content">
+					<p class="General_Paragraph">
+						By clicking using Doodle Launcher, you agrre to the following:
+					</p>
+					<p class="General_Paragraph">
+						Please read the entirety of this page before continuing.
+					</p>
+					<p class="General_Paragraph">
+						By using Doodle Launcher, you will be able to do the following:<br>
+						<ul class="General_Paragraph">
+							<li>
+								Create shortcuts by copying the link and adding it in the shortcut editor. 
+							</li>
+							<li>
+								Use the launcher as a library to your frequently used websites.
+							</li>
+						</ul>
+					</p>
+					<p class="General_Paragraph">
+						By using Doodle Launcher, you will not be able to do the following:<br>
+						<ul class="General_Paragraph">
+							<li>
+								Modify the source code used by the launcher to inject monetized content. This includes .html, .js, and .css files.
+							</li>
+							<li>
+								Distribute/sharing the program/zip file to other sites other than the official download page.
+							</li>
+						</ul>
+					</p>
+					<p class="General_Paragraph">
+						By using Doodle Launcher, you agree and understand the following:<br>
+						<ul class="General_Paragraph">
+							<li>
+								Your personal information is your responsibility; and you must not include any sensitive information into any input fields in the launcher; and that potential data/information leaks due to your failure to follow this rule is none of Elmer F.'s fault.
+							</li>
+							<li>
+								Your device's digital security is your responsibility; all the links you enter in the launcher and open through the launcher is your responsibility; any security threats and malware contained within the websites you visit using the launcher is your responsibility.
+							</li>
+							<li>
+								The contents of the websites you visit through the launcher is your responsibility; any malicious content, misinformation, sensitive information, graphic imagery, and more that is contained within the websites you visit using the launcher is your responsibility.
+							</li>
+							<li>
+								Your device's specifications may affect the launcher's performance and load times.
+							</li>
+							<li>
+								The launcher does not collect ANY data or information for monetized reasons; all of the data you enter is contained within your browser's local storage.
+							</li>
+							<li>
+								By using the Public Beta Release, you are entitled to give valid and constructive criticism, comments, and suggestions for the project's improvement.
+							</li>
+							<li>
+								By using the Public Beta Release, you are aware that bugs may occur and that you are entitled to report the bug to Elmer F.
+							</li>
+						</ul>
+					</p>
+					
+				</div>
+				<div class="Subwindow_Bottom Grid">
+				</div>
+			</div>
+		</div>
+		
+		<div class="Subwindow_Blur" id="subwindow_DataStorage">
+			<div class="Subwindow" style="width: 450px; margin: auto;">
+				<div class="Subwindow_TitleBar">
+					<h1 class="Subwindow_TitleBar_Title">
+						How data is stored
+					</h1>
+					<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="DataStorage" onclick="close_Subwindow(this.id)">
+					</img>
+				</div>
+				<div class="Subwindow_Content">
+					<p class="Subwindow_Content_Text">
+						Doodle Launcher stores the following data:
+						<ul class="General_Paragraph">
+							<li>
+								Category title text and shortcut title text.
+							</li>
+							<li>
+								URLs associated with the shortcut created.
+							</li>
+							<li>
+								Settings values for both appearance and behaviors.
+							</li>
+							<li>
+								Launcher version data, build number, version title.
+							</li>
+							<li>
+								Session data (whether the launcher is opened for the first time since the browser is opened).
+							</li>
+						</ul>
+					</p>
+					<p class="Subwindow_Content_Text">
+						How these data is stored:
+						<ul class="General_Paragraph">
+							<li>
+								Doodle Launcher uses your browser's local storage feature. This feature allows a page to store values and texts in your storage.
+							</li>
+							<li>
+								Using different browsers doesn't transfer the data into that browser.
+							</li>
+							<li>
+								Any data stored in the browser local storage is bound within the restrictions of the browser. This prohibits the launcher from accessing any file in your computer.
+							</li>
+							<li>
+								This data can easily be accessed by other pages and websites. It is highly recommended to always check the URL preview before opening a shortcut. It is also recommended to never input sensitive information such as addresses or account passwords into the system.
+							</li>
+						</ul>
+					</p>
+					<p class="Subwindow_Content_Text">
+						Is my private information being collected?
+						<ul class="General_Paragraph">
+							<li>
+								The launcher does not collect any information besides the information you input.
+							</li>
+							<li>
+								The launcher only use the browser's local storage, and it does not send any information to anyone else.
+							</li>
+						</ul>
+					</p>
+				</div>
+				<div class="Subwindow_Bottom Grid">
+				</div>
+			</div>
+		</div>
+		
+		<div class="Subwindow_Blur" id="subwindow_Tutorial_ShortcutEditor">
+			<div class="Subwindow" style="width: 450px; margin: auto;">
+				<div class="Subwindow_TitleBar">
+					<h1 class="Subwindow_TitleBar_Title">
+						How to use Shortcut Editor
+					</h1>
+					<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="Tutorial_ShortcutEditor" onclick="close_Subwindow(this.id)">
+					</img>
+				</div>
+				<div class="Subwindow_Content">
+					<p class="Subwindow_Content_Text">
+						There are two tabs in Shortcut Editor:
+						<ul class="General_Paragraph">
+							<li>
+								Normal view previews how your shortcuts would look like in the Home page.
+							</li>
+							<li>
+								Table view lets you edit or delete items in your shortcut library.
+							</li>
+						</ul>
+					</p>
+					<p class="Subwindow_Content_Text">
+						There are two types of items you can create:
+						<ul class="General_Paragraph">
+							<li>
+								A category is a toggleable tab where you can group your shortcuts.
+							</li>
+							<li>
+								A shortcut is a button that opens a new tab with the URL you provide when clicked.
+							</li>
+						</ul>
+					</p>
+					<p class="Subwindow_Content_Text">
+						How to create categories:
+						<ul class="General_Paragraph">
+							<li>
+								On the top of the page there is a button named "Add Item". Click it and a window should appear. It doesn't matter what tab you are in.
+							</li>
+							<li>
+								Inside the window, click "Category".
+							</li>
+							<li>
+								Type the name of your category on the input field, then click "Create Item".
+							</li>
+							<li>
+								You should receive confirmation via a toast notification that the item has been successfully made (unless you have toast notifications disabled in the settings).
+							</li>
+						</ul>
+					</p>
+					<p class="Subwindow_Content_Text">
+						How to create shortcuts:
+						<ul class="General_Paragraph">
+							<li>
+								On the top of the page there is a button named "Add Item". Click it and a window should appear. It doesn't matter what tab you are in.
+							</li>
+							<li>
+								Inside the window, click "Shortcut".
+							</li>
+							<li>
+								There will be three input fields present. The shortcut title, URL, and category.
+							</li>
+							<li>
+								The shortcut title is the displayed text of the shortcut button.
+							</li>
+							<li>
+								The shortcut URL is the URL the shortcut button links to when clicked.
+							</li>
+							<li>
+								The shortcut category is the category where this new shortcut button is to be inserted. It is required to choose a category (you must create one if you haven't already).
+							</li>
+							<li>
+								The shortcut category can be clicked, and a dropdown menu will appear. Click the category name where you want your shortcut to be inserted. The dropdown will close and the selected category will appear on the button.
+							</li>
+							<li>
+								All three inputs are required. Once done, click "Create Item".
+							</li>
+							<li>
+								You should receive confirmation via a toast notification that the item has been successfully made (unless you have toast notifications disabled in the settings).
+							</li>
+						</ul>
+					</p>
+					<p class="Subwindow_Content_Text">
+						How to edit items using Table View:
+						<ul class="General_Paragraph">
+							<li>
+								On the side of the screen, click the table icon to switch to Table View.
+							</li>
+							<li>
+								It should now show a table version of your shotcut library. The tables display the shortcut name and its URL, along with the editing controls.
+							</li>
+							<li>
+								The eye icon lets you open the shortcut as if you are clicking the shortcut button in Normal View.
+							</li>
+							<li>
+								The pencil icon lets you edit the data of the item, while the trashcan icon deletes it.
+							</li>
+							<li>
+								Click the pencil icon beside the item you want to modify and it should open a window.
+							</li>
+							<li>
+								Modify the shortcut name or the URL or change the category name if that is what you selected.
+							</li>
+							<li>
+								Once done, click "Save Changes".
+							</li>
+							<li>
+								You should receive confirmation via a toast notification that the item has been successfully made (unless you have toast notifications disabled in the settings).
+							</li>
+							<li>
+								To delete items, simply click the trashcan icon beside the row you want to delete. If a confirmation box appears, click "Delete". You should receive confirmation via a toast notification that the item has been successfully made (unless you have toast notifications disabled in the settings).
+							</li>
+						</ul>
+					</p>
+					
+				</div>
+				<div class="Subwindow_Bottom Grid">
+				</div>
+			</div>
+		</div>
+		
+		<!--<div class="Subwindow_Blur" id="subwindow_SelectPresets">
+			<div class="Subwindow">
+			<div class="Subwindow_TitleBar">
+			<h1 class="Subwindow_TitleBar_Title">
+			Select Presets
+			</h1>
+			<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="SelectPresets" onclick="close_Subwindow(this.id)">
+			</img>
+			</div>
+			<div class="Subwindow_Content">
+			<p class="Subwindow_Content_Text">
+			Select a preset below.
+			</p>
+			</div>
+			<div class="Subwindow_Bottom Grid">
+			<h1 class="Subwindow_Bottom_Button_Main">
+			Select preset
+			</h1>
+			</div>
+			</div>
+			
+		</div>-->
+	</div>
+	<!-- All content goes inside the PageGrid -->
+	<div class="PageGrid">
+		<div class="Header" id="pageElement_Header">
+			<img class="Sidebar_Toggle" id="toggle_Sidebar" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar()"></img>
+			<div class="Header_PageNavi" id="button_PageNavi" onclick="toggle_Navigator(this.id)">
+				<h2 class="Header_PageNavi_Title" id="Header_PageNavi_Title">
+					Settings
+				</h2>
+			</div>
+			<div class="Header_Buttons" id="pageElement_Header_Buttons">
+				<h3 class="Header_Buttons_Item" onclick="Settings_ApplyChanges()">
+					Save settings
+				</h3>
+				<!-- <h3 class="Header_Buttons_Item" id="SelectPresets" onclick="open_Subwindow(this.id)">
+					Preset selector
+				</h3> -->
+				
+			</div>
+			<div class="Header_Clock" id="pageElement_Header_Clock">
+				<h1 class="Header_Clock_Time" id="Clock_Time">
+					id="Clock_Time"
+				</h1>
+				<h1 class="Header_Clock_Date" id="Clock_Date">
+					id="Clock_Date"
+				</h1>
+			</div>
+			<div class="Header_Battery" id="pageElement_Header_Battery">
+				<h1 class="Header_Battery" id="Battery_Level">
+					%
+				</h1>
+			</div>
+			<div class="Header_RightMenu">
+				<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_softwareUpdate.png"  id="button_Update" onclick="toggle_Textbox(this.id)"></img>
+				<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_wifi_online.png"  id="button_Wifi" onclick="toggle_Textbox(this.id)"></img>
+			</div>
+		</div>
+		<div class="Header_Menu" id="pageElement_Header_Menu">
+			<div class="Header_Menu_Top">
+				<div class="Header_Menu_Top_Clock">
+					<h1 class="Header_Menu_Top_Clock_Time" id="Clock_Time_2">
+						id="Clock_Time"
+					</h1>
+					<h1 class="Header_Menu_Top_Clock_Date" id="Clock_Date_2">
+						id="Clock_Date"
+					</h1>
+				</div>
+				<h1 class="Header_Menu_Top_Battery" id="Battery_Level_2">
+					%
+				</h1>
+			</div>
+			<div class="Header_PageNavi_Textbox_Title">
+				Launcher Navigation
+			</div>
+			<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageNaviList">
+				
+			</div>
+			<div class="Header_PageNavi_Textbox_Title">
+				Page Actions
+			</div>
+			<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageActions">
+				<p class="Header_PageNavi_Textbox_List_Item" onclick="Settings_ApplyChanges()">
+					Save settings
+				</p>
+			</div>
+		</div>
+		<div class="Header_PageNavi_Textbox" id="button_PageNavi_textbox">
+			<div class="Header_PageNavi_Textbox_Title">
+				Launcher Navigation
+			</div>
+			<div class="Header_PageNavi_Textbox_List" id="pageElement_PageNaviList">
+				
+			</div>
+		</div>
+		<div class="Header_Right_Textbox"  id="button_Wifi_textbox">
+			<div class="Header_Right_Textbox_Title" id="textboxElement_Wifi">
+				No Connection
+			</div>				
+			<p class="Header_Right_Textbox_Text" id="pageElement_Connection">
+				Since you're not connected to the internet, links will not open properly. Connect to a Wi-Fi network and refresh the page.
+			</p>
+			<a href="https://fast.com/" target="_blank" id="pageElement_Connection_Speedtest">
+				<p class="Header_Right_Textbox_Text">
+					<u>Speedtest</u>
+				</p>
+			</a>
+		</div>
+		<div class="Header_Right_Textbox" id="button_Update_textbox">
+			<div class="Header_Right_Textbox_Title">
+				Update is available
+			</div>				
+			<p class="Header_Right_Textbox_Text">
+				A launcher update is available for you to download.
+			</p>
+			<a href="DL_Settings.html#LauncherUpdate">
+				<p class="Header_Right_Textbox_Text">
+					<u>Check for updates</u>
+				</p>
+			</a>
+		</div>
+		<div class="Sidebar" id="pageElement_Sidebar">
+			<div class="Sidebar_Item" id="Settings_Tab_Appearance" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Appearance_Icon" src="Assets/Icons/icon_customize.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Appearance
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Settings_Tab_Behavior" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Behavior_Icon"src="Assets/Icons/icon_lms.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Behavior
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Settings_Tab_Information" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Information_Icon"src="Assets/Icons/icon_information.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Public Beta Information
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Settings_Tab_Update" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Update_Icon" src="Assets/Icons/icon_softwareUpdate.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Launcher Update
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Settings_Tab_Experiments" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Experiments_Icon" src="Assets/Icons/favicon_old.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Experimental Features
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Settings_Tab_Profiles" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Profiles_Icon" src="Assets/Icons/icon_user.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Library Profiles
+				</p>
+			</div>
+			<!--<div class="Sidebar_Item" id="Settings_Tab_Credits" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Credits_Icon"src="Assets/Icons/favicon_old.png"></img>
+				<p class="Sidebar_Icon_Text">
+				Credits
+				</p>
+			</div>-->
+		</div>
+		
+		
+		
+		<div class="MainContent" id="pageElement_MainContent">
+			<div class="CornerButtons" id="pageElement_CornerButtons">
+				
+				<a href="#pageElement_Bottom" id="pageElement_GoToBottom"> <img src="Assets/Icons/icon_downArrow.png" class="CornerButtons_Button GoToBottom"></img> </a>
+				<a href="#pageElement_Top" id="pageElement_BackToTop"> <img src="Assets/Icons/icon_upArrow.png" class="CornerButtons_Button GoToTop"></img> </a>
+			</div>
+			<span class="anchor" id="pageElement_Top"></span>
+			<h1 class="Greeting_Text" id="pageElement_Tab_Title">
+				Doodle Launcher Settings
+			</h1>
+			<p class="General_Paragraph" id="pageElement_Tab_Description">
+				This page lets you tweak different settings and change how the launcher looks and behaves. You can also find relevant information here. <br>
+				Select a tab on the sidebar to access settings on that tab.
+			</p>
+			<div class="Settings_Home_Container" id="Settings_Home_Container">
+				<div class="Settings_Home_Item" id="Settings_Tab_Appearance" onclick="trigger_ChangeTab(this.id)">
+					<img class="Settings_Home_Item_Icon" src="Assets/Icons/icon_customize.png"></img>
+					<h1 class="Settings_Home_Item_Text">
+						Appearance
+					</h1>
+				</div>
+				<div class="Settings_Home_Item" id="Settings_Tab_Behavior" onclick="trigger_ChangeTab(this.id)">
+					<img class="Settings_Home_Item_Icon" src="Assets/Icons/icon_lms.png"></img>
+					<h1 class="Settings_Home_Item_Text">
+						Behavior
+					</h1>
+				</div>
+				<div class="Settings_Home_Item" id="Settings_Tab_Information" onclick="trigger_ChangeTab(this.id)">
+					<img class="Settings_Home_Item_Icon" src="Assets/Icons/icon_changelog.png"></img>
+					<h1 class="Settings_Home_Item_Text">
+						Information
+					</h1>
+				</div>
+				<div class="Settings_Home_Item" id="Settings_Tab_Update" onclick="trigger_ChangeTab(this.id)">
+					<img class="Settings_Home_Item_Icon" src="Assets/Icons/icon_softwareUpdate.png"></img>
+					<h1 class="Settings_Home_Item_Text">
+						Launcher Update
+					</h1>
+				</div>
+				<div class="Settings_Home_Item" id="Settings_Tab_Experiments" onclick="trigger_ChangeTab(this.id)">
+					<img class="Settings_Home_Item_Icon" src="Assets/Icons/favicon_old.png"></img>
+					<h1 class="Settings_Home_Item_Text">
+						Experimental Features
+					</h1>
+				</div>
+				<div class="Settings_Home_Item" id="Settings_Tab_Profiles" onclick="trigger_ChangeTab(this.id)">
+					<img class="Settings_Home_Item_Icon" src="Assets/Icons/favicon_old.png"></img>
+					<h1 class="Settings_Home_Item_Text">
+						Library Profiles
+					</h1>
+				</div>
+				<!--<div class="Settings_Home_Item" id="Settings_Tab_Credits" onclick="trigger_ChangeTab(this.id)">
+					<img class="Settings_Home_Item_Icon" src="Assets/Icons/favicon_old.png"></img>
+					<h1 class="Settings_Home_Item_Text">
+					Credits
+					</h1>
+				</div>-->
+			</div>
+			
+			<div id="Settings_Tab_Appearance_Container" class="Tab_Container">
+				<h1 class="Greeting_Text" id="pageElement_Tab_Title">
+					Appearance
+				</h1>
+				<p class="General_Paragraph">
+					Customize how the launcher looks.
+				</p>
+				<!--<input type="checkbox" id="switch" /><label for="switch">Toggle</label>-->
+				<!--<label class="switch">
+					<input type="checkbox">
+					<span class="slider round"></span>
+				</label>-->
+				<div class="Category">
+					<span class="anchor" id="anchor_category_presets"></span>
+					<div class="Category_Label" id="category_presets" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Presets
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_presets"></img>		
+					</div>
+					<div id="content_category_presets" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							Click a button below to change all values to that preset. It will automatically save your settings. Presets only include the wallpaper and the colors.
+						</p>
+						<div class="Settings_Home_Container">
+							<!-- <div class="Settings_Home_Item" onclick="Settings_LoadPresets('darkmode')">
+								<img class="Settings_Home_Item_Icon" src="Assets/Icons/icon_Moon.png"></img>
+								<h1 class="Settings_Home_Item_Text">
+									Dark mode
+								</h1>
+							</div>
+							<div class="Settings_Home_Item" onclick="Settings_LoadPresets('lightmode')">
+								<img class="Settings_Home_Item_Icon" src="Assets/Icons/icon_Sun.png"></img>
+								<h1 class="Settings_Home_Item_Text">
+									Light mode
+								</h1>
+							</div> -->
+							<!--<div class="Settings_Home_Item" onclick="Settings_LoadPresets('lightmode')">
+								<img class="Settings_Home_Item_Icon" src="Assets/Icons/icon_Sun.png"></img>
+								<h1 class="Settings_Home_Item_Text">
+								Light mode
+								</h1>
+							</div>-->
+						</div>
+						<div class="Settings_PresetNew_Container">
+							<div class="Settings_PresetNew_Item" onclick="Settings_LoadPresets('darkmode')">
+								<img src="Assets/Background/default_New.png" class="Settings_PresetNew_Wallpaper"></img>
+								<p class="Settings_PresetNew_Item_Name">
+									Dark mode
+								</p>
+								<div class="Settings_PresetNew_ColorBoxes_Container">
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #cf5520"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #a03d13"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #171010"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #242424"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #171010"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #292929"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #171010"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #1E1E24"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #1E1E24"></div>
+								</div>
+							</div>
+							<div class="Settings_PresetNew_Item" onclick="Settings_LoadPresets('lightmode')">
+								<img src="Assets/Background/default_lightmode.jpg" class="Settings_PresetNew_Wallpaper"></img>
+								<p class="Settings_PresetNew_Item_Name">
+									Light mode
+								</p>
+								<div class="Settings_PresetNew_ColorBoxes_Container">
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #a2b4fb"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #4664dd"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #ffffff"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #a6a6a6"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #cccccc"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #cccccc"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #bfbfbf"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #e6e6e6"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #ffffff"></div>
+								</div>
+							</div>
+								<div class="Settings_PresetNew_Item" onclick="Settings_LoadPresets('gardenofwords')">
+								<img src="Assets/Background/gardenofwords.jpg" class="Settings_PresetNew_Wallpaper"></img>
+								<p class="Settings_PresetNew_Item_Name">
+									Garden of Words
+								</p>
+								<div class="Settings_PresetNew_ColorBoxes_Container">
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #9f4f52"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #9f4f52"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #171010"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #242424"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #171010"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #292929"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #171010"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #1E1E24"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #1E1E24"></div>
+								</div>
+							</div>
+								<div class="Settings_PresetNew_Item" onclick="Settings_LoadPresets('underwater')">
+								<img src="Assets/Background/underwater.jpg" class="Settings_PresetNew_Wallpaper"></img>
+								<p class="Settings_PresetNew_Item_Name">
+									Underwater
+								</p>
+								<div class="Settings_PresetNew_ColorBoxes_Container">
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #bd7b87"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #a05482"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #012754"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #03316d"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #012754"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #00305d"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #004775"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #00628e"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #027cad"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="Category">
+					<span class="anchor" id="anchor_category_wallpaper"></span>
+					<div class="Category_Label" id="category_wallpaper" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Wallpaper
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_wallpaper"></img>		
+					</div>
+					<div id="content_category_wallpaper" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							Tick the "Enable Wallpapers" checkbox to change your wallpapers. If wallpapers are disabled, the background will be a solid color from General Colors in the Colors section.
+						</p>
+						<div class="Settings_ValuesTable_Checkboxes">
+							<input type="checkbox" id="AP-WP-CB-EnableWallpapers"></input>
+							<label class="Input_Label" for="AP-WP-CB-EnableWallpapers"> Enable wallpapers </label>
+						</div>
+						<img class="Settings_WallpaperImg" src="Assets/Background/gardenofwords.jpg"></img>
+						<br>
+						<h1 class="General_Button" id="ChangeWallpaper" onclick="open_Subwindow(this.id)">
+							Change wallpaper
+						</h1>
+						<div class="Settings_ValuesTable_Checkboxes">
+							<input type="checkbox" id="AP-WP-CB-BlurHomeWallpaper"></input>
+							<label class="Input_Label" for="AP-WP-CB-BlurHomeWallpaper"> Blur wallpaper background on the Home Page</label>
+						</div>
+					</div>
+				</div>
+				<div class="Category">
+					<span class="anchor" id="anchor_category_Text"></span>
+					<div class="Category_Label" id="category_Text" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Text
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Text"></img>
+					</div>
+					<div id="content_category_Text" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							If you want the preferred font style used for the launcher, click the button below and the launcher will set the fonts to its default font.<br>
+							If you don't have these default fonts installed in your computer, it will pull it from Google Fonts. This requires an active internet connection.
+						</p>
+						<!--<h1 class="General_Button" id="ChangeWallpaper" onclick="Settings_LoadPresets('intendedfonts')">
+							Use intended fonts (experimental)
+						</h1>-->
+						<p class="General_Paragraph">
+							Alternatively, you can manually change the fonts into any font family you have installed in your computer.
+						</p>
+						
+						<div class="Settings_ValuesTable_Text">
+							<label for="AP-TX-Font-Primary" class="Input_Label"> Primary text font</label>
+							<input type="text" id="AP-TX-Font-Primary" class="Input_Text"></input>
+							<label for="AP-TX-Font-Secondary" class="Input_Label"> Secondary text font</label>
+							<input type="text" id="AP-TX-Font-Secondary" class="Input_Text"></input>
+							<label for="AP-TX-Font-Numbers" class="Input_Label"> Numbers text font</label>
+							<input type="text" id="AP-TX-Font-Numbers" class="Input_Text"></input>
+						</div>
+						<div class="Settings_ValuesTable_Color">
+							<input type="color" id="AP-TX-Font-Color" class="Input_Color"></input>
+							<label for="AP-TX-Font-Color" class="Input_Label"> Text color </label>
+						</div>
+					</div>
+				</div>
+				<div class="Category">
+					<span class="anchor" id="anchor_category_colors"></span>
+					<div class="Category_Label" id="category_colors" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Colors
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_colors"></img>
+					</div>
+					<div id="content_category_colors" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							You can customize the colors used by the launcher here. Alternatively, you can set them to the preset dark and light mode.
+						</p>
+						<p class="General_Paragraph">
+							Advanced settings
+						</p>
+						<div class="Settings_ValuesTable_Color">
+							
+							
+							<input type="color" id="AP-CL-AccentColor" class="Input_Color"></input>
+							<label for="AP-CL-AccentColor" class="Input_Label"> Accent color </label>
+							
+							<input type="color" id="AP-CL-AccentColor-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AccentColor-Hover" class="Input_Label"> Accent hover color </label>
+							
+							<input type="color" id="AP-CL-BGColor-General" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-General" class="Input_Label"> General background color </label>
+							
+							<input type="color" id="AP-CL-HoverColor" class="Input_Color"></input>
+							<label for="AP-CL-HoverColor" class="Input_Label"> Hover color </label>
+							
+							<input type="color" id="AP-CL-BGColor-Menu" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-Menu" class="Input_Label"> Menu background color </label>
+							
+							<input type="color" id="AP-CL-BGColor-Subwindow" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-Subwindow" class="Input_Label"> Subwindow background colors </label>
+							
+							<input type="color" id="AP-CL-BGColor-Dropdown" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-Dropdown" class="Input_Label"> Dropdown menu background color </label>
+							
+							<input type="color" id="AP-CL-BGColor-Opacitated" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-Opacitated" class="Input_Label"> Blur effect background color (it will have an opacity of 50%) </label>
+							
+							<input type="color" id="AP-CL-BGColor-ShortcutButton" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-ShortcutButton" class="Input_Label"> Shortcut button background color </label>
+							
+							<input type="color" id="AP-CL-BGColor-GeneralButton" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-GeneralButton" class="Input_Label"> General button background color </label>
+							
+							<input type="color" id="AP-CL-BGColor-Input" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-Input" class="Input_Label"> Input field background color </label>
+							
+							<input type="color" id="AP-CL-BGColor-Divider" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-Divider" class="Input_Label"> Divider color </label>
+							
+						</div>
+						<div class="Settings_ValuesTable_Ranges">
+							<label for="AP-CL-IconBrightness" class="Input_Label"> Icon Brightness (0 - Black, 100 - White) </label>
+							<input type="range" id="AP-CL-IconBrightness" class="Input_Range" min="0" max="100" onchange="Settings_RangeValueChanged(this.id)"></input>
+							<label for="AP-CL-IconBrightness" class="Input_Label" id="AP-CL-IconBrightness_ValueDisplay"> 20% </label>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div id="Settings_Tab_Behavior_Container" class="Tab_Container">
+				<h1 class="Greeting_Text" id="pageElement_Tab_Title">
+					Behavior
+				</h1>
+				<p class="General_Paragraph">
+					Control how the launcher behaves.
+				</p>
+				<!--<div class="Settings_ValuesTable_Checkboxes">
+					<input type="checkbox" id="BH-TG-BlurEffects"></input>
+					<label class="Input_Label" for="BH-TG-BlurEffects"> Enable blur effects </label>
+					
+					<input type="checkbox" id="BH-TG-DisplayTimeAndDate"></input>
+					<label class="Input_Label" for="BH-TG-DisplayTimeAndDate"> Display time and date </label>
+					
+					<input type="checkbox" id="BH-TG-DisplayBattery"></input>
+					<label class="Input_Label" for="BH-TG-DisplayBattery"> Display battery percentage </label>
+					
+					<input type="checkbox" id="BH-TG-DisplayInternetStatus"></input>
+					<label class="Input_Label" for="BH-TG-DisplayInternetStatus"> Display internet status</label>
+				-->
+					<input type="checkbox" id="BH-TG-NotifyForUpdates" style="display: none"></input>
+					<label class="Input_Label" for="BH-TG-NotifyForUpdates" style="display: none"> Notify if an update is available</label>
+					<!--
+					<input type="checkbox" id="BH-TG-DisplayCategoryNavigation"></input>
+					<label class="Input_Label" for="BH-TG-DisplayCategoryNavigation"> Display a navigation bar in the home page that lets you easily jump to a specific category</label>
+					
+					<input type="checkbox" id="BH-TG-DisplayToasts"></input>
+					<label class="Input_Label" for="BH-TG-DisplayToasts"> Display toast notifications</label>
+				</div>-->
+				
+				<div class="Category">
+					<span class="anchor" id="anchor_category_Display"></span>
+					<div class="Category_Label" id="category_Display" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Display
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Display"></img>		
+					</div>
+					<div id="content_category_Display" class="Category_Content_Container">
+						<div class="Settings_ValuesTable_Checkboxes">
+							<input type="checkbox" id="BH-TG-BlurEffects"></input>
+							<label class="Input_Label" for="BH-TG-BlurEffects"> Enable blur effects </label>
+							
+							<input type="checkbox" id="BH-TG-DisplayTimeAndDate"></input>
+							<label class="Input_Label" for="BH-TG-DisplayTimeAndDate"> Display time and date </label>
+							
+							<input type="checkbox" id="BH-TG-DisplayBattery"></input>
+							<label class="Input_Label" for="BH-TG-DisplayBattery"> Display battery percentage </label>
+							
+							<input type="checkbox" id="BH-TG-DisplayInternetStatus"></input>
+							<label class="Input_Label" for="BH-TG-DisplayInternetStatus"> Display internet status</label>
+							<input type="checkbox" id="BH-TG-DisplayCategoryNavigation"></input>
+							<label class="Input_Label" for="BH-TG-DisplayCategoryNavigation"> Display a navigation bar in the home page that lets you easily jump to a specific category</label>
+							
+							<input type="checkbox" id="BH-TG-DisplayToasts"></input>
+							<label class="Input_Label" for="BH-TG-DisplayToasts"> Display toast notifications</label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="Category">
+					<span class="anchor" id="anchor_category_ShortcutEditor"></span>
+					<div class="Category_Label" id="category_ShortcutEditor" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Shortcut Editor
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_ShortcutEditor"></img>		
+					</div>
+					<div id="content_category_ShortcutEditor" class="Category_Content_Container">
+						<div class="Settings_ValuesTable_Checkboxes">
+							<input type="checkbox" id="BH-TG-SE_CloseWindowAfterAction"></input>
+							<label class="Input_Label" for="BH-TG-SE_CloseWindowAfterAction"> Close input window after creating/editing an item</label>
+							<input type="checkbox" id="BH-TG-SE_ClearFieldsAfterCreation"></input>
+							<label class="Input_Label" for="BH-TG-SE_ClearFieldsAfterCreation"> Clear input fields after creating an item</label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="Category">
+					<span class="anchor" id="anchor_category_Greetings"></span>
+					<div class="Category_Label" id="category_Greetings" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Greetings
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Greetings"></img>		
+					</div>
+					<div id="content_category_Greetings" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							Choose whether to enable or disable the greeting text on the home page.
+						</p>
+						<div class="Settings_ValuesTable_Checkboxes">
+							<input type="checkbox" id="BH-TG-DisplayGreetings"></input>
+							<label class="Input_Label" for="BH-TG-DisplayGreetings"> Display greeting text on the home page. </label>
+							
+							<input type="checkbox" id="BH-TG-DisplayGreetings_DisplayName"></input>
+							<label class="Input_Label" for="BH-TG-DisplayGreetings_DisplayName"> Display your name on the greeting text (requires the Display Greetings setting enabled). </label>
+						</div>
+						<h1 class="General_Button" id="CustomizeGreetingText" onclick="open_Subwindow(this.id)">
+							Customize your name
+						</h1>
+					</div>
+				</div>
+				
+				<div class="Category">
+					<span class="anchor" id="anchor_category_SearchBar"></span>
+					<div class="Category_Label" id="category_SearchBar" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Search bar
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_SearchBar"></img>		
+					</div>
+					<div id="content_category_SearchBar" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							Control the behavior of the search bar in the header of the home page.
+						</p>
+						<div class="Settings_ValuesTable_Checkboxes">
+							<input type="checkbox" id="BH-TG-DisplaySearchBar"></input>
+							<label class="Input_Label" for="BH-TG-DisplaySearchBar"> Enable search bar on the home page </label>
+						</div>
+						<div>
+							<p class="Input_Dropdown_SelectedItem" id="dropdownButton_SeaEng" onclick="trigger_toggleDropdown(this.id)">
+								Choose a search engine
+							</p>
+							<div class="Input_Dropdown" id="menu_dropdownButton_SeaEng">
+								<p class="Input_Dropdown_Item" id="dropdownItem_SeaEngEcosia" onclick="trigger_dropdownItemSelected(this.id)">
+									Ecosia
+								</p>
+								<p class="Input_Dropdown_Item" id="dropdownItem_SeaEngGoogle" onclick="trigger_dropdownItemSelected(this.id)">
+									Google
+								</p>
+								<p class="Input_Dropdown_Item" id="dropdownItem_SeaEngBing" onclick="trigger_dropdownItemSelected(this.id)">
+									Bing
+								</p>
+								<p class="Input_Dropdown_Item" id="dropdownItem_SeaEngDuckDuckGo" onclick="trigger_dropdownItemSelected(this.id)">
+									DuckDuckGo
+								</p>
+								<p class="Input_Dropdown_Item" id="dropdownItem_SeaEngYahoo!" onclick="trigger_dropdownItemSelected(this.id)">
+									Yahoo!
+								</p>
+							</div>
+						</div>
+					</div>
+					
+					
+					
+				</div>
+			</div>
+			
+			<div id="Settings_Tab_Information_Container" class="Tab_Container">
+				<h1 class="Greeting_Text" id="pageElement_Tab_Title">
+					Information
+				</h1>
+				<p class="General_Paragraph">
+					Learn more about the Doodle Launcher Public Beta.
+				</p>
+				<div class="Category">
+					<span class="anchor" id="anchor_category_WhatIsDoodleLauncher"></span>
+					<div class="Category_Label" id="category_WhatIsDoodleLauncher" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							What is Doodle Launcher
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_WhatIsDoodleLauncher"></img>
+					</div>
+					<div id="content_category_WhatIsDoodleLauncher" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							Doodle Launcher is an HTML based app that enables you to create an organized library of your frequently used links. You can create shortcuts that links to any URL you want. You can organize these shortcuts into toggleable folders.<br><br>
+							Doodle Launcher is currently in Beta, but it has been in development since October 2021, although it was less of a dynamic system back then.
+						</p>
+					</div>
+				</div>
+				
+				<div class="Category">
+					<span class="anchor" id="anchor_category_KeyboardShortcuts"></span>
+					<div class="Category_Label" id="category_KeyboardShortcuts" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Keyboard shortcuts
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_KeyboardShortcuts"></img>
+					</div>
+					<div id="content_category_KeyboardShortcuts" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							List of all keyboard shortcuts available.<br>
+							Some keyboard shortcuts are page specific, and will not work unless you are in that page.<br>
+							Some keyboard shortcuts may not trigger on the first stroke. Do the keyboard shortcut again to trigger it properly. This will be fixed in a future update.
+							
+						</p>
+						<div class="Settings_KeyboardShortcuts_Table">
+							<h1 class="Settings_KeyboardShortcuts_Table_Cells_Shortcut">
+								Ctrl + Q
+							</h1>
+							<p class="Settings_KeyboardShortcuts_Table_Cells_Meaning">
+								Toggles all categories
+							</p>						
+							<h1 class="Settings_KeyboardShortcuts_Table_Cells_Shortcut">
+								Ctrl + Space
+							</h1>
+							<p class="Settings_KeyboardShortcuts_Table_Cells_Meaning">
+								Opens the "Add Item" window on the Shorcut Editor
+							</p>						
+							<h1 class="Settings_KeyboardShortcuts_Table_Cells_Shortcut">
+								Ctrl + B
+							</h1>
+							<p class="Settings_KeyboardShortcuts_Table_Cells_Meaning">
+								Opens the session screen that appears everytime you start up the launcher
+							</p>
+							<h1 class="Settings_KeyboardShortcuts_Table_Cells_Shortcut">
+								Ctrl + Shift
+							</h1>
+							<p class="Settings_KeyboardShortcuts_Table_Cells_Meaning">
+								Opens the Quick Search Bar
+							</p>							
+							<h1 class="Settings_KeyboardShortcuts_Table_Cells_Shortcut">
+								Ctrl + Right Arrow
+							</h1>
+							<p class="Settings_KeyboardShortcuts_Table_Cells_Meaning">
+								Opens the "Category Navigation" sidebar on the Home Page
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="Category">
+					<span class="anchor" id="anchor_category_Version"></span>
+					<div class="Category_Label" id="category_Version" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Version
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Version"></img>
+					</div>
+					<div id="content_category_Version" class="Category_Content_Container">
+						<div class="Settings_Version">
+							<div class="Settings_Version_Row1">
+								<h3 class="Settings_Version_Row1_VersionTitle" id="pageElement_Version_Title">
+									You are using<br>
+									Doodle Launcher Public Preview 1
+								</h3>
+								<p class="General_Paragraph" id="pageElement_Version_BuildNumber">
+									Build: 2690
+								</p>
+								<p class="General_Paragraph" id="pageElement_Version_ContinuityVersion">
+									Continuity version: 1.12.1
+								</p>
+								<p class="General_Paragraph" id="pageElement_Version_UI">
+									ELMSUI version: 1.4
+								</p>
+								<p class="General_Paragraph" id="pageElement_Version_CompilationDate">
+									Release date: June 15, 2022
+								</p>
+								<a href="DL_Settings_Changelogs.html">
+									<h1 class="General_Button">
+										View changelog
+									</h1>
+								</a>
+								<a href="https://forms.gle/UXicAqPqcKw6wXfW8" target="_blank">
+									<h1 class="General_Button">
+										Provide feedback
+									</h1>
+								</a>
+								<a href="https://forms.gle/ZRn7gbon2EUL2hsP9" target="_blank">
+									<h1 class="General_Button">
+										Report a bug
+									</h1>
+								</a>
+								<h1 class="General_Button" id="Tutorial_ShortcutEditor" onclick="open_Subwindow(this.id)">
+									How to use Shortcut Editor
+								</h1>
+							</div>
+							<div class="Settings_Version_Row2">
+								<p class="General_Paragraph" id="pageElement_Version_Copyright">
+									Copyright Content By ElmerF 2022
+								</p>
+								<p class="General_Paragraph">
+									By using Doodle Launcher you agree with Elmer's Use Of Content Guidelines.
+								</p>
+								<h1 class="General_Button" id="UCG" onclick="open_Subwindow(this.id)">
+									Use Of Content Guidelines
+								</h1>
+								<h1 class="General_Button" id="DataStorage" onclick="open_Subwindow(this.id)">
+									What data is stored
+								</h1>
+								
+								<p class="General_Paragraph">
+									Special thanks to <b> JP, Rovic, and Eugene </b> for testing this version. <3
+									</p>
+									</div>
+									<img src="Assets/Icons/favicon.png" class="Settings_Version_Logo1"></img>
+									<img src="Assets/Icons/ContentByElmerF.png" class="Settings_Version_Logo2"></img>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					
+					
+					
+					<div id="Settings_Tab_Update_Container" class="Tab_Container">
+						<h1 class="Greeting_Text" id="pageElement_Tab_Title">
+							Launcher Update
+						</h1>
+						<p class="General_Paragraph">
+							Check for updates and download them directly into the launcher.
+						</p>
+						<a href="https://drive.google.com/uc?export=view&id=1IwuJBAVMqyyUAf1nZUtqieEQbch7Z2D3" target="_blank">
+							<img src="https://drive.google.com/uc?export=view&id=1IwuJBAVMqyyUAf1nZUtqieEQbch7Z2D3" class="Settings_UpdateImage" loading="lazy"> </img>
+						</a>
+						<a href="https://docs.google.com/uc?export=download&id=1PLm9bg8torN7WCLTnw-yHuEpRV1f63bW">
+							<h1 class="General_Button">
+								Download the latest update
+							</h1>
+						</a>
+						<p class="General_Paragraph">
+							You can download a different version by opening the version list below. It is not guaranteed that backtracking to previous versions would work properly.
+						</p>
+						<a href="https://cbelmerf.wixsite.com/content/download-dl" target="_blank">
+							<h1 class="General_Button">
+								Version download list
+							</h1>
+						</a>
+					</div>
+					
+					<div id="Settings_Tab_Experiments_Container" class="Tab_Container">
+						<h1 class="Greeting_Text" id="pageElement_Tab_Title">
+							Experimental Features
+						</h1>
+						<p class="General_Paragraph">
+							Test features that aren't quite ready yet easily.
+						</p>
+						
+						<div class="Category">
+							<span class="anchor" id="anchor_category_Exp_SLP"></span>
+							<div class="Category_Label" id="category_Exp_SLP" onclick="toggle_Category(this.id)">
+								<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+								<h1 class="Category_Label_Text">
+									Shortcut Library Profiles (0.1)
+								</h1>
+								<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Exp_SLP"></img>		
+							</div>
+							<div id="content_category_Exp_SLP" class="Category_Content_Container">
+								<p class="General_Paragraph">
+									This feature lets you create different shortcut libraries and seperate them from each other. Like a login account system, you can secure your shortcut library by using a password to lock your shortcut library. 
+								</p>
+								<div class="Settings_ValuesTable_Checkboxes">
+									<input type="checkbox" id="BH-TG-DisplaySearchBar"></input>
+									<label class="Input_Label" for="BH-TG-DisplaySearchBar"> Enable the Library Profiles feature </label>
+								</div>
+								<p class="General_Paragraph">
+									Enabling this feature adds the following:
+								</p>
+								<ul class="General_Paragraph">
+									<li>
+										The profile login UI that displays every beginning of the session.
+									</li>
+									<li>
+										A Profile tab on Settings that contains all the tools and settings needed for the feature.
+									</li>
+									<li>
+										Changes the shortcut system to take profiles into account.
+									</li>
+									<li>
+										Changes how your shortcuts and categories are saved to take profiles into account.
+									</li>
+								</ul>
+								<p class="General_Paragraph">
+									This feature is unfinished. Here's some notable problems:
+								</p>
+								<ul class="General_Paragraph">
+									<li>
+										Enabling this feature will make it impossible to retrieve your old shortcuts when you disable it again.
+									</li>
+									<li>
+										Any shortcuts made before and while the feature is enabled will be impossible to recover or used even if you disable it.
+									</li>
+								</ul>
+							</div>
+							
+							
+							
+							
+						</div>
+					</div>
+					
+					<div id="Settings_Tab_Profiles_Container" class="Tab_Container">
+						<h1 class="Greeting_Text" id="pageElement_Tab_Title">
+							Library Profiles
+						</h1>
+						<p class="General_Paragraph">
+							Organize and separate your shortcuts from each other by creating different shortcut library profiles.
+						</p>
+						
+						<div class="Category">
+							<span class="anchor" id="anchor_category_CurrProfileInfo"></span>
+							<div class="Category_Label" id="category_CurrProfileInfo" onclick="toggle_Category(this.id)">
+								<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+								<h1 class="Category_Label_Text">
+									Profile Info
+								</h1>
+								<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_CurrProfileInfo"></img>		
+							</div>
+							<div id="content_category_CurrProfileInfo" class="Category_Content_Container">
+								<p class="General_Paragraph">
+									Profile information appears here
+								</p>
+							</div>
+						</div>
+						
+						<div class="Category">
+							<span class="anchor" id="anchor_category_ProfileList"></span>
+							<div class="Category_Label" id="category_ProfileList" onclick="toggle_Category(this.id)">
+								<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+								<h1 class="Category_Label_Text">
+									Profile List
+								</h1>
+								<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_ProfileList"></img>		
+							</div>
+							<div id="content_category_ProfileList" class="Category_Content_Container">
+								<p class="General_Paragraph">
+									List all profiles here
+								</p>
+							</div>
+						</div>
+					</div>
+					
+					<div id="Settings_Tab_Credits_Container" class="Tab_Container">
+						<h1 class="Greeting_Text" id="pageElement_Tab_Title">
+							Credits
+						</h1>
+						<p class="General_Paragraph">
+							Credits for the assets used and testers that tested the public beta.
+						</p>
+						</div>
+					
+					<footer class="Footer" id="pageElement_Bottom">
+						<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
+							Doodle Launcher Public Beta
+						</h1>
+						<h1 class="Footer_Text" id="pageElement_Footer_Copyright">
+							Content By ElmerF 2022
+						</h1>
+					</footer>
+				</div>
+				
+			</div>
+			<script src="Scripts/DL_Javascript.js"></script>
+		</body>
+	</html>											

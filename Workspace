@@ -1,0 +1,17 @@
+<NotepadPlus>
+    <Project name="Doodle Launcher">
+        <Folder name="Scripts">
+            <File name="Scripts\DL_Javascript.js" />
+            <File name="Scripts\DL_Stylesheet.css" />
+            <File name="Scripts\DL_Stylesheet_Animations.css" />
+            <File name="Scripts\DL_Stylesheet_Reference.css" />
+        </Folder>
+        <Folder name="HTML">
+            <File name="DL_Clock.html" />
+            <File name="DL_Main.html" />
+            <File name="DL_Settings.html" />
+            <File name="DL_ShortcutEditor.html" />
+            <File name="DL_Welcome.html" />
+        </Folder>
+    </Project>
+</NotepadPlus>

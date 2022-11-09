@@ -1,0 +1,281 @@
+<html>
+	<head>
+		<title id="pageElement_PageTitle">
+			Doodle Launcher Public
+		</title>
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet.css">
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Animations.css">
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Reference.css">
+		<link rel="icon" type="image/png" href="Assets/Icons/favicon.png" sizes="96x96">
+	</head>
+	<body class="MainPage" onload="OnloadTasks()">
+		
+		<div class="LoadingScreen" id="LoadingScreen">
+			<img class="LoadingScreen_Icon" src="Assets/Icons/favicon.png"></img>
+			<h2 class="LoadingScreen_VersionTitle" id="versionTitle">
+				Doodle Launcher
+			</h2>
+			<h4 class="LoadingScreen_Text" id="LoadingScreen_Text">
+				Building page...
+			</h4>
+			<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+			<h4 class="LoadingScreen_Copyright" id="copyrightTitle">
+				Content By ElmerF
+			</h4>
+		</div>
+		<div class="SessionScreen" id="pageElement_SessionScreen" onclick="close_SessionScreen()">
+			<h1 class="SessionScreen_Time" id="Clock_Time_SessionScreen">
+				
+			</h1>
+			<h3 class="SessionScreen_Date" id="Clock_Date_SessionScreen">
+				
+			</h3>
+			<p class="SessionScreen_Instruction">
+				Click anywhere to start
+			</p>
+			<div class="SessionScreen_Copyright">
+				<p class="SessionScreen_Copyright_Text" id="pageElement_SessionScreen_Copyright">
+					Doodle Launcher Public Beta | Content By ElmerF 2022
+				</p>
+			</div>
+		</div>
+		<!-- Toast notifications -->
+		<div class="ToastNotif" id="pageElement_ToastDrawer">
+		</div>
+		
+		
+		<div class="Subwindow_Blur" id="subwindow_ChangeWallpaper">
+			<div class="Subwindow">
+				<div class="Subwindow_TitleBar">
+					<h1 class="Subwindow_TitleBar_Title">
+						Change wallpaper
+					</h1>
+					<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="ChangeWallpaper" onclick="close_Subwindow(this.id)">
+					</img>
+				</div>
+				<div class="Subwindow_Content">
+					<p class="Subwindow_Content_Text">
+						Due to browser restriction and safety reasons, the launcher is not allowed to get the direct path of the image in your disk. Instead, you have to put the image you want as your wallpaper in <b> Assets -> Background </b>in the launcher's folder. <br>Below, specify the file name and file extension of the image. Click the "Detect" button to check if the launcher is able to detect the image through the image preview below. Once you're done, click "Done".<br>
+						Leave the input field blank if you don't want a wallpaper applied (The background color will be the general color).
+					</p>
+					<div class="Subwindow_Division_2">
+						<img class="Settings_WallpaperImg_Preview" id="Settings_WallpaperPreview" onerror="Settings_FileNotFound()"></img>
+						<div>
+							<input class="Input_Text" placeholder="File name" id="form_Settings_WallpaperName"></input>
+							<p class="Input_Dropdown_SelectedItem" id="dropdownButton_ImageType" onclick="trigger_toggleDropdown(this.id)" onchange="Settings_DetectImageFile()">
+								Click to pick a file type
+							</p>
+							<div class="Input_Dropdown" id="menu_dropdownButton_ImageType">
+								<p class="Input_Dropdown_Item" id="dropdownItem_ImgTyp.jpg" onclick="trigger_dropdownItemSelected(this.id)">
+									.jpg
+								</p>
+								<p class="Input_Dropdown_Item" id="dropdownItem_ImgTyp.png" onclick="trigger_dropdownItemSelected(this.id)">
+									.png
+								</p>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="Subwindow_Bottom Grid_2">
+					<h1 class="Subwindow_Bottom_Button" onclick="Settings_DetectImageFile()">
+						Detect
+					</h1>
+					<h1 class="Subwindow_Bottom_Button_Main" onclick="Settings_ApplyChanges()">
+						Apply
+					</h1>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<!-- All content goes inside the PageGrid -->
+	<div class="PageGrid">
+		<div class="Header" id="pageElement_Header">
+			<img class="Sidebar_Toggle" id="toggle_Sidebar" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar()"></img>
+			<div class="Header_PageNavi" id="button_PageNavi" onclick="toggle_Navigator(this.id)">
+				<h2 class="Header_PageNavi_Title" id="Header_PageNavi_Title">
+					Clock
+				</h2>
+			</div>
+			<div class="Header_Buttons" id="pageElement_Header_Buttons">
+				<h3 class="Header_Buttons_Item" onclick="Settings_ApplyChanges()">
+					Save settings
+				</h3>
+				
+			</div>
+			<div class="Header_Clock" id="pageElement_Header_Clock">
+				<h1 class="Header_Clock_Time" id="Clock_Time">
+					id="Clock_Time"
+				</h1>
+				<h1 class="Header_Clock_Date" id="Clock_Date">
+					id="Clock_Date"
+				</h1>
+			</div>
+			<div class="Header_Battery" id="pageElement_Header_Battery">
+				<h1 class="Header_Battery" id="Battery_Level">
+					%
+				</h1>
+			</div>
+			<div class="Header_RightMenu">
+				<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_softwareUpdate.png"  id="button_Update" onclick="toggle_Textbox(this.id)"></img>
+				<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_wifi_online.png"  id="button_Wifi" onclick="toggle_Textbox(this.id)"></img>
+			</div>
+		</div>
+		<div class="Header_Menu" id="pageElement_Header_Menu">
+			<div class="Header_Menu_Top">
+				<div class="Header_Menu_Top_Clock">
+					<h1 class="Header_Menu_Top_Clock_Time" id="Clock_Time_2">
+						id="Clock_Time"
+					</h1>
+					<h1 class="Header_Menu_Top_Clock_Date" id="Clock_Date_2">
+						id="Clock_Date"
+					</h1>
+				</div>
+				<h1 class="Header_Menu_Top_Battery" id="Battery_Level_2">
+					%
+				</h1>
+			</div>
+			<div class="Header_PageNavi_Textbox_Title">
+				Launcher Navigation
+			</div>
+			<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageNaviList">
+				
+			</div>
+			<div class="Header_PageNavi_Textbox_Title">
+				Page Actions
+			</div>
+			<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageActions">
+				<p class="Header_PageNavi_Textbox_List_Item" onclick="Settings_ApplyChanges()">
+					Save settings
+				</p>
+			</div>
+		</div>
+		<div class="Header_PageNavi_Textbox" id="button_PageNavi_textbox">
+			<div class="Header_PageNavi_Textbox_Title">
+				Launcher Navigation
+			</div>
+			<div class="Header_PageNavi_Textbox_List" id="pageElement_PageNaviList">
+				
+			</div>
+		</div>
+		<div class="Header_Right_Textbox"  id="button_Wifi_textbox">
+			<div class="Header_Right_Textbox_Title" id="textboxElement_Wifi">
+				No Connection
+			</div>				
+			<p class="Header_Right_Textbox_Text" id="pageElement_Connection">
+				Since you're not connected to the internet, links will not open properly. Connect to a Wi-Fi network and refresh the page.
+			</p>
+			<a href="https://fast.com/" target="_blank">
+				<p class="Header_Right_Textbox_Text">
+					<u>Speedtest</u>
+				</p>
+			</a>
+		</div>
+		<div class="Header_Right_Textbox" id="button_Update_textbox">
+			<div class="Header_Right_Textbox_Title">
+				Update is available
+			</div>				
+			<p class="Header_Right_Textbox_Text">
+				A launcher update is available for you to download.
+			</p>
+			<a href="DL_Settings.html#LauncherUpdate">
+				<p class="Header_Right_Textbox_Text">
+					<u>Check for updates</u>
+				</p>
+			</a>
+		</div>
+		<div class="Sidebar" id="pageElement_Sidebar">
+			<div class="Sidebar_Item" id="Settings_Tab_Appearance" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Appearance_Icon" src="Assets/Icons/icon_customize.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Appearance
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Settings_Tab_Behavior" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Behavior_Icon"src="Assets/Icons/icon_lms.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Behavior
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Settings_Tab_Information" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Information_Icon"src="Assets/Icons/icon_changelog.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Public Beta Information
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Settings_Tab_Update" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Update_Icon" src="Assets/Icons/icon_softwareUpdate.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Launcher Update
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Settings_Tab_Credits" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Credits_Icon"src="Assets/Icons/favicon_old.png"></img>
+				<p class="Sidebar_Icon_Text">
+					Credits
+				</p>
+			</div>
+		</div>
+		
+		
+		
+		<div class="MainContent" id="pageElement_MainContent">
+			<a href="#pageElement_Top" id="pageElement_BackToTop"> <img src="Assets/Icons/icon_upArrow.png" class="BackToTop"></img> </a>
+			<span class="anchor" id="pageElement_Top"></span>
+			<h1 class="Greeting_Text" id="pageElement_Tab_Title">
+				Doodle Launcher Settings
+			</h1>
+			<p class="General_Paragraph" id="pageElement_Tab_Description">
+				This page lets you tweak different settings and change how the launcher looks and behaves. You can also find relevant information here. <br>
+				Select a tab on the sidebar to access settings on that tab.
+			</p>
+			<div class="Settings_Home_Container" id="Settings_Home_Container">
+				<div class="Settings_Home_Item" id="Settings_Tab_Appearance" onclick="trigger_ChangeTab(this.id)">
+					<img class="Settings_Home_Item_Icon" src="Assets/Icons/icon_customize.png"></img>
+					<h1 class="Settings_Home_Item_Text">
+						Appearance
+					</h1>
+				</div>
+				<div class="Settings_Home_Item" id="Settings_Tab_Behavior" onclick="trigger_ChangeTab(this.id)">
+					<img class="Settings_Home_Item_Icon" src="Assets/Icons/icon_lms.png"></img>
+					<h1 class="Settings_Home_Item_Text">
+						Behavior
+					</h1>
+				</div>
+				<div class="Settings_Home_Item" id="Settings_Tab_Information" onclick="trigger_ChangeTab(this.id)">
+					<img class="Settings_Home_Item_Icon" src="Assets/Icons/icon_changelog.png"></img>
+					<h1 class="Settings_Home_Item_Text">
+						Information
+					</h1>
+				</div>
+				<div class="Settings_Home_Item" id="Settings_Tab_Update" onclick="trigger_ChangeTab(this.id)">
+					<img class="Settings_Home_Item_Icon" src="Assets/Icons/icon_softwareUpdate.png"></img>
+					<h1 class="Settings_Home_Item_Text">
+						Launcher Update
+					</h1>
+				</div>
+				<div class="Settings_Home_Item" id="Settings_Tab_Credits" onclick="trigger_ChangeTab(this.id)">
+					<img class="Settings_Home_Item_Icon" src="Assets/Icons/favicon_old.png"></img>
+					<h1 class="Settings_Home_Item_Text">
+						Credits
+					</h1>
+				</div>
+			</div>
+			
+			
+			
+			<footer class="Footer">
+				<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
+					Doodle Launcher Public Beta
+					</h1>
+					<h1 class="Footer_Text">
+					Content By ElmerF 2022
+				</h1>
+			</footer>
+		</div>
+		
+	</div>
+	<script src="Scripts/DL_Javascript.js"></script>
+</body>
+</html>
