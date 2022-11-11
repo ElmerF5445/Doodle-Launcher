@@ -640,7 +640,10 @@ function check_WindowSize(){
 	var Header_Battery = document.getElementById("pageElement_Header_Battery");
 	var Sidebar = document.getElementById("SidebarContainer");
 	
-	if (windowWidth < 750){//Small size
+	let details = navigator.userAgent;
+	let regexp = /android|iphone|kindle|ipad/i;
+	let isMobileDevice = regexp.test(details);
+	if (isMobileDevice){
 		windowSizePreset = "small";
 		MainContent.style.width = "auto";
 		MainContent.style.margin = "0";
@@ -654,22 +657,38 @@ function check_WindowSize(){
 		}
 		Header_Clock.style.visibility = "hidden";
 		Header_Battery.style.visibility = "hidden";
-		
-		} else {//Normal size
-		windowSizePreset = "normal";
-		MainContent.style.width = "75%";
-		MainContent.style.margin = "auto";
-		Header_Buttons.style.display = "flex";
-		//Hides the full screen navigator
-		NavigatorElementFull = document.getElementById("pageElement_Header_Menu");
-		if (NavigatorElementFull.style.display != "none"){
-			NavigatorElementFull.style.display = "none";
-			
+	} else {
+		if (windowWidth < 750){ //Small size
+			windowSizePreset = "small";
+			MainContent.style.width = "auto";
+			MainContent.style.margin = "0";
+			Header_Buttons.style.display = "none";
+			//Hides the small navigator
 			var NavigatorElement = document.getElementById("button_PageNavi_textbox");
-			NavigatorElement.style.display = "block";
+			if (NavigatorElement.style.display != "none"){
+				NavigatorElement.style.display = "none";			
+				NavigatorElementFull = document.getElementById("pageElement_Header_Menu");
+				NavigatorElementFull.style.display = "block";
+			}
+			Header_Clock.style.visibility = "hidden";
+			Header_Battery.style.visibility = "hidden";
+			
+		} else {//Normal size
+			windowSizePreset = "normal";
+			MainContent.style.width = "75%";
+			MainContent.style.margin = "auto";
+			Header_Buttons.style.display = "flex";
+			//Hides the full screen navigator
+			NavigatorElementFull = document.getElementById("pageElement_Header_Menu");
+			if (NavigatorElementFull.style.display != "none"){
+				NavigatorElementFull.style.display = "none";
+				
+				var NavigatorElement = document.getElementById("button_PageNavi_textbox");
+				NavigatorElement.style.display = "block";
+			}
+			Header_Clock.style.visibility = "visible";
+			Header_Battery.style.visibility = "visible";
 		}
-		Header_Clock.style.visibility = "visible";
-		Header_Battery.style.visibility = "visible";
 	}
 	console.log(windowSizePreset);
 }
