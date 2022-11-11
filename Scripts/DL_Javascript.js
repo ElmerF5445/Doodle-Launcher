@@ -419,7 +419,7 @@ function check_Connection(){
 
 function generate_Launcher_NavigationList(){
 	let navigationListItems = ["Home", "Shortcut Editor", "Settings", "Pomodoro Timer"]; //Launcher navigation text
-	let navigationListItems_Link = ["DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html"]; //Launcher navigation links
+	let navigationListItems_Link = ["index.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html"]; //Launcher navigation links
 	
 	for (var i = 0; i < navigationListItems.length; i++) {
 		var navigationListItems_Select = navigationListItems[i]; //Contains the selected pagenavi text
