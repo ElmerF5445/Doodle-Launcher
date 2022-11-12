@@ -3,9 +3,9 @@
 	This file contains all the JavaScript functionality for Doodle Launcher
 */
 
-var VersionTitle = "Doodle Launcher Public Preview 3";
-var VersionNumber = "Preview 3";
-var ContinuityVersionNumber = "1.14"
+var VersionTitle = "Doodle Launcher Online Test 1";
+var VersionNumber = "Preview 3 Online Test 1";
+var ContinuityVersionNumber = "1.14.1"
 var BuildNumber = 3781;
 var CopyrightTitle = "Content By ElmerF 2022";
 var ELMSUIVersion = "1.4.2";
