@@ -64,7 +64,7 @@ function OnloadTasks(){
 	console.log("Welcome to "+VersionTitle+" "+VersionNumber+" ("+ContinuityVersionNumber+"). Copyright "+CopyrightTitle);
 	
 	switch (PageName){
-		case "DL_Main.html":
+		case "index.html":
 			pageProperty_enableGreetings = 1;
 			var pageProperty_showSidebarToggle = 0;
 			var pageProperty_enableSidebar = 0;
