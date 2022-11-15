@@ -1,0 +1,816 @@
+<html>
+	<head>
+		<title id="pageElement_PageTitle">
+			Sound Board Plus
+		</title>
+		
+		<style>
+			.ErrorScreen_CSSFileMissing{
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			background-color: #101122;
+			padding: 30px;
+			z-index: 500;
+			margin: 0;
+			}
+			.ErrorScreen_CSSFileMissing_Text{
+			font-family: Arial;
+			color: white;
+			
+			}
+		</style>
+		<link rel="stylesheet" href="Scripts/SBP_Stylesheet.css">
+		<link rel="stylesheet" href="Scripts/SBP_Stylesheet_Animations.css">
+		<link rel="stylesheet" href="Scripts/SBP_Stylesheet_Reference.css">
+		<link rel="icon" type="image/png" href="Assets/Icons/favicon_old.png" sizes="96x96">
+		<!-- Default intended fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;800&family=Roboto&display=swap" rel="stylesheet">
+	</head>
+	<body class="MainPage" onload="OnloadTasks(), Onboarding_CheckVersion()">
+		<script src="Scripts/SBP_Javascript.js"></script>
+		<div class="ErrorScreen_CSSFileMissing">
+			<h1 class="ErrorScreen_CSSFileMissing_Text">
+				Error - CSS file missing
+			</h1>
+			<p class="ErrorScreen_CSSFileMissing_Text">
+				You are seeing this screen because the launcher is unable to load the .css file properly. Here's some of the possible causes:
+				<ul class="ErrorScreen_CSSFileMissing_Text">
+					<li>
+						The file has been moved.
+					</li>
+					<li>
+						The file has been deleted.
+					</li>
+					<li>
+						The file has been corrupted.
+					</li>
+				</ul>
+			</p>
+			<p class="ErrorScreen_CSSFileMissing_Text">
+				The launcher will not function properly without the following files:
+				<ul class="ErrorScreen_CSSFileMissing_Text">
+					<li>
+						Scripts/SBP_Stylesheet.css
+					</li>
+					<li>
+						Scripts/SBP_Stylesheet_Animations.css
+					</li>
+					<li>
+						Scripts/SBP_Stylesheet_Reference.css
+					</li>
+					<li>
+						Scripts/SBP_Javascript.js
+					</li>
+				</ul>
+			</p>
+			<p class="ErrorScreen_CSSFileMissing_Text">
+				Please download a fresh copy of the launcher. <br>If you think there is a mistake, contact Elmer through any social medias in <a href="https://cbelmerf.wixsite.com/content/socials" target="_blank"> his website. </a>
+			</p>
+		</div>
+		<div class="LoadingScreen" id="LoadingScreen">
+			<img class="LoadingScreen_Icon" src="Assets/Icons/favicon_old.png"></img>
+			<h2 class="LoadingScreen_VersionTitle" id="versionTitle">
+				Sound Board Plus
+			</h2>
+			<h4 class="LoadingScreen_Text" id="LoadingScreen_Text">
+				Building page...
+			</h4>
+			<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+			<h4 class="LoadingScreen_Copyright" id="copyrightTitle">
+				Content By ElmerF
+			</h4>
+		</div>
+		<div class="SessionScreen" id="pageElement_SessionScreen" onclick="close_SessionScreen()">
+			<h1 class="SessionScreen_Time" id="Clock_Time_SessionScreen">
+				
+			</h1>
+			<h3 class="SessionScreen_Date" id="Clock_Date_SessionScreen">
+				
+			</h3>
+			<p class="SessionScreen_Instruction">
+				Click anywhere to start
+			</p>
+			<div class="SessionScreen_Copyright">
+				<p class="SessionScreen_Copyright_Text" id="pageElement_SessionScreen_Copyright">
+					Doodle Launcher Public Beta | Content By ElmerF 2022
+				</p>
+			</div>
+		</div>
+		<!--<div class="ToggleableSearchBar" id="pageElement_Toggleable_SearchBar">
+			<div class="ToggleableSearchBar_SearchBar">
+				<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3"></input>
+				<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
+			</div>
+			<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
+		</div>
+		
+		<div class="ExperimentSelector" id="pageElement_ExperimentSelector">
+			<div class="ExperimentSelector_Box">
+				<h2 class="General_Title ExperimentSelector_Title">
+					Select a feature to activate
+				</h2>
+				<p class="General_Paragraph ExperimentSelector_Text" onclick="trigger_Close_ExperimentSelector(), OBN_Begin()">
+					New Onboarding
+				</p>
+				<p class="General_Paragraph ExperimentSelector_Text">
+					Log-in Screen
+				</p>
+				<p class="General_Paragraph ExperimentSelector_Text" onclick="trigger_Close_ExperimentSelector(), changePage_Tasker()">
+					To-do List
+				</p>
+			</div>
+		</div>-->
+		
+		<!-- Onboarding New -->
+		<div class="Onboarding_New_Container" id="pageElement_Onboarding_New">
+			<div class="Onboarding_New_Window">
+				<div class="Onboarding_New_Window_Graphic">
+					<img src="Assets/Images/Onboarding/OBNG_Placeholder_1.png" class="Onboarding_New_Window_Graphic_Image" id="OBN_Graphic_1"></img>
+					<img src="Assets/Images/Onboarding/OBNG_Placeholder_2.png" class="Onboarding_New_Window_Graphic_Image" id="OBN_Graphic_2"></img>
+					<img src="Assets/Images/Onboarding/OBNG_Placeholder_2.png" class="Onboarding_New_Window_Graphic_Image" id="OBN_Graphic_3"></img>
+					<img src="Assets/Images/Onboarding/OBNG_Placeholder_3.png" class="Onboarding_New_Window_Graphic_Image" id="OBN_Graphic_4"></img>
+					<img src="Assets/Images/Onboarding/OBNG_Placeholder_4.png" class="Onboarding_New_Window_Graphic_Image" id="OBN_Graphic_5"></img>
+					<img src="Assets/Images/Onboarding/OBNG_Placeholder_5.png" class="Onboarding_New_Window_Graphic_Image" id="OBN_Graphic_6"></img>
+					<img src="Assets/Images/Onboarding/OBNG_Placeholder_6.png" class="Onboarding_New_Window_Graphic_Image" id="OBN_Graphic_7"></img>
+					<img src="Assets/Images/Onboarding/OBNG_Placeholder_7.png" class="Onboarding_New_Window_Graphic_Image" id="OBN_Graphic_8"></img>
+					<img src="Assets/Images/Onboarding/OBNG_Placeholder_8.png" class="Onboarding_New_Window_Graphic_Image" id="OBN_Graphic_9"></img>
+				</div>
+				<div class="Onboarding_New_Window_Content">
+					<div class="Onboarding_New_Page" id="OBN_Page_1">
+						<h1 class="Onboarding_New_Page_Title">
+							Welcome to Doodle Launcher
+						</h1>
+						<p class="General_Paragraph">
+							Thank you for downloading Doodle Launcher. Let's start!
+						</p>
+					</div>
+					<div class="Onboarding_New_Page" style="display:none" id="OBN_Page_2">
+						<h1 class="Onboarding_New_Page_Title">
+							Shortcut to your favorite pages
+						</h1>
+						<p class="General_Paragraph">
+							Like a bookmark list, create shortcuts linking to your frequently visited websites and access them with a single click.
+						</p>
+					</div>
+					<div class="Onboarding_New_Page" style="display:none" id="OBN_Page_3">
+						<h1 class="Onboarding_New_Page_Title">
+							Organize your shortcuts into categories
+						</h1>
+						<p class="General_Paragraph">
+							Like file cabinets, you can categorize your shortcuts into toggleable tabs that you can organize into.
+						</p>
+					</div>
+					<div class="Onboarding_New_Page" style="display:none" id="OBN_Page_4">
+						<h1 class="Onboarding_New_Page_Title">
+							Easily edit shortcuts
+						</h1>
+						<p class="General_Paragraph">
+							With a click of a button, you can edit or delete shortcuts and categories through the Shortcut Editor.
+						</p>
+					</div>
+					<div class="Onboarding_New_Page" style="display:none" id="OBN_Page_5">
+						<h1 class="Onboarding_New_Page_Title">
+							Customize your home screen
+						</h1>
+						<p class="General_Paragraph">
+							Give your shortcut library character that is unique to you. Doodle Launcher lets you customize a lot of aspects on your home page, such as the colors and font.
+						</p>
+					</div>
+					<div class="Onboarding_New_Page" style="display:none" id="OBN_Page_6">
+						<h1 class="Onboarding_New_Page_Title">
+							Search quick
+						</h1>
+						<p class="General_Paragraph">
+							Using the launcher and have to search for something? Instead of opening a new tab and searching from there, pull up the Quick Search Bar using Ctrl+Shift and search from there, and the launcher will automatically open a tab with your search query using the search engine of your choice.
+						</p>
+					</div>
+					<div class="Onboarding_New_Page" style="display:none" id="OBN_Page_7">
+						<h1 class="Onboarding_New_Page_Title">
+							What's your name?
+						</h1>
+						<p class="General_Paragraph">
+							Start your browsing through the launcher with a personalized greeting. Do you want to have your name included in the home page greeting? If yes, please write your name in the input box below. This can be changed in the settings.
+						</p>
+						<input type="checkbox" id="OB-DisplayGreetingName"></input>
+						<label class="Input_Label" for="OB-DisplayGreetingName"> Show my name on the greeting text </label>
+						<input class="Input_Text" placeholder="Type your name here" id="form_Onboarding_GreetingName"style="width: 95%;margin: 5px;"></input>
+					</div>
+					<!--<div class="Onboarding_New_Page" style="display:none" id="OBN_Page_8">
+						<h1 class="Onboarding_New_Page_Title">
+							Pick a beginning preset
+						</h1>
+						<p class="General_Paragraph">
+							Select a preset below and the launcher will set everything instantly. This changes the colors and background image and can be changed in the settings.
+						</p>
+						<div class="Onboarding_Presets_Container">
+							<div class="Onboarding_Presets_Button">
+								<img src="Assets/Background/default_New.png" class="Onboarding_Presets_Button_Wallpaper">
+								<p class="Onboarding_Presets_Button_Title">
+									Dark mode (default)
+								</p>
+							</div>
+							<div class="Onboarding_Presets_Button">
+								<img src="Assets/Background/default_lightmode.jpg" class="Onboarding_Presets_Button_Wallpaper">
+								<p class="Onboarding_Presets_Button_Title">
+									Light mode
+								</p>
+							</div>
+							<div class="Onboarding_Presets_Button">
+								<img src="Assets/Background/underwater.jpg" class="Onboarding_Presets_Button_Wallpaper">
+								<p class="Onboarding_Presets_Button_Title">
+									Underwater
+								</p>
+							</div>
+						</div>
+					</div>-->
+					<div class="Onboarding_New_Page" style="display:none" id="OBN_Page_8">
+						<h1 class="Onboarding_New_Page_Title">
+							Before you start...
+						</h1>
+						<p class="General_Paragraph">
+							It's important to know how the launcher works and how it handles information.
+						</p>
+						<h4 class="General_Title">
+							How your data is stored
+						</h4>
+						<p class="General_Paragraph">
+							Doodle Launcher stores all saved data into your browser's internal storage. Data written and saved while your using the launcher will not carry over when you switch browsers.
+						</p>
+						<h4 class="General_Title">
+							What system the launcher use
+						</h4>
+						<p class="General_Paragraph">
+							The launcher uses JavaScript to do most of the functions and features. 
+						</p>
+						<h4 class="General_Title">
+							Vulnerabilities
+						</h4>
+						<p class="General_Paragraph">
+							Because all data is stored into the browser's internal storage, it is easy for other websites to execute a similar JavaScript code to access these keys. This is a vulnerability that is hard to solve using the current system without using some kind of online storage alternative / cloud storage. 
+						</p>
+						<h4 class="General_Title">
+							Do not include any sensitive information
+						</h4>
+						<p class="General_Paragraph">
+							It is a bad idea to include any sensitive information such as passwords, addresses, etc. into any input boxes within the launcher. Data stored can easily be accessed by websites you visit and may use it for their own heinous intentions.
+						</p>
+					</div>
+					<div class="Onboarding_New_Page" style="display:none" id="OBN_Page_9">
+						<h1 class="Onboarding_New_Page_Title">
+							Thank you!
+						</h1>
+						<p class="General_Paragraph">
+							That's all for now. Click Start now to begin using Doodle Launcher.
+						</p>
+					</div>
+					<div class="Onboarding_New_Window_Buttons">
+						<div class="Onboarding_New_Window_Buttons_1" id="OBN_ButtonSet_1">
+							<p class="Onboarding_New_Window_Buttons_Copyright">
+								Content By ElmerF 2022
+							</p>
+							<h1 class="Onboarding_New_Window_Buttons_Next" onclick="OBN_Switch_Page('forward')">
+								Start
+							</h1>
+						</div>
+						<div class="Onboarding_New_Window_Buttons_2" id="OBN_ButtonSet_2">
+							<h1 class="Onboarding_New_Window_Buttons_Previous" onclick="OBN_Switch_Page('backward')">
+								Previous
+							</h1>
+							<h1 class="Onboarding_New_Window_Buttons_Next" onclick="OBN_Switch_Page('forward')">
+								Next
+							</h1>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		<!-- Onboarding -->
+		<div class="OnboardingWindow_Container" id="pageElement_Onboarding">
+			<div class="OnboardingWindow">
+				<div class="OnboardingWindow_Content" id="OB_Content_Page0">
+					<h1 class="OnboardingWindow_Title">
+						Welcome to the Doodle Launcher Public Preview 2
+					</h1>
+					<div>
+						<p class="General_Paragraph">
+							There are a couple of things you need to do before you can move on. <br>
+							You will only see this pop-up once every version, and the process will not take more than five minutes. <br><br>
+							Begin the process by pressing "Get started".
+						</p>
+						
+					</div>
+				</div>
+				<div class="OnboardingWindow_Content" id="OB_Content_Page1">
+					<h1 class="OnboardingWindow_Title">
+						Agreement
+					</h1>
+					<div>
+						<p class="General_Paragraph">
+							By clicking "Next", you agree to the following.
+						</p>
+						<p class="General_Paragraph">
+							Please read the entirety of this page before continuing.
+						</p>
+						<p class="General_Paragraph">
+							By using Doodle Launcher, you will be able to do the following:<br>
+							<ul class="General_Paragraph">
+								<li>
+									Create shortcuts by copying the link and adding it in the shortcut editor. 
+								</li>
+								<li>
+									Use the launcher as a library to your frequently used websites.
+								</li>
+							</ul>
+						</p>
+						<p class="General_Paragraph">
+							By using Doodle Launcher, you will not be able to do the following:<br>
+							<ul class="General_Paragraph">
+								<li>
+									Modify the source code used by the launcher to inject monetized content. This includes .html, .js, and .css files.
+								</li>
+								<li>
+									Distribute/sharing the program/zip file to other sites other than the official download page.
+								</li>
+							</ul>
+						</p>
+						<p class="General_Paragraph">
+							By using Doodle Launcher, you agree and understand the following:<br>
+							<ul class="General_Paragraph">
+								<li>
+									Your personal information is your responsibility; and you must not include any sensitive information into any input fields in the launcher; and that potential data/information leaks due to your failure to follow this rule is none of Elmer F.'s fault.
+								</li>
+								<li>
+									Your device's digital security is your responsibility; all the links you enter in the launcher and open through the launcher is your responsibility; any security threats and malware contained within the websites you visit using the launcher is your responsibility.
+								</li>
+								<li>
+									The contents of the websites you visit through the launcher is your responsibility; any malicious content, misinformation, sensitive information, graphic imagery, and more that is contained within the websites you visit using the launcher is your responsibility.
+								</li>
+								<li>
+									Your device's specifications may affect the launcher's performance and load times.
+								</li>
+								<li>
+									The launcher does not collect ANY data or information for monetized reasons; all of the data you enter is contained within your browser's local storage.
+								</li>
+								<li>
+									By using the Public Beta Release, you are entitled to give valid and constructive criticism, comments, and suggestions for the project's improvement.
+								</li>
+								<li>
+									By using the Public Beta Release, you are aware that bugs may occur and that you are entitled to report the bug to Elmer F.
+								</li>
+							</ul>
+						</p>
+					</div>
+				</div>
+				<div class="OnboardingWindow_Content" id="OB_Content_Page2">
+					<h1 class="OnboardingWindow_Title">
+						Update notes
+					</h1>
+					<div>
+						<p class="General_Paragraph">
+							This update includes the following:
+							<ul class="General_Paragraph">
+								<li>
+									More information such as how the launcher collects data, how to use the Shortcut Editor, and Use of Content Guidelines.
+								</li>
+								<li>
+									A confirmation box that asks for your confirmation on deleting items.
+								</li>
+								<li>
+									An option to display the greeting message on the home page.
+								</li>
+								<li>
+									An option to display your name on the greeting message on the home page.
+								</li>
+								<li>
+									Pressing Ctrl + Space again while the "Add Item" window on Shortcut Editor will now close it.
+								</li>
+								<li>
+									Pressing Esc while any windows are open will close it.
+								</li>
+								<li>
+									A few UI changes and tweaks.
+								</li>
+								<li>
+									A button that delivers you straight away to the Report Bug or Feedback forms on the Settings.
+								</li>
+							</ul>
+						</p>
+						<p class="General_Paragraph">
+							Learn more on Settings > Information > View Changelog.
+						</p>
+					</div>
+				</div>
+				<div class="OnboardingWindow_Content" id="OB_Content_Page3">
+					<h1 class="OnboardingWindow_Title">
+						You're good to go!
+					</h1>
+					<div>
+						<p class="General_Paragraph">
+							Click "Next" to start using Doodle Launcher Public Preview.
+						</p>
+					</div>
+				</div>
+				
+				<div class="OnboardingWindow_Bottom" id="OB_Button_Page0">
+					<p class="General_Paragraph">
+						Content By ElmerF 2022
+					</p>
+					<h1 class="Subwindow_Bottom_Button_Main" id="opacitateToLeft" onclick="changePagesForward(this.id)">
+						Get started
+					</h1>
+				</div>
+				<div class="OnboardingWindow_Bottom" id="OB_Button_Page1">
+					<h1 class="Subwindow_Bottom_Button" id="opacitateToRight" onclick="changePagesBackward(this.id)">
+						Previous
+					</h1>
+					<h1 class="Subwindow_Bottom_Button_Main" id="opacitateToLeft" onclick="changePagesForward(this.id)">
+						Next
+					</h1>
+				</div>
+			</div>
+		</div>
+		<!-- Update -->
+		<div class="UpdateWindow_Container" id="subwindow_UpdateWindow">
+			<div class="UpdateWindow">
+				<h1 class="UpdateWindow_Title">
+					Doodle Launcher 1.13 (Public Preview 2)
+				</h1>
+				<div class="UpdateWindow_Contents">
+					<p class="General_Paragraph">
+						Thank you for downloading Doodle Launcher. Here's what changed:
+					</p>
+					<p class="General_Paragraph">
+						Additions
+					</p>		
+					<ul class="General_Paragraph">
+						<li>
+							Added buttons that lead to the feedback form and the bug report form in Settings > Information > Version.
+						</li>
+						<li>
+							Added an option to hide toast notifications in Settings > Behaviors.
+						</li>
+						<li>
+							Added a confirmation box when deleting an item in Shortcut Editor.
+						</li>
+						<li>
+							Added a "How to use" button and help window in Shortcut Editor.
+						</li>
+						<li>
+							Added a button that links to the version list in the website through Settings > Launcher Update.
+						</li>
+						<li>
+							Added an option to display a greeting message in the home page on Settings > Behaviors > Greetings.
+						</li>
+						<li>
+							Added an option to display your name in the greeting in the home page on Settings > Behaviors > Greetings.
+						</li>
+						<li>
+							Added a Use of Content Guidelines button in Settings > Information > Version.
+						</li>
+						<li>
+							Added a How Data is Stored button in Settings > Information > Version.
+						</li>
+					</ul>
+					<p class="General_Paragraph">
+						Changes
+					</p>		
+					<ul class="General_Paragraph">
+						<li>
+							The Launcher Update Image is now clickable and will open a full-sized version of the image.
+						</li>
+						<li>
+							The Quick Search Bar will now show the search engine used in its placeholder text.
+						</li>
+						<li>
+							The "Add Item" subwindow in Shortcut Editor will now close when Ctrl + Space is pressed again.
+						</li>
+						<li>
+							Subwindows will now close when Esc is pressed.
+						</li>
+						<li>
+							The icon of the specific page will now display in the loading screen and as the favicon instead of the default logo.
+						</li>
+						<li>
+							The tab name will now change depending on the page you are on.
+						</li>
+						<li>
+							The "Shortcut" tab is now visible by default when first opening the "Add Item" subwindow in Shortcut Editor
+						</li>
+						<li>
+							Changed the design of the tab buttons in the "Add Item" subwindow.
+						</li>
+						<li>
+							Tweaked the layouts for the subwindows that mostly contains input boxes.
+						</li>
+						<li>
+							Fixed divider lines not following the "Divider Color" setting.
+						</li>
+						<li>
+							Fixed a bug where the date doesn't appear in the session screen when it is re-triggered using Ctrl + B.
+						</li>
+						<li>
+							Fixed a bug where the Category Navigation sidebar still appears even if the "Display a navigation bar in the home page that lets you easily jump to a specific category" setting is disabled.
+						</li>
+						<li>
+							Fixed a bug where the page greeting remains to display "Good Evening" regardless of the time of day.
+						</li>
+						<li>
+							Fixed console error regarding Shortcut Editor tabs.
+						</li>
+						<li>
+							Fixed console error regarding Battery Percentages.
+						</li>
+						<li>
+							Removed the "Notify if an update is available" checkbox in Settings > Behaviors.
+						</li>
+						<li>
+							Removed the extra description on the "Add Item" subwindow in Shortcut Editor.
+						</li>
+					</ul>
+				</div>
+				<h1 class="Subwindow_Bottom_Button_Main" id="UpdateWindow" onclick="close_Subwindow(this.id)">
+					Proceed
+				</h1>
+			</div>
+		</div>
+		
+		<!-- All content goes inside the PageGrid -->
+		<div class="PageGrid">
+			<div class="Header" id="pageElement_Header">
+				<!--<img class="Sidebar_CategoryNavigation_Toggle" id="toggle_Sidebar_CategoryNavigation" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar_CategoryNavigation()"></img>
+				<!-- For loading purposes only -->
+				<img class="Sidebar_CategoryNavigation_Toggle" id="toggle_Sidebar" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar_CategoryNavigation()"></img>
+				<!-- -->
+				<div class="Header_PageNavi" id="button_PageNavi" onclick="toggle_Navigator(this.id)">
+					<h2 class="Header_PageNavi_Title" id="Header_PageNavi_Title">
+						Home
+					</h2>
+				</div>
+				<div class="Header_Buttons" id="pageElement_Header_Buttons">
+					<h3 class="Header_Buttons_Item" onclick="SBP_PauseUnpause()" id="pageElement_SBP_PauseUnpause_Header">
+						Pause all playing sounds
+					</h3>
+					<h3 class="Header_Buttons_Item" onclick="SBP_StopAllSounds()">
+						Stop all sounds
+					</h3>
+					
+					<!--<a href="SBP_ShortcutEditor.html">
+						<h3 class="Header_Buttons_Item">
+						Shortcut editor
+						</h3>
+						</a>
+						<h3 class="Header_Buttons_Item">
+						Settings
+						</h3>
+						<h3 class="Header_Buttons_Item">
+						Public Beta Information
+						</h3>
+						<a href="../Elmer's School Launcher/Main.html">
+						<h3 class="Header_Buttons_Item">
+						Old UI
+						</h3>
+					</a>-->
+				</div>
+				<div class="Header_Clock" id="pageElement_Header_Clock">
+					<h1 class="Header_Clock_Time" id="Clock_Time">
+						id="Clock_Time"
+					</h1>
+					<h1 class="Header_Clock_Date" id="Clock_Date">
+						id="Clock_Date"
+					</h1>
+				</div>
+				<div class="Header_Battery" id="pageElement_Header_Battery">
+					<h1 class="Header_Battery" id="Battery_Level">
+						%
+					</h1>
+				</div>
+				<div class="Header_RightMenu">
+					<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_softwareUpdate.png"  id="button_Update" onclick="toggle_Textbox(this.id)"></img>
+					<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_wifi_online.png"  id="button_Wifi" onclick="toggle_Textbox(this.id)"></img>
+				</div>
+			</div>
+			<div class="Header_Menu" id="pageElement_Header_Menu">
+				<div class="Header_Menu_Top">
+					<div class="Header_Menu_Top_Clock">
+						<h1 class="Header_Menu_Top_Clock_Time" id="Clock_Time_2">
+							id="Clock_Time"
+						</h1>
+						<h1 class="Header_Menu_Top_Clock_Date" id="Clock_Date_2">
+							id="Clock_Date"
+						</h1>
+					</div>
+					<h1 class="Header_Menu_Top_Battery" id="Battery_Level_2">
+						%
+					</h1>
+				</div>
+				
+				<div class="Header_PageNavi_Textbox_Title">
+					Navigation
+				</div>
+				<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageNaviList">
+					
+				</div>
+				<!--<div class="Header_PageNavi_Textbox_Title">
+					Page Actions
+					</div>
+					<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageActions">
+					<a href="SBP_ShortcutEditor.html">
+					<p class="Header_PageNavi_Textbox_List_Item">
+					Shortcut editor
+					</p>
+					</a>
+					<p class="Header_PageNavi_Textbox_List_Item">
+					Settings
+					</p>
+				</div>-->
+			</div>
+			<div class="Header_PageNavi_Textbox" id="button_PageNavi_textbox">
+				<div class="Header_PageNavi_Textbox_Title">
+					Navigation 
+				</div>
+				<div class="Header_PageNavi_Textbox_List" id="pageElement_PageNaviList">
+					
+				</div>
+			</div>
+			<div class="Header_Right_Textbox"  id="button_Wifi_textbox">
+				<div class="Header_Right_Textbox_Title" id="textboxElement_Wifi">
+					No Connection
+				</div>				
+				<p class="Header_Right_Textbox_Text" id="pageElement_Connection">
+					Since you're not connected to the internet, links will not open properly. Connect to a Wi-Fi network and refresh the page.
+				</p>
+				<a href="https://fast.com/" target="_blank" id="pageElement_Connection_Speedtest">
+					<p class="Header_Right_Textbox_Text">
+						<u>Speedtest</u>
+					</p>
+				</a>
+			</div>
+			<div class="Header_Right_Textbox" id="button_Update_textbox">
+				<div class="Header_Right_Textbox_Title">
+					Update is available
+				</div>				
+				<p class="Header_Right_Textbox_Text">
+					A launcher update is available for you to download.
+				</p>
+				<a href="SBP_Settings.html#LauncherUpdate">
+					<p class="Header_Right_Textbox_Text">
+						<u>Check for updates</u>
+					</p>
+				</a>
+			</div>
+			<div class="Sidebar_CategoryNavigation" id="pageElement_Sidebar_CategoryNavigation">
+				<p class="Sidebar_CategoryNavigation_Title">
+					Category Navigation
+					<img src="Assets/Icons/icon_close.png" class="Sidebar_CategoryNavigation_Title_Close" onclick="toggle_Sidebar_CategoryNavigation()"></img>
+				</p>
+			</div>
+			
+			<!--<div class="Subwindow_Blur" id="subwindow_PRIVATE_Elmer_Transfer">
+				<div class="Subwindow">
+				<div class="Subwindow_TitleBar">
+				<h1 class="Subwindow_TitleBar_Title" id="EditItem_SubwindowTitle">
+				Welcome to the new Doodle Launcher
+				</h1>
+				<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="PRIVATE_Elmer_Transfer" onclick="close_Subwindow(this.id)">
+				</img>
+				</div>
+				<div class="Subwindow_Content">
+				<p class="Subwindow_Content_Text">
+				This update overhauls the shortcut storage system.<br>
+				The new system allows you to create shortcuts and categories without the developer's help. Since your previous links were baked into the app itself, we need to transfer these links into the new system. <br>
+				<br>
+				Click "Transfer my links" to start the transferring process. This is automatic and will not take too long.<br>
+				Click "Proceed normally" to proceed without transferring your previous links.<br>
+				<br>
+				You can do this again on Settings > Launcher Update > Transfer links.
+				</p>
+				
+				
+				</div>
+				<div class="Subwindow_Bottom Grid_2">
+				<h1 class="Subwindow_Bottom_Button" onclick="Settings_DetectImageFile()">
+				Proceed normally
+				</h1>
+				<h1 class="Subwindow_Bottom_Button_Main" onclick="Settings_ApplyChanges()">
+				Transfer my links
+				</h1>
+				</div>
+				</div>
+			</div>-->
+			
+			
+			
+			<div class="MainContent" id="pageElement_MainContent">
+				<div class="CornerButtons" id="pageElement_CornerButtons">
+					<img src="Assets/Icons/icon_hamburgermenu.png" class="CornerButtons_Button CategoryNavigation" onclick="toggle_Sidebar_CategoryNavigation()"></img>
+					<a href="#pageElement_Bottom" id="pageElement_GoToBottom"> <img src="Assets/Icons/icon_downArrow.png" class="CornerButtons_Button GoToBottom"></img> </a>
+					<a href="#pageElement_Top" id="pageElement_BackToTop"> <img src="Assets/Icons/icon_upArrow.png" class="CornerButtons_Button GoToTop"></img> </a>
+				</div>
+				<span class="anchor" id="pageElement_Top"></span>
+				<h1 class="Greeting_Text" id="pageElement_Greeting">
+					Sound Board Plus
+				</h1>
+				<p class="General_Paragraph">
+					Click a button below to play a sound. To add a sound button, click the "Home" text above and select "Board Editor". To stop all sounds, click the "Stop all sounds" above. The system does not allow a sound to play again until the sound stops playing. <br>
+					If the audio doesn't play and the indicator doesn't reset, it is possible that the file name you provided can't be found on the Assets/Audio folder.
+				</p>
+				<div id="pageElement_ContentContainer" class="SBP_Container">
+					<!--<div class="SBP_Item" id="SBP_Item_1" onclick="SBP_PlayAudio(this.id)">
+						John Wayne
+					</div>
+					<div class="SBP_Item" id="SBP_Item_2" onclick="SBP_PlayAudio(this.id)">
+						Crowd Gasping
+					</div>
+					<div class="SBP_Item" id="SBP_Item_3" onclick="SBP_PlayAudio(this.id)">
+						Denied
+					</div>
+					<div class="SBP_Item" id="SBP_Item_4" onclick="SBP_PlayAudio(this.id)">
+						Villager Hurt
+					</div>
+					<div class="SBP_Item" id="SBP_Item_5" onclick="SBP_PlayAudio(this.id)">
+						PowerOut
+					</div>
+					<div class="SBP_Item" id="SBP_Item_6" onclick="SBP_PlayAudio(this.id)">
+						YouSuck
+					</div>
+					<div class="SBP_Item" id="SBP_Item_7" onclick="SBP_PlayAudio(this.id)">
+						Curb Your Enthusiasm Theme
+					</div>
+					<div class="SBP_Item" id="SBP_Item_8" onclick="SBP_PlayAudio(this.id)">
+						DUN
+					</div>
+					<div class="SBP_Item" id="SBP_Item_9" onclick="SBP_PlayAudio(this.id)">
+						Laughing Sound Effects!
+					</div>
+					<div class="SBP_Item" id="SBP_Item_10" onclick="SBP_PlayAudio(this.id)">
+						Victory
+					</div>
+					<div class="SBP_Item" id="SBP_Item_11" onclick="SBP_PlayAudio(this.id)">
+						Wheezing Laugh
+					</div>
+					<div class="SBP_Item" id="SBP_Item_12" onclick="SBP_PlayAudio(this.id)">
+						Wilhelm Scream
+					</div>
+					<div class="SBP_Item" id="SBP_Item_13" onclick="SBP_PlayAudio(this.id)">
+						Applause
+					</div>
+					<div class="SBP_Item" id="SBP_Item_14" onclick="SBP_PlayAudio(this.id)">
+						Cardi B Aww
+					</div>
+					<div class="SBP_Item" id="SBP_Item_15" onclick="SBP_PlayAudio(this.id)">
+						Magic
+					</div>
+					<div class="SBP_Item" id="SBP_Item_16" onclick="SBP_PlayAudio(this.id)">
+						Want a break from the ads
+					</div>
+					<div class="SBP_Item" id="SBP_Item_17" onclick="SBP_PlayAudio(this.id)">
+						Break (Pixel)
+					</div>
+					<div class="SBP_Item" id="SBP_Item_18" onclick="SBP_PlayAudio(this.id)">
+						Break
+					</div>
+					<div class="SBP_Item" id="SBP_Item_19" onclick="SBP_PlayAudio(this.id)">
+						NO GOD PLEASE NO
+					</div>
+					<audio id="SBP_Item_1_Audio" src="Assets/Audio/Lady Gaga - John Wayne.mp3"></audio>
+					<audio id="SBP_Item_2_Audio" src="Assets/Audio/Crowd gasping.mp3"></audio>
+					<audio id="SBP_Item_3_Audio" src="Assets/Audio/Denied.mp3"></audio>
+					<audio id="SBP_Item_4_Audio" src="Assets/Audio/Villager Hurt.mp3"></audio>
+					<audio id="SBP_Item_5_Audio" src="Assets/Audio/PowerOut.mp3"></audio>
+					<audio id="SBP_Item_6_Audio" src="Assets/Audio/YouSuck.mp3"></audio>
+					<audio id="SBP_Item_7_Audio" src="Assets/Audio/Curb Your Enthusiasm Theme.mp3"></audio>
+					<audio id="SBP_Item_8_Audio" src="Assets/Audio/DUN.mp3"></audio>
+					<audio id="SBP_Item_9_Audio" src="Assets/Audio/Laughing Sound Effects!.mp3"></audio>
+					<audio id="SBP_Item_10_Audio" src="Assets/Audio/Victory.mp3"></audio>
+					<audio id="SBP_Item_11_Audio" src="Assets/Audio/WheezingLaugh.mp3"></audio>
+					<audio id="SBP_Item_12_Audio" src="Assets/Audio/WilhelmScream.mp3"></audio>
+					<audio id="SBP_Item_13_Audio" src="Assets/Audio/Applause Crowd Cheering sound effect.mp3"></audio>
+					<audio id="SBP_Item_14_Audio" src="Assets/Audio/crit1.ogg"></audio>
+					<audio id="SBP_Item_15_Audio" src="Assets/Audio/open3.ogg"></audio>
+					<audio id="SBP_Item_16_Audio" src="Assets/Audio/cave14.ogg"></audio>
+					<audio id="SBP_Item_17_Audio" src="Assets/Audio/Game Over (Pixel) [B-Side Remix].mp3"></audio>
+					<audio id="SBP_Item_18_Audio" src="Assets/Audio/Game Over [B-Side Remix].mp3"></audio>
+					<audio id="SBP_Item_19_Audio" src="Assets/Audio/NO GOD! PLEASE NO!!! NOOOOOOOOOO.mp3"></audio>-->
+						
+					<img src="Assets/Images/ShortcutLibraryEmpty_HomePage.png" class="pageElement_LibraryEmptyNotif" id="pageElement_LibraryEmptyNotif"></img>
+				</div>
+				
+				<footer class="Footer" id="pageElement_Bottom">
+					<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
+						Doodle Launcher Public Beta
+					</h1>
+					<h1 class="Footer_Text" id="pageElement_Footer_Copyright">
+						Content By ElmerF 2022
+					</h1>
+				</footer>
+			</div>
+			
+		</div>
+		
+	</body>
+</html>
