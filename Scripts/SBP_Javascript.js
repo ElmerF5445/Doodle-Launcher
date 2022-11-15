@@ -387,8 +387,8 @@ function check_Connection(){
 }
 
 function generate_Launcher_NavigationList(){
-	let navigationListItems = ["Home", "Board Editor"]; //Launcher navigation text
-	let navigationListItems_Link = ["SBP_Main.html", "SBP_BoardEditor.html"]; //Launcher navigation links
+	let navigationListItems = ["Home", "Board Editor", "Doodle Launcher", "Pomodoro Timer"]; //Launcher navigation text
+	let navigationListItems_Link = ["SBP_Main.html", "SBP_BoardEditor.html", "DL_Main.html", "DL_PomodoroTimer.html"]; //Launcher navigation links
 	
 	for (var i = 0; i < navigationListItems.length; i++) {
 		var navigationListItems_Select = navigationListItems[i]; //Contains the selected pagenavi text
