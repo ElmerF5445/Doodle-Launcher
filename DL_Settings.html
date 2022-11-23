@@ -632,7 +632,7 @@
 					Launcher Update
 				</p>
 			</div>
-			<div class="Sidebar_Item" id="Settings_Tab_Experiments" onclick="trigger_ChangeTab(this.id)">
+			<!-- <div class="Sidebar_Item" id="Settings_Tab_Experiments" onclick="trigger_ChangeTab(this.id)">
 				<img class="Sidebar_Icon" id="Settings_Tab_Experiments_Icon" src="Assets/Icons/favicon_old.png"></img>
 				<p class="Sidebar_Icon_Text">
 					Experimental Features
@@ -643,7 +643,7 @@
 				<p class="Sidebar_Icon_Text">
 					Library Profiles
 				</p>
-			</div>
+			</div> -->
 			<!--<div class="Sidebar_Item" id="Settings_Tab_Credits" onclick="trigger_ChangeTab(this.id)">
 				<img class="Sidebar_Icon" id="Settings_Tab_Credits_Icon"src="Assets/Icons/favicon_old.png"></img>
 				<p class="Sidebar_Icon_Text">
@@ -693,7 +693,7 @@
 						Launcher Update
 					</h1>
 				</div>
-				<div class="Settings_Home_Item" id="Settings_Tab_Experiments" onclick="trigger_ChangeTab(this.id)">
+				<!-- <div class="Settings_Home_Item" id="Settings_Tab_Experiments" onclick="trigger_ChangeTab(this.id)">
 					<img class="Settings_Home_Item_Icon" src="Assets/Icons/favicon_old.png"></img>
 					<h1 class="Settings_Home_Item_Text">
 						Experimental Features
@@ -704,7 +704,7 @@
 					<h1 class="Settings_Home_Item_Text">
 						Library Profiles
 					</h1>
-				</div>
+				</div> -->
 				<!--<div class="Settings_Home_Item" id="Settings_Tab_Credits" onclick="trigger_ChangeTab(this.id)">
 					<img class="Settings_Home_Item_Icon" src="Assets/Icons/favicon_old.png"></img>
 					<h1 class="Settings_Home_Item_Text">
@@ -852,10 +852,10 @@
 						<h1 class="General_Button" id="ChangeWallpaper" onclick="open_Subwindow(this.id)">
 							Change wallpaper
 						</h1>
-						<div class="Settings_ValuesTable_Checkboxes">
+						<!-- <div class="Settings_ValuesTable_Checkboxes">
 							<input type="checkbox" id="AP-WP-CB-BlurHomeWallpaper"></input>
 							<label class="Input_Label" for="AP-WP-CB-BlurHomeWallpaper"> Blur wallpaper background on the Home Page</label>
-						</div>
+						</div> -->
 					</div>
 				</div>
 				<div class="Category">
@@ -869,16 +869,11 @@
 					</div>
 					<div id="content_category_Text" class="Category_Content_Container">
 						<p class="General_Paragraph">
-							If you want the preferred font style used for the launcher, click the button below and the launcher will set the fonts to its default font.<br>
-							If you don't have these default fonts installed in your computer, it will pull it from Google Fonts. This requires an active internet connection.
+							By default, fonts are pulled from Google Fonts. You can also manually change it to your preferred font family. 
 						</p>
 						<!--<h1 class="General_Button" id="ChangeWallpaper" onclick="Settings_LoadPresets('intendedfonts')">
 							Use intended fonts (experimental)
-						</h1>-->
-						<p class="General_Paragraph">
-							Alternatively, you can manually change the fonts into any font family you have installed in your computer.
-						</p>
-						
+						</h1>-->						
 						<div class="Settings_ValuesTable_Text">
 							<label for="AP-TX-Font-Primary" class="Input_Label"> Primary text font</label>
 							<input type="text" id="AP-TX-Font-Primary" class="Input_Text"></input>
