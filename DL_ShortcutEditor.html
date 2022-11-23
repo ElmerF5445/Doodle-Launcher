@@ -25,7 +25,7 @@
 			<div class="LoadingScreen_CopyrightSection" id="LoadingScreen_CopyrightSection">
 				
 				<!-- <h4 class="LoadingScreen_Text" id="LoadingScreen_Text"> -->
-					<!-- Building page... -->
+				<!-- Building page... -->
 				<!-- </h4> -->
 				<div style="display: flex; justify-content: center; align-items: center;">
 					<img class="LoadingScreen_Copyright_Logo" src="Assets/Icons/ContentByElmerF.png"></img>
@@ -223,7 +223,7 @@
 					</h2>
 				</div>
 				<div class="Header_Buttons" id="pageElement_Header_Buttons">
-					<h3 class="Header_Buttons_Item" id="AddItem" onclick="open_Subwindow(this.id)">
+					<!-- <h3 class="Header_Buttons_Item" id="AddItem" onclick="open_Subwindow(this.id)">
 						Add item
 					</h3>
 					<h3 class="Header_Buttons_Item" id="SwapList_Category" onclick="open_Subwindow(this.id)">
@@ -234,7 +234,7 @@
 					</h3>
 					<h3 class="Header_Buttons_Item" id="Tutorial_ShortcutEditor" onclick="open_Subwindow(this.id)">
 						How to use
-					</h3>
+					</h3> -->
 					<!--<h3 class="Header_Buttons_Item">
 						How to use
 						</h3>
@@ -291,7 +291,7 @@
 					Page Actions
 				</div>
 				<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageActions">
-					<p class="Header_PageNavi_Textbox_List_Item" id="AddItem" onclick="open_Subwindow(this.id)">
+					<!-- <p class="Header_PageNavi_Textbox_List_Item" id="AddItem" onclick="open_Subwindow(this.id)">
 						Add item
 					</p>
 					<p class="Header_PageNavi_Textbox_List_Item" id="SwapList_Category" onclick="open_Subwindow(this.id)">
@@ -299,7 +299,7 @@
 					</p>
 					<p class="Header_PageNavi_Textbox_List_Item" id="Tutorial_ShortcutEditor" onclick="open_Subwindow(this.id)">
 						How to use
-					</p>
+					</p> -->
 				</div>
 			</div>
 			<div class="Header_PageNavi_Textbox" id="button_PageNavi_textbox">
@@ -347,6 +347,12 @@
 					<img class="Sidebar_Icon" id="ShortcutEditor_Tab_TableView_Icon" src="Assets/Icons/iconNew_table.png"></img>
 					<p class="Sidebar_Icon_Text">
 						Table view
+					</p>
+				</div>
+				<div class="Sidebar_Item" id="ShortcutEditor_Tab_ImportExport" onclick="trigger_ChangeTab(this.id)">
+					<img class="Sidebar_Icon" id="ShortcutEditor_Tab_ImportExport_Icon" src="Assets/Icons/iconNew_download.png"></img>
+					<p class="Sidebar_Icon_Text">
+						Import/export shortcuts
 					</p>
 				</div>
 			</div>
@@ -450,7 +456,7 @@
 						</div>
 					</div>
 					<div class="Subwindow_Bottom">
-						<h1 class="Subwindow_Bottom_Button_Main" onclick="SE_CreateItem()">
+						<h1 class="Subwindow_Bottom_Button_Main" onclick="SE_CreateItem_StringTextTest()">
 							Create item
 						</h1>
 					</div>
@@ -549,7 +555,7 @@
 							Click a list item and another to switch positions of the list items.
 						</p>
 						<div id="pageElement_ShortcutEditor_SwapList_List">
-						
+							
 						</div>
 					</div>
 					<div class="Subwindow_Bottom">
@@ -658,6 +664,80 @@
 						</div>-->
 					</div>
 					
+				</div>
+				<span class="anchor" id="pageElement_Top"></span>
+				<div id="ShortcutEditor_Tab_ImportExport_Container" class="Tab_Container">
+					<h1 class="Greeting_Text" >
+						Import/Export shortcuts
+					</h1>
+					<div class="Category">
+						<span class="anchor" id="anchor_category_ShortcutEditor"></span>
+						<div class="Category_Label" id="category_Import" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								Import shortcuts
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Import"></img>	
+						</div>
+						<div id="content_category_Import" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Copy and paste the shortcut list text into the input box below. 
+							</p>
+							<p class="Subwindow_Content_Text">
+									Select a category to insert the shortcut:
+							</p>
+							<p class="Input_Dropdown_SelectedItem" id="dropdownButton_Import_Shortcut" onclick="trigger_toggleDropdown(this.id)">
+								No selected
+							</p>
+							<div class="Input_Dropdown" id="menu_dropdownButton_Import_Shortcut">
+								<!--<p class="Input_Dropdown_Item">
+									Category 1
+									</p>
+									Content is created by JS function SE_CreateDropdown()
+								-->
+							</div>
+							<input type="text" class="Input_Text_Long" placeholder="Paste import shortcut list here" id="pageElement_Input_Text"></input>
+							<h1 class="General_Button" onclick="SE_Import_ShortcutList()">
+								Import shortcuts
+							</h1>
+						</div>
+					</div>
+					<div class="Category">
+						<span class="anchor" id="anchor_category_Export"></span>
+						<div class="Category_Label" id="category_Export" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								Export shortcuts
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Export"></img>		
+						</div>
+						<div id="content_category_Export" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Click "Generate" below to begin generating the shortcut list text string for each category. You can then copy and paste each shortcut lists to someone else or to another computer or browser to import the links and text for each shortcut. This is only available on Public Preview 4 and up.
+							</p>
+							<p class="Subwindow_Content_Text">
+									Select a category to create a list from:
+							</p>
+							<p class="Input_Dropdown_SelectedItem" id="dropdownButton_Export_Shortcut" onclick="trigger_toggleDropdown(this.id)">
+								No selected
+							</p>
+							<div class="Input_Dropdown" id="menu_dropdownButton_Export_Shortcut">
+								<!--<p class="Input_Dropdown_Item">
+									Category 1
+									</p>
+									Content is created by JS function SE_CreateDropdown()
+								-->
+							</div>
+							<h1 class="General_Button" onclick="SE_Generate_ExportList()">
+								Generate
+							</h1>
+							<div class="ShortcutEditor_Export_Container"onclick="SE_Export_CopyToClipboard()">
+								<p class="ShortcutEditor_Export_Text" id="pageElement_Export_Text" >
+									
+								</p>
+							</div>
+						</div>
+					</div>
 				</div>
 				<footer class="Footer">
 					<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
