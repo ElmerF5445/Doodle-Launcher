@@ -12,8 +12,8 @@ var ELMSUIVersion = "1.4.2";
 var CompilationDate = "Septemer 12, 2022";
 var path = window.location.pathname;
 var PageName = path.split("/").pop();
-var enable_Dev_Counter = true;
-var enable_Dev_ToggleDivOutlines = true;
+var enable_Dev_Counter = false;
+var enable_Dev_ToggleDivOutlines = false;
 
 // if(enable_Dev_ToggleDivOutlines == true){
 // document.getElementsByTagName("div").style.border = "solid white";
