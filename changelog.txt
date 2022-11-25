@@ -1,39 +1,27 @@
 Changelog
 
-v.1.15 [Public Preview 4] (Pending)
-This version adds an Experimental tab on Settings. This adds two experiments, the Library Profile system, and the In-Tab Browser and Shortcut Preview.
+v.1.15 [Public Preview 4] (December 1, 2022)
+This version adds a way to launch or open all the shortcuts in a category. It also adds a way to import and export shortcuts using text strings that stores the shortcut name and urls.
 === Additions ===
-- Added an Experimental tab on Settings.
+- Added an import and export shortcut system for Shortcut Editor.
 - Added a "Welcome back" message on the home page.
-- Added an "Open all shortcuts" button for each category. (Unblock pop-ups for DL_Main.html for this feature to work.)
-- Added an option to select all text inside an input box when clicked for Shortcut Editor in Settings > Behaviors > Shortcut Editor.
-- Added a Low Battery notification in the Home page. This is toggleable on Settings > Behaviors > Battery.
-- Added an option to blur the wallpaper background in the Home page through Settings > Appearance > Wallpaper.
-- Added an option to add text shadows to text elements through Settings > Appearance > Text.
+- Added an "Open all shortcuts" button on the Category Navigation sidebar. (Unblock pop-ups for DL_Main.html for this feature to work.)
 === Changes ===
-- Updated the onboarding screen to take up the entire window and now has accompanying graphics and different content.
 - Updated the update information screen.
 - Updated the loading screen to have a fade in animation and an updated layout.
 - The loading screen text will now only appear once it has the proper values loaded.
 - The timer that dictates when the loading screen fades out will now only start counting once the rest of the system is done loading.
 - Header menu buttons now updates the cursor to a pointer when hovering over it.
-- Swapping shortcuts in "Re-order Shortcuts" window will no longer put you back to the category selection everytime you swap.
-- Reduced the border radius of subwindow items.
-- The "Display battery percentage" setting has been moved to Settings > Behaviors > Battery.
-- Opening the "Add Item" window in Shortcut Editor will now focus on the first input box visible.
-- The scroll bar will now disappear when full-screen elements are visible.
+- Header buttons now relies on preset arrays to make content more dynamic.
+- Removed the button instruction for Settings > Appearance > Text
 - Toast notifications now limit information that it can display.
 - Toast notifications can be forcefully closed by clicking on it.
 - Toast notifications no longer fades a little bit when being hovered.
-- Shortcuts is now hidden before the starting animation plays when closing the session screen.
 === Experiments ===
 = Pomodoro Technique Timer =
 - Access on DL_Pomodoro.html.
 = In-Tab Browser and Shortcut Preview =
 - This feature allows you to view the clicked shortcut without opening a new tab, and will be opened inside the launcher tab.
-= Library Profile System =
-- This feature allows you to have different profiles/accounts that stores different categories and shortcuts. This lets you separate different shortcut libraries for different purposes.
-- You cannot disable this once you enabled the feature.
 
 
 v.1.14 [Public Preview 3] (September 14, 2022)

@@ -3,17 +3,17 @@
 	This file contains all the JavaScript functionality for Doodle Launcher
 */
 
-var VersionTitle = "Doodle Launcher Public Preview 3";
-var VersionNumber = "Preview 3";
-var ContinuityVersionNumber = "1.14"
-var BuildNumber = 3781;
+var VersionTitle = "Doodle Launcher Public Preview 4";
+var VersionNumber = "Preview 4";
+var ContinuityVersionNumber = "1.15"
+var BuildNumber = 4153;
 var CopyrightTitle = "Content By ElmerF 2022";
 var ELMSUIVersion = "1.4.2";
-var CompilationDate = "Septemer 12, 2022";
+var CompilationDate = "December 1, 2022";
 var path = window.location.pathname;
 var PageName = path.split("/").pop();
 var enable_Dev_Counter = false;
-var enable_Dev_ToggleDivOutlines = false;
+var enable_Dev_ToggleDivOutlines = true;
 
 // if(enable_Dev_ToggleDivOutlines == true){
 // document.getElementsByTagName("div").style.border = "solid white";
@@ -465,6 +465,12 @@ function generate_Launcher_HeaderButtons(pageName){
 			Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
 			Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
 			Generator_HeaderButtons_OnclickAction = ["open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
+		break;
+		case "DL_Settings.html":
+			Generator_HeaderButtons_Text = ["Save changes"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png"];
+			Generator_HeaderButtons_ID = [""];
+			Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
 		break;
 	}
 	for (a = 0; a != Generator_HeaderButtons_Text.length; a++){

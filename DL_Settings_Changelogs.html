@@ -245,6 +245,11 @@
 					Category Navigation
 					<img src="Assets/Icons/icon_close.png" class="Sidebar_CategoryNavigation_Title_Close" onclick="toggle_Sidebar_CategoryNavigation()"></img>
 				</p>
+				<a href="#anchor_category_1.15">
+					<p class="Sidebar_CategoryNavigation_Item">
+						1.15 - December 1, 2022
+					</p>
+				</a>
 				<a href="#anchor_category_1.14">
 					<p class="Sidebar_CategoryNavigation_Item">
 						1.14 - September 14, 2022
@@ -350,6 +355,76 @@
 					<p class="General_Paragraph">
 						To navigate through the changelog, press Ctrl + Right Arrow to open the navigator.
 					</p>
+					
+					<div class="Category">
+						<span class="anchor" id="anchor_category_1.15"></span>
+						<div class="Category_Label" id="category_1.15" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								1.15 - December 1, 2022
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_1.15"></img>		
+						</div>
+						<div id="content_category_1.15" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Additions
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Added an import and export shortcut system for Shortcut Editor.
+								</li>
+								<li>
+									Added a "Welcome back" message on the home page.
+								</li>
+								<li>
+									Added an "Open all shortcuts" button on the Category Navigation sidebar. (Unblock pop-ups for DL_Main.html for this feature to work.)
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Changes
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Updated the update information screen.
+								</li>
+								<li>
+									Updated the loading screen to have a fade in animation and an updated layout.
+								</li>
+								<li>
+									The loading screen text will now only appear once it has the proper values loaded.
+								</li>
+								<li>
+									The timer that dictates when the loading screen fades out will now only start counting once the rest of the system is done loading.
+								</li>
+								<li>
+									Header menu buttons now updates the cursor to a pointer when hovering over it.
+								</li>
+								<li>
+									Header buttons now relies on preset arrays to make content more dynamic.
+								</li>
+								<li>
+									Removed the button instruction for Settings > Appearance > Text
+								</li>
+								<li>
+									Toast notifications now limit information that it can display.
+								</li>
+								<li>
+									Toast notifications can be forcefully closed by clicking on it.
+								</li>
+								<li>
+									Toast notifications no longer fades a little bit when being hovered.
+								</li>
+							</ul>
+							<p class="General_Paragraph">
+								Experimental Feature
+							</p>		
+							<ul class="General_Paragraph">
+								<li>
+									Added Pomodoro Technique Timer page.
+								</li>
+							</ul>
+						</div>
+					</div>
 					
 					<div class="Category">
 						<span class="anchor" id="anchor_category_1.14"></span>
