@@ -512,11 +512,12 @@
 	<div class="PageGrid">
 		<div class="Header" id="pageElement_Header">
 			<img class="Sidebar_Toggle" id="toggle_Sidebar" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar()"></img>
-			<div class="Header_PageNavi" id="button_PageNavi" onclick="toggle_Navigator(this.id)">
-				<h2 class="Header_PageNavi_Title" id="Header_PageNavi_Title">
-					Settings
-				</h2>
-			</div>
+			<div class="Header_PageNavi" id="pageElement_Header_MainMenu" onclick="trigger_toggle_Textbox(this.id)">
+					<img src="Assets/Icons/favicon.png" class="Header_PageNavi_Icon"></img>
+					<h2 class="Header_PageNavi_Title" id="Header_PageNavi_Title">
+						Home
+					</h2>
+				</div>
 			<div class="Header_Buttons" id="pageElement_Header_Buttons">
 				<!-- <h3 class="Header_Buttons_Item" onclick="Settings_ApplyChanges()">
 					Save settings
@@ -526,87 +527,115 @@
 				</h3> -->
 				
 			</div>
-			<div class="Header_Clock" id="pageElement_Header_Clock">
-				<h1 class="Header_Clock_Time" id="Clock_Time">
-					id="Clock_Time"
-				</h1>
-				<h1 class="Header_Clock_Date" id="Clock_Date">
-					id="Clock_Date"
-				</h1>
-			</div>
-			<div class="Header_Battery" id="pageElement_Header_Battery">
-				<h1 class="Header_Battery" id="Battery_Level">
-					%
-				</h1>
-			</div>
-			<div class="Header_RightMenu">
-				<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_softwareUpdate.png"  id="button_Update" onclick="toggle_Textbox(this.id)"></img>
-				<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_wifi_online.png"  id="button_Wifi" onclick="toggle_Textbox(this.id)"></img>
-			</div>
-		</div>
-		<div class="Header_Menu" id="pageElement_Header_Menu">
-			<div class="Header_Menu_Top">
-				<div class="Header_Menu_Top_Clock">
-					<h1 class="Header_Menu_Top_Clock_Time" id="Clock_Time_2">
-						id="Clock_Time"
-					</h1>
-					<h1 class="Header_Menu_Top_Clock_Date" id="Clock_Date_2">
-						id="Clock_Date"
-					</h1>
+			<div class="Header_StatusTray" onclick="trigger_toggle_Textbox(this.id)" id="pageElement_Header_StatusTray">
+					<div class="Header_Clock" id="pageElement_Header_Clock">
+						<h1 class="Header_Clock_Time" id="Clock_Time">
+							id="Clock_Time"
+						</h1>
+						<h1 class="Header_Clock_Date" id="Clock_Date">
+							id="Clock_Date"
+						</h1>
+					</div>
+					<div class="Header_Battery" id="pageElement_Header_Battery">
+						<h1 class="Header_Battery" id="Battery_Level">
+							%
+						</h1>
+					</div>
+					<div class="Header_RightMenu">
+						<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_wifi_online.png"  id="button_Wifi"></img>
+					</div>
 				</div>
-				<h1 class="Header_Menu_Top_Battery" id="Battery_Level_2">
-					%
-				</h1>
-			</div>
-			<div class="Header_PageNavi_Textbox_Title">
-				Launcher Navigation
-			</div>
-			<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageNaviList">
-				
-			</div>
-			<div class="Header_PageNavi_Textbox_Title">
-				Page Actions
-			</div>
-			<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageActions">
-				<!-- <p class="Header_PageNavi_Textbox_List_Item" onclick="Settings_ApplyChanges()">
-					Save settings
-				</p> -->
-			</div>
 		</div>
-		<div class="Header_PageNavi_Textbox" id="button_PageNavi_textbox">
-			<div class="Header_PageNavi_Textbox_Title">
-				Launcher Navigation
+		
+		
+		<div class="Header_MainMenu_Container" style="display: none" id="pageElement_Header_MainMenu_Textbox">
+				<div id="pageElement_Header_MainMenu_Textbox_Content" style="opacity: 0%">
+					<!-- <div class="Header_MainMenu_StatusBar">
+						<h4 class="Header_MainMenu_StatusBar_Text">
+						11:14 PM
+						</h4>
+						<h4 class="Header_MainMenu_StatusBar_Text">
+						Thursday, 12/1/2022
+						</h4>
+						<h4 class="Header_MainMenu_StatusBar_Text">
+						68%
+						</h4>
+					</div> -->
+					<div class="Header_MainMenu_Profile">
+						<img class="Header_MainMenu_Profile_Image" src="Assets/Icons/icon_user.png"></img>
+						<h3 class="Header_MainMenu_Profile_Name">
+							Jemma Regalados
+						</h3>
+					</div>
+					<!-- <div class="Header_MainMenu_SearchBar">
+						<input type="text" class="Header_MainMenu_SearchBar_Input"></input>
+						<img class="Header_MainMenu_SearchBar_Button" src="Assets/Icons/icon_search.png"></img>
+					</div> -->
+					<h3 class="Header_MainMenu_Title">
+						Doodle Launcher
+					</h3>
+					<div class="Header_MainMenu_Navigation" id="pageElement_MainMenu_NavigationList">
+						<!-- <a>
+							<div class="Header_MainMenu_Navigation_Item">
+							<img class="Header_MainMenu_Navigation_Item_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<p class="Header_MainMenu_Navigation_Item_Text">
+							Home
+							</p>
+							</div>
+						</a> -->
+					</div>
+					<h3 class="Header_MainMenu_Title">
+						Page Actions
+					</h3>
+					<div class="Header_MainMenu_Navigation" id="pageElement_PageActionsList">
+						<!-- <div class="Header_MainMenu_Navigation_Item">
+							<img class="Header_MainMenu_Navigation_Item_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<p class="Header_MainMenu_Navigation_Item_Text">
+								Save settings
+							</p>
+						</div>
+						<div class="Header_MainMenu_Navigation_Item">
+						-->
+					</div>
+				</div>
 			</div>
-			<div class="Header_PageNavi_Textbox_List" id="pageElement_PageNaviList">
-				
+		<div class="Header_StatusMenu_Container" id="pageElement_Header_StatusTray_Textbox" style="display: none">
+			<div id="pageElement_Header_StatusTray_Textbox_Content" style="opacity: 0%">
+					<div class="Header_StatusMenu_Clock">
+						<h1 class="Header_StatusMenu_Clock_Time" id="Clock_Time_2">
+							12:30 AM
+						</h1>
+						<p class="Header_StatusMenu_Clock_Date" id="Clock_Date_2">
+							Tuesday, December 06, 2022
+						</p>
+					</div>
+					<div class="Header_StatusMenu_Internet">
+						<h3 class="Header_StatusMenu_Internet_Status" id="textboxElement_Wifi">
+							Connected
+						</h3>
+						<p class="Header_StatusMenu_Internet_Status_Description" id="pageElement_Connection">
+							You are connected to the internet. The launcher will function as intended and shortcuts will open properly.
+						</p>
+						<a href="https://fast.com/" target="_blank" id="pageElement_Connection_Speedtest">
+							<div class="Header_MainMenu_Navigation_Item">
+								<img class="Header_MainMenu_Navigation_Item_Icon" src="Assets/Icons/favicon_old.png"></img>
+								<p class="Header_MainMenu_Navigation_Item_Text">
+									Speedtest
+								</p>
+							</div>
+						</a>
+					</div>
+					<div class="Header_StatusMenu_Battery">
+						<h1 class="Header_StatusMenu_Battery_Percent" id="Battery_Level_2">
+							50.3%
+						</h1>
+						<p class="Header_StatusMenu_Battery_Description" id="Battery_TimeRemaining">
+							Estimated 54 minutes remaining
+						</p>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="Header_Right_Textbox"  id="button_Wifi_textbox">
-			<div class="Header_Right_Textbox_Title" id="textboxElement_Wifi">
-				No Connection
-			</div>				
-			<p class="Header_Right_Textbox_Text" id="pageElement_Connection">
-				Since you're not connected to the internet, links will not open properly. Connect to a Wi-Fi network and refresh the page.
-			</p>
-			<a href="https://fast.com/" target="_blank" id="pageElement_Connection_Speedtest">
-				<p class="Header_Right_Textbox_Text">
-					<u>Speedtest</u>
-				</p>
-			</a>
-		</div>
-		<div class="Header_Right_Textbox" id="button_Update_textbox">
-			<div class="Header_Right_Textbox_Title">
-				Update is available
-			</div>				
-			<p class="Header_Right_Textbox_Text">
-				A launcher update is available for you to download.
-			</p>
-			<a href="DL_Settings.html#LauncherUpdate">
-				<p class="Header_Right_Textbox_Text">
-					<u>Check for updates</u>
-				</p>
-			</a>
-		</div>
+		
 		<div class="Sidebar" id="pageElement_Sidebar">
 			<div class="Sidebar_Item" id="Settings_Tab_Appearance" onclick="trigger_ChangeTab(this.id)">
 				<img class="Sidebar_Icon" id="Settings_Tab_Appearance_Icon" src="Assets/Icons/icon_customize.png"></img>

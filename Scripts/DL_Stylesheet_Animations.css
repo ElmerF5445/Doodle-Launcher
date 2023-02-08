@@ -9,24 +9,34 @@
 }
 
 @keyframes close_SessionScreen{
-	from {opacity: 100%;}
-	to {opacity: 0%;}
+	from {opacity: 100%; transform: translateY(0%);}
+	to {opacity: 0%; transform: translateY(-50%);}
 }
 
 @keyframes open_SessionScreen{
-	from {opacity: 0%;}
-	to {opacity: 100%;}
+	from {opacity: 0%; transform: translateY(-50%);}
+	to {opacity: 100%; transform: translateY(0%);}
 }
 
 
 @keyframes open_Textbox{
-	from {transform: translateY(-30px); opacity: 0%;}
+	from {transform: translateY(-30px); opacity: 0%; max-height: 0%;}
 	to {transform: translateY(0px); opacity: 100%;}
 }
 
 @keyframes close_Textbox{
 	from {transform: translateY(0px); opacity: 100%;}
 	to {transform: translateY(-30px); opacity: 0%;}
+}
+
+@keyframes open_Textbox_Contents{
+	from {transform: translateY(-10px); opacity: 0%;}
+	to {transform: translateY(0px); opacity: 100%;}
+}
+
+@keyframes close_Textbox_Contents{
+	from {opacity: 100%;}
+	to {opacity: 0%;}
 }
 
 @keyframes opening_Navigator_Container_Normal{
@@ -47,6 +57,16 @@
 @keyframes closing_Navigator_Container_Full{
 	from {transform: translateY(0px); opacity: 100%; bottom: 20px;}
 	to {transform: translateY(-30px); opacity: 0%; bottom: 200px;}
+}
+
+@keyframes categoryNavigation_CategoryClicked{
+	0% {background-color: rgba(255, 255, 255, 0.0);}
+	50% {background-color: rgba(255, 255, 255, 0.5);}
+	100% {background-color: rgba(255, 255, 255, 0.0);}
+}
+@keyframes categoryNavigation_CategoryClicked_reset{
+	from {background-color: rgba(255, 255, 255, 0.0);}
+	to {background-color: rgba(255, 255, 255, 0.0);}
 }
 
 @keyframes tabOpening{
@@ -184,4 +204,14 @@
 @keyframes Header_Greeting_Welcome{
 	from {transform: translateY(0px);}
 	to {transform: translateY(-65px);}
+}
+
+@keyframes fadeIn{
+	from {opacity: 0%;}
+	to {opacity: 100%;}
+}
+
+@keyframes fadeOut{
+	from {opacity: 100%;}
+	to {opacity: 0%;}
 }

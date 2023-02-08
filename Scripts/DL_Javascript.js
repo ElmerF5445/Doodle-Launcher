@@ -3,24 +3,23 @@
 	This file contains all the JavaScript functionality for Doodle Launcher
 */
 
-var VersionTitle = "Doodle Launcher Public Preview 4";
-var VersionNumber = "Preview 4";
-var ContinuityVersionNumber = "1.15"
+var VersionTitle = "Doodle Launcher ELMS UI 1.5 Update Beta";
+var VersionNumber = "1.5";
+var ContinuityVersionNumber = "1.5"
 var BuildNumber = 4153;
-var CopyrightTitle = "Content By ElmerF 2022";
-var ELMSUIVersion = "1.4.2";
+var CopyrightTitle = "Content By ElmerF 2023";
+var ELMSUIVersion = "1.5";
 var CompilationDate = "December 1, 2022";
 var path = window.location.pathname;
 var PageName = path.split("/").pop();
-var enable_Dev_Counter = false;
+var enable_Dev_Counter = true;
 var enable_Dev_ToggleDivOutlines = true;
 
 // if(enable_Dev_ToggleDivOutlines == true){
 // document.getElementsByTagName("div").style.border = "solid white";
 // }
 
-var enableGreetings;
-var pageProperty_enableGreetings;
+var dev_debug_ElementOutlines = 0;
 
 var Behavior_EnableBlurEffects;
 var Behavior_DisplayTimeAndDate;
@@ -46,6 +45,145 @@ function OnloadTasks_Onboarding(){
 		Onboarding_PageElements[a].style.display = "none";
 	}
 }
+
+/* Page Properties */
+var pageProperty_MenuName = "Doodle Launcher"; // Refers to the name displayed on the main menu
+var pageProperty_PageTitle = "Home"; // Refers to the page name to be displayed
+var pageProperty_enableGreetings = 0; // Refers to whether the greeting text is to be updated or not
+var pageProperty_enableSidebar = 1; // Refers to whether the sidebar and sidebar toggle will be used
+var pageProperty_enableCategoryLabelIcons = 0; // Refers to whether the icons besides category tabs should appear
+var pageProperty_lockSidebar = 0; // Refers to whether the sidebar will have a contracted and expanded state or a closed and open-fixed-size state
+var pageProperty_enableStatusBar = 0; // Refers to whether the status bar at the right side of the header will be shown
+var pageProperty_enableClockScreen = 0; // Refers to whether the session screen should appear
+var pageProperty_useProfileSystem = 0; // Refers to whether the page will use the profile system introduced in Doodle Launcher
+var pageProperty_useSettingsSystem = 1; // Refers to whether the page will use the personalized settings system. Disabling will set all properties to default and :root values
+var pageProperty_sidebarExpandedWidth = 250; // Refers to the width of the sidebar when expanded. Requires pageProperty_enableStatusBar = 1
+var pageProperty_backgroundState = 0; // Refers to the state of the background for the page. 0 = Solid color, BGColor-General value will be used; 1 = Wallpaper, BG-WallpaperImg will be used; 2 = Wallpaper is shown with blur effect, BG-WallpaperImg, BGColor-Opacitated, and Element-BackdropBlur will be used
+var pageProperty_enableCategoryNavigation = 0; // Refers to whether the page uses the category navigation system to generate the sidebar links
+var pageProperty_pageIcon = "placeholder.png"; // Refers to the icon that will be displayed on the header, favicon, and loading screen
+
+function dev_OnloadTasks(){
+	startTime();
+	startDate();
+	displayDay();
+	// close_LoadingScreen();
+	sessionCheck();
+	var path = window.location.pathname;
+	var PageName = path.split("/").pop();
+	console.log("Welcome to "+VersionTitle+" "+VersionNumber+" ("+ContinuityVersionNumber+"). Copyright "+CopyrightTitle);
+	generate_Launcher_HeaderButtons(PageName);
+	console.log("Setting page properties for page '" + PageName + "'...");
+	switch (PageName){
+		case "DL_Template_V1.html":
+			pageProperty_pageIcon = "placeholder.png";
+			pageProperty_MenuName = "Doodle Launcher";
+			pageProperty_PageTitle = "Template";
+			pageProperty_enableGreetings = 1;
+			pageProperty_enableSidebar = 1;
+			pageProperty_enableCategoryLabelIcons = 0;
+			pageProperty_lockSidebar = 0;
+			pageProperty_enableStatusBar = 1;
+			pageProperty_useProfileSystem = 1;
+			pageProperty_sidebarExpandedWidth = 300;
+			pageProperty_backgroundState = 1;
+			pageProperty_enableClockScreen = 1;
+			pageProperty_enableCategoryNavigation = 0;
+		break;
+		case "DL_Main_Dev.html":
+			pageProperty_pageIcon = "favicon.png";
+			pageProperty_MenuName = "Doodle Launcher";
+			pageProperty_PageTitle = "Home";
+			pageProperty_enableGreetings = 1;
+			pageProperty_enableSidebar = 1;
+			pageProperty_enableCategoryLabelIcons = 0;
+			pageProperty_lockSidebar = 0;
+			pageProperty_enableStatusBar = 1;
+			pageProperty_useProfileSystem = 1;
+			pageProperty_sidebarExpandedWidth = 300;
+			pageProperty_backgroundState = 1;
+			pageProperty_enableClockScreen = 1;
+			pageProperty_enableCategoryNavigation = 1;
+			Generator_Render_Categories();
+		break;
+		case "DL_Settings_Dev.html":
+			pageProperty_pageIcon = "icon_settings.png";
+			pageProperty_MenuName = "Doodle Launcher";
+			pageProperty_PageTitle = "Settings";
+			pageProperty_enableGreetings = 0;
+			pageProperty_enableSidebar = 1;
+			pageProperty_enableCategoryLabelIcons = 0;
+			pageProperty_lockSidebar = 0;
+			pageProperty_enableStatusBar = 1;
+			pageProperty_useProfileSystem = 1;
+			pageProperty_sidebarExpandedWidth = 300;
+			pageProperty_backgroundState = 1;
+			pageProperty_enableClockScreen = 1;
+			pageProperty_enableCategoryNavigation = 0;
+		break;
+	}
+	generate_Launcher_NavigationList();
+	dev_SetPageProperties();
+}
+
+function dev_SetPageProperties(){
+	var SetPageProperties_Header_SidebarToggleValue = "50px";
+	var SetPageProperties_Header_StatusBarValue = "auto";
+	var SetPageProperties_Header_Value;
+	if (pageProperty_enableSidebar == 0){
+		document.getElementById("pageElement_Header_SidebarToggle").style.visibility = "hidden";
+		document.getElementById("pageElement_Sidebar").style.display = "none";
+		console.log("pageProperty_enableSidebar is disabled");
+		
+		SetPageProperties_Header_SidebarToggleValue = "0px";
+		document.getElementById("pageElement_Content").style.gridTemplateColumns = "0px 1fr";
+		 
+	}
+	
+	if (pageProperty_lockSidebar == 1){
+		document.getElementById("pageElement_Sidebar").style.width = "0px";
+		document.getElementById("pageElement_Content").style.marginLeft = "0px"
+	}
+	if (pageProperty_enableStatusBar == 0){
+		SetPageProperties_Header_StatusBarValue = "0px";
+		document.getElementById("pageElement_Header_StatusTray").style.display = "none";
+		console.log("pageProperty_enableStatusBar is disabled");
+	}
+	SetPageProperties_Header_Value = SetPageProperties_Header_SidebarToggleValue + " auto 1fr "+SetPageProperties_Header_StatusBarValue;
+	document.getElementById("pageElement_Header").style.gridTemplateColumns = SetPageProperties_Header_Value;
+	
+	
+	if (pageProperty_useProfileSystem == 0){
+		document.getElementById("pageElement_Header_MainMenu_ProfileButton").style.display = "none";
+		console.log("pageProperty_useProfileSystem is disabled");
+	}
+	
+	if (pageProperty_backgroundState == 0){
+		var stylesheet = document.querySelector('.MainPage');
+		stylesheet.style.setProperty("background-image", "none");
+		var stylesheet2 = document.querySelector(':root');
+		stylesheet2.style.setProperty("--BG-WallpaperImg", "none");
+	}
+	if (pageProperty_backgroundState == 2){
+		document.getElementById("pageElement_BlurBG").style.display = "block";
+		console.log("pageProperty_backgroundState has been set to background blur");
+	}
+	
+	document.getElementById("pageElement_Header_MainMenu_Textbox_Content_PageName").innerHTML = pageProperty_MenuName;
+	
+	document.getElementById("Header_PageNavi_Title").innerHTML = pageProperty_PageTitle;
+	
+	if (pageProperty_useSettingsSystem == 1){
+		Settings_LoadAppearance();
+	}
+	
+	document.getElementById("pageElement_favicon").setAttribute("href", "Assets/Icons/"+pageProperty_pageIcon);
+	document.getElementById("Header_PageIcon").src = "Assets/Icons/"+pageProperty_pageIcon;
+	document.getElementById("LoadingScreen_Icon").src = "Assets/Icons/"+pageProperty_pageIcon;
+	
+	console.log("Page properties has been set successfully");
+	set_Version_General();
+}
+
 function OnloadTasks(){	
 	check_SettingsFileExistence();
 	//Settings_LoadAppearance();
@@ -64,25 +202,46 @@ function OnloadTasks(){
 	console.log("Welcome to "+VersionTitle+" "+VersionNumber+" ("+ContinuityVersionNumber+"). Copyright "+CopyrightTitle);
 	generate_Launcher_HeaderButtons(PageName);
 	switch (PageName){
-		case "DL_Main.html":
-			pageProperty_enableGreetings = 1;
+		case "DL_LogIn.html":
+			pageProperty_enableGreetings = 0;
 			var pageProperty_showSidebarToggle = 0;
 			var pageProperty_enableSidebar = 0;
 			var pageProperty_enableCategoryLabelIcons = 0;
 			var pageProperty_enableTabContainers = 0;
 			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
 			var pageProperty_enableCategoryNavigation = 0;
+			pageProperty_lockSidebar = false;
+			pageProperty_PageTitle = "Log in";
+			check_Version();
 			
+			hide_ToggleableElements();
+			setTimeout(start_Animations, 2500);
+			enableGreetings = 0;
+			
+			generate_ProfileSelector();
+			if (Appearance_Behavior_BlurHomeWallpaper == true || Appearance_Behavior_BlurHomeWallpaper == "true"){
+				document.getElementById("pageElement_WallpaperBlur").style.display = "block";
+			} else {
+				document.getElementById("pageElement_WallpaperBlur").style.display = "none";
+			}
+		break;
+		case "DL_Main.html":
+			pageProperty_enableGreetings = 1;
+			var pageProperty_showSidebarToggle = 1;
+			var pageProperty_enableSidebar = 1;
+			var pageProperty_enableCategoryLabelIcons = 0;
+			var pageProperty_enableTabContainers = 0;
+			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
+			var pageProperty_enableCategoryNavigation = 0;
+			pageProperty_lockSidebar = false;
 			pageProperty_PageTitle = "Home";
 			check_Version();
 			Generator_Render_Categories();
-			/*const SE_Array_Category_Index = ["fillerCategory", "TEST_Category_1", "TEST_Category_2", "TEST_Category_3", "Education", "Elmer Elmer", "Socials"];
-			localStorage.setItem(key_Index_Category, JSON.stringify(SE_Array_Category_Index));*/
 			hide_ToggleableElements();
 			setTimeout(start_Animations, 2500);
 			enableGreetings = 1;
 			
-			generate_ProfileSelector();
+			
 			if (Appearance_Behavior_BlurHomeWallpaper == true || Appearance_Behavior_BlurHomeWallpaper == "true"){
 				document.getElementById("pageElement_WallpaperBlur").style.display = "block";
 			} else {
@@ -93,6 +252,7 @@ function OnloadTasks(){
 			pageProperty_enableGreetings = 1;
 			var pageProperty_showSidebarToggle = 1;
 			var pageProperty_enableSidebar = 1;
+			pageProperty_lockSidebar = false;
 			var pageProperty_enableCategoryLabelIcons = 0;
 			var pageProperty_enableTabContainers = 0;
 			var pageProperty_enableCategoryNavigation = 0;
@@ -111,6 +271,7 @@ function OnloadTasks(){
 			pageProperty_enableGreetings = 1;
 			var pageProperty_showSidebarToggle = 1;
 			var pageProperty_enableSidebar = 1;
+			pageProperty_lockSidebar = false;
 			var pageProperty_enableCategoryLabelIcons = 0;
 			var pageProperty_enableTabContainers = 0;
 			var pageProperty_enableCategoryNavigation = 0;
@@ -121,6 +282,7 @@ function OnloadTasks(){
 			pageProperty_enableGreetings = 0;
 			var pageProperty_showSidebarToggle = 0;
 			var pageProperty_enableSidebar = 0;
+			pageProperty_lockSidebar = false;
 			var pageProperty_enableCategoryLabelIcons = 0;
 			var pageProperty_enableTabContainers = 0;
 			var pageProperty_enableCategoryNavigation = 0;
@@ -131,6 +293,7 @@ function OnloadTasks(){
 			pageProperty_enableGreetings = 0;
 			var pageProperty_showSidebarToggle = 1;
 			var pageProperty_enableSidebar = 1;
+			pageProperty_lockSidebar = false;
 			var pageProperty_enableCategoryLabelIcons = 0;
 			var pageProperty_enableTabContainers = 1;
 			var pageProperty_enableCategoryNavigation = 0;
@@ -143,6 +306,7 @@ function OnloadTasks(){
 			pageProperty_enableGreetings = 0;
 			var pageProperty_showSidebarToggle = 0;
 			var pageProperty_enableSidebar = 0;
+			pageProperty_lockSidebar = false;
 			var pageProperty_enableCategoryLabelIcons = 0;
 			var pageProperty_enableTabContainers = 0;
 			var pageProperty_enableCategoryNavigation = 1;
@@ -153,11 +317,38 @@ function OnloadTasks(){
 			pageProperty_enableGreetings = 0;
 			var pageProperty_showSidebarToggle = 0;
 			var pageProperty_enableSidebar = 0;
+			pageProperty_lockSidebar = false;
 			var pageProperty_enableCategoryLabelIcons = 0;
 			var pageProperty_enableTabContainers = 0;
 			var pageProperty_enableCategoryNavigation = 0;
 			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
 			pageProperty_PageTitle = "Tasker";
+		break;
+		case "WA_Main.html":
+			pageProperty_enableGreetings = 0;
+			var pageProperty_showSidebarToggle = 1;
+			var pageProperty_enableSidebar = 1;
+			pageProperty_lockSidebar = true;
+			var pageProperty_enableCategoryLabelIcons = 0;
+			var pageProperty_enableTabContainers = 0;
+			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
+			var pageProperty_enableCategoryNavigation = 0;
+			
+			pageProperty_PageTitle = "Watermark Applier";
+			check_Version();
+			// Generator_Render_Categories();
+			/*const SE_Array_Category_Index = ["fillerCategory", "TEST_Category_1", "TEST_Category_2", "TEST_Category_3", "Education", "Elmer Elmer", "Socials"];
+			localStorage.setItem(key_Index_Category, JSON.stringify(SE_Array_Category_Index));*/
+			hide_ToggleableElements();
+			setTimeout(start_Animations, 2500);
+			enableGreetings = 1;
+			
+			generate_ProfileSelector();
+			if (Appearance_Behavior_BlurHomeWallpaper == true || Appearance_Behavior_BlurHomeWallpaper == "true"){
+				document.getElementById("pageElement_WallpaperBlur").style.display = "block";
+			} else {
+				document.getElementById("pageElement_WallpaperBlur").style.display = "none";
+			}
 		break;
 	}
 	console.log("Setting page properties with the following values: "+pageProperty_showSidebarToggle+" | "+pageProperty_enableCategoryLabelIcons+" | "+pageProperty_enableSidebar+" | "+pageProperty_enableTabContainers);
@@ -175,7 +366,7 @@ function OnloadTasks(){
 	}*/
 	
 	if (pageProperty_showSidebarToggle == 1){
-		document.getElementById("pageElement_Header").style.gridTemplateColumns = "30px auto 1fr auto auto auto"; //Includes the sidebar toggle to the grid
+		document.getElementById("pageElement_Header").style.gridTemplateColumns = "30px auto 1fr auto"; //Includes the sidebar toggle to the grid
 		document.getElementById("pageElement_MainContent").style.paddingLeft = "50px"; //Changes the container padding
 		console.log("SidebarToggle");
 		} else {
@@ -192,7 +383,7 @@ function OnloadTasks(){
 		}
 	}
 	if (pageProperty_enableSidebar == 1){
-		document.getElementById("pageElement_Sidebar").style.display = "grid"; //Shows the sidebar
+		document.getElementById("pageElement_Sidebar").style.display = "flex"; //Shows the sidebar
 		document.getElementById("pageElement_MainContent").style.paddingLeft = "50px"; //Changes the container padding 
 		console.log("Enabled")
 	}
@@ -202,12 +393,17 @@ function OnloadTasks(){
 			tabs[a].style.display = "none";
 		}
 	}
+	if (pageProperty_lockSidebar == true){
+		document.getElementById("pageElement_Sidebar").style.width = "320px";
+		document.getElementById("pageElement_MainContent").style.paddingLeft = "315px";
+			Sidebar_State = "Expanded";
+	}
 	
 	console.log(pageProperty_showSidebarToggle_CategoryNavigation);
 	console.log(pageProperty_showSidebarToggle);
 	
 	Settings_CheckSettingFile();
-	document.getElementById("button_Update").style.display = "none";
+	
 	
 	document.getElementById("pageElement_SearchQuery_3").placeholder = "Search using "+Behavior_DisplaySearchBar_PreferredEngine;
 	
@@ -285,20 +481,20 @@ function apply_Behaviors(){
 	
 	if(Behavior_DisplayTimeAndDate == false){
 		document.getElementById("pageElement_Header_Clock").style.display = "none";
-		document.getElementById("Clock_Time_2").style.display = "none";
-		document.getElementById("Clock_Date_2").style.display = "none";
+		/* document.getElementById("Clock_Time_2").style.display = "none";
+		document.getElementById("Clock_Date_2").style.display = "none"; */
 		} else {
 		document.getElementById("pageElement_Header_Clock").style.display = "block";
-		document.getElementById("Clock_Time_2").style.display = "block";
-		document.getElementById("Clock_Date_2").style.display = "block";
+		/* document.getElementById("Clock_Time_2").style.display = "block";
+		document.getElementById("Clock_Date_2").style.display = "block"; */
 	}
 	
 	if(Behavior_DisplayBattery == false){
 		document.getElementById("pageElement_Header_Battery").style.display = "none";
-		document.getElementById("Battery_Level_2").style.display = "none";
+		/* document.getElementById("Battery_Level_2").style.display = "none"; */
 		} else {
 		document.getElementById("pageElement_Header_Battery").style.display = "block";
-		document.getElementById("Battery_Level_2").style.display = "block";
+		/* document.getElementById("Battery_Level_2").style.display = "block"; */
 	}
 	
 	if(Behavior_DisplayInternetStatus == false){
@@ -347,11 +543,9 @@ function set_Version_General(){
 	document.getElementById("pageElement_SessionScreen_Copyright").innerHTML = VersionTitle+" | "+CopyrightTitle;
 	document.getElementById("pageElement_Footer_VersionTitle").innerHTML = VersionTitle;
 	document.getElementById("pageElement_Footer_Copyright").innerHTML = CopyrightTitle;
-	
-	var path = window.location.pathname;
-	var PageName = path.split("/").pop();
-	console.log("Welcome to "+VersionTitle+" "+VersionNumber+" ("+ContinuityVersionNumber+"). Copyright "+CopyrightTitle);
-	switch (PageName){
+document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle + " - " + pageProperty_PageTitle;
+
+	/* switch (PageName){
 		case "DL_Main.html":
 		document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle + " - " + "Home";
 		break;
@@ -367,7 +561,7 @@ function set_Version_General(){
 		default:
 		document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle;
 		break;
-	}
+	} */
 	
 	// Set loading screen elements visible
 	document.getElementById("LoadingScreen_UpperSection").style.animationName = "open_LoadingScreen_Elements";
@@ -402,7 +596,8 @@ function wait_LoadingScreen(){
 }
 function remove_LoadingScreen(){
 	var x = document.getElementById("LoadingScreen");
-	x.parentNode.removeChild(x);
+	x.style.display = "none";
+	//x.parentNode.removeChild(x);
 	start_Animations();
 }
 
@@ -421,8 +616,9 @@ function check_Connection(){
 }
 
 function generate_Launcher_NavigationList(){
-	let navigationListItems = ["Home", "Shortcut Editor", "Settings", "Pomodoro Timer"]; //Launcher navigation text
-	let navigationListItems_Link = ["DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html"]; //Launcher navigation links
+	let navigationListItems = ["Old UI", "Home", "Shortcut Editor", "Settings", "Pomodoro Timer", "Watermark Applier"]; //Launcher navigation text
+	let navigationListItems_Link = ["file:///C:/Users/Elmer%20Jr%20G%20Felisilda/Documents/HTML%20Projects/Doodle%20Launcher/DL_Main.html", "DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html", "WA_Main.html"]; //Launcher navigation links
+	let navigationListItems_Icon = ["favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png"];
 	
 	for (var i = 0; i < navigationListItems.length; i++) {
 		var navigationListItems_Select = navigationListItems[i]; //Contains the selected pagenavi text
@@ -432,26 +628,25 @@ function generate_Launcher_NavigationList(){
 		var listItemLink = document.createElement('a'); //Creates an a element
 		listItemLink.href = navigationListItems_Link_Select; //Adds the link
 		listItemLink.setAttribute("id", "pageElement_PageNaviList_Item_"+i); //Adds an id to attach the text
-		document.getElementById("pageElement_PageNaviList").appendChild(listItemLink); //Attaches the a element to the page navi element
+		document.getElementById("pageElement_MainMenu_NavigationList").appendChild(listItemLink); //Attaches the a element to the page navi element
+		
+		var listItemLink_Div = document.createElement('div');
+		listItemLink_Div.classList.add("Header_MainMenu_Navigation_Item");
+		listItemLink_Div.setAttribute("id", "pageElement_PageNaviList_Item_Div_"+i);
+		document.getElementById("pageElement_PageNaviList_Item_"+i).appendChild(listItemLink_Div);
+		
+		listItemLink_Icon = document.createElement('img');
+		listItemLink_Icon.src = "Assets/Icons/"+ navigationListItems_Icon[i];
+		listItemLink_Icon.classList.add("Header_MainMenu_Navigation_Item_Icon");
+		document.getElementById("pageElement_PageNaviList_Item_Div_"+i).appendChild(listItemLink_Icon);
 		
 		var listItemLink_Text = document.createElement('p'); //Creates a text p element
 		listItemLink_Text.innerHTML = navigationListItems_Select; //Sets text to selected page navi text
-		listItemLink_Text.classList.add("Header_PageNavi_Textbox_List_Item"); //Adds the styling to the object
-		document.getElementById("pageElement_PageNaviList_Item_"+i).appendChild(listItemLink_Text); //Attaches object to the a object
-		
-		//Creates the list on the header menu (only appears when the screen is small enough)
-		
-		//Attaches to the page
-		var listItemLink = document.createElement('a'); //Creates an a element
-		listItemLink.href = navigationListItems_Link_Select; //Adds the link
-		listItemLink.setAttribute("id", "pageElement_PageNaviList_Item_"+i); //Adds an id to attach the text
-		document.getElementById("pageElement_Header_Menu_PageNaviList").appendChild(listItemLink); //Attaches the a element to the page navi element
-		
-		var listItemLink_Text = document.createElement('p'); //Creates a text p element
-		listItemLink_Text.innerHTML = navigationListItems_Select; //Sets text to selected page navi text
-		listItemLink_Text.classList.add("Header_PageNavi_Textbox_List_Item"); //Adds the styling to the object
-		document.getElementById("pageElement_PageNaviList_Item_"+i).appendChild(listItemLink_Text); //Attaches object to the a object
+		listItemLink_Text.classList.add("Header_MainMenu_Navigation_Item_Text"); //Adds the styling to the object
+		document.getElementById("pageElement_PageNaviList_Item_Div_"+i).appendChild(listItemLink_Text); //Attaches object to the a object
 	}
+	
+	
 }
 
 function generate_Launcher_HeaderButtons(pageName){
@@ -460,43 +655,65 @@ function generate_Launcher_HeaderButtons(pageName){
 	let Generator_HeaderButtons_ID = [];
 	let Generator_HeaderButtons_OnclickAction = [];
 	switch (pageName){
+		case "DL_Main.html":
+			Generator_HeaderButtons_Text = ["Internet search", "Category Navigation"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
+			Generator_HeaderButtons_ID = ["", ""];
+			Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()", "toggle_Sidebar_CategoryNavigation()"];
+			var Generator_DisplayInHeader = false;
+		break;
 		case "DL_ShortcutEditor.html":
 			Generator_HeaderButtons_Text = ["Add Item", "Re-order categories", "Re-order shortcuts", "How to use"];
 			Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
 			Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
 			Generator_HeaderButtons_OnclickAction = ["open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
+			var Generator_DisplayInHeader = true;
 		break;
 		case "DL_Settings.html":
 			Generator_HeaderButtons_Text = ["Save changes"];
 			Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png"];
 			Generator_HeaderButtons_ID = [""];
 			Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
+			var Generator_DisplayInHeader = true;
 		break;
 	}
-	for (a = 0; a != Generator_HeaderButtons_Text.length; a++){
-		var HeaderButton_Text = document.createElement('h3');
-		HeaderButton_Text.innerHTML = Generator_HeaderButtons_Text[a];
-		HeaderButton_Text.classList.add("Header_Buttons_Item");
-		HeaderButton_Text.setAttribute("id", Generator_HeaderButtons_ID[a]);
-		HeaderButton_Text.setAttribute("onclick", Generator_HeaderButtons_OnclickAction[a]);
-		document.getElementById("pageElement_Header_Buttons").appendChild(HeaderButton_Text);
+	
+	if(Generator_DisplayInHeader == true){
+		for (a = 0; a != Generator_HeaderButtons_Text.length; a++){
+			var HeaderButton_Text = document.createElement('h3');
+			HeaderButton_Text.innerHTML = Generator_HeaderButtons_Text[a];
+			HeaderButton_Text.classList.add("Header_Buttons_Item");
+			HeaderButton_Text.setAttribute("id", Generator_HeaderButtons_ID[a]);
+			HeaderButton_Text.setAttribute("onclick", Generator_HeaderButtons_OnclickAction[a]);
+			document.getElementById("pageElement_Header_Buttons").appendChild(HeaderButton_Text);
+		}
 	}
 	
-	for (a = 0; a != Generator_HeaderButtons_Text.length; a++){
-		var HeaderButton_Text = document.createElement('p');
-		HeaderButton_Text.innerHTML = Generator_HeaderButtons_Text[a];
-		HeaderButton_Text.classList.add("Header_PageNavi_Textbox_List_Item");
-		HeaderButton_Text.setAttribute("id", Generator_HeaderButtons_ID[a]);
-		HeaderButton_Text.setAttribute("onclick", Generator_HeaderButtons_OnclickAction[a]);
-		document.getElementById("pageElement_Header_Menu_PageActions").appendChild(HeaderButton_Text);
+	for (i = 0; i != Generator_HeaderButtons_Text.length; i++){		
+		//Attaches to the page
+		var listItemLink_Div = document.createElement('div');
+		listItemLink_Div.classList.add("Header_MainMenu_Navigation_Item");
+		listItemLink_Div.setAttribute("id", "pageElement_PageActionsList_Item_Div_"+i);
+		listItemLink_Div.setAttribute("onclick", Generator_HeaderButtons_OnclickAction[i]);
+		document.getElementById("pageElement_PageActionsList").appendChild(listItemLink_Div);
+		
+		listItemLink_Icon = document.createElement('img');
+		listItemLink_Icon.src = Generator_HeaderButtons_Icon[i];
+		listItemLink_Icon.classList.add("Header_MainMenu_Navigation_Item_Icon");
+		document.getElementById("pageElement_PageActionsList_Item_Div_"+i).appendChild(listItemLink_Icon);
+		
+		var listItemLink_Text = document.createElement('p'); //Creates a text p element
+		listItemLink_Text.innerHTML = Generator_HeaderButtons_Text[i]; //Sets text to selected page navi text
+		listItemLink_Text.classList.add("Header_MainMenu_Navigation_Item_Text"); //Adds the styling to the object
+		document.getElementById("pageElement_PageActionsList_Item_Div_"+i).appendChild(listItemLink_Text); //Attaches object to the a object
 	}
+	
 }
 
 function hide_ToggleableElements(){
 	document.getElementById("pageElement_Toggleable_SearchBar").style.display = "none";
 	document.getElementById("pageElement_SessionScreen").style.display = "none";
 	document.getElementById("pageElement_SessionScreen").style.display = "none";
-	document.getElementById("button_Wifi_textbox").style.display = "none";
 	if (PageName == "DL_ShortcutEditor.html"){
 		document.getElementById("subwindow_AddItem").style.display = "none";
 	}
@@ -646,15 +863,18 @@ function open_SessionScreen(){
 	sessionScreenState = "visible";
 	var x = document.getElementById("pageElement_SessionScreen");
 	x.style.animationName = "open_SessionScreen";
-	x.style.animationDuration = "0.3s";
+	x.style.animationDuration = "0.5s";
 	x.style.animationFillMode = "forwards";
 	x.style.display = "block"
 	setTimeout(function(){x.style.display = "block"; start_Animations();}, 500);
 	
-	var shortcutObjects = document.querySelectorAll(".Shortcut_Item");
-    for (var a = 0; a < shortcutObjects.length; a++) {
-        shortcutObjects[a].style.display = "none";
-	}
+	x.addEventListener("animationend", function(){
+		var shortcutObjects = document.querySelectorAll(".Shortcut_Item");
+		for (var a = 0; a < shortcutObjects.length; a++) {
+			shortcutObjects[a].style.display = "none";
+		}
+	});
+	
 }
 
 function close_SessionScreen(){
@@ -718,13 +938,6 @@ function check_WindowSize(){
 		MainContent.style.margin = "auto";
 		Header_Buttons.style.display = "flex";
 		//Hides the full screen navigator
-		NavigatorElementFull = document.getElementById("pageElement_Header_Menu");
-		if (NavigatorElementFull.style.display != "none"){
-			NavigatorElementFull.style.display = "none";
-			
-			var NavigatorElement = document.getElementById("button_PageNavi_textbox");
-			NavigatorElement.style.display = "block";
-		}
 		Header_Clock.style.visibility = "visible";
 		Header_Battery.style.visibility = "visible";
 	}
@@ -734,11 +947,6 @@ function check_WindowSize(){
 		Header_Buttons.style.display = "none";
 		//Hides the small navigator
 		var NavigatorElement = document.getElementById("button_PageNavi_textbox");
-		if (NavigatorElement.style.display != "none"){
-			NavigatorElement.style.display = "none";			
-			NavigatorElementFull = document.getElementById("pageElement_Header_Menu");
-			NavigatorElementFull.style.display = "block";
-		}
 		Header_Clock.style.visibility = "hidden";
 		Header_Battery.style.visibility = "hidden";
 	}
@@ -774,22 +982,40 @@ document.addEventListener('keydown', (event) => {
 	}
 	//if (PageName == "DL_ShortcutEditor.html"){
 	if (keysPressed['Control'] && event.key == ' ') {
-		if(document.getElementById("subwindow_AddItem").style.display == "none"){
-			open_Subwindow("AddItem");
-			} else {
-			close_Subwindow("AddItem");
+		if(PageName == "WA_Main.html"){
+			generateImage();
+		} else {
+			if(document.getElementById("subwindow_AddItem").style.display == "none"){
+				open_Subwindow("AddItem");
+				} else {
+				close_Subwindow("AddItem");
+			}
 		}
 		
 	}
 	if (keysPressed['Control'] && event.key == 'b') {
-		open_SessionScreen();
-		
+		if (pageProperty_enableClockScreen == 1){
+			open_SessionScreen();
+		}
 	}
 	if (keysPressed['Control'] && event.key == 'ArrowRight') {
-		if(Behavior_DisplayCategoryNavigation == true){
-			toggle_Sidebar_CategoryNavigation();
+		if (pageProperty_enableSidebar == 1){
+			toggle_Sidebar();
 		}
-		
+		/* if(PageName == "WA_Main.html"){
+			WA_Next_Image();
+		} */
+	}
+	if (keysPressed['Control'] && event.key == 'ArrowLeft') {
+		if(PageName == "WA_Main.html"){
+			WA_Previous_Image();
+		}
+	}
+	
+	if (keysPressed['Control'] && event.key == 'CapsLock') {
+		if(PageName == "WA_Main.html"){
+			WA_Reset();
+		}
 	}
 	
 	if (keysPressed['Control'] && event.key == 'Shift') {
@@ -802,13 +1028,21 @@ document.addEventListener('keydown', (event) => {
 		
 	}
 	
-	/*if (keysPressed['Control'] && event.key == 'Alt') {
-		if (enable_Dev_ToggleDivOutlines == true){
-		document.getElementsByClassName("div").style.borderStyle = "solid";
-		document.getElementsByClassName("div").style.borderColor = "yellow";
+	
+	if (keysPressed['Control'] && event.key == 'Alt') {
+		if (dev_debug_ElementOutlines == 0){
+			var stylesheet = document.querySelector(':root');
+			stylesheet.style.setProperty("--Debug-ElementOutline", "solid red");
+			dev_debug_ElementOutlines = 1;
+			console.log("Outlines on");
+		} else if (dev_debug_ElementOutlines == 1){
+			var stylesheet = document.querySelector(':root');
+			stylesheet.style.setProperty("--Debug-ElementOutline", "none");
+			dev_debug_ElementOutlines = 0;
+			console.log("Outlines off");
 		}
-		
-	}*/
+	}
+	
 	
 	if (keysPressed['Escape']){
 		if (subwindow_activeSubwindow != "none"){
@@ -893,12 +1127,34 @@ function toggle_SearchBar(){
 }
 
 //Toggle sidebar
+var Sidebar_State = "Contracted";
 function toggle_Sidebar(){
-	var Sidebar = document.getElementById("pageElement_Sidebar");
-	if (Sidebar.style.width == "50px"){ //Expands the sidebar
-		Sidebar.style.width = "320px";
-		} else { //Closes the sidebar
-		Sidebar.style.width = "50";
+	var Sidebar = document.getElementById("pageElement_Content");
+	var toggle_Sidebar_GridTemplateColumns = "50px 1fr";
+	if (pageProperty_enableSidebar == 1){
+		if (pageProperty_lockSidebar == 0){
+			if (Sidebar_State == "Contracted"){
+				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarExpandedWidth + "px";
+				document.getElementById("pageElement_Content").style.marginLeft = pageProperty_sidebarExpandedWidth + "px"
+				Sidebar_State = "Expanded";
+			} else if (Sidebar_State == "Expanded"){
+				document.getElementById("pageElement_Sidebar").style.width = "50px";
+				document.getElementById("pageElement_Content").style.marginLeft = "50px"
+				// var toggle_Sidebar_GridTemplateColumns = "50px 1fr";
+				Sidebar_State = "Contracted";
+			}
+		} else if (pageProperty_lockSidebar == 1){
+			if (Sidebar_State == "Contracted"){
+				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarExpandedWidth + "px";
+				document.getElementById("pageElement_Content").style.marginLeft = pageProperty_sidebarExpandedWidth + "px"
+				Sidebar_State = "Expanded";
+			} else if (Sidebar_State == "Expanded"){
+				document.getElementById("pageElement_Sidebar").style.width = "0px";
+				document.getElementById("pageElement_Content").style.marginLeft = "0px"
+				Sidebar_State = "Contracted";
+			}
+		}
+		// document.getElementById("pageElement_Content").style.gridTemplateColumns = toggle_Sidebar_GridTemplateColumns;
 	}
 }
 
@@ -908,9 +1164,11 @@ function toggle_Sidebar_CategoryNavigation(){
 	if (Sidebar.style.width == "0px"){ //Expands the sidebar
 		Sidebar.style.width = "320px";
 		Sidebar.style.paddingLeft = "10px";
-		} else { //Closes the sidebar
+		document.getElementById("pageElement_MainContent").style.paddingLeft = "315px";
+	} else { //Closes the sidebar
 		Sidebar.style.width = "0px";
 		Sidebar.style.paddingLeft = "0px";
+		document.getElementById("pageElement_MainContent").style.paddingLeft = "0px";
 	}
 }
 
@@ -1001,6 +1259,38 @@ function close_Subwindow(ID){
 	subwindowElement.style.animationFillMode = "forwards";
 	subwindow_activeSubwindow = "none";
 	setTimeout(function(){subwindowElement.style.display = "none";}, 300);
+	
+}
+
+function trigger_toggle_Textbox(ID){
+	var textboxID = document.getElementById(ID + "_Textbox");
+	var textboxContentsID = document.getElementById(ID + "_Textbox_Content");
+	if (textboxID.style.display == "none"){
+		textboxID.style.display = "block";
+		textboxID.style.animationFillMode = "forwards";
+		textboxID.style.animationName = "open_Textbox";
+		textboxID.style.animationDuration = "var(--Element-Transition-Delay)";
+		
+		textboxContentsID.style.display = "block";
+		textboxContentsID.style.animationFillMode = "forwards";
+		textboxContentsID.style.animationName = "open_Textbox_Contents";
+		textboxContentsID.style.animationDuration = "var(--Element-Transition-Delay)";
+		textboxContentsID.style.animationDelay= "0.21s";
+	} else {
+		// textboxID.style.display = "none";
+		textboxID.style.animationFillMode = "forwards";
+		textboxID.style.animationName = "close_Textbox";
+		textboxID.style.animationDuration = "var(--Element-Transition-Delay)";
+		setTimeout(function(){textboxID.style.display = "none";}, 500);
+		
+		// textboxContentsID.style.display = "none";
+		textboxContentsID.style.animationFillMode = "forwards";
+		textboxContentsID.style.animationName = "close_Textbox_Contents";
+		textboxContentsID.style.animationDuration = "0.3s";
+		textboxContentsID.style.opacity = "0%";
+		setTimeout(function(){textboxContentsID.style.display = "none";}, 200);
+	}
+	
 	
 }
 
@@ -1145,22 +1435,27 @@ function startTime() {
 		} else {
 		var AMPM = "PM";
 	}
-	document.getElementById('Clock_Time').innerHTML =  displayHour + ":" + m + " " + AMPM;
-	document.getElementById('Clock_Time_2').innerHTML =  displayHour + ":" + m + " " + AMPM;
+	if (pageProperty_enableStatusBar == 1){
+		document.getElementById('Clock_Time').innerHTML =  displayHour + ":" + m + " " + AMPM;
+		document.getElementById('StatusMenu_Clock_Time').innerHTML =  displayHour + ":" + m + " " + AMPM;
+	}
 	
 	// document.getElementById("Sidebar_Clock_Time").innerHTML = displayHour + ":" + m + ":" + s + " "+AMPM;
+	if (pageProperty_enableClockScreen == 1){
+		document.getElementById('Clock_Time_SessionScreen').innerHTML =  displayHour + ":" + m;
+	}
 	
-	document.getElementById('Clock_Time_SessionScreen').innerHTML =  displayHour + ":" + m;
 	
-	
-	var battery_level;
-	navigator.getBattery()
-	.then(function(battery) {
-		var battery_level = Math.round((battery.level)*100);
-		document.getElementById('Battery_Level').innerHTML =  battery_level+"%";
-		document.getElementById('Battery_Level_2').innerHTML =  battery_level+"%";
-	});
-	
+	if (pageProperty_enableStatusBar == 1){
+		var battery_level;
+		navigator.getBattery()
+		.then(function(battery) {
+			var battery_level = Math.round((battery.level)*100);
+			document.getElementById('Battery_Level').innerHTML =  battery_level+"%";
+			document.getElementById('StatusMenu_Battery_Level').innerHTML =  battery_level+"%";
+			document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Estimated " + Math.round(battery.dischargingTime / 60) + " minutes remaining";
+		});
+	}
 	if (battery_level <= 15){
 		document.getElementById('Battery_Level').style.color = "#ff3c19";
 	}
@@ -1210,10 +1505,12 @@ function displayDay() {
 	if (n == 6){
 		var day = "Saturday";
 	}
-	document.getElementById("Clock_Date").innerHTML = day + ", "+ date;
-	document.getElementById("Clock_Date_2").innerHTML = day + ", "+ date;
+	if (pageProperty_enableStatusBar == 1){
+		document.getElementById("StatusMenu_Clock_Date_2").innerHTML = day + ", "+ date;
+	}
+	// document.getElementById("Clock_Date_2").innerHTML = day + ", "+ date;
 	// document.getElementById("Sidebar_Clock_Date").innerHTML = day + ", "+ date;
-	if (sessionScreenState == "visible"){
+	if (pageProperty_enableClockScreen == 1){
 		document.getElementById("Clock_Date_SessionScreen").innerHTML = day + ", "+ date;
 	}
 	setTimeout(displayDay, 5000);
@@ -1274,31 +1571,9 @@ function toggle_Navigator(id){
 	var NavigatorElement = document.getElementById("button_PageNavi_textbox");
 	var NavigatorElementFull = document.getElementById("pageElement_Header_Menu");
 	if (windowSizePreset != "small"){ //Normal size
-		if (NavigatorElement.style.display == "none"){
-			NavigatorElement.style.display = "block";
-			NavigatorElement.style.animationFillMode = "forwards";
-			NavigatorElement.style.animationName = "opening_Navigator_Container_Normal";
-			NavigatorElement.style.animationDuration = "0.3s";
-			} else {
-			NavigatorElement.style.animationName = "closing_Navigator_Container_Normal";
-			NavigatorElement.style.animationDuration = "0.3s";
-			NavigatorElement.style.animationFillMode = "forwards";
-			setTimeout(function(){NavigatorElement.style.display = "none";}, 300);
-		}
+		
 		} else { //Small size
-		if (NavigatorElementFull.style.display == "none"){
-			NavigatorElementFull = document.getElementById("pageElement_Header_Menu");
-			NavigatorElementFull.style.display = "block";
-			NavigatorElementFull.style.animationFillMode = "forwards";
-			NavigatorElementFull.style.animationName = "opening_Navigator_Container_Full";
-			NavigatorElementFull.style.animationDuration = "0.3s";
-			} else {
-			NavigatorElementFull = document.getElementById("pageElement_Header_Menu");
-			NavigatorElementFull.style.animationName = "closing_Navigator_Container_Full";
-			NavigatorElementFull.style.animationDuration = "0.3s";
-			NavigatorElementFull.style.animationFillMode = "forwards";
-			setTimeout(function(){NavigatorElementFull.style.display = "none";}, 300);
-		}
+		
 	}	
 }
 
@@ -1308,11 +1583,11 @@ var SE_CreateItem_ShortcutText; //For SE_CreateItem
 var SE_CreateItem_ShortcutURL; //For SE_CreateItem
 var toast_Count = 1;
 function trigger_createToast(type){
-	if (document.getElementById("button_PageNavi_textbox").style.display == "block"){
+	/* if (document.getElementById("button_PageNavi_textbox").style.display == "block"){
 		document.getElementById("pageElement_ToastDrawer").style.paddingTop = "400px";
 		} else {
 		document.getElementById("pageElement_ToastDrawer").style.paddingTop = "75px";
-	}
+	} */
 	if (Behavior_DisplayToasts == true){
 		var toast_Div = document.createElement('div');
 		toast_Div.classList.add("ToastNotif_Toast");
@@ -1420,6 +1695,16 @@ function trigger_createToast(type){
 				toast_Icon.setAttribute("src", "Assets/Icons/favicon.png");
 				toast_Title.innerHTML = "Not available";
 				toast_Subtitle.innerHTML = "This feature is not implemented properly yet.";
+			break;
+			case "WA_ProcessingImage": //When a shortcut in Shortcut Editor is successfully created
+				toast_Icon.setAttribute("src", "Assets/Icons/icon_schedules.png");
+				toast_Title.innerHTML = "Processing Image...";
+				toast_Subtitle.innerHTML = "Your image is being processed. Please wait...";
+			break;
+			case "WA_ProcessingFinished": //When a shortcut in Shortcut Editor is successfully created
+				toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
+				toast_Title.innerHTML = "Processing Finished";
+				toast_Subtitle.innerHTML = "The image has been processed. You can now save it.";
 			break;
 			case "dev_EnableCounter":
 				toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
@@ -2296,13 +2581,18 @@ function Generator_Render_Categories(){
 	
 	var SE_Renderer_Category_Count = Object.keys(JSON.parse(localStorage.getItem("DL_CategoryIndex"))).length;
 	console.log("Renderer_CategoryCount: "+SE_Renderer_Category_Count);
-	if (SE_Renderer_Category_Count == 1){ //If the category count is 1 (empty), display the notification
+	/* if (SE_Renderer_Category_Count == 1){ //If the category count is 1 (empty), display the notification
 		document.getElementById("pageElement_LibraryEmptyNotif").style.display = "block";
 		} else {
 		document.getElementById("pageElement_LibraryEmptyNotif").style.display = "none";
-	}
+	} */
 	for (a = 1; a != SE_Renderer_Category_Count; a++){
 		/* Category main container */
+		var categoryAnchor = document.createElement('span'); //Creates the container div element
+		categoryAnchor.setAttribute("id", "anchor_category_"+a); //Adds id to div
+		categoryAnchor.classList.add("anchor_category"); //Adds CSS to div
+		document.getElementById("pageElement_ContentContainer").appendChild(categoryAnchor);
+		
 		var categoryDiv = document.createElement('div'); //Creates the container div element
 		categoryDiv.setAttribute("id", "pageElement_CategoryDiv_"+a); //Adds id to div
 		categoryDiv.classList.add("Category"); //Adds CSS to div
@@ -2341,10 +2631,37 @@ function Generator_Render_Categories(){
 		document.getElementById("content_category_"+a).appendChild(categoryShortcuts);
 		
 		/* Category navigation sidebar generation */
-		if(PageName == "DL_Main.html"){
-			var categoryNavigation_Anchor = document.createElement('a');
+		if(PageName == "DL_Main_Dev.html" && pageProperty_enableCategoryNavigation == 1){
+			var categoryNavigation_Div = document.createElement('div');
+			categoryNavigation_Div.classList.add("Sidebar_Item");
+			categoryNavigation_Div.setAttribute("id", "categoryNavigation_"+a);
+			document.getElementById("pageElement_Sidebar").appendChild(categoryNavigation_Div);
+			
+			var categoryNavigation_Letter_Anchor = document.createElement('a');
+			categoryNavigation_Letter_Anchor.setAttribute("id", "categoryNavigation_Letter_Anchor_"+a);
+			categoryNavigation_Letter_Anchor.setAttribute("href", "#anchor_category_"+a);
+			document.getElementById("categoryNavigation_"+a).appendChild(categoryNavigation_Letter_Anchor);
+			
+			var categoryNavigation_Letter_Div = document.createElement('div');
+			categoryNavigation_Letter_Div.classList.add("Sidebar_Item_Letter");
+			categoryNavigation_Letter_Div.setAttribute("id", "categoryNavigation_Letter_Div_"+a);
+			document.getElementById("categoryNavigation_Letter_Anchor_"+a).appendChild(categoryNavigation_Letter_Div);
+			
+			var categoryNavigation_Letter_Text = document.createElement('h2');
+			categoryNavigation_Letter_Text.classList.add("Sidebar_Item_Letter_Text");
+			categoryNavigation_Letter_Text.innerHTML = Array.from(SE_Array_Category_Index[a])[0];
+			document.getElementById("categoryNavigation_Letter_Div_"+a).appendChild(categoryNavigation_Letter_Text);
+			
+			var categoryNavigation_Text = document.createElement('p');
+			categoryNavigation_Text.classList.add("Sidebar_Item_Text");
+			categoryNavigation_Text.innerHTML = SE_Array_Category_Index[a];
+			document.getElementById("categoryNavigation_"+a).appendChild(categoryNavigation_Text); 
+			
+			
+			/* var categoryNavigation_Anchor = document.createElement('a');
 			categoryNavigation_Anchor.setAttribute("id", "categoryNavigation_"+a);
-			categoryNavigation_Anchor.setAttribute("href", "#pageElement_CategoryDiv_"+a);
+			categoryNavigation_Anchor.setAttribute("href", "#anchor_category_"+a);
+			categoryNavigation_Anchor.setAttribute("onclick", "trigger_categoryNavigation_Anchor('"+a+"')");
 			document.getElementById("pageElement_Sidebar_CategoryNavigation").appendChild(categoryNavigation_Anchor);
 			
 			var categoryNavigation_Text = document.createElement('p');
@@ -2357,7 +2674,7 @@ function Generator_Render_Categories(){
 			categoryLauncher_Text.setAttribute("id", "categoryLauncher_"+a);
 			categoryLauncher_Text.setAttribute("onclick", "trigger_launchCategory_Confirmation(this.id)");
 			categoryLauncher_Text.innerHTML = SE_Array_Category_Index[a];
-			document.getElementById("pageElement_Category_Launcher_List").appendChild(categoryLauncher_Text);
+			document.getElementById("pageElement_Category_Launcher_List").appendChild(categoryLauncher_Text); */
 		}
 	}
 	Generator_Render_Shortcuts();
@@ -2575,6 +2892,21 @@ function Generator_Render_Shortcuts_TableView(){
 		}
 	}
 }
+
+function trigger_categoryNavigation_Anchor(ID){
+	var selectedDiv = document.getElementById("pageElement_CategoryDiv_"+ID);
+	selectedDiv.style.animationName = "categoryNavigation_CategoryClicked";
+	
+	selectedDiv.style.animationDuration = "0.5s";
+	selectedDiv.style.animationIteration = "infinite";
+	selectedDiv.style.animationFillMode = "forwards";
+	
+	setTimeout( function() { selectedDiv.style.animationName = "categoryNavigation_CategoryClicked_reset";
+	selectedDiv.style.animationDuration = "0.5s";}, 500);
+	
+	
+}
+
 // Table View
 var SE_EE_CategoryNumber;
 function SE_TV_EditElement_GetCategoryNumber(id){ //Gets the category number that the item belongs in through the edit buttons ID
@@ -4430,13 +4762,21 @@ function trigger_launchAllTabs(){
 // EXPERIMENT - LIBRARY PROFILE SYSTEM //
 let placeholderProfileArray = ["Default1", "Account 1", "Account 2", "Account 3"];
 let placeholderProfileArray_Image = ["default1.png", "account_1.png", "account_2.png", "account_3.png"];
+let placeholderProfileArray_Passwords = ["jemma123", "chowda456", "BBC789", "arnold910"];
+let placeholderProfileArray_BackgroundImage = ["Assets/Background/city.jpg", "Assets/Background/default_darkmode.jpg", "Assets/Background/gardenofwords.jpg", "Assets/Background/default_New.png"];
 localStorage.setItem("DL_Profiles", JSON.stringify(placeholderProfileArray));
 localStorage.setItem("DL_Profiles_Images", JSON.stringify(placeholderProfileArray_Image));
+localStorage.setItem("DL_Profiles_Passwords", JSON.stringify(placeholderProfileArray_Passwords));
+localStorage.setItem("DL_Profiles_Backgrounds", JSON.stringify(placeholderProfileArray_BackgroundImage));
 
 var key_Index_Profiles = "DL_Profiles";
 var key_Index_Profiles_Images = "DL_Profiles_Images";
+var key_Index_Profiles_Passwords = "DL_Profiles_Passwords";
+var key_Index_Profiles_Backgrounds = "DL_Profiles_Backgrounds";
 let PS_Array_ProfileArray = [];
 let PS_Array_ProfileImageArray = [];
+let PS_Array_ProfilePasswordArray = [];
+let PS_Array_ProfileBackgroundArray= [];
 function generate_ProfileSelector(){
 	var PS_Profile_Count = Object.keys(JSON.parse(localStorage.getItem(key_Index_Profiles))).length; 
 	var PS_Profile_Data = Object.values(JSON.parse(localStorage.getItem(key_Index_Profiles)));
@@ -4448,6 +4788,18 @@ function generate_ProfileSelector(){
 	var PS_ProfileImage_Data = Object.values(JSON.parse(localStorage.getItem(key_Index_Profiles_Images)));
 	for (b = 0; b != PS_ProfileImage_Count; b++){
 		PS_Array_ProfileImageArray.push(PS_ProfileImage_Data[b]);
+	} 
+	
+	var PS_Array_ProfilePassword_Count = Object.keys(JSON.parse(localStorage.getItem(key_Index_Profiles_Passwords))).length; 
+	var PS_Array_ProfilePassword_Data = Object.values(JSON.parse(localStorage.getItem(key_Index_Profiles_Passwords)));
+	for (c = 0; c != PS_Array_ProfilePassword_Count; c++){
+		PS_Array_ProfilePasswordArray.push(PS_Array_ProfilePassword_Data[c]);
+	} 
+	
+	var PS_Array_ProfileBackground_Count = Object.keys(JSON.parse(localStorage.getItem(key_Index_Profiles_Backgrounds))).length; 
+	var PS_Array_ProfileBackground_Data = Object.values(JSON.parse(localStorage.getItem(key_Index_Profiles_Backgrounds)));
+	for (c = 0; c != PS_Array_ProfilePassword_Count; c++){
+		PS_Array_ProfileBackgroundArray.push(PS_Array_ProfileBackground_Data[c]);
 	} 
 	
 	for (c = 0; c != PS_Profile_Count; c++){
@@ -4730,15 +5082,44 @@ function open_ProfileSelector(){
 }
 
 
-
+var IDNumber;
 function Login_ProfileChosen(accountNumber){
-	var IDNumber = accountNumber.substr(19, 0);
+	document.getElementById("LoginScreen_Password_Input").value = "";
+	IDNumber = accountNumber.substr(24,34);
 	console.log(IDNumber);
 	document.getElementById("pageElement_Login_Name").innerHTML = PS_Array_ProfileArray[IDNumber];
-	document.getElementById("pageElement_Login_Image").src = "Assets/ProfilePictures/"+PS_Array_ProfileImageArray[IDNumber];
+	document.getElementById("pageElement_Login_Image").src = "Assets/Profile_Pictures/"+PS_Array_ProfileImageArray[IDNumber];
+	document.getElementById("pageElement_LoginScreen").style.backgroundImage = "url("+PS_Array_ProfileBackgroundArray[IDNumber]+");";
+	// document.getElementById("pageElement_LoginScreen").style.visibility = "visible";
 	document.getElementById("pageElement_LoginScreen").style.display = "grid";
 }
 
+function Login_BackToProfileSelector(){
+	var x = document.getElementById("pageElement_LoginScreen");
+	/* x.style.animationName = "fadeOut";
+	x.style.animationDuration = "0.3s";
+	// x.style.animationFillMode = "forwards";
+	x.style.visibility = "hidden"; */
+	x.style.display = "none";
+}
+
+function Login_CheckPassword(){
+	var Login_Password = document.getElementById("LoginScreen_Password_Input").value;
+	if (Login_Password == PS_Array_ProfilePasswordArray[IDNumber]){
+		document.getElementById("pageElement_ProfileSelector").style.display = "none";
+		document.getElementById("pageElement_LoginScreen").style.display = "none";
+		console.log("Login: Success - Correct Password");
+		var x = document.getElementById("LoadingScreen");
+		x.style.display = "grid";
+		x.style.animationName = "blurIn";
+		x.animationFillMode = "forwards";
+		x.style.animationDuration = "0.5s";
+		close_LoadingScreen();
+		
+	} else {
+		console.log("Login: Failed - Wrong Password");
+	}
+}
 
 
 

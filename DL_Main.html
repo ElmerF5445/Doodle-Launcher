@@ -23,7 +23,7 @@
 		<link rel="stylesheet" href="Scripts/DL_Stylesheet.css">
 		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Animations.css">
 		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Reference.css">
-		<link rel="icon" type="image/png" href="Assets/Icons/favicon.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="Assets/Icons/favicon_old.png" sizes="96x96">
 		<!-- Default intended fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,7 +86,7 @@
 		</div>
 		<div class="LoadingScreen" id="LoadingScreen">
 			<div class="LoadingScreen_UpperSection" id="LoadingScreen_UpperSection">
-				<img class="LoadingScreen_Icon" src="Assets/Icons/favicon.png"></img>
+				<img class="LoadingScreen_Icon" src="Assets/Icons/favicon_old.png"></img>
 				<h2 class="LoadingScreen_VersionTitle" id="versionTitle">
 					Doodle Launcher
 				</h2>
@@ -123,7 +123,7 @@
 		</div>
 		<div class="ToggleableSearchBar" id="pageElement_Toggleable_SearchBar">
 			<div class="ToggleableSearchBar_SearchBar">
-				<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3"></input>
+				<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3" onkeydown="if (event.keyCode == 13) {search_Query('toggleable')}"></input>
 				<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
 			</div>
 			<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
@@ -155,68 +155,7 @@
 			</div>
 		</div>
 		
-		<!-- Profile Selector -->
-		<div class="ProfileSelector" style="display: none" id="pageElement_ProfileSelector">
-			<div> </div>
-			<h1 class="ProfileSelector_Greeting">
-				Welcome to Doodle Launcher
-			</h1>
-			<h4 class="ProfileSelector_Instruction">
-				Select a profile below to load its shortcut library.
-			</h4>
-			<div class="ProfileSelector_Profiles" id="pageElement_ProfileSelector_ProfilesDiv">
-				<div class="ProfileSelector_Profiles_Item" id="ProfileSelector_Profile_DefaultUser1" onclick="Login_ProfileChosen()">
-					<img class="ProfileSelector_Profiles_Item_Picture" src="Assets/Icons/icon_user.png">
-					<h5 class="ProfileSelector_Profiles_Item_Name">
-						Default User 1
-					</h5>
-				</div>
-				<div class="ProfileSelector_Profiles_Item" onclick="Login_ProfileChosen()">
-					<img class="ProfileSelector_Profiles_Item_Picture" src="Assets/Icons/icon_schedules.png">
-					<h5 class="ProfileSelector_Profiles_Item_Name">
-						Default User 2
-					</h5>
-				</div>
-				<div class="ProfileSelector_Profiles_Item" onclick="Login_ProfileChosen()">
-					<img class="ProfileSelector_Profiles_Item_Picture" src="Assets/Icons/icon_lms.png">
-					<h5 class="ProfileSelector_Profiles_Item_Name">
-						Default User 3
-					</h5>
-				</div>
-				<div class="ProfileSelector_Profiles_Item ProfileSelector_Profiles_Item_CreateProfile">
-					<img class="ProfileSelector_Profiles_Item_Picture" src="Assets/Icons/icon_add.png">
-					<h5 class="ProfileSelector_Profiles_Item_Name">
-						Create a new profile
-					</h5>
-				</div>
-			</div>
-			<div class="ProfileSelector_SearchBar">
-				<div class="ToggleableSearchBar_SearchBar">
-					<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3"></input>
-					<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
-				</div>
-			</div>
-		</div>
 		
-		<!-- Login screen -->
-		<div class="LoginScreen" style="display: none" id="pageElement_LoginScreen">
-			<div></div>
-			<div class="LoginScreen_Profile">
-				<h1 class="LoginScreen_Profile_Title">
-					Log in to Doodle Launcher
-				</h1>
-				<img class="LoginScreen_Profile_Picture" src="Assets/Icons/icon_user.png" id="pageElement_Login_Image"></img>
-				<h3 class="LoginScreen_Profile_Name" id="pageElement_Login_Name">
-					Default User 1
-				</h3>
-				<div class="LoginScreen_Profile_Password">
-					<input type="text" class="Input_Text LoginScreen_Profile_Password_Input" placeholder="Password"></input>
-					<p class="LoginScreen_Profile_Password_SignIn">
-						Enter
-					</p>
-				</div>
-			</div>
-		</div>
 		
 		<!-- Onboarding New -->
 		<div class="Onboarding_New_Container" id="pageElement_Onboarding_New">
@@ -684,14 +623,17 @@
 			
 			<div class="Category_Launcher_Window" id="pageElement_Category_Launcher_List">
 				<div class="Category_Launcher_Title">
-					<h2 class="Category_Launcher_Title_Text">
-						Launch a category
-					</h2>
-					<img src="Assets/Icons/icon_close.png" class="Category_Launcher_Title_Close" onclick="close_Subwindow('Category_Launcher')">
+					<h3 class="Category_Launcher_Title_Text">
+						Launch all shortcuts
+					</h3>
+					
 				</div>
+				<p class="General_Paragraph">
+					Are you sure you want to launch all [] shortcuts from the category "[]"?
+				</p>
 				<ul class="General_Paragraph">
 					<li>
-						This will launch all the shortcuts in the category you select.
+						This will launch all the shortcuts in the category you select and open them on their separate tabs.
 					</li>
 					<li>
 						Opening multiple tabs at once may cause significant performance slowdowns on your browser.
@@ -700,7 +642,18 @@
 						Make sure you disable "Pop-up blocking" on this page only.
 					</li>
 				</ul>
-				
+				<div class="Category_Launcher_Buttons">
+					<div style="display: flex; justify-content: center;" onclick="close_Subwindow('Category_Launcher')">
+						<h4 class="Category_Launcher_Buttons_SecondaryOption">
+							Cancel
+						</h4>
+					</div>
+					<div style="display: flex; justify-content: center;">
+						<h4 class="Category_Launcher_Buttons_PrimaryOption">
+							Launch all
+						</h4>
+					</div>
+				</div>
 				
 			</div>
 		</div>
@@ -736,9 +689,10 @@
 			<div class="Header" id="pageElement_Header">
 				<!--<img class="Sidebar_CategoryNavigation_Toggle" id="toggle_Sidebar_CategoryNavigation" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar_CategoryNavigation()"></img>
 				<!-- For loading purposes only -->
-				<img class="Sidebar_CategoryNavigation_Toggle" id="toggle_Sidebar" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar_CategoryNavigation()"></img>
+				<img class="Sidebar_CategoryNavigation_Toggle" id="toggle_Sidebar" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar()"></img>
 				<!-- -->
-				<div class="Header_PageNavi" id="button_PageNavi" onclick="toggle_Navigator(this.id)">
+				<div class="Header_PageNavi" id="pageElement_Header_MainMenu" onclick="trigger_toggle_Textbox(this.id)">
+					<img src="Assets/Icons/favicon.png" class="Header_PageNavi_Icon"></img>
 					<h2 class="Header_PageNavi_Title" id="Header_PageNavi_Title">
 						Home
 					</h2>
@@ -766,106 +720,176 @@
 						</h3>
 					</a>-->
 				</div>
-				<div class="Header_Clock" id="pageElement_Header_Clock" onclick="toggle_Sidebar_TimeDate()">
-					<h1 class="Header_Clock_Time" id="Clock_Time">
-						id="Clock_Time"
-					</h1>
-					<h1 class="Header_Clock_Date" id="Clock_Date">
-						id="Clock_Date"
-					</h1>
-				</div>
-				<div class="Header_Battery" id="pageElement_Header_Battery">
-					<h1 class="Header_Battery" id="Battery_Level">
-						%
-					</h1>
-				</div>
-				<div class="Header_RightMenu">
-					<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_softwareUpdate.png"  id="button_Update" onclick="toggle_Textbox(this.id)"></img>
-					<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_wifi_online.png"  id="button_Wifi" onclick="toggle_Textbox(this.id)"></img>
-				</div>
-			</div>
-			<div class="Header_Menu" id="pageElement_Header_Menu">
-				<div class="Header_Menu_Top">
-					<div class="Header_Menu_Top_Clock">
-						<h1 class="Header_Menu_Top_Clock_Time" id="Clock_Time_2">
+				<div class="Header_StatusTray" onclick="trigger_toggle_Textbox(this.id)" id="pageElement_Header_StatusTray">
+					<div class="Header_Clock" id="pageElement_Header_Clock">
+						<h1 class="Header_Clock_Time" id="Clock_Time">
 							id="Clock_Time"
 						</h1>
-						<h1 class="Header_Menu_Top_Clock_Date" id="Clock_Date_2">
+						<h1 class="Header_Clock_Date" id="Clock_Date">
 							id="Clock_Date"
 						</h1>
 					</div>
-					<h1 class="Header_Menu_Top_Battery" id="Battery_Level_2">
-						%
-					</h1>
-				</div>
-				<div class="Header_QuickSearchBar">
-					<input class="Header_QuickSearchBar_Input2" placeholder="Internet search" id="pageElement_SearchQuery2"></input>
-					<img src="Assets/Icons/icon_search.png" class="Header_QuickSearchBar_Search" id="headerMenu" onclick="search_Query(this.id)"></img>
-				</div>
-				<div class="Header_PageNavi_Textbox_Title">
-					Launcher Navigation
-				</div>
-				<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageNaviList">
-					
-				</div>
-				<!--<div class="Header_PageNavi_Textbox_Title">
-					Page Actions
+					<div class="Header_Battery" id="pageElement_Header_Battery">
+						<h1 class="Header_Battery" id="Battery_Level">
+							%
+						</h1>
 					</div>
-					<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageActions">
-					<a href="DL_ShortcutEditor.html">
-					<p class="Header_PageNavi_Textbox_List_Item">
-					Shortcut editor
-					</p>
-					</a>
-					<p class="Header_PageNavi_Textbox_List_Item">
-					Settings
-					</p>
-				</div>-->
-			</div>
-			<div class="Header_PageNavi_Textbox" id="button_PageNavi_textbox">
-				<div class="Header_PageNavi_Textbox_Title">
-					Launcher Navigation
-				</div>
-				<div class="Header_PageNavi_Textbox_List" id="pageElement_PageNaviList">
-					
+					<div class="Header_RightMenu">
+						<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_wifi_online.png"  id="button_Wifi"></img>
+					</div>
 				</div>
 			</div>
-			<div class="Header_Right_Textbox"  id="button_Wifi_textbox">
-				<div class="Header_Right_Textbox_Title" id="textboxElement_Wifi">
-					No Connection
-				</div>				
-				<p class="Header_Right_Textbox_Text" id="pageElement_Connection">
-					Since you're not connected to the internet, links will not open properly. Connect to a Wi-Fi network and refresh the page.
-				</p>
-				<a href="https://fast.com/" target="_blank" id="pageElement_Connection_Speedtest">
-					<p class="Header_Right_Textbox_Text">
-						<u>Speedtest</u>
-					</p>
-				</a>
+			<div class="Header_MainMenu_Container" style="display: none" id="pageElement_Header_MainMenu_Textbox">
+				<div id="pageElement_Header_MainMenu_Textbox_Content" style="opacity: 0%">
+					<!-- <div class="Header_MainMenu_StatusBar">
+						<h4 class="Header_MainMenu_StatusBar_Text">
+						11:14 PM
+						</h4>
+						<h4 class="Header_MainMenu_StatusBar_Text">
+						Thursday, 12/1/2022
+						</h4>
+						<h4 class="Header_MainMenu_StatusBar_Text">
+						68%
+						</h4>
+					</div> -->
+					<div class="Header_MainMenu_Profile">
+						<img class="Header_MainMenu_Profile_Image" src="Assets/Icons/icon_user.png"></img>
+						<h3 class="Header_MainMenu_Profile_Name">
+							Jemma Regalados
+						</h3>
+					</div>
+					<!-- <div class="Header_MainMenu_SearchBar">
+						<input type="text" class="Header_MainMenu_SearchBar_Input"></input>
+						<img class="Header_MainMenu_SearchBar_Button" src="Assets/Icons/icon_search.png"></img>
+					</div> -->
+					<h3 class="Header_MainMenu_Title">
+						Doodle Launcher
+					</h3>
+					<div class="Header_MainMenu_Navigation" id="pageElement_MainMenu_NavigationList">
+						<!-- <a>
+							<div class="Header_MainMenu_Navigation_Item">
+							<img class="Header_MainMenu_Navigation_Item_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<p class="Header_MainMenu_Navigation_Item_Text">
+							Home
+							</p>
+							</div>
+						</a> -->
+					</div>
+					<h3 class="Header_MainMenu_Title">
+						Page Actions
+					</h3>
+					<div class="Header_MainMenu_Navigation" id="pageElement_PageActionsList">
+						<!-- <div class="Header_MainMenu_Navigation_Item">
+							<img class="Header_MainMenu_Navigation_Item_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<p class="Header_MainMenu_Navigation_Item_Text">
+							Save settings
+							</p>
+							</div>
+							<div class="Header_MainMenu_Navigation_Item">
+						-->
+					</div>
+				</div>
 			</div>
-			<div class="Header_Right_Textbox" id="button_Update_textbox">
-				<div class="Header_Right_Textbox_Title">
-					Update is available
-				</div>				
-				<p class="Header_Right_Textbox_Text">
-					A launcher update is available for you to download.
-				</p>
-				<a href="DL_Settings.html#LauncherUpdate">
-					<p class="Header_Right_Textbox_Text">
-						<u>Check for updates</u>
-					</p>
-				</a>
+			<div class="Header_StatusMenu_Container" id="pageElement_Header_StatusTray_Textbox" style="display: none">
+				<div id="pageElement_Header_StatusTray_Textbox_Content" style="opacity: 0%">
+					<div class="Header_StatusMenu_Clock">
+						<h1 class="Header_StatusMenu_Clock_Time" id="Clock_Time_2">
+							12:30 AM
+						</h1>
+						<p class="Header_StatusMenu_Clock_Date" id="Clock_Date_2">
+							Tuesday, December 06, 2022
+						</p>
+					</div>
+					<div class="Header_StatusMenu_Internet">
+						<h3 class="Header_StatusMenu_Internet_Status" id="textboxElement_Wifi">
+							Connected
+						</h3>
+						<p class="Header_StatusMenu_Internet_Status_Description" id="pageElement_Connection">
+							You are connected to the internet. The launcher will function as intended and shortcuts will open properly.
+						</p>
+						<a href="https://fast.com/" target="_blank" id="pageElement_Connection_Speedtest">
+							<div class="Header_MainMenu_Navigation_Item">
+								<img class="Header_MainMenu_Navigation_Item_Icon" src="Assets/Icons/favicon_old.png"></img>
+								<p class="Header_MainMenu_Navigation_Item_Text">
+									Speedtest
+								</p>
+							</div>
+						</a>
+					</div>
+					<div class="Header_StatusMenu_Battery">
+						<h1 class="Header_StatusMenu_Battery_Percent" id="Battery_Level_2">
+							50.3%
+						</h1>
+						<p class="Header_StatusMenu_Battery_Description" id="Battery_TimeRemaining">
+							Estimated 54 minutes remaining
+						</p>
+					</div>
+				</div>
 			</div>
-			<div class="Sidebar_CategoryNavigation" id="pageElement_Sidebar_CategoryNavigation" style="width: 0px">
+			<!-- <div class="Sidebar_CategoryNavigation" id="pageElement_Sidebar_CategoryNavigation" style="width: 0px">
 				<p class="Sidebar_CategoryNavigation_LaunchCategory" onclick="open_Subwindow('Category_Launcher'), toggle_Sidebar_CategoryNavigation()">
-					Launch all shortcuts from a category
+				Launch all shortcuts from a category
 				</p>
 				<p class="Sidebar_CategoryNavigation_Title">
-					Category Navigation
-					<img src="Assets/Icons/icon_close.png" class="Sidebar_CategoryNavigation_Title_Close" onclick="toggle_Sidebar_CategoryNavigation()"></img>
+				Category Navigation
+				<img src="Assets/Icons/icon_close.png" class="Sidebar_CategoryNavigation_Title_Close" onclick="toggle_Sidebar_CategoryNavigation()"></img>
 				</p>
 				
+			</div> -->
+			<!-- <div class="New_Sidebar">
+				<div class="New_Sidebar_Item">
+				<h3 class="New_Sidebar_Item_Letter">
+				C
+				</h3>
+				<h3 class="New_Sidebar_Item_Text">
+				College Sites
+				</h3>
+				</div>
+				<div class="New_Sidebar_Item">
+				<h3 class="New_Sidebar_Item_Letter">
+				E
+				</h3>
+				<h3 class="New_Sidebar_Item_Text">
+				ELMS Assignment Tabs
+				</h3>
+			</div> -->
+			
+			<!-- </div> -->
+			
+			<div class="Sidebar" id="pageElement_Sidebar">
+				<div class="Sidebar_Item" id="Settings_Tab_Appearance" onclick="trigger_ChangeTab(this.id)">
+					<!-- <img class="Sidebar_Icon" id="Settings_Tab_Appearance_Icon" src="Assets/Icons/icon_customize.png"></img> -->
+					<div class="Sidebar_Item_Letter">
+						<h2 class="Sidebar_Item_Letter_Text">
+							C
+						</h2>
+					</div>
+					<p class="Sidebar_Item_Text" onclick="open_Subwindow('Category_Launcher')">
+						College Sites
+					</p>
+				</div>
+				<div class="Sidebar_Item" id="Settings_Tab_Appearance" onclick="trigger_ChangeTab(this.id)">
+					<div class="Sidebar_Item_Letter">
+						<h2 class="Sidebar_Item_Letter_Text">
+							E
+						</h2>
+					</div>
+					<p class="Sidebar_Item_Text">
+						ELMS Assignment Tabs
+					</p>
+				</div>
+				<div class="Sidebar_Item" id="Settings_Tab_Appearance" onclick="trigger_ChangeTab(this.id)">
+					<div class="Sidebar_Item_Letter">
+						<h2 class="Sidebar_Item_Letter_Text">
+							E
+						</h2>
+					</div>
+					<p class="Sidebar_Item_Text">
+						ELMS Module Tabs
+					</p>
+				</div>
 			</div>
+			
 			
 			<!--<div class="Subwindow_Blur" id="subwindow_PRIVATE_Elmer_Transfer">
 				<div class="Subwindow">
@@ -904,7 +928,7 @@
 			
 			<div class="MainContent" id="pageElement_MainContent">
 				<div class="CornerButtons" id="pageElement_CornerButtons">
-					<img src="Assets/Icons/icon_hamburgermenu.png" class="CornerButtons_Button CategoryNavigation" onclick="toggle_Sidebar_CategoryNavigation()"></img>
+					
 					<a href="#pageElement_Bottom" id="pageElement_GoToBottom"> <img src="Assets/Icons/icon_downArrow.png" class="CornerButtons_Button GoToBottom"></img> </a>
 					<a href="#pageElement_Top" id="pageElement_BackToTop"> <img src="Assets/Icons/icon_upArrow.png" class="CornerButtons_Button GoToTop"></img> </a>
 				</div>
@@ -913,95 +937,95 @@
 					Good Evening
 				</h1>
 				<div id="pageElement_ContentContainer">
-					<!--<div class="Category">
+					<div class="Category">
 						<span class="anchor" id="anchor_category_test1"></span>
 						<div class="Category_Label" id="category_test1" onclick="toggle_Category(this.id)">
-						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
-						<h1 class="Category_Label_Text">
-						Category
-						</h1>
-						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_test1"></img>
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								Category
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_test1"></img>
 						</div>
 						<div id="content_category_test1" class="Category_Content_Container">
-						<div class="Category_Shortcuts">
-						<div class="Shortcut_Item">
-						Item 1
+							<div class="Category_Shortcuts">
+								<div class="Shortcut_Item">
+									Item 1
+								</div>
+								<div class="Shortcut_Item">
+									Item 2
+								</div>
+								<div class="Shortcut_Item">
+									Item 3
+								</div>
+								<div class="Shortcut_Item">
+									Item 4
+								</div>
+								<div class="Shortcut_Item">
+									Item 5
+								</div>
+								<div class="Shortcut_Item">
+									Item 6
+								</div>
+								<div class="Shortcut_Item">
+									Item 7
+								</div>
+								<div class="Shortcut_Item">
+									Item 8
+								</div>
+							</div>
+							<div class="Category_Folder">
+								<div class="Category_Folder_Item">
+									<div class="Category_Folder_Item_Title">
+										Folder 1
+									</div>
+									<div class="Category_Folder_Item_List">
+										<p class="Category_Folder_Item_List_Item">
+											Item 1
+										</p>
+										<p class="Category_Folder_Item_List_Item">
+											Item 2
+										</p>
+										<p class="Category_Folder_Item_List_Item">
+											Item 3
+										</p>
+									</div>
+								</div>
+								<div class="Category_Folder_Item">
+									<div class="Category_Folder_Item_Title">
+										Folder 2
+									</div>
+									<div class="Category_Folder_Item_List">
+										<p class="Category_Folder_Item_List_Item">
+											Item 1
+										</p>
+										<p class="Category_Folder_Item_List_Item">
+											Item 2
+										</p>
+										<p class="Category_Folder_Item_List_Item">
+											Item 3
+										</p>
+									</div>
+								</div>
+								<div class="Category_Folder_Item">
+									<div class="Category_Folder_Item_Title">
+										Folder 3
+									</div>
+									<div class="Category_Folder_Item_List">
+										<p class="Category_Folder_Item_List_Item">
+											Item 1
+										</p>
+										<p class="Category_Folder_Item_List_Item">
+											Item 2
+										</p>
+										<p class="Category_Folder_Item_List_Item">
+											Item 3
+										</p>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="Shortcut_Item">
-						Item 2
-						</div>
-						<div class="Shortcut_Item">
-						Item 3
-						</div>
-						<div class="Shortcut_Item">
-						Item 4
-						</div>
-						<div class="Shortcut_Item">
-						Item 5
-						</div>
-						<div class="Shortcut_Item">
-						Item 6
-						</div>
-						<div class="Shortcut_Item">
-						Item 7
-						</div>
-						<div class="Shortcut_Item">
-						Item 8
-						</div>
-						</div>
-						<div class="Category_Folder">
-						<div class="Category_Folder_Item">
-						<div class="Category_Folder_Item_Title">
-						Folder 1
-						</div>
-						<div class="Category_Folder_Item_List">
-						<p class="Category_Folder_Item_List_Item">
-						Item 1
-						</p>
-						<p class="Category_Folder_Item_List_Item">
-						Item 2
-						</p>
-						<p class="Category_Folder_Item_List_Item">
-						Item 3
-						</p>
-						</div>
-						</div>
-						<div class="Category_Folder_Item">
-						<div class="Category_Folder_Item_Title">
-						Folder 2
-						</div>
-						<div class="Category_Folder_Item_List">
-						<p class="Category_Folder_Item_List_Item">
-						Item 1
-						</p>
-						<p class="Category_Folder_Item_List_Item">
-						Item 2
-						</p>
-						<p class="Category_Folder_Item_List_Item">
-						Item 3
-						</p>
-						</div>
-						</div>
-						<div class="Category_Folder_Item">
-						<div class="Category_Folder_Item_Title">
-						Folder 3
-						</div>
-						<div class="Category_Folder_Item_List">
-						<p class="Category_Folder_Item_List_Item">
-						Item 1
-						</p>
-						<p class="Category_Folder_Item_List_Item">
-						Item 2
-						</p>
-						<p class="Category_Folder_Item_List_Item">
-						Item 3
-						</p>
-						</div>
-						</div>
-						</div>
-						</div>
-						</div>
-					-->
+					</div>
+					
 					<img src="Assets/Images/ShortcutLibraryEmpty_HomePage.png" class="pageElement_LibraryEmptyNotif" id="pageElement_LibraryEmptyNotif"></img>
 				</div>
 				

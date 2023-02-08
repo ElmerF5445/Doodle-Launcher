@@ -1,5 +1,48 @@
 Changelog
 
+v.1.16 [Pre-Release 1] (Pending)
+The first pre-release version of the launcher contains a rework of the layouts and designs throughout the system. It also fixed a lot of visual bugs and optimized the layouts for phones.
+=== Additions ===
+- Added the Main Menu, organizing the launcher navigation and page action buttons in one place
+- Added Shortcut Lists
+- Added a Library Profile System
+- Added an option to customize specific element properties such as color and fonts in Settings > Appearance > Element-Specific
+- Added an option to disable the shadow color changing to the accent hover color in Settings > Behavior > Display
+- Added an option to disable transition animations on Settings > Behavior > Display
+- Added an option to show the seconds on the clock on Settings > Behavior > Clock
+- Added an option to adjust the update duration of the clock, internet status, and battery percentage on Settings > Behavior > Clock
+- Added an option to blur the background of the home screen in Settings > Appearance > Wallpaper
+- Added Page Action buttons on the Home page
+=== Changes ===
+- Updated the general UI system
+- Updated the Header buttons to have an icon beside them
+- Header buttons will now compress into icons only when the screen is small enough
+- Replaced the Launcher Navigation flyout with the Main Menu flyout
+- Updated the page property system
+- Updated the Sidebar UI system to only use one Sidebar type for all types of content
+- Updated several subwindow UIs
+- Updated the category navigation UI
+- Onboarding system has been put into its own page
+- Login system has been put into its own page
+- Fixed subwindows not being centered properly
+- Fixed the Re-Order Shortcuts button not functioning properly
+- Fixed Sidebar item distancing problems when the window is tall enough
+- Made the loading screen icon and the favicon of pages consistent
+- Removed action buttons on pages that don't need them
+- Fixed the page not scrolling smoothly when navigating
+- Categories will momentarily flash when its button is pressed in Category Navigation
+- Pressing Enter while in the search box will now do a search
+- Hovering over a button will now change the color of its shadow into the accent hover color
+- All buttons now have the same appearance as the shortcut buttons
+- The clock no longer displays the date when being hovered
+- The clock, battery percentage, and internet icon will now open the same textbox when clicked
+- Fixed the change wallpaper detect button using a primary font instead of the secondary one
+- Fixed the Table View UI not overflowing properly
+- Fixed the Table View UI Subwindow not playing the opening animation
+- Optimized subwindow layouts for mobile
+- Optimized page element sizes for mobile
+
+
 v.1.15 [Public Preview 4] (December 1, 2022)
 This version adds a way to launch or open all the shortcuts in a category. It also adds a way to import and export shortcuts using text strings that stores the shortcut name and urls.
 === Additions ===
