@@ -931,23 +931,23 @@ function check_WindowSize_test(){
 	}
 	
 	// Desktop
-	/* if(windowSizePreset == "small"){
-		// MainContent.style.marginLeft = "3%";
-		// Header_PageTitle.style.display = "none";
-		// Header_StatusTray_Clock.style.display = "none";
-		// Header_StatusTray_Battery.style.display = "none";
+	if(windowSizePreset == "small"){
+		MainContent.style.marginLeft = "3%";
+		Header_PageTitle.style.display = "none";
+		Header_StatusTray_Clock.style.display = "none";
+		Header_StatusTray_Battery.style.display = "none";
 		for (a = 0; a < Header_Buttons_Text.length; a++){
 			Header_Buttons_Text[a].style.display = "none";
 		}
 	} else if (windowSizePreset == "normal"){
-		// MainContent.style.marginLeft = "10%";
-		// Header_PageTitle.style.display = "block";
-		// Header_StatusTray_Clock.style.display = "block";
-		// Header_StatusTray_Battery.style.display = "block";
+		MainContent.style.marginLeft = "10%";
+		Header_PageTitle.style.display = "block";
+		Header_StatusTray_Clock.style.display = "block";
+		Header_StatusTray_Battery.style.display = "block";
 		for (a = 0; a < Header_Buttons_Text.length; a++){
 			Header_Buttons_Text[a].style.display = "block";
 		}
-	} */
+	}
 	
 	// Mobile
 	/* if (windowSizePreset == "normal" && isMobileDevice == true){

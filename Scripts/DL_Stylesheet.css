@@ -3,12 +3,7 @@
 	This file contains all the styling for Doodle Launcher
 */
 
-/* Media Queries */
-@media only screen and (max-width: 750px) {
-	.Header_PageNavi_Title .Header_Clock .Header_Battery .Header_Content_Button_Text{
-		display: none;
-	}
-}
+
 
 
 /* ================================== */
@@ -4215,3 +4210,9 @@ td {
 }
 
 
+/* Media Queries */
+@media(min-width: 750px) {
+	.Header_PageNavi_Title .Header_Clock .Header_Battery .Header_Content_Button_Text{
+		display: none;
+	}
+}
