@@ -15,11 +15,10 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;800&family=Roboto&display=swap" rel="stylesheet">
-		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
 	</head>
 	<body class="MainPage" onload="dev_OnloadTasks()">
 		<script src="Scripts/DL_Javascript.js"></script>
-		<div class="LoadingScreen" id="LoadingScreen">
+		<div class="LoadingScreen" id="LoadingScreen" style="display: none">
 			<div class="LoadingScreen_UpperSection" id="LoadingScreen_UpperSection">
 				<img class="LoadingScreen_Icon" src="Assets/Icons/favicon_old.png" id="LoadingScreen_Icon"></img>
 				<h2 class="LoadingScreen_VersionTitle" id="versionTitle">
@@ -40,7 +39,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="SessionScreen" id="pageElement_SessionScreen" onclick="close_SessionScreen()">
+		<div class="SessionScreen" id="pageElement_SessionScreen" onclick="close_SessionScreen()" style="display: none">
 			<h1 class="SessionScreen_Time" id="Clock_Time_SessionScreen">
 				
 			</h1>
@@ -60,49 +59,18 @@
 			d
 		</div>
 		<div class="Page_Subwindows" id="pageElement_Subwindows">
-			<div class="Subwindow" id="subwindow_Test_Subwindow">
-				<div class="Subwindow_Titlebar">
-					<h2 class="Subwindow_TitleBar_Title">
-						Subwindow
-					</h2>
-					<img class="Subwindow_Titlebar_Close" src="Assets/Icons/icon_close.png" onclick="close_Subwindow('Test_Subwindow')">
-				</div>
-				<div class="Subwindow_Content">
-					<h1 class="General_Title">
-						TEXT
-					</h1>
-				</div>
-				<div class="Subwindow_Bottom">
-					<div class="Subwindow_Bottom_Button_SecondaryAction">
-						Secondary action
-					</div>
-					<div class="Subwindow_Bottom_Button_PrimaryAction">
-						Primary action
-					</div>
-				</div>
-			</div>
-			<div class="Modal" id="subwindow_Test_Modal">
-				<div class="Modal_TitleBar">
-					<h2 class="Modal_TitleBar_Title">
-						Modal / Confirmation
-					</h2>
-				</div>
-				<div class="Modal_Content">
-					<p class="General_Paragraph">
-						In this format, the box closes if either the Esc button is pressed, or the user clicks any of the button in the bottom section of the window.
-					</p>
-				</div>
-				<div class="Modal_Content_Bottom">
-					<div class="Subwindow_Bottom_Button_SecondaryAction">
-						Secondary action
-					</div>
-					<div class="Subwindow_Bottom_Button_PrimaryAction">
-						Primary action
-					</div>
-				</div>
-			</div>
+			
 		</div>
+		
 		<div class="Page_Overlays">
+			<div class="SearchScreen">
+				<h1 class="SearchScreen_Title">
+				Doodle Launcher
+			</h1>
+			<div class="SearchScreen_SearchBar">
+				<input class="SearchScreen_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery"></input>
+				<img src="Assets/Icons/icon_search.png" class="SearchScreen_SearchBar_Button" id="headerMain" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
+			</div>
 			<div class="Header_MainMenu_Container" style="display: none" id="pageElement_Header_MainMenu_Textbox">
 				<div id="pageElement_Header_MainMenu_Textbox_Content" style="opacity: 0%">
 					<div class="Header_MainMenu_Profile" id="pageElement_Header_MainMenu_ProfileButton">
@@ -180,7 +148,7 @@
 				</div>
 			</div>
 		</div>
-		<header class="Page_Header" id="pageElement_Header">
+		<header class="Page_Header" id="pageElement_Header" style="display: none">
 			<img class="Sidebar_CategoryNavigation_Toggle" id="pageElement_Header_SidebarToggle" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar()"></img>
 			<div class="Header_PageNavi" id="pageElement_Header_MainMenu" onclick="trigger_toggle_Textbox(this.id)">
 				<img src="Assets/Icons/favicon.png" class="Header_PageNavi_Icon" id="Header_PageIcon"></img>
@@ -221,51 +189,19 @@
 				</div>
 			</div>
 		</header>
+		
 		<div class="Page_Sidebar" id="pageElement_Sidebar">
 			d
 		</div>
 		<main class="Page_Content" id="pageElement_Content">
+			
+		</div>
 			<div>
 				<div class="Page_MainContent">
 					
-					<h1 class="General_Title">
-						Section
-					</h1>
-					<div id="pageElement_ContentContainer">
-						<div class="General_Button" onclick="open_Subwindow('Test_Subwindow')">
-							Subwindow
-						</div>
-						<div class="General_Button" onclick="open_Subwindow('Test_Modal')">
-							Modal / Confirmation Box
-						</div>
-					</div>
-					<h1 class="General_Title">
-						Dropdown
-					</h1>
-					<p class="General_Paragraph">
-						Input_Dropdown_SelectedItem - The clickable dropdown button that displays the currently selected item in the list. Set the ID to a custom dropdown name.<br>
-						Input_Dropdown_Item - Item in the dropdown list. Set the id to dropdownItem_ + the id of Input_Dropdown_SelectedItem. When clicked, the displayed text of the item will be the value of Input_Dropdown_SelectedItem which can then be used for any system using .innerText.
-						
-					</p>
-					<p class="Input_Dropdown_SelectedItem" id="sampleDropdown" onclick="trigger_toggleDropdown(this.id)">
-						Selected dropdown
-					</p>
-					<div class="Input_Dropdown" id="dropdownMenu_sampleDropdown" style="display: none">
-						<p class="Input_Dropdown_Item" id="dropdownItem_sampleDropdown" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
-							Item 1
-						</p>
-						<p class="Input_Dropdown_Item" id="dropdownItem_sampleDropdown" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
-							Item 2
-						</p>
-						<p class="Input_Dropdown_Item" id="dropdownItem_sampleDropdown" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
-							Item 3
-						</p>
-						<p class="Input_Dropdown_Item" id="dropdownItem_sampleDropdown" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
-							Item 4
-						</p>
-					</div>
 					
-					<footer class="Page_Footer">
+					
+					<footer class="Page_Footer" style="display: none">
 						<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
 							Doodle Launcher Release 1.0
 						</h1>

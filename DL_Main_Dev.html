@@ -58,13 +58,20 @@
 		<div class="Page_Blur" id="pageElement_BlurBG">
 			d
 		</div>
-		<div class="Page_Subwindows">
-			
+		<div class="Page_Subwindows" id="pageElement_Subwindows">
+			<div class="Subwindow" id="subwindow_Profile">
+				<div class="Subwindow_Titlebar">
+					<h2 class="Subwindow_TitleBar_Title">
+						Test
+					</h2>
+					<img class="Subwindow_Titlebar_Close" src="Assets/Icons/icon_close.png" onclick="close_Subwindow('Profile')">
+				</div>
+			</div>
 		</div>
 		<div class="Page_Overlays">
 			<div class="Header_MainMenu_Container" style="display: none" id="pageElement_Header_MainMenu_Textbox">
 				<div id="pageElement_Header_MainMenu_Textbox_Content" style="opacity: 0%">
-					<div class="Header_MainMenu_Profile" id="pageElement_Header_MainMenu_ProfileButton">
+					<div class="Header_MainMenu_Profile" id="pageElement_Header_MainMenu_ProfileButton" onclick="open_Subwindow('Profile')">
 						<img class="Header_MainMenu_Profile_Image" src="Assets/Icons/icon_user.png"></img>
 						<h3 class="Header_MainMenu_Profile_Name">
 							Jemma Regalados

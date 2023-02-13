@@ -68,18 +68,38 @@
 	--Accent-Color-Hover: #a03d13; /* Accent color when hovered Old: #9f4f52*/
 	--BGColor-General: #171010; /* BG color for everything that does not fall on the categories below */
 	
+	/* General */
+	--
+	
 	/* Header */
-	--Color-Accent-Header: #171010;
-	--Color-BG-Header: #171010;
-	--Color-Text-Header: #171010;
-	--Color-Divider-Header: #171010;
-	--Color-Buttons-Header: #171010;
-	--Color-Hover-Header: #171010;
-	--Color-Focus-Header: #171010;
-	--Color-Input-Header: #171010;
-	--Color-IconBrightness-Header: brightness(1);
+	--Header-Color-Accent
+	--Header-Color-Accent-Hover
+	--Header-Color-BG
+	--Header-Color-Hover
+	--Header-Color-Onclick
+	--Header-Font-Primary-Text
+	--Header-Font-Secondary-Text
+	--Header-Font-Numbers-Text
+	--Header-Color-Primary-Text
+	--Header-Color-Secondary-Text
+	--Header-Color-Numbers-text
+	--Header-Color-Divider
 	
 	/* Sidebar */
+	--Sidebar-Color-Accent
+	--Sidebar-Color-Accent-Hover
+	--Sidebar-Color-BG
+	--Sidebar-Color-Hover
+	--Sidebar-Color-Onclick
+	--Sidebar-Font-Primary-Text
+	--Sidebar-Font-Secondary-Text
+	--Sidebar-Font-Numbers-Text
+	--Sidebar-Color-Primary-Text
+	--Sidebar-Color-Secondary-Text
+	--Sidebar-Color-Numbers-text
+	--Sidebar-Color-Divider
+	
+	
 	--Color-Accent-Sidebar: #171010;
 	--Color-BG-Sidebar: #171010;
 	--Color-Text-Sidebar: #171010;

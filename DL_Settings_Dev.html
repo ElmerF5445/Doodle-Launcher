@@ -181,22 +181,45 @@
 			</div>
 		</header>
 		<div class="Page_Sidebar" id="pageElement_Sidebar">
-			d
+			<div class="Sidebar_Item" id="Settings_Tab_Appearance" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Appearance_Icon" src="Assets/Icons/icon_customize.png"></img>
+				<p class="Sidebar_Item_Text">
+					Appearance
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Settings_Tab_Behavior" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Behavior_Icon"src="Assets/Icons/icon_lms.png"></img>
+				<p class="Sidebar_Item_Text">
+					Behavior
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Settings_Tab_Information" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Information_Icon"src="Assets/Icons/icon_information.png"></img>
+				<p class="Sidebar_Item_Text">
+					Public Beta Information
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="Settings_Tab_Update" onclick="trigger_ChangeTab(this.id)">
+				<img class="Sidebar_Icon" id="Settings_Tab_Update_Icon" src="Assets/Icons/icon_softwareUpdate.png"></img>
+				<p class="Sidebar_Item_Text">
+					Launcher Update
+				</p>
+			</div>
 		</div>
 		<main class="Page_Content" id="pageElement_Content">
 			<div>
 				<div class="Page_MainContent">
-					<h1 class="Greeting_Text" id="pageElement_Greeting">
-						Good Evening
+					<h1 class="Greeting_Text" id="pageElement_Tab_Title">
+						Doodle Launcher Settings
 					</h1>
-					<h1 class="General_Title">
-						Test
-					</h1>
+					<p class="General_Paragraph" id="pageElement_Tab_Description">
+						This page lets you tweak different settings and change how the launcher looks and behaves. You can also find relevant information here. <br>
+						Select a tab on the sidebar to access settings on that tab.
+					</p>
 					<div id="pageElement_ContentContainer">
 						
 					</div>
-				</div>
-				<footer class="Page_Footer">
+					<footer class="Page_Footer">
 					<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
 						Doodle Launcher Release 1.0
 					</h1>
@@ -205,6 +228,8 @@
 						Copyright Content By ElmerF 2023
 					</h1>
 				</footer>
+				</div>
+				
 			</div>
 		</main>
 	</body>

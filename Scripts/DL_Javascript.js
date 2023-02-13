@@ -58,6 +58,7 @@ var pageProperty_enableClockScreen = 0; // Refers to whether the session screen 
 var pageProperty_useProfileSystem = 0; // Refers to whether the page will use the profile system introduced in Doodle Launcher
 var pageProperty_useSettingsSystem = 1; // Refers to whether the page will use the personalized settings system. Disabling will set all properties to default and :root values
 var pageProperty_sidebarExpandedWidth = 250; // Refers to the width of the sidebar when expanded. Requires pageProperty_enableStatusBar = 1
+var pageProperty_sidebarCompactedWidth = 50; // Refers to the width of the sidebar when compacted. Requires pageProperty_enableStatusBar = 1
 var pageProperty_backgroundState = 0; // Refers to the state of the background for the page. 0 = Solid color, BGColor-General value will be used; 1 = Wallpaper, BG-WallpaperImg will be used; 2 = Wallpaper is shown with blur effect, BG-WallpaperImg, BGColor-Opacitated, and Element-BackdropBlur will be used
 var pageProperty_enableCategoryNavigation = 0; // Refers to whether the page uses the category navigation system to generate the sidebar links
 var pageProperty_pageIcon = "placeholder.png"; // Refers to the icon that will be displayed on the header, favicon, and loading screen
@@ -68,6 +69,7 @@ function dev_OnloadTasks(){
 	displayDay();
 	// close_LoadingScreen();
 	sessionCheck();
+	check_WindowSize_test();
 	var path = window.location.pathname;
 	var PageName = path.split("/").pop();
 	console.log("Welcome to "+VersionTitle+" "+VersionNumber+" ("+ContinuityVersionNumber+"). Copyright "+CopyrightTitle);
@@ -78,7 +80,7 @@ function dev_OnloadTasks(){
 			pageProperty_pageIcon = "placeholder.png";
 			pageProperty_MenuName = "Doodle Launcher";
 			pageProperty_PageTitle = "Template";
-			pageProperty_enableGreetings = 1;
+			pageProperty_enableGreetings = 0;
 			pageProperty_enableSidebar = 1;
 			pageProperty_enableCategoryLabelIcons = 0;
 			pageProperty_lockSidebar = 0;
@@ -87,6 +89,22 @@ function dev_OnloadTasks(){
 			pageProperty_sidebarExpandedWidth = 300;
 			pageProperty_backgroundState = 1;
 			pageProperty_enableClockScreen = 1;
+			pageProperty_enableCategoryNavigation = 0;
+		break;
+		case "DL_SearchScreen.html":
+			pageProperty_pageIcon = "favicon.png";
+			pageProperty_MenuName = "Doodle Launcher";
+			pageProperty_PageTitle = "Search Screen";
+			pageProperty_enableGreetings = 0;
+			pageProperty_enableSidebar = 0;
+			pageProperty_enableCategoryLabelIcons = 0;
+			pageProperty_lockSidebar = 0;
+			pageProperty_enableStatusBar = 0;
+			pageProperty_useProfileSystem = 0;
+			pageProperty_useSettingsSystem = 0;
+			pageProperty_sidebarExpandedWidth = 300;
+			pageProperty_backgroundState = 2;
+			pageProperty_enableClockScreen = 0;
 			pageProperty_enableCategoryNavigation = 0;
 		break;
 		case "DL_Main_Dev.html":
@@ -116,7 +134,7 @@ function dev_OnloadTasks(){
 			pageProperty_enableStatusBar = 1;
 			pageProperty_useProfileSystem = 1;
 			pageProperty_sidebarExpandedWidth = 300;
-			pageProperty_backgroundState = 1;
+			pageProperty_backgroundState = 2;
 			pageProperty_enableClockScreen = 1;
 			pageProperty_enableCategoryNavigation = 0;
 		break;
@@ -136,7 +154,7 @@ function dev_SetPageProperties(){
 		
 		SetPageProperties_Header_SidebarToggleValue = "0px";
 		document.getElementById("pageElement_Content").style.gridTemplateColumns = "0px 1fr";
-		 
+		
 	}
 	
 	if (pageProperty_lockSidebar == 1){
@@ -203,152 +221,152 @@ function OnloadTasks(){
 	generate_Launcher_HeaderButtons(PageName);
 	switch (PageName){
 		case "DL_LogIn.html":
-			pageProperty_enableGreetings = 0;
-			var pageProperty_showSidebarToggle = 0;
-			var pageProperty_enableSidebar = 0;
-			var pageProperty_enableCategoryLabelIcons = 0;
-			var pageProperty_enableTabContainers = 0;
-			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
-			var pageProperty_enableCategoryNavigation = 0;
-			pageProperty_lockSidebar = false;
-			pageProperty_PageTitle = "Log in";
-			check_Version();
-			
-			hide_ToggleableElements();
-			setTimeout(start_Animations, 2500);
-			enableGreetings = 0;
-			
-			generate_ProfileSelector();
-			if (Appearance_Behavior_BlurHomeWallpaper == true || Appearance_Behavior_BlurHomeWallpaper == "true"){
-				document.getElementById("pageElement_WallpaperBlur").style.display = "block";
+		pageProperty_enableGreetings = 0;
+		var pageProperty_showSidebarToggle = 0;
+		var pageProperty_enableSidebar = 0;
+		var pageProperty_enableCategoryLabelIcons = 0;
+		var pageProperty_enableTabContainers = 0;
+		var pageProperty_showSidebarToggle_CategoryNavigation = 0;
+		var pageProperty_enableCategoryNavigation = 0;
+		pageProperty_lockSidebar = false;
+		pageProperty_PageTitle = "Log in";
+		check_Version();
+		
+		hide_ToggleableElements();
+		setTimeout(start_Animations, 2500);
+		enableGreetings = 0;
+		
+		generate_ProfileSelector();
+		if (Appearance_Behavior_BlurHomeWallpaper == true || Appearance_Behavior_BlurHomeWallpaper == "true"){
+			document.getElementById("pageElement_WallpaperBlur").style.display = "block";
 			} else {
-				document.getElementById("pageElement_WallpaperBlur").style.display = "none";
-			}
+			document.getElementById("pageElement_WallpaperBlur").style.display = "none";
+		}
 		break;
 		case "DL_Main.html":
-			pageProperty_enableGreetings = 1;
-			var pageProperty_showSidebarToggle = 1;
-			var pageProperty_enableSidebar = 1;
-			var pageProperty_enableCategoryLabelIcons = 0;
-			var pageProperty_enableTabContainers = 0;
-			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
-			var pageProperty_enableCategoryNavigation = 0;
-			pageProperty_lockSidebar = false;
-			pageProperty_PageTitle = "Home";
-			check_Version();
-			Generator_Render_Categories();
-			hide_ToggleableElements();
-			setTimeout(start_Animations, 2500);
-			enableGreetings = 1;
-			
-			
-			if (Appearance_Behavior_BlurHomeWallpaper == true || Appearance_Behavior_BlurHomeWallpaper == "true"){
-				document.getElementById("pageElement_WallpaperBlur").style.display = "block";
+		pageProperty_enableGreetings = 1;
+		var pageProperty_showSidebarToggle = 1;
+		var pageProperty_enableSidebar = 1;
+		var pageProperty_enableCategoryLabelIcons = 0;
+		var pageProperty_enableTabContainers = 0;
+		var pageProperty_showSidebarToggle_CategoryNavigation = 0;
+		var pageProperty_enableCategoryNavigation = 0;
+		pageProperty_lockSidebar = false;
+		pageProperty_PageTitle = "Home";
+		check_Version();
+		Generator_Render_Categories();
+		hide_ToggleableElements();
+		setTimeout(start_Animations, 2500);
+		enableGreetings = 1;
+		
+		
+		if (Appearance_Behavior_BlurHomeWallpaper == true || Appearance_Behavior_BlurHomeWallpaper == "true"){
+			document.getElementById("pageElement_WallpaperBlur").style.display = "block";
 			} else {
-				document.getElementById("pageElement_WallpaperBlur").style.display = "none";
-			}
+			document.getElementById("pageElement_WallpaperBlur").style.display = "none";
+		}
 		break;
 		case "DL_ShortcutEditor.html":
-			pageProperty_enableGreetings = 1;
-			var pageProperty_showSidebarToggle = 1;
-			var pageProperty_enableSidebar = 1;
-			pageProperty_lockSidebar = false;
-			var pageProperty_enableCategoryLabelIcons = 0;
-			var pageProperty_enableTabContainers = 0;
-			var pageProperty_enableCategoryNavigation = 0;
-			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
-			pageProperty_PageTitle = "Shortcut Editor";
-			//SE_Render_List_TableView();
-			Generator_Render_Categories();
-			//render_Categories_TableView();
-			Generator_Render_Categories_TableView();
-			SE_Create_SwapperList();
-			SE_Create_SwapperList_Shortcuts();
-			setTimeout(start_Animations, 2500);
-			SE_CreateDropdown();
+		pageProperty_enableGreetings = 1;
+		var pageProperty_showSidebarToggle = 1;
+		var pageProperty_enableSidebar = 1;
+		pageProperty_lockSidebar = false;
+		var pageProperty_enableCategoryLabelIcons = 0;
+		var pageProperty_enableTabContainers = 0;
+		var pageProperty_enableCategoryNavigation = 0;
+		var pageProperty_showSidebarToggle_CategoryNavigation = 0;
+		pageProperty_PageTitle = "Shortcut Editor";
+		//SE_Render_List_TableView();
+		Generator_Render_Categories();
+		//render_Categories_TableView();
+		Generator_Render_Categories_TableView();
+		SE_Create_SwapperList();
+		SE_Create_SwapperList_Shortcuts();
+		setTimeout(start_Animations, 2500);
+		SE_CreateDropdown();
 		break;
 		case "DL_Clock.html":
-			pageProperty_enableGreetings = 1;
-			var pageProperty_showSidebarToggle = 1;
-			var pageProperty_enableSidebar = 1;
-			pageProperty_lockSidebar = false;
-			var pageProperty_enableCategoryLabelIcons = 0;
-			var pageProperty_enableTabContainers = 0;
-			var pageProperty_enableCategoryNavigation = 0;
-			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
-			pageProperty_PageTitle = "Clock";
+		pageProperty_enableGreetings = 1;
+		var pageProperty_showSidebarToggle = 1;
+		var pageProperty_enableSidebar = 1;
+		pageProperty_lockSidebar = false;
+		var pageProperty_enableCategoryLabelIcons = 0;
+		var pageProperty_enableTabContainers = 0;
+		var pageProperty_enableCategoryNavigation = 0;
+		var pageProperty_showSidebarToggle_CategoryNavigation = 0;
+		pageProperty_PageTitle = "Clock";
 		break;
 		case "DL_PomodoroTimer.html":
-			pageProperty_enableGreetings = 0;
-			var pageProperty_showSidebarToggle = 0;
-			var pageProperty_enableSidebar = 0;
-			pageProperty_lockSidebar = false;
-			var pageProperty_enableCategoryLabelIcons = 0;
-			var pageProperty_enableTabContainers = 0;
-			var pageProperty_enableCategoryNavigation = 0;
-			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
-			pageProperty_PageTitle = "Pomodoro Timer";
+		pageProperty_enableGreetings = 0;
+		var pageProperty_showSidebarToggle = 0;
+		var pageProperty_enableSidebar = 0;
+		pageProperty_lockSidebar = false;
+		var pageProperty_enableCategoryLabelIcons = 0;
+		var pageProperty_enableTabContainers = 0;
+		var pageProperty_enableCategoryNavigation = 0;
+		var pageProperty_showSidebarToggle_CategoryNavigation = 0;
+		pageProperty_PageTitle = "Pomodoro Timer";
 		break;
 		case "DL_Settings.html":
-			pageProperty_enableGreetings = 0;
-			var pageProperty_showSidebarToggle = 1;
-			var pageProperty_enableSidebar = 1;
-			pageProperty_lockSidebar = false;
-			var pageProperty_enableCategoryLabelIcons = 0;
-			var pageProperty_enableTabContainers = 1;
-			var pageProperty_enableCategoryNavigation = 0;
-			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
-			pageProperty_PageTitle = "Settings";
-			Settings_LoadSettingValues();
-			set_Version_Settings();
+		pageProperty_enableGreetings = 0;
+		var pageProperty_showSidebarToggle = 1;
+		var pageProperty_enableSidebar = 1;
+		pageProperty_lockSidebar = false;
+		var pageProperty_enableCategoryLabelIcons = 0;
+		var pageProperty_enableTabContainers = 1;
+		var pageProperty_enableCategoryNavigation = 0;
+		var pageProperty_showSidebarToggle_CategoryNavigation = 0;
+		pageProperty_PageTitle = "Settings";
+		Settings_LoadSettingValues();
+		set_Version_Settings();
 		break;
 		case "DL_Settings_Changelogs.html":
-			pageProperty_enableGreetings = 0;
-			var pageProperty_showSidebarToggle = 0;
-			var pageProperty_enableSidebar = 0;
-			pageProperty_lockSidebar = false;
-			var pageProperty_enableCategoryLabelIcons = 0;
-			var pageProperty_enableTabContainers = 0;
-			var pageProperty_enableCategoryNavigation = 1;
-			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
-			pageProperty_PageTitle = "Changelogs";
+		pageProperty_enableGreetings = 0;
+		var pageProperty_showSidebarToggle = 0;
+		var pageProperty_enableSidebar = 0;
+		pageProperty_lockSidebar = false;
+		var pageProperty_enableCategoryLabelIcons = 0;
+		var pageProperty_enableTabContainers = 0;
+		var pageProperty_enableCategoryNavigation = 1;
+		var pageProperty_showSidebarToggle_CategoryNavigation = 0;
+		pageProperty_PageTitle = "Changelogs";
 		break;
 		case "DL_ReminderAndTodoList.html":
-			pageProperty_enableGreetings = 0;
-			var pageProperty_showSidebarToggle = 0;
-			var pageProperty_enableSidebar = 0;
-			pageProperty_lockSidebar = false;
-			var pageProperty_enableCategoryLabelIcons = 0;
-			var pageProperty_enableTabContainers = 0;
-			var pageProperty_enableCategoryNavigation = 0;
-			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
-			pageProperty_PageTitle = "Tasker";
+		pageProperty_enableGreetings = 0;
+		var pageProperty_showSidebarToggle = 0;
+		var pageProperty_enableSidebar = 0;
+		pageProperty_lockSidebar = false;
+		var pageProperty_enableCategoryLabelIcons = 0;
+		var pageProperty_enableTabContainers = 0;
+		var pageProperty_enableCategoryNavigation = 0;
+		var pageProperty_showSidebarToggle_CategoryNavigation = 0;
+		pageProperty_PageTitle = "Tasker";
 		break;
 		case "WA_Main.html":
-			pageProperty_enableGreetings = 0;
-			var pageProperty_showSidebarToggle = 1;
-			var pageProperty_enableSidebar = 1;
-			pageProperty_lockSidebar = true;
-			var pageProperty_enableCategoryLabelIcons = 0;
-			var pageProperty_enableTabContainers = 0;
-			var pageProperty_showSidebarToggle_CategoryNavigation = 0;
-			var pageProperty_enableCategoryNavigation = 0;
-			
-			pageProperty_PageTitle = "Watermark Applier";
-			check_Version();
-			// Generator_Render_Categories();
-			/*const SE_Array_Category_Index = ["fillerCategory", "TEST_Category_1", "TEST_Category_2", "TEST_Category_3", "Education", "Elmer Elmer", "Socials"];
-			localStorage.setItem(key_Index_Category, JSON.stringify(SE_Array_Category_Index));*/
-			hide_ToggleableElements();
-			setTimeout(start_Animations, 2500);
-			enableGreetings = 1;
-			
-			generate_ProfileSelector();
-			if (Appearance_Behavior_BlurHomeWallpaper == true || Appearance_Behavior_BlurHomeWallpaper == "true"){
-				document.getElementById("pageElement_WallpaperBlur").style.display = "block";
+		pageProperty_enableGreetings = 0;
+		var pageProperty_showSidebarToggle = 1;
+		var pageProperty_enableSidebar = 1;
+		pageProperty_lockSidebar = true;
+		var pageProperty_enableCategoryLabelIcons = 0;
+		var pageProperty_enableTabContainers = 0;
+		var pageProperty_showSidebarToggle_CategoryNavigation = 0;
+		var pageProperty_enableCategoryNavigation = 0;
+		
+		pageProperty_PageTitle = "Watermark Applier";
+		check_Version();
+		// Generator_Render_Categories();
+		/*const SE_Array_Category_Index = ["fillerCategory", "TEST_Category_1", "TEST_Category_2", "TEST_Category_3", "Education", "Elmer Elmer", "Socials"];
+		localStorage.setItem(key_Index_Category, JSON.stringify(SE_Array_Category_Index));*/
+		hide_ToggleableElements();
+		setTimeout(start_Animations, 2500);
+		enableGreetings = 1;
+		
+		generate_ProfileSelector();
+		if (Appearance_Behavior_BlurHomeWallpaper == true || Appearance_Behavior_BlurHomeWallpaper == "true"){
+			document.getElementById("pageElement_WallpaperBlur").style.display = "block";
 			} else {
-				document.getElementById("pageElement_WallpaperBlur").style.display = "none";
-			}
+			document.getElementById("pageElement_WallpaperBlur").style.display = "none";
+		}
 		break;
 	}
 	console.log("Setting page properties with the following values: "+pageProperty_showSidebarToggle+" | "+pageProperty_enableCategoryLabelIcons+" | "+pageProperty_enableSidebar+" | "+pageProperty_enableTabContainers);
@@ -396,7 +414,7 @@ function OnloadTasks(){
 	if (pageProperty_lockSidebar == true){
 		document.getElementById("pageElement_Sidebar").style.width = "320px";
 		document.getElementById("pageElement_MainContent").style.paddingLeft = "315px";
-			Sidebar_State = "Expanded";
+		Sidebar_State = "Expanded";
 	}
 	
 	console.log(pageProperty_showSidebarToggle_CategoryNavigation);
@@ -543,8 +561,8 @@ function set_Version_General(){
 	document.getElementById("pageElement_SessionScreen_Copyright").innerHTML = VersionTitle+" | "+CopyrightTitle;
 	document.getElementById("pageElement_Footer_VersionTitle").innerHTML = VersionTitle;
 	document.getElementById("pageElement_Footer_Copyright").innerHTML = CopyrightTitle;
-document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle + " - " + pageProperty_PageTitle;
-
+	document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle + " - " + pageProperty_PageTitle;
+	
 	/* switch (PageName){
 		case "DL_Main.html":
 		document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle + " - " + "Home";
@@ -616,9 +634,9 @@ function check_Connection(){
 }
 
 function generate_Launcher_NavigationList(){
-	let navigationListItems = ["Old UI", "Home", "Shortcut Editor", "Settings", "Pomodoro Timer", "Watermark Applier"]; //Launcher navigation text
-	let navigationListItems_Link = ["file:///C:/Users/Elmer%20Jr%20G%20Felisilda/Documents/HTML%20Projects/Doodle%20Launcher/DL_Main.html", "DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html", "WA_Main.html"]; //Launcher navigation links
-	let navigationListItems_Icon = ["favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png"];
+	let navigationListItems = ["Old UI", "Home", "Shortcut Editor", "Settings", "Pomodoro Timer", "Watermark Applier", "Template V1"]; //Launcher navigation text
+	let navigationListItems_Link = ["file:///C:/Users/Elmer%20Jr%20G%20Felisilda/Documents/HTML%20Projects/Doodle%20Launcher/DL_Main.html", "DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html", "WA_Main.html", "DL_Template_V1.html"]; //Launcher navigation links
+	let navigationListItems_Icon = ["favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png"];
 	
 	for (var i = 0; i < navigationListItems.length; i++) {
 		var navigationListItems_Select = navigationListItems[i]; //Contains the selected pagenavi text
@@ -656,25 +674,25 @@ function generate_Launcher_HeaderButtons(pageName){
 	let Generator_HeaderButtons_OnclickAction = [];
 	switch (pageName){
 		case "DL_Main.html":
-			Generator_HeaderButtons_Text = ["Internet search", "Category Navigation"];
-			Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
-			Generator_HeaderButtons_ID = ["", ""];
-			Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()", "toggle_Sidebar_CategoryNavigation()"];
-			var Generator_DisplayInHeader = false;
+		Generator_HeaderButtons_Text = ["Internet search", "Category Navigation"];
+		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
+		Generator_HeaderButtons_ID = ["", ""];
+		Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()", "toggle_Sidebar_CategoryNavigation()"];
+		var Generator_DisplayInHeader = false;
 		break;
 		case "DL_ShortcutEditor.html":
-			Generator_HeaderButtons_Text = ["Add Item", "Re-order categories", "Re-order shortcuts", "How to use"];
-			Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
-			Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
-			Generator_HeaderButtons_OnclickAction = ["open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
-			var Generator_DisplayInHeader = true;
+		Generator_HeaderButtons_Text = ["Add Item", "Re-order categories", "Re-order shortcuts", "How to use"];
+		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
+		Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
+		Generator_HeaderButtons_OnclickAction = ["open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
+		var Generator_DisplayInHeader = true;
 		break;
 		case "DL_Settings.html":
-			Generator_HeaderButtons_Text = ["Save changes"];
-			Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png"];
-			Generator_HeaderButtons_ID = [""];
-			Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
-			var Generator_DisplayInHeader = true;
+		Generator_HeaderButtons_Text = ["Save changes"];
+		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png"];
+		Generator_HeaderButtons_ID = [""];
+		Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
+		var Generator_DisplayInHeader = true;
 		break;
 	}
 	
@@ -891,7 +909,74 @@ function close_SessionScreen(){
 
 var windowSizePreset = "normal";
 var windowDeviceType = "Desktop";
-window.addEventListener('resize', check_WindowSize);
+window.addEventListener('resize', check_WindowSize_test);
+let details = navigator.userAgent;
+let regexp = /android|iphone|kindle|ipad/i;
+let isMobileDevice = regexp.test(details);
+function check_WindowSize_test(){
+	var Content = document.getElementById("pageElement_Content");
+	var MainContent = document.getElementById("Page_MainContent");
+	var Header = document.getElementById("pageElement_Header");
+	var Header_PageTitle = document.getElementById("Header_PageNavi_Title");
+	var Header_Buttons_Text = document.querySelectorAll(".Header_Content_Button_Text");
+	var Header_StatusTray_Clock = document.getElementById("pageElement_Header_Clock");
+	var Header_StatusTray_Battery = document.getElementById("pageElement_Header_Battery");
+	var Sidebar = document.getElementById("pageElement_Sidebar");
+	
+	windowWidth = window.innerWidth;
+	if (windowWidth < 750){ //Small size
+		windowSizePreset = "small";
+		} else { //Normal size
+		windowSizePreset = "normal";
+	}
+	
+	// Desktop
+	/* if(windowSizePreset == "small"){
+		// MainContent.style.marginLeft = "3%";
+		// Header_PageTitle.style.display = "none";
+		// Header_StatusTray_Clock.style.display = "none";
+		// Header_StatusTray_Battery.style.display = "none";
+		for (a = 0; a < Header_Buttons_Text.length; a++){
+			Header_Buttons_Text[a].style.display = "none";
+		}
+	} else if (windowSizePreset == "normal"){
+		// MainContent.style.marginLeft = "10%";
+		// Header_PageTitle.style.display = "block";
+		// Header_StatusTray_Clock.style.display = "block";
+		// Header_StatusTray_Battery.style.display = "block";
+		for (a = 0; a < Header_Buttons_Text.length; a++){
+			Header_Buttons_Text[a].style.display = "block";
+		}
+	} */
+	
+	// Mobile
+	/* if (windowSizePreset == "normal" && isMobileDevice == true){
+		Header.style.height = "100px";
+		Content.style.marginTop = "100px";
+		Sidebar.style.marginTop = "100px";
+		Sidebar.style.width = "100px";
+		pageProperty_sidebarExpandedWidth = 750;
+		pageProperty_sidebarCompactedWidth = 100;
+		document.getElementById("Header_PageNavi_Title").style.fontSize = "50px";
+	}
+	if(windowSizePreset == "small"){
+		Header_PageTitle.style.display = "none";
+		Header_StatusTray_Clock.style.display = "none";
+		Header_StatusTray_Battery.style.display = "none";
+		for (a = 0; a < Header_Buttons_Text.length; a++){
+			Header_Buttons_Text[a].style.display = "none";
+		}
+	} else if (windowSizePreset == "normal"){
+		Header_PageTitle.style.display = "block";
+		Header_StatusTray_Clock.style.display = "block";
+		Header_StatusTray_Battery.style.display = "block";
+		for (a = 0; a < Header_Buttons_Text.length; a++){
+			Header_Buttons_Text[a].style.display = "block";
+		}
+	} */
+	
+}
+
 function check_WindowSize(){
 	windowWidth = window.innerWidth;
 	
@@ -984,7 +1069,7 @@ document.addEventListener('keydown', (event) => {
 	if (keysPressed['Control'] && event.key == ' ') {
 		if(PageName == "WA_Main.html"){
 			generateImage();
-		} else {
+			} else {
 			if(document.getElementById("subwindow_AddItem").style.display == "none"){
 				open_Subwindow("AddItem");
 				} else {
@@ -1035,7 +1120,7 @@ document.addEventListener('keydown', (event) => {
 			stylesheet.style.setProperty("--Debug-ElementOutline", "solid red");
 			dev_debug_ElementOutlines = 1;
 			console.log("Outlines on");
-		} else if (dev_debug_ElementOutlines == 1){
+			} else if (dev_debug_ElementOutlines == 1){
 			var stylesheet = document.querySelector(':root');
 			stylesheet.style.setProperty("--Debug-ElementOutline", "none");
 			dev_debug_ElementOutlines = 0;
@@ -1137,18 +1222,18 @@ function toggle_Sidebar(){
 				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarExpandedWidth + "px";
 				document.getElementById("pageElement_Content").style.marginLeft = pageProperty_sidebarExpandedWidth + "px"
 				Sidebar_State = "Expanded";
-			} else if (Sidebar_State == "Expanded"){
-				document.getElementById("pageElement_Sidebar").style.width = "50px";
+				} else if (Sidebar_State == "Expanded"){
+				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarCompactedWidth +"px";
 				document.getElementById("pageElement_Content").style.marginLeft = "50px"
 				// var toggle_Sidebar_GridTemplateColumns = "50px 1fr";
 				Sidebar_State = "Contracted";
 			}
-		} else if (pageProperty_lockSidebar == 1){
+			} else if (pageProperty_lockSidebar == 1){
 			if (Sidebar_State == "Contracted"){
 				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarExpandedWidth + "px";
 				document.getElementById("pageElement_Content").style.marginLeft = pageProperty_sidebarExpandedWidth + "px"
 				Sidebar_State = "Expanded";
-			} else if (Sidebar_State == "Expanded"){
+				} else if (Sidebar_State == "Expanded"){
 				document.getElementById("pageElement_Sidebar").style.width = "0px";
 				document.getElementById("pageElement_Content").style.marginLeft = "0px"
 				Sidebar_State = "Contracted";
@@ -1165,7 +1250,7 @@ function toggle_Sidebar_CategoryNavigation(){
 		Sidebar.style.width = "320px";
 		Sidebar.style.paddingLeft = "10px";
 		document.getElementById("pageElement_MainContent").style.paddingLeft = "315px";
-	} else { //Closes the sidebar
+		} else { //Closes the sidebar
 		Sidebar.style.width = "0px";
 		Sidebar.style.paddingLeft = "0px";
 		document.getElementById("pageElement_MainContent").style.paddingLeft = "0px";
@@ -1244,6 +1329,8 @@ function toggle_Category_All(){
 
 var subwindow_activeSubwindow;
 function open_Subwindow(ID){
+	document.getElementById("pageElement_Subwindows").style.display = "flex";
+	document.getElementById("pageElement_Subwindows").style.opacity = "100%";
 	var subwindowElement = document.getElementById("subwindow_"+ID);
 	subwindowElement.style.display = "block";
 	subwindowElement.style.animationFillMode = "forwards";
@@ -1253,12 +1340,13 @@ function open_Subwindow(ID){
 }
 
 function close_Subwindow(ID){
+	document.getElementById("pageElement_Subwindows").style.opacity = "0%";
 	var subwindowElement = document.getElementById("subwindow_"+ID);
 	subwindowElement.style.animationName = "closing_Subwindow";
 	subwindowElement.style.animationDuration = "0.3s";
 	subwindowElement.style.animationFillMode = "forwards";
 	subwindow_activeSubwindow = "none";
-	setTimeout(function(){subwindowElement.style.display = "none";}, 300);
+	setTimeout(function(){subwindowElement.style.display = "none"; document.getElementById("pageElement_Subwindows").style.display = "none";}, 300);
 	
 }
 
@@ -1276,7 +1364,7 @@ function trigger_toggle_Textbox(ID){
 		textboxContentsID.style.animationName = "open_Textbox_Contents";
 		textboxContentsID.style.animationDuration = "var(--Element-Transition-Delay)";
 		textboxContentsID.style.animationDelay= "0.21s";
-	} else {
+		} else {
 		// textboxID.style.display = "none";
 		textboxID.style.animationFillMode = "forwards";
 		textboxID.style.animationName = "close_Textbox";
@@ -1436,13 +1524,22 @@ function startTime() {
 		var AMPM = "PM";
 	}
 	if (pageProperty_enableStatusBar == 1){
-		document.getElementById('Clock_Time').innerHTML =  displayHour + ":" + m + " " + AMPM;
-		document.getElementById('StatusMenu_Clock_Time').innerHTML =  displayHour + ":" + m + " " + AMPM;
+		if (document.getElementById('pageElement_Header_Clock').style.display == "block"){
+			document.getElementById('Clock_Time').innerHTML =  displayHour + ":" + m + " " + AMPM;
+			
+		}
+		if (document.getElementById('pageElement_Header_StatusTray_Textbox').style.display == "block"){
+			document.getElementById('StatusMenu_Clock_Time').innerHTML =  displayHour + ":" + m + " " + AMPM;
+			
+		}
 	}
 	
 	// document.getElementById("Sidebar_Clock_Time").innerHTML = displayHour + ":" + m + ":" + s + " "+AMPM;
 	if (pageProperty_enableClockScreen == 1){
-		document.getElementById('Clock_Time_SessionScreen').innerHTML =  displayHour + ":" + m;
+		if (document.getElementById('pageElement_SessionScreen').style.display == "block"){
+			document.getElementById('Clock_Time_SessionScreen').innerHTML =  displayHour + ":" + m;
+			
+		}
 	}
 	
 	
@@ -1451,9 +1548,13 @@ function startTime() {
 		navigator.getBattery()
 		.then(function(battery) {
 			var battery_level = Math.round((battery.level)*100);
-			document.getElementById('Battery_Level').innerHTML =  battery_level+"%";
-			document.getElementById('StatusMenu_Battery_Level').innerHTML =  battery_level+"%";
-			document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Estimated " + Math.round(battery.dischargingTime / 60) + " minutes remaining";
+			if (document.getElementById('pageElement_Header_Battery').style.display == "block"){
+				document.getElementById('Battery_Level').innerHTML =  battery_level+"%";
+			}
+			if (document.getElementById('pageElement_Header_StatusTray_Textbox').style.display == "block"){
+				document.getElementById('StatusMenu_Battery_Level').innerHTML =  battery_level+"%";
+				document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Estimated " + Math.round(battery.dischargingTime / 60) + " minutes remaining";
+			}
 		});
 	}
 	if (battery_level <= 15){
@@ -1617,104 +1718,104 @@ function trigger_createToast(type){
 		toast_Subtitle.classList.add("ToastNotif_Toast_URL");
 		switch(type){
 			case "success":
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_linkAdded.png");
-				toast_Title.innerHTML = "I am success";
-				toast_Subtitle.innerHTML = "LMAO its SuccessToastYT he's roasty toasty who would've thought it would make the news papers LMAO LOL FR FR TBH";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkAdded.png");
+			toast_Title.innerHTML = "I am success";
+			toast_Subtitle.innerHTML = "LMAO its SuccessToastYT he's roasty toasty who would've thought it would make the news papers LMAO LOL FR FR TBH";
 			break;
 			case "failed":
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_linkError.png");
-				toast_Title.innerHTML = "Fail :(";
-				toast_Subtitle.innerHTML = "uncooked toast";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkError.png");
+			toast_Title.innerHTML = "Fail :(";
+			toast_Subtitle.innerHTML = "uncooked toast";
 			break;
 			case "SE_FormNotFilled": //When not all of the required fields are filled
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_linkError.png");
-				toast_Title.innerHTML = "Item not added";
-				toast_Subtitle.innerHTML = "Make sure that you've filled all of the required fields";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkError.png");
+			toast_Title.innerHTML = "Item not added";
+			toast_Subtitle.innerHTML = "Make sure that you've filled all of the required fields";
 			break;
 			case "SE_CategoryCreated": //When a category in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_linkAdded.png");
-				toast_Title.innerHTML = "Category added";
-				toast_Subtitle.innerHTML = "Category named '"+SE_CreateItem_categoryTitle+"' has been created.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkAdded.png");
+			toast_Title.innerHTML = "Category added";
+			toast_Subtitle.innerHTML = "Category named '"+SE_CreateItem_categoryTitle+"' has been created.";
 			break;
 			case "SE_ShortcutCreated": //When a shortcut in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_linkAdded.png");
-				toast_Title.innerHTML = "Shortcut added";
-				toast_Subtitle.innerHTML = "Shortcut named '"+SE_CreateItem_ShortcutText+"' with a URL of '"+SE_CreateItem_ShortcutURL+"' has been created.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkAdded.png");
+			toast_Title.innerHTML = "Shortcut added";
+			toast_Subtitle.innerHTML = "Shortcut named '"+SE_CreateItem_ShortcutText+"' with a URL of '"+SE_CreateItem_ShortcutURL+"' has been created.";
 			break;
 			case "Settings_FileNotFound": //When a shortcut in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_error.png");
-				toast_Title.innerHTML = "Error";
-				toast_Subtitle.innerHTML = "We couldn't find the file you're referring to. Double check the file name, type, and make sure it is in the Assets/Background folder.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_error.png");
+			toast_Title.innerHTML = "Error";
+			toast_Subtitle.innerHTML = "We couldn't find the file you're referring to. Double check the file name, type, and make sure it is in the Assets/Background folder.";
 			break;
 			case "Settings_SaveSuccess": //When a shortcut in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
-				toast_Title.innerHTML = "Settings saved";
-				toast_Subtitle.innerHTML = "Settings have been successfully saved and applied.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
+			toast_Title.innerHTML = "Settings saved";
+			toast_Subtitle.innerHTML = "Settings have been successfully saved and applied.";
 			break;
 			case "ShortcutEditor_ListUpdated": //When a shortcut in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
-				toast_Title.innerHTML = "List updated";
-				toast_Subtitle.innerHTML = "Changes had been saved.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
+			toast_Title.innerHTML = "List updated";
+			toast_Subtitle.innerHTML = "Changes had been saved.";
 			break;
 			case "ShortcutEditor_CopiedToClipboard": //When a shortcut in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_changelog.png");
-				toast_Title.innerHTML = "Copied!";
-				toast_Subtitle.innerHTML = "Text has been copied to the clipboard.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_changelog.png");
+			toast_Title.innerHTML = "Copied!";
+			toast_Subtitle.innerHTML = "Text has been copied to the clipboard.";
 			break;
 			case "SearchBar_NoQuery": //When a shortcut in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_Search.png");
-				toast_Title.innerHTML = "Search not made";
-				toast_Subtitle.innerHTML = "Type something in the search bar to do the search.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_Search.png");
+			toast_Title.innerHTML = "Search not made";
+			toast_Subtitle.innerHTML = "Type something in the search bar to do the search.";
 			break;
 			case "Presets_Set": //When a shortcut in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
-				toast_Title.innerHTML = "Preset applied";
-				toast_Subtitle.innerHTML = "The selected preset has been successfully applied to the values table. Click 'Save Settings' to save changes.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
+			toast_Title.innerHTML = "Preset applied";
+			toast_Subtitle.innerHTML = "The selected preset has been successfully applied to the values table. Click 'Save Settings' to save changes.";
 			break;
 			case "Settings_FormEmpty": //When a shortcut in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_error.png");
-				toast_Title.innerHTML = "Error";
-				toast_Subtitle.innerHTML = "The input box required is empty.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_error.png");
+			toast_Title.innerHTML = "Error";
+			toast_Subtitle.innerHTML = "The input box required is empty.";
 			break;
 			case "LaunchCategory_Before":
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_others.png");
-				toast_Title.innerHTML = "Launching...";
-				toast_Subtitle.innerHTML = "Your shortcuts should be opening on their new tabs now.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_others.png");
+			toast_Title.innerHTML = "Launching...";
+			toast_Subtitle.innerHTML = "Your shortcuts should be opening on their new tabs now.";
 			break;
 			case "LaunchCategory_After":
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_others.png");
-				toast_Title.innerHTML = "Shortcuts launched";
-				toast_Subtitle.innerHTML = "All shortcuts from the category has been opened.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_others.png");
+			toast_Title.innerHTML = "Shortcuts launched";
+			toast_Subtitle.innerHTML = "All shortcuts from the category has been opened.";
 			break;
 			case "ShortcutEditor_InvalidCharacter": //When a shortcut in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_error.png");
-				toast_Title.innerHTML = "Error";
-				toast_Subtitle.innerHTML = "The character ';' is not accepted.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_error.png");
+			toast_Title.innerHTML = "Error";
+			toast_Subtitle.innerHTML = "The character ';' is not accepted.";
 			break;
 			case "NotImplemented": //When a shortcut in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/favicon.png");
-				toast_Title.innerHTML = "Not available";
-				toast_Subtitle.innerHTML = "This feature is not implemented properly yet.";
+			toast_Icon.setAttribute("src", "Assets/Icons/favicon.png");
+			toast_Title.innerHTML = "Not available";
+			toast_Subtitle.innerHTML = "This feature is not implemented properly yet.";
 			break;
 			case "WA_ProcessingImage": //When a shortcut in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_schedules.png");
-				toast_Title.innerHTML = "Processing Image...";
-				toast_Subtitle.innerHTML = "Your image is being processed. Please wait...";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_schedules.png");
+			toast_Title.innerHTML = "Processing Image...";
+			toast_Subtitle.innerHTML = "Your image is being processed. Please wait...";
 			break;
 			case "WA_ProcessingFinished": //When a shortcut in Shortcut Editor is successfully created
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
-				toast_Title.innerHTML = "Processing Finished";
-				toast_Subtitle.innerHTML = "The image has been processed. You can now save it.";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
+			toast_Title.innerHTML = "Processing Finished";
+			toast_Subtitle.innerHTML = "The image has been processed. You can now save it.";
 			break;
 			case "dev_EnableCounter":
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
-				toast_Title.innerHTML = "Dev Counter Enabled";
-				toast_Subtitle.innerHTML = "Enabled";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
+			toast_Title.innerHTML = "Dev Counter Enabled";
+			toast_Subtitle.innerHTML = "Enabled";
 			break;
 			case "dev_EnableCounter":
-				toast_Icon.setAttribute("src", "Assets/Icons/icon_close.png");
-				toast_Title.innerHTML = "Dev Counter Disabled";
-				toast_Subtitle.innerHTML = "Disabled";
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_close.png");
+			toast_Title.innerHTML = "Dev Counter Disabled";
+			toast_Subtitle.innerHTML = "Disabled";
 			break;
 		}
 		document.getElementById("toast_Div_"+toast_Count).appendChild(toast_Icon);
@@ -1746,10 +1847,12 @@ function scrollFunction() {
 	}
 }
 
-function trigger_toggleDropdown(ID){
-	var dropdownMenu = document.getElementById("menu_"+ID);
+
+
+function trigger_toggleDropdown(ID){	
+	var dropdownMenu = document.getElementById("dropdownMenu_"+ID);
 	var dropdownButton = document.getElementById(ID);
-	var dropdownItems = document.querySelectorAll(".Input_Dropdown_Item");	
+	var dropdownItems = document.querySelectorAll("[id='dropdownItem_"+ID+"']");	
 	if (dropdownMenu.style.display == "none"){
 		dropdownMenu.parentElement.style.height = "250px";
 		dropdownMenu.style.display = "block";
@@ -1763,6 +1866,8 @@ function trigger_toggleDropdown(ID){
 			dropdownItems_Select.style.animationFillMode = "forwards";
 		}
 		dropdownButton.style.backgroundColor = "#292930";
+		dropdownButton.style.borderTopStyle = "solid";
+		dropdownButton.style.borderBottomStyle = "none";
 		} else {
 		dropdownMenu.parentElement.style.height = "auto";
 		dropdownMenu.style.animationName = "closing_Dropdown";
@@ -1774,11 +1879,19 @@ function trigger_toggleDropdown(ID){
 			dropdownItems_Select.style.animationDuration = "0.3s";
 			dropdownItems_Select.style.animationFillMode = "forwards";
 		}
-		setTimeout(function(){dropdownMenu.style.display = "none";}, 500);
+		setTimeout(function(){dropdownMenu.style.display = "none";}, 300);
 		dropdownButton.style.backgroundColor = "#121212";
+		dropdownButton.style.borderTopStyle = "none";
+		dropdownButton.style.borderBottomStyle = "solid";
 	}
 }
 
+function trigger_dropdownItemSelected(ID, text){
+	var trimmedID = ID.slice(13);
+	console.log(trimmedID);
+	document.getElementById(trimmedID).innerHTML = text;
+	trigger_toggleDropdown(trimmedID);
+}
 
 
 function search_Query(position){
@@ -2138,101 +2251,62 @@ function SE_CreateDropdown(){
 	}
 }
 
-function trigger_dropdownItemSelected(ID){
-	console.log(ID); //Debug
-	var selected_dropdownItem = document.getElementById(ID).textContent; //Gets the content of the clicked dropdown item
-	console.log(selected_dropdownItem); //Debug
-	var dropdown_List = ID.substr(0, 19); //Gets the ID type of the dropdown container the item belongs in
-	console.log(dropdown_List);
-	switch (dropdown_List){
-		case "dropdownItem_Folder": //The ID type of the container
-		document.getElementById("dropdownButton_AddItem_Folder").innerHTML = selected_dropdownItem; //Sets the text of the container to the text of the selected item
-		trigger_toggleDropdown("dropdownButton_AddItem_Folder"); //Closes the dropdown menu after the click
-		break;
-		case "dropdownItem_Shrtct":
-		document.getElementById("dropdownButton_AddItem_Shortcut1").innerHTML = selected_dropdownItem;
-		trigger_toggleDropdown("dropdownButton_AddItem_Shortcut1");
-		break;
-		case "dropdownItem_ImgTyp":
-		document.getElementById("dropdownButton_ImageType").innerHTML = selected_dropdownItem;
-		trigger_toggleDropdown("dropdownButton_ImageType");
-		break;
-		case "dropdownItem_SeaEng":
-		document.getElementById("dropdownButton_SeaEng").innerHTML = selected_dropdownItem;
-		trigger_toggleDropdown("dropdownButton_SeaEng");
-		case "dropdownItem_SpTest":
-		document.getElementById("dropdownButton_SpTest").innerHTML = selected_dropdownItem;
-		trigger_toggleDropdown("dropdownButton_SpTest");
-		console.log("Optioned");
-		break;
-		case "dropdownItem_ImpSct":
-		document.getElementById("dropdownButton_Import_Shortcut").innerHTML = selected_dropdownItem;
-		trigger_toggleDropdown("dropdownButton_Import_Shortcut");
-		console.log("Optioned");
-		break;
-		case "dropdownItem_ExpSct":
-		document.getElementById("dropdownButton_Export_Shortcut").innerHTML = selected_dropdownItem;
-		trigger_toggleDropdown("dropdownButton_Export_Shortcut");
-		console.log("Optioned");
-		break;
-	}
-}
 
 function SE_CreateItem_StringTextTest(){
 	var SE_StringTextTest_Score = 1;
 	var SE_StringTextTest_Score2 = 1;
 	switch (SE_AddItem_TypeSelected){
 		case "select_Category":
-			SE_CreateItem_categoryTitle = document.getElementById("form_SE_Category").value; //Gets the form answer
-			for (a = 1; a < SE_CreateItem_categoryTitle.length; a++){
-				console.log("Checking string input character "+a);
-				console.log("Read character: "+SE_CreateItem_categoryTitle.charAt(a));
-				if (SE_CreateItem_categoryTitle.charAt(a) != ";"){
-					console.log("Character clear");
-					SE_StringTextTest_Score++;
+		SE_CreateItem_categoryTitle = document.getElementById("form_SE_Category").value; //Gets the form answer
+		for (a = 1; a < SE_CreateItem_categoryTitle.length; a++){
+			console.log("Checking string input character "+a);
+			console.log("Read character: "+SE_CreateItem_categoryTitle.charAt(a));
+			if (SE_CreateItem_categoryTitle.charAt(a) != ";"){
+				console.log("Character clear");
+				SE_StringTextTest_Score++;
 				} else {
-					console.log("Character ';' found");
-				}
+				console.log("Character ';' found");
 			}
-			console.log("Test score: "+SE_StringTextTest_Score);
-			console.log("Length: "+SE_CreateItem_categoryTitle.length);
-			if (SE_StringTextTest_Score == SE_CreateItem_categoryTitle.length){
-				SE_CreateItem();
+		}
+		console.log("Test score: "+SE_StringTextTest_Score);
+		console.log("Length: "+SE_CreateItem_categoryTitle.length);
+		if (SE_StringTextTest_Score == SE_CreateItem_categoryTitle.length){
+			SE_CreateItem();
 			} else {
-				trigger_createToast("ShortcutEditor_InvalidCharacter");
-			}
+			trigger_createToast("ShortcutEditor_InvalidCharacter");
+		}
 		break;
 		case "select_Shortcut":
-			SE_CreateItem_ShortcutText = document.getElementById("form_SE_Shortcut_Title").value;
-			SE_CreateItem_ShortcutURL = document.getElementById("form_SE_Shortcut_URL").value;
-			for (a = 1; a < SE_CreateItem_ShortcutText.length; a++){
-				console.log("Checking string input character "+a);
-				console.log("Read character: "+SE_CreateItem_ShortcutText.charAt(a));
-				if (SE_CreateItem_ShortcutText.charAt(a) != ";"){
-					console.log("Character clear");
-					SE_StringTextTest_Score++;
+		SE_CreateItem_ShortcutText = document.getElementById("form_SE_Shortcut_Title").value;
+		SE_CreateItem_ShortcutURL = document.getElementById("form_SE_Shortcut_URL").value;
+		for (a = 1; a < SE_CreateItem_ShortcutText.length; a++){
+			console.log("Checking string input character "+a);
+			console.log("Read character: "+SE_CreateItem_ShortcutText.charAt(a));
+			if (SE_CreateItem_ShortcutText.charAt(a) != ";"){
+				console.log("Character clear");
+				SE_StringTextTest_Score++;
 				} else {
-					console.log("Character ';' found");
-				}
+				console.log("Character ';' found");
 			}
-			for (b = 1; b < SE_CreateItem_ShortcutURL.length; b++){
-				console.log("Checking string input character "+b);
-				console.log("Read character: "+SE_CreateItem_ShortcutURL.charAt(b));
-				if (SE_CreateItem_ShortcutURL.charAt(b) != ";"){
-					console.log("Character clear");
-					SE_StringTextTest_Score2++;
+		}
+		for (b = 1; b < SE_CreateItem_ShortcutURL.length; b++){
+			console.log("Checking string input character "+b);
+			console.log("Read character: "+SE_CreateItem_ShortcutURL.charAt(b));
+			if (SE_CreateItem_ShortcutURL.charAt(b) != ";"){
+				console.log("Character clear");
+				SE_StringTextTest_Score2++;
 				} else {
-					console.log("Character ';' found");
-				}
+				console.log("Character ';' found");
 			}
-			console.log("Test1 score: "+SE_StringTextTest_Score);
-			console.log("Test2 score: "+SE_StringTextTest_Score2);
-			console.log("Length: "+SE_CreateItem_ShortcutText.length);
-			if (SE_StringTextTest_Score == SE_CreateItem_ShortcutText.length &&SE_StringTextTest_Score2 == SE_CreateItem_ShortcutURL.length){
-				SE_CreateItem();
+		}
+		console.log("Test1 score: "+SE_StringTextTest_Score);
+		console.log("Test2 score: "+SE_StringTextTest_Score2);
+		console.log("Length: "+SE_CreateItem_ShortcutText.length);
+		if (SE_StringTextTest_Score == SE_CreateItem_ShortcutText.length &&SE_StringTextTest_Score2 == SE_CreateItem_ShortcutURL.length){
+			SE_CreateItem();
 			} else {
-				trigger_createToast("ShortcutEditor_InvalidCharacter");
-			}
+			trigger_createToast("ShortcutEditor_InvalidCharacter");
+		}
 		break;
 	}
 }
@@ -2448,25 +2522,25 @@ function SE_Generate_ExportList(){
 		console.log(SE_ExportList_Text2);
 		document.getElementById("pageElement_Export_Text").innerHTML = SE_ExportList_Text2;
 		var SE_ExportList_Text1 = SE_ExportList_Text2; // Previous text
-
+		
 	}
 }
 /* let text = document.getElementById('myText').innerHTML;
-  const copyContent = async () => {
+	const copyContent = async () => {
     try {
-      await navigator.clipboard.writeText(text);
-      console.log('Content copied to clipboard');
+	await navigator.clipboard.writeText(text);
+	console.log('Content copied to clipboard');
     } catch (err) {
-      console.error('Failed to copy: ', err);
+	console.error('Failed to copy: ', err);
     }
-  } */
+} */
 function SE_Export_CopyToClipboard(){
 	navigator.clipboard.writeText(document.getElementById("pageElement_Export_Text").innerText).then(() => {
-	  console.log('Content copied to clipboard');
-	  /* Resolved - text copied to clipboard successfully */
-	},() => {
-	  console.error('Failed to copy');
-	  /* Rejected - text failed to copy to the clipboard */
+		console.log('Content copied to clipboard');
+		/* Resolved - text copied to clipboard successfully */
+		},() => {
+		console.error('Failed to copy');
+		/* Rejected - text failed to copy to the clipboard */
 	});
 	trigger_createToast("ShortcutEditor_CopiedToClipboard");
 }
@@ -2488,14 +2562,14 @@ function SE_Import_ShortcutList(){
 	/* for (a = 0; a != SE_ImportList_Input.length; a++){
 		var SE_ImportList_WordDetect2 = SE_ImportList_WordDetect1.concat("", SE_ImportList_Input.charAt(a));
 		if (SE_ImportList_Input.charAt(a) == ";" && SE_ImportList_Input.charAt(a+1) != ";"){
-			; detected - Next string is Shortcut URL
-			SE_ImportList_ReadMode = "Shortcut_URL";
-			
+		; detected - Next string is Shortcut URL
+		SE_ImportList_ReadMode = "Shortcut_URL";
+		
 		} else if (SE_ImportList_Input.charAt(a) == ";" && SE_ImportList_Input.charAt(a+1) == ";"){
-			;; detected - Next string is Shortcut Name
-			SE_ImportList_ReadMode = "Shortcut_Name";
-			SE_ImportList_Shortcut_Name.push = SE_ImportList_WordDetect2;
-			SE_ImportList_WordDetect2 = "";
+		;; detected - Next string is Shortcut Name
+		SE_ImportList_ReadMode = "Shortcut_Name";
+		SE_ImportList_Shortcut_Name.push = SE_ImportList_WordDetect2;
+		SE_ImportList_WordDetect2 = "";
 		}
 		console.log(SE_ImportList_ReadMode);
 	} */
@@ -2504,14 +2578,14 @@ function SE_Import_ShortcutList(){
 		SE_ImportList_WordDetect1 = SE_ImportList_WordDetect2;
 		// console.log(SE_ImportList_WordDetect2);
 		if (SE_ImportList_Input.charAt(a) == ";"){
-			/* SE_ImportList_WordDetect1 == "";
-			SE_ImportList_WordDetect2 == "";
-			SE_ImportList_MainArray.push(SE_ImportList_WordDetect2);
-			console.log(SE_ImportList_MainArray);
-			SE_ImportList_WordDetect1 == "";
-			SE_ImportList_WordDetect2 == "";
-			//console.log("Found");
-			
+		/* SE_ImportList_WordDetect1 == "";
+		SE_ImportList_WordDetect2 == "";
+		SE_ImportList_MainArray.push(SE_ImportList_WordDetect2);
+		console.log(SE_ImportList_MainArray);
+		SE_ImportList_WordDetect1 == "";
+		SE_ImportList_WordDetect2 == "";
+		//console.log("Found");
+		
 		} 
 	} */
 	// Separates all characters into their own slots on an array
@@ -2526,14 +2600,14 @@ function SE_Import_ShortcutList(){
 			SE_ImportList_WordDetect3 = SE_ImportList_WordDetect2.replace(';', '');
 			if (b != 0){
 				SE_ImportList_WordDetect4 = SE_ImportList_WordDetect3.replace(' ', '');
-			} else {
+				} else {
 				SE_ImportList_WordDetect4 = SE_ImportList_WordDetect3;
 			}
 			SE_ImportList_Shortcut_Name.push(SE_ImportList_WordDetect4);
 			SE_ImportList_WordDetect1 = "";
 			SE_ImportList_WordDetect2 = "";
 			b++;
-		} else if (SE_ImportList_CharacterArray[b] == ";" && SE_ImportList_CharacterArray[b+1] != "; "){
+			} else if (SE_ImportList_CharacterArray[b] == ";" && SE_ImportList_CharacterArray[b+1] != "; "){
 			SE_ImportList_WordDetect3 = SE_ImportList_WordDetect2.replace(';', '');
 			SE_ImportList_WordDetect4 = SE_ImportList_WordDetect3.replace(' ', '');
 			SE_ImportList_Shortcut_URL.push(SE_ImportList_WordDetect4);
@@ -2571,7 +2645,7 @@ function SE_Import_ShortcutList(){
 		localStorage.setItem(SE_CreateItem_CategoryKey, JSON.stringify(SE_Array_ListText)); //Saves the updated array to the selected category key
 		localStorage.setItem(SE_CreateItem_CategoryKeyURL, JSON.stringify(SE_Array_ListURL)); //Saves the updated array to the selected category key
 		refresh_ShortcutEditor();
-	} else {
+		} else {
 		console.log("ERROR");
 	}
 }
@@ -2659,21 +2733,21 @@ function Generator_Render_Categories(){
 			
 			
 			/* var categoryNavigation_Anchor = document.createElement('a');
-			categoryNavigation_Anchor.setAttribute("id", "categoryNavigation_"+a);
-			categoryNavigation_Anchor.setAttribute("href", "#anchor_category_"+a);
-			categoryNavigation_Anchor.setAttribute("onclick", "trigger_categoryNavigation_Anchor('"+a+"')");
-			document.getElementById("pageElement_Sidebar_CategoryNavigation").appendChild(categoryNavigation_Anchor);
-			
-			var categoryNavigation_Text = document.createElement('p');
-			categoryNavigation_Text.classList.add("Sidebar_CategoryNavigation_Item");;
-			categoryNavigation_Text.innerHTML = SE_Array_Category_Index[a];
-			document.getElementById("categoryNavigation_"+a).appendChild(categoryNavigation_Text);
-			
-			var categoryLauncher_Text = document.createElement('p');
-			categoryLauncher_Text.classList.add("Category_Launcher_Text");
-			categoryLauncher_Text.setAttribute("id", "categoryLauncher_"+a);
-			categoryLauncher_Text.setAttribute("onclick", "trigger_launchCategory_Confirmation(this.id)");
-			categoryLauncher_Text.innerHTML = SE_Array_Category_Index[a];
+				categoryNavigation_Anchor.setAttribute("id", "categoryNavigation_"+a);
+				categoryNavigation_Anchor.setAttribute("href", "#anchor_category_"+a);
+				categoryNavigation_Anchor.setAttribute("onclick", "trigger_categoryNavigation_Anchor('"+a+"')");
+				document.getElementById("pageElement_Sidebar_CategoryNavigation").appendChild(categoryNavigation_Anchor);
+				
+				var categoryNavigation_Text = document.createElement('p');
+				categoryNavigation_Text.classList.add("Sidebar_CategoryNavigation_Item");;
+				categoryNavigation_Text.innerHTML = SE_Array_Category_Index[a];
+				document.getElementById("categoryNavigation_"+a).appendChild(categoryNavigation_Text);
+				
+				var categoryLauncher_Text = document.createElement('p');
+				categoryLauncher_Text.classList.add("Category_Launcher_Text");
+				categoryLauncher_Text.setAttribute("id", "categoryLauncher_"+a);
+				categoryLauncher_Text.setAttribute("onclick", "trigger_launchCategory_Confirmation(this.id)");
+				categoryLauncher_Text.innerHTML = SE_Array_Category_Index[a];
 			document.getElementById("pageElement_Category_Launcher_List").appendChild(categoryLauncher_Text); */
 		}
 	}
@@ -5097,8 +5171,8 @@ function Login_ProfileChosen(accountNumber){
 function Login_BackToProfileSelector(){
 	var x = document.getElementById("pageElement_LoginScreen");
 	/* x.style.animationName = "fadeOut";
-	x.style.animationDuration = "0.3s";
-	// x.style.animationFillMode = "forwards";
+		x.style.animationDuration = "0.3s";
+		// x.style.animationFillMode = "forwards";
 	x.style.visibility = "hidden"; */
 	x.style.display = "none";
 }
@@ -5116,7 +5190,7 @@ function Login_CheckPassword(){
 		x.style.animationDuration = "0.5s";
 		close_LoadingScreen();
 		
-	} else {
+		} else {
 		console.log("Login: Failed - Wrong Password");
 	}
 }

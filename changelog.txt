@@ -3,6 +3,7 @@ Changelog
 v.1.16 [Pre-Release 1] (Pending)
 The first pre-release version of the launcher contains a rework of the layouts and designs throughout the system. It also fixed a lot of visual bugs and optimized the layouts for phones.
 === Additions ===
+- Added a Search Screen, similar to the Google Home page which reduces loading times. You can switch to the normal home page in it. You can also disable the feature on Settings > Behavior > Search Screen.
 - Added the Main Menu, organizing the launcher navigation and page action buttons in one place
 - Added Shortcut Lists
 - Added a Library Profile System
@@ -36,6 +37,7 @@ The first pre-release version of the launcher contains a rework of the layouts a
 - All buttons now have the same appearance as the shortcut buttons
 - The clock no longer displays the date when being hovered
 - The clock, battery percentage, and internet icon will now open the same textbox when clicked
+- The clock, date, and battery percentage will now only update when it's visible.
 - Fixed the change wallpaper detect button using a primary font instead of the secondary one
 - Fixed the Table View UI not overflowing properly
 - Fixed the Table View UI Subwindow not playing the opening animation
