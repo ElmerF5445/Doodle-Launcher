@@ -2,6 +2,10 @@
 	DL_Stylesheet.css
 	This file contains all the styling for Doodle Launcher
 */
+* {
+	outline: var(--Debug-ElementOutline);
+	-webkit-tap-highlight-color: transparent;
+}
 
 
 
@@ -175,14 +179,13 @@ img::before{
 	overflow-x: hidden; 
 }
 
-* {
-	outline: var(--Debug-ElementOutline);
-}
 
 .Page_MainContent{
 	margin-left: 10%;
 	margin-right: 10%;
+	padding: 10px;
 	padding-bottom: 50px;
+	
 }
 
 .Page_Footer{
@@ -1603,6 +1606,8 @@ img::before{
 	overflow-y: auto;
 	width: 55%;
 	display: none;
+	max-width: 100%;
+	max-height: 100%;
 }
 
 
@@ -1737,6 +1742,8 @@ img::before{
 	/* bottom: 20px; */
 	overflow-y: auto;
 	display: none;
+	max-width: 100%;
+	max-height: 100%;
 }
 
 .Modal_Titlebar{
@@ -4209,10 +4216,3 @@ td {
 	color: var(--Text-Color);
 }
 
-
-/* Media Queries */
-@media(min-width: 750px) {
-	.Header_PageNavi_Title .Header_Clock .Header_Battery .Header_Content_Button_Text{
-		display: none;
-	}
-}

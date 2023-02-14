@@ -69,7 +69,6 @@ function dev_OnloadTasks(){
 	displayDay();
 	// close_LoadingScreen();
 	sessionCheck();
-	check_WindowSize_test();
 	var path = window.location.pathname;
 	var PageName = path.split("/").pop();
 	console.log("Welcome to "+VersionTitle+" "+VersionNumber+" ("+ContinuityVersionNumber+"). Copyright "+CopyrightTitle);
@@ -199,6 +198,7 @@ function dev_SetPageProperties(){
 	document.getElementById("LoadingScreen_Icon").src = "Assets/Icons/"+pageProperty_pageIcon;
 	
 	console.log("Page properties has been set successfully");
+	check_WindowSize_test();
 	set_Version_General();
 }
 
@@ -922,7 +922,10 @@ function check_WindowSize_test(){
 	var Header_StatusTray_Clock = document.getElementById("pageElement_Header_Clock");
 	var Header_StatusTray_Battery = document.getElementById("pageElement_Header_Battery");
 	var Sidebar = document.getElementById("pageElement_Sidebar");
-	
+	var MainMenu = document.getElementById("pageElement_Header_MainMenu_Textbox");
+	var StatusMenu = document.getElementById("pageElement_Header_StatusTray_Textbox");
+	var Subwindows = document.querySelectorAll(".Subwindow");
+	var Modals = document.querySelectorAll(".Modal");
 	windowWidth = window.innerWidth;
 	if (windowWidth < 750){ //Small size
 		windowSizePreset = "small";
@@ -939,6 +942,21 @@ function check_WindowSize_test(){
 		for (a = 0; a < Header_Buttons_Text.length; a++){
 			Header_Buttons_Text[a].style.display = "none";
 		}
+		MainMenu.style.width = "85%";
+		StatusMenu.style.width = "85%";
+		StatusMenu.style.float = "left";
+		StatusMenu.style.left = "20px";
+		Content.style.width = "95%";
+		for (a = 0; a < Subwindows.length; a++){
+			Subwindows[a].style.margin = "0";
+			Subwindows[a].style.minWidth = "100%";
+			Subwindows[a].style.minHeight = "100%";
+		}
+		for (a = 0; a < Modals.length; a++){
+			Modals[a].style.margin = "0";
+			Modals[a].style.minWidth = "100%";
+			Modals[a].style.minHeight = "100%";
+		}
 	} else if (windowSizePreset == "normal"){
 		MainContent.style.marginLeft = "10%";
 		Header_PageTitle.style.display = "block";
@@ -947,33 +965,36 @@ function check_WindowSize_test(){
 		for (a = 0; a < Header_Buttons_Text.length; a++){
 			Header_Buttons_Text[a].style.display = "block";
 		}
+		MainMenu.style.width = "350px";
+		StatusMenu.style.width = "350px";
+		StatusMenu.style.float = "right";
+		StatusMenu.style.left = "";
+		Content.style.width = "100%";
+		for (a = 0; a < Subwindows.length; a++){
+			Subwindows[a].style.margin = "auto";
+			Subwindows[a].style.minWidth = "0%";
+			Subwindows[a].style.minHeight = "0%";
+		}
+		for (a = 0; a < Modals.length; a++){
+			Modals[a].style.margin = "auto";
+			Modals[a].style.minWidth = "0%";
+			Modals[a].style.minHeight = "0%";
+		}
 	}
 	
-	// Mobile
-	/* if (windowSizePreset == "normal" && isMobileDevice == true){
+	/* // Mobile
+	if (windowSizePreset == "normal" && isMobileDevice == true){
 		Header.style.height = "100px";
 		Content.style.marginTop = "100px";
 		Sidebar.style.marginTop = "100px";
 		Sidebar.style.width = "100px";
-		pageProperty_sidebarExpandedWidth = 750;
+		pageProperty_sidebarExpandedWidth = 500;
 		pageProperty_sidebarCompactedWidth = 100;
 		document.getElementById("Header_PageNavi_Title").style.fontSize = "50px";
-	}
-	if(windowSizePreset == "small"){
-		Header_PageTitle.style.display = "none";
-		Header_StatusTray_Clock.style.display = "none";
-		Header_StatusTray_Battery.style.display = "none";
-		for (a = 0; a < Header_Buttons_Text.length; a++){
-			Header_Buttons_Text[a].style.display = "none";
-		}
-	} else if (windowSizePreset == "normal"){
-		Header_PageTitle.style.display = "block";
-		Header_StatusTray_Clock.style.display = "block";
-		Header_StatusTray_Battery.style.display = "block";
-		for (a = 0; a < Header_Buttons_Text.length; a++){
-			Header_Buttons_Text[a].style.display = "block";
-		}
+	} else {
+	
 	} */
+	
 	
 }
 
