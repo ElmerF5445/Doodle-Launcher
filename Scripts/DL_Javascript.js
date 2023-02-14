@@ -918,6 +918,7 @@ function check_WindowSize_test(){
 	var MainContent = document.getElementById("Page_MainContent");
 	var Header = document.getElementById("pageElement_Header");
 	var Header_PageTitle = document.getElementById("Header_PageNavi_Title");
+	var Header_Buttons = document.querySelectorAll(".Header_Content_Button");
 	var Header_Buttons_Text = document.querySelectorAll(".Header_Content_Button_Text");
 	var Header_StatusTray_Clock = document.getElementById("pageElement_Header_Clock");
 	var Header_StatusTray_Battery = document.getElementById("pageElement_Header_Battery");
@@ -926,15 +927,30 @@ function check_WindowSize_test(){
 	var StatusMenu = document.getElementById("pageElement_Header_StatusTray_Textbox");
 	var Subwindows = document.querySelectorAll(".Subwindow");
 	var Modals = document.querySelectorAll(".Modal");
+	var Footer_VersionTitle = document.getElementById("pageElement_Footer_VersionTitle");
 	windowWidth = window.innerWidth;
+	windowHeight = window.innerHeight;
 	if (windowWidth < 750){ //Small size
 		windowSizePreset = "small";
 		} else { //Normal size
 		windowSizePreset = "normal";
 	}
 	
+	MainMenu.style.maxHeight = windowHeight-90 + "px";
+	StatusMenu.style.maxHeight = windowHeight-90 + "px";
+	
+	
 	// Desktop
 	if(windowSizePreset == "small"){
+		if (windowWidth < 400){
+			for (a = 0; a < Header_Buttons.length; a++){
+				Header_Buttons[a].style.display = "none";
+			}
+		} else {
+			for (a = 0; a < Header_Buttons.length; a++){
+				Header_Buttons[a].style.display = "grid";
+			}
+		}
 		MainContent.style.marginLeft = "3%";
 		Header_PageTitle.style.display = "none";
 		Header_StatusTray_Clock.style.display = "none";
@@ -957,6 +973,7 @@ function check_WindowSize_test(){
 			Modals[a].style.minWidth = "100%";
 			Modals[a].style.minHeight = "100%";
 		}
+		Footer_VersionTitle.style.display = "none";
 	} else if (windowSizePreset == "normal"){
 		MainContent.style.marginLeft = "10%";
 		Header_PageTitle.style.display = "block";
@@ -980,6 +997,7 @@ function check_WindowSize_test(){
 			Modals[a].style.minWidth = "0%";
 			Modals[a].style.minHeight = "0%";
 		}
+		Footer_VersionTitle.style.display = "flex";
 	}
 	
 	/* // Mobile

@@ -618,6 +618,9 @@ img::before{
 	background-color: var(--BGColor-Opacitated);
 	backdrop-filter: var(--Element-BackdropBlur);
 	box-shadow: var(--Element-BoxShadow);
+	overflow-x: hidden;
+	overflow-y: auto;
+	margin-bottom: 15px;
 	/* display: none; */
 	transition: var(--Element-Transition-Delay);
 }
@@ -766,6 +769,8 @@ img::before{
 	background-color: var(--BGColor-Opacitated);
 	backdrop-filter: var(--Element-BackdropBlur);
 	box-shadow: var(--Element-BoxShadow);
+	overflow-x: hidden;
+	overflow-y: auto;
 	/* display: none; */
 	transition: var(--Element-Transition-Delay);
 }
@@ -2269,6 +2274,9 @@ img::before{
 	position: fixed;
 	min-width: 350px;
 	max-width: 40%;
+	float: left;
+	left: 0px;
+	top: 10px;
 	height: 100%;
 	z-index: 100;
 	padding: 10px;
