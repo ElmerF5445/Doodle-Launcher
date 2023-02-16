@@ -20,8 +20,8 @@
 
 
 @keyframes open_Textbox{
-	from {transform: translateY(-30px); opacity: 0%; max-height: 0%;}
-	to {transform: translateY(0px); opacity: 100%;}
+	from {transform: translateY(-30px); opacity: 0%; max-height: 0%; overflow-y: none;}
+	to {transform: translateY(0px); opacity: 100%; overflow-y: auto;}
 }
 
 @keyframes close_Textbox{
@@ -152,13 +152,13 @@
 }
 
 @keyframes opening_SearchBar{
-	from {transform: translateY(-50px); opacity: 0%;}
-	to {transform: translateY(-1px); opacity: 100%;}
+	from {opacity: 0%; height: 0px;}
+	to {opacity: 100%; height: 50px;}
 }
 
 @keyframes closing_SearchBar{
-	from {transform: translateY(-1px); opacity: 100%;}
-	to {transform: translateY(-50px); opacity: 0%;}
+	from {opacity: 100%; height: 50px;}
+	to {opacity: 0%; height: 0px;}
 }
 
 @keyframes opacitateToLeft{

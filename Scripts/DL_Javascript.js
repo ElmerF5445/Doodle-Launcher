@@ -3,9 +3,10 @@
 	This file contains all the JavaScript functionality for Doodle Launcher
 */
 
+/* ESSENTIAL CODE */
 var VersionTitle = "Doodle Launcher ELMS UI 1.5 Update Beta";
 var VersionNumber = "1.5";
-var ContinuityVersionNumber = "1.5"
+var ContinuityVersionNumber = "1.15"
 var BuildNumber = 4153;
 var CopyrightTitle = "Content By ElmerF 2023";
 var ELMSUIVersion = "1.5";
@@ -13,38 +14,8 @@ var CompilationDate = "December 1, 2022";
 var path = window.location.pathname;
 var PageName = path.split("/").pop();
 var enable_Dev_Counter = true;
-var enable_Dev_ToggleDivOutlines = true;
-
-// if(enable_Dev_ToggleDivOutlines == true){
-// document.getElementsByTagName("div").style.border = "solid white";
-// }
 
 var dev_debug_ElementOutlines = 0;
-
-var Behavior_EnableBlurEffects;
-var Behavior_DisplayTimeAndDate;
-var Behavior_DisplayBattery;
-var Behavior_DisplayInternetStatus;
-var Behavior_NotifyForUpdates;
-var Behavior_DisplayCategoryNavigation;
-var Behavior_DisplaySearchBar;
-var Behavior_DisplaySearchBar_PreferredEngine;
-var Behavior_DisplayToasts;
-var Behavior_DisplayGreetings;
-var Behavior_DisplayGreetings_DisplayName;
-var Behavior_DisplayGreetings_DisplayName_Text;
-var Behavior_SE_CloseWindowAfterAction;
-var Behavior_SE_ClearFieldsAfterCreation;
-var Appearance_Behavior_BlurHomeWallpaper;
-
-var pageProperty_PageTitle;
-
-function OnloadTasks_Onboarding(){
-	var Onboarding_PageElements = document.querySelectorAll(".Onboarding_Process_Page");
-	for (a = 1; a < Onboarding_PageElements.length; a++){
-		Onboarding_PageElements[a].style.display = "none";
-	}
-}
 
 /* Page Properties */
 var pageProperty_MenuName = "Doodle Launcher"; // Refers to the name displayed on the main menu
@@ -62,8 +33,32 @@ var pageProperty_sidebarCompactedWidth = 50; // Refers to the width of the sideb
 var pageProperty_backgroundState = 0; // Refers to the state of the background for the page. 0 = Solid color, BGColor-General value will be used; 1 = Wallpaper, BG-WallpaperImg will be used; 2 = Wallpaper is shown with blur effect, BG-WallpaperImg, BGColor-Opacitated, and Element-BackdropBlur will be used
 var pageProperty_enableCategoryNavigation = 0; // Refers to whether the page uses the category navigation system to generate the sidebar links
 var pageProperty_pageIcon = "placeholder.png"; // Refers to the icon that will be displayed on the header, favicon, and loading screen
+var pageProperty_enableLoadingScreen = 1; // Refers whether the loading screen will be displayed
+var pageProperty_mainContentWidth = 100; // Refers to the width (in %) of the main content div (.Page_MainContent). The value sets to 100% when the window size is set to small.
+var pageProperty_enableHeader = 1; // Refers to whether the header will be displayed in the page
+var pageProperty_sidebarMoveContent = 1; // Refers to whether the main content moves when the sidebar is opened
+var pageProperty_enableQuickSearch = 0; // Refers to whether to display the quick search bar when Ctrl + Shift is pressed.
+var pageProperty_quickSearch_addTopPadding = 1; // Refers to whether the quick search bar will have a top padding to give space to the Header element. If pageProperty_enableHeader is set to 0, this property is set to 0.
 
-function dev_OnloadTasks(){
+
+var Behavior_EnableBlurEffects;
+var Behavior_DisplayTimeAndDate;
+var Behavior_DisplayBattery;
+var Behavior_DisplayInternetStatus;
+var Behavior_NotifyForUpdates;
+var Behavior_DisplayCategoryNavigation;
+var Behavior_DisplaySearchBar;
+var Behavior_DisplaySearchBar_PreferredEngine;
+var Behavior_DisplayToasts;
+var Behavior_DisplayGreetings;
+var Behavior_DisplayGreetings_DisplayName;
+var Behavior_DisplayGreetings_DisplayName_Text;
+var Behavior_SE_CloseWindowAfterAction;
+var Behavior_SE_ClearFieldsAfterCreation;
+var Appearance_Behavior_BlurHomeWallpaper;
+
+
+function OnloadTasks(){
 	startTime();
 	startDate();
 	displayDay();
@@ -86,9 +81,14 @@ function dev_OnloadTasks(){
 			pageProperty_enableStatusBar = 1;
 			pageProperty_useProfileSystem = 1;
 			pageProperty_sidebarExpandedWidth = 300;
-			pageProperty_backgroundState = 1;
+			pageProperty_backgroundState = 2;
 			pageProperty_enableClockScreen = 1;
 			pageProperty_enableCategoryNavigation = 0;
+			pageProperty_enableLoadingScreen = 1;
+			pageProperty_enableHeader = 1;
+			pageProperty_sidebarMoveContent = 0;
+			pageProperty_enableQuickSearch = 1;
+			pageProperty_quickSearch_addTopPadding = 1;
 		break;
 		case "DL_SearchScreen.html":
 			pageProperty_pageIcon = "favicon.png";
@@ -139,10 +139,29 @@ function dev_OnloadTasks(){
 		break;
 	}
 	generate_Launcher_NavigationList();
-	dev_SetPageProperties();
+	SetPageProperties();
 }
 
-function dev_SetPageProperties(){
+
+
+function SetPageProperties(){
+	if (pageProperty_enableLoadingScreen == 1){
+		document.getElementById("LoadingScreen").style.display = "grid";
+	}
+	
+	if (pageProperty_enableHeader == 0){
+		document.getElementById("pageElement_Header").style.display = "none";
+		document.getElementById("pageElement_Content").style.marginTop = "0px";
+		document.getElementById("pageElement_Content").style.height = "100%";
+		pageProperty_enableSidebar = 0;
+		pageProperty_quickSearch_addTopPadding = 0;
+		console.log("pageProperty_enableHeader is disabled; pageProperty_enableSidebar is disabled; pageProperty_quickSearch_addTopPadding is disabled");
+	}
+	
+	if (pageProperty_quickSearch_addTopPadding == 0){
+		document.getElementById("pageElement_Toggleable_SearchBar").style.top = "0px";
+	}
+	
 	var SetPageProperties_Header_SidebarToggleValue = "50px";
 	var SetPageProperties_Header_StatusBarValue = "auto";
 	var SetPageProperties_Header_Value;
@@ -150,15 +169,19 @@ function dev_SetPageProperties(){
 		document.getElementById("pageElement_Header_SidebarToggle").style.visibility = "hidden";
 		document.getElementById("pageElement_Sidebar").style.display = "none";
 		console.log("pageProperty_enableSidebar is disabled");
+		document.getElementById("pageElement_Content").style.marginLeft = "0px";
+		document.getElementById("pageElement_Content").style.marginLeft = "0px";
+		
 		
 		SetPageProperties_Header_SidebarToggleValue = "0px";
 		document.getElementById("pageElement_Content").style.gridTemplateColumns = "0px 1fr";
-		
+		console.log("Sidebar is disabled");
 	}
 	
 	if (pageProperty_lockSidebar == 1){
 		document.getElementById("pageElement_Sidebar").style.width = "0px";
 		document.getElementById("pageElement_Content").style.marginLeft = "0px"
+		console.log("Sidebar is locked");
 	}
 	if (pageProperty_enableStatusBar == 0){
 		SetPageProperties_Header_StatusBarValue = "0px";
@@ -168,6 +191,11 @@ function dev_SetPageProperties(){
 	SetPageProperties_Header_Value = SetPageProperties_Header_SidebarToggleValue + " auto 1fr "+SetPageProperties_Header_StatusBarValue;
 	document.getElementById("pageElement_Header").style.gridTemplateColumns = SetPageProperties_Header_Value;
 	
+	if (pageProperty_enableHeader == 0){
+		document.getElementById("pageElement_Header").style.display = "none";
+		document.getElementById("pageElement_Content").style.marginTop = "0px";
+		pageProperty_enableSidebar = 0;
+	}
 	
 	if (pageProperty_useProfileSystem == 0){
 		document.getElementById("pageElement_Header_MainMenu_ProfileButton").style.display = "none";
@@ -197,12 +225,1694 @@ function dev_SetPageProperties(){
 	document.getElementById("Header_PageIcon").src = "Assets/Icons/"+pageProperty_pageIcon;
 	document.getElementById("LoadingScreen_Icon").src = "Assets/Icons/"+pageProperty_pageIcon;
 	
+	document.getElementById("Page_MainContent").style.width = pageProperty_mainContentWidth + "%";
+	
 	console.log("Page properties has been set successfully");
 	check_WindowSize_test();
+	tabs_DisplayFirstPage();
 	set_Version_General();
+	
 }
 
-function OnloadTasks(){	
+function close_LoadingScreen(){
+	setTimeout( function() { wait_LoadingScreen(); }, 3000);
+	
+}
+
+function wait_LoadingScreen(){
+	// document.getElementById("LoadingScreen_Text").innerHTML = "Welcome back!";
+	var x = document.getElementById("LoadingScreen");
+	x.style.animationName = "blurOut";
+	x.style.animationDuration = "0.5s";
+	setTimeout( function() { remove_LoadingScreen(); }, 500);
+	// x.addEventListener("animationend",remove_LoadingScreen);
+}
+function remove_LoadingScreen(){
+	var x = document.getElementById("LoadingScreen");
+	x.style.display = "none";
+	//x.parentNode.removeChild(x);
+	start_Animations();
+}
+
+function check_Connection(){
+	if (navigator.onLine) {
+		document.getElementById('button_Wifi').src = "Assets/Icons/icon_wifi_online.png";
+		document.getElementById('textboxElement_Wifi').innerHTML = "You're connected";
+		document.getElementById('pageElement_Connection').innerHTML = "You are connected to the internet. The launcher will function as intended and shortcuts will open properly."
+		document.getElementById("pageElement_Connection_Speedtest").style.display = "block";
+		} else {
+		document.getElementById('button_Wifi').src = "Assets/Icons/icon_wifi_offline.png";
+		document.getElementById('textboxElement_Wifi').innerHTML = "No connection";
+		document.getElementById('pageElement_Connection').innerHTML = "Since you're not connected to the internet, links will not open properly. Connect to a Wi-Fi network and refresh the page."
+		document.getElementById("pageElement_Connection_Speedtest").style.display = "none";
+	}
+}
+
+function generate_Launcher_NavigationList(){
+	let navigationListItems = ["Old UI", "Home", "Shortcut Editor", "Settings", "Pomodoro Timer", "Watermark Applier", "Template V1"]; //Launcher navigation text
+	let navigationListItems_Link = ["file:///C:/Users/Elmer%20Jr%20G%20Felisilda/Documents/HTML%20Projects/Doodle%20Launcher/DL_Main.html", "DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html", "WA_Main.html", "DL_Template_V1.html"]; //Launcher navigation links
+	let navigationListItems_Icon = ["favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png"];
+	
+	for (var i = 0; i < navigationListItems.length; i++) {
+		var navigationListItems_Select = navigationListItems[i]; //Contains the selected pagenavi text
+		var navigationListItems_Link_Select = navigationListItems_Link[i]; //Contains the selected pagenavi link
+		
+		//Attaches to the page
+		var listItemLink = document.createElement('a'); //Creates an a element
+		listItemLink.href = navigationListItems_Link_Select; //Adds the link
+		listItemLink.setAttribute("id", "pageElement_PageNaviList_Item_"+i); //Adds an id to attach the text
+		document.getElementById("pageElement_MainMenu_NavigationList").appendChild(listItemLink); //Attaches the a element to the page navi element
+		
+		var listItemLink_Div = document.createElement('div');
+		listItemLink_Div.classList.add("Header_MainMenu_Navigation_Item");
+		listItemLink_Div.setAttribute("id", "pageElement_PageNaviList_Item_Div_"+i);
+		document.getElementById("pageElement_PageNaviList_Item_"+i).appendChild(listItemLink_Div);
+		
+		listItemLink_Icon = document.createElement('img');
+		listItemLink_Icon.src = "Assets/Icons/"+ navigationListItems_Icon[i];
+		listItemLink_Icon.classList.add("Header_MainMenu_Navigation_Item_Icon");
+		document.getElementById("pageElement_PageNaviList_Item_Div_"+i).appendChild(listItemLink_Icon);
+		
+		var listItemLink_Text = document.createElement('p'); //Creates a text p element
+		listItemLink_Text.innerHTML = navigationListItems_Select; //Sets text to selected page navi text
+		listItemLink_Text.classList.add("Header_MainMenu_Navigation_Item_Text"); //Adds the styling to the object
+		document.getElementById("pageElement_PageNaviList_Item_Div_"+i).appendChild(listItemLink_Text); //Attaches object to the a object
+	}
+	
+	
+}
+
+function generate_Launcher_HeaderButtons(pageName){
+	let Generator_HeaderButtons_Text = [];
+	let Generator_HeaderButtons_Icon = [];
+	let Generator_HeaderButtons_ID = [];
+	let Generator_HeaderButtons_OnclickAction = [];
+	switch (pageName){
+		case "DL_Main.html":
+		Generator_HeaderButtons_Text = ["Internet search", "Category Navigation"];
+		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
+		Generator_HeaderButtons_ID = ["", ""];
+		Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()", "toggle_Sidebar_CategoryNavigation()"];
+		var Generator_DisplayInHeader = false;
+		break;
+		case "DL_ShortcutEditor.html":
+		Generator_HeaderButtons_Text = ["Add Item", "Re-order categories", "Re-order shortcuts", "How to use"];
+		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
+		Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
+		Generator_HeaderButtons_OnclickAction = ["open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
+		var Generator_DisplayInHeader = true;
+		break;
+		case "DL_Settings.html":
+		Generator_HeaderButtons_Text = ["Save changes"];
+		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png"];
+		Generator_HeaderButtons_ID = [""];
+		Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
+		var Generator_DisplayInHeader = true;
+		break;
+	}
+	
+	if(Generator_DisplayInHeader == true){
+		for (a = 0; a != Generator_HeaderButtons_Text.length; a++){
+			var HeaderButton_Text = document.createElement('h3');
+			HeaderButton_Text.innerHTML = Generator_HeaderButtons_Text[a];
+			HeaderButton_Text.classList.add("Header_Buttons_Item");
+			HeaderButton_Text.setAttribute("id", Generator_HeaderButtons_ID[a]);
+			HeaderButton_Text.setAttribute("onclick", Generator_HeaderButtons_OnclickAction[a]);
+			document.getElementById("pageElement_Header_Buttons").appendChild(HeaderButton_Text);
+		}
+	}
+	
+	for (i = 0; i != Generator_HeaderButtons_Text.length; i++){		
+		//Attaches to the page
+		var listItemLink_Div = document.createElement('div');
+		listItemLink_Div.classList.add("Header_MainMenu_Navigation_Item");
+		listItemLink_Div.setAttribute("id", "pageElement_PageActionsList_Item_Div_"+i);
+		listItemLink_Div.setAttribute("onclick", Generator_HeaderButtons_OnclickAction[i]);
+		document.getElementById("pageElement_PageActionsList").appendChild(listItemLink_Div);
+		
+		listItemLink_Icon = document.createElement('img');
+		listItemLink_Icon.src = Generator_HeaderButtons_Icon[i];
+		listItemLink_Icon.classList.add("Header_MainMenu_Navigation_Item_Icon");
+		document.getElementById("pageElement_PageActionsList_Item_Div_"+i).appendChild(listItemLink_Icon);
+		
+		var listItemLink_Text = document.createElement('p'); //Creates a text p element
+		listItemLink_Text.innerHTML = Generator_HeaderButtons_Text[i]; //Sets text to selected page navi text
+		listItemLink_Text.classList.add("Header_MainMenu_Navigation_Item_Text"); //Adds the styling to the object
+		document.getElementById("pageElement_PageActionsList_Item_Div_"+i).appendChild(listItemLink_Text); //Attaches object to the a object
+	}
+	
+}
+
+var sessionScreenState;
+function sessionCheck(){
+	if (sessionStorage.getItem("DL2_UserOpened") === null) {
+		console.log("Session key does not exist");
+		sessionStorage.setItem("DL2_UserOpened", "yes");
+		console.log("Added session key");
+		sessionScreenState = "visible";
+		console.log(sessionScreenState);
+		
+		var today = new Date();
+		var dd = String(today.getDate()).padStart(2, '0');
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = today.getFullYear();
+		today = mm + '/' + dd + '/' + yyyy;
+		date = today;
+		var d = new Date();
+		var n = d.getDay();
+		if (n == 0){
+			var day = "Sunday";
+		}
+		if (n == 1){
+			var day = "Monday";
+		}
+		if (n == 2){
+			var day = "Tuesday";
+		}
+		if (n == 3){
+			var day = "Wednesday";
+		}
+		if (n == 4){
+			var day = "Thursday";
+		}
+		if (n == 5){
+			var day = "Friday";
+		}
+		if (n == 6){
+			var day = "Saturday";
+		}
+		} else {
+		var SessionScreen = document.getElementById("pageElement_SessionScreen");
+		SessionScreen.style.display = "none";
+		sessionScreenState = "invisible";
+		//start_Animations();
+	}
+}
+
+function open_SessionScreen(){
+	sessionScreenState = "visible";
+	var x = document.getElementById("pageElement_SessionScreen");
+	x.style.animationName = "open_SessionScreen";
+	x.style.animationDuration = "0.5s";
+	x.style.animationFillMode = "forwards";
+	x.style.display = "block"
+	setTimeout(function(){x.style.display = "block"; start_Animations();}, 500);
+	
+	x.addEventListener("animationend", function(){
+		var shortcutObjects = document.querySelectorAll(".Shortcut_Item");
+		for (var a = 0; a < shortcutObjects.length; a++) {
+			shortcutObjects[a].style.display = "none";
+		}
+	});
+	
+}
+
+function close_SessionScreen(){
+	sessionScreenState = "invisible";
+	console.log(sessionScreenState);
+	var x = document.getElementById("pageElement_SessionScreen");
+	x.style.animationName = "close_SessionScreen";
+	x.style.animationDuration = "0.3s";
+	x.style.animationFillMode = "forwards";
+	setTimeout(function(){x.style.display = "none"; start_Animations();}, 500);
+	start_Animations();
+	
+}
+
+function tabs_DisplayFirstPage(){
+	if (document.querySelectorAll(".Tab_Container") != null){
+		var Tab_Container = document.querySelectorAll(".Tab_Container");
+		for (a = 1; a != Tab_Container.length; a++){
+			Tab_Container[a].style.display = "none";
+			
+		}
+	}
+}
+
+function trigger_ChangeTab_test(ID){
+	var Tab_Container = document.querySelectorAll(".Tab_Container");
+	var Sidebar_Icon = document.querySelectorAll(".Sidebar_Item_Icon");
+	var Sidebar_Letters = document.querySelectorAll(".Sidebar_Item_Letter");
+	for (a = 0; a != Tab_Container.length; a++){
+		Tab_Container[a].style.display = "none";
+		
+	}
+	for (b = 0; b != Sidebar_Icon.length; b++){
+		Sidebar_Icon[b].style.backgroundColor = "var(--Menus-BGColor)";
+	}
+	for (c = 0; c != Sidebar_Letters.length; c++){
+		Sidebar_Letters[c].style.backgroundColor = "var(--Menus-BGColor)";
+	}
+	var selectedTab = document.getElementById("tab_"+ID);
+	selectedTab.style.display = "block";
+	selectedTab.style.animationName = "opening_pageTab";
+	selectedTab.style.animationDuration = "0.3s";
+	selectedTab.style.animationFillMode = "forwards";
+	var selectedIcon = document.getElementById("tabIcon_"+ID);
+	selectedIcon.style.backgroundColor = "var(--Accent-Color)";
+}
+
+var windowSizePreset = "normal";
+var windowDeviceType = "Desktop";
+window.addEventListener('resize', check_WindowSize_test);
+let details = navigator.userAgent;
+let regexp = /android|iphone|kindle|ipad/i;
+let isMobileDevice = regexp.test(details);
+function check_WindowSize_test(){
+	var Content = document.getElementById("pageElement_Content");
+	var MainContent = document.getElementById("Page_MainContent");
+	var Header = document.getElementById("pageElement_Header");
+	var Header_PageTitle = document.getElementById("Header_PageNavi_Title");
+	var Header_Buttons = document.querySelectorAll(".Header_Content_Button");
+	var Header_Buttons_Text = document.querySelectorAll(".Header_Content_Button_Text");
+	var Header_StatusTray_Clock = document.getElementById("pageElement_Header_Clock");
+	var Header_StatusTray_Battery = document.getElementById("pageElement_Header_Battery");
+	var Sidebar = document.getElementById("pageElement_Sidebar");
+	var MainMenu = document.getElementById("pageElement_Header_MainMenu_Textbox");
+	var StatusMenu = document.getElementById("pageElement_Header_StatusTray_Textbox");
+	var Subwindows = document.querySelectorAll(".Subwindow");
+	var Modals = document.querySelectorAll(".Modal");
+	var Footer_VersionTitle = document.getElementById("pageElement_Footer_VersionTitle");
+	windowWidth = window.innerWidth;
+	windowHeight = window.innerHeight;
+	if (windowWidth < 750){ //Small size
+		windowSizePreset = "small";
+		} else { //Normal size
+		windowSizePreset = "normal";
+	}
+	
+	MainMenu.style.maxHeight = windowHeight-90 + "px";
+	StatusMenu.style.maxHeight = windowHeight-90 + "px";
+	
+	
+	// Desktop
+	if(windowSizePreset == "small"){
+		if (windowWidth < 400){
+			for (a = 0; a < Header_Buttons.length; a++){
+				Header_Buttons[a].style.display = "none";
+			}
+		} else {
+			for (a = 0; a < Header_Buttons.length; a++){
+				Header_Buttons[a].style.display = "grid";
+			}
+		}
+		MainContent.style.width = "100%";
+		MainContent.style.marginLeft = "3%";
+		Header_PageTitle.style.display = "none";
+		Header_StatusTray_Clock.style.display = "none";
+		Header_StatusTray_Battery.style.display = "none";
+		for (a = 0; a < Header_Buttons_Text.length; a++){
+			Header_Buttons_Text[a].style.display = "none";
+		}
+		MainMenu.style.width = "85%";
+		StatusMenu.style.width = "85%";
+		StatusMenu.style.float = "left";
+		StatusMenu.style.left = "20px";
+		
+		if (pageProperty_enableSidebar == 1){
+			Content.style.width = "calc(100% - 50px)";
+			if (pageProperty_lockSidebar == 1){
+				Content.style.width = "100%";
+			}
+		} else {
+			Content.style.width = "100%";
+		}
+		for (a = 0; a < Subwindows.length; a++){
+			Subwindows[a].style.margin = "0";
+			Subwindows[a].style.minWidth = "100%";
+			Subwindows[a].style.minHeight = "100%";
+		}
+		for (a = 0; a < Modals.length; a++){
+			Modals[a].style.margin = "0";
+			Modals[a].style.minWidth = "100%";
+			Modals[a].style.minHeight = "100%";
+		}
+		Footer_VersionTitle.style.display = "none";
+	} else if (windowSizePreset == "normal"){
+		MainContent.style.width = pageProperty_mainContentWidth + "%";
+		MainContent.style.marginLeft = "10%";
+		Header_PageTitle.style.display = "block";
+		Header_StatusTray_Clock.style.display = "block";
+		Header_StatusTray_Battery.style.display = "block";
+		for (a = 0; a < Header_Buttons_Text.length; a++){
+			Header_Buttons_Text[a].style.display = "block";
+		}
+		MainMenu.style.width = "350px";
+		StatusMenu.style.width = "350px";
+		StatusMenu.style.float = "right";
+		StatusMenu.style.left = "";
+		if (pageProperty_enableSidebar == 1){
+			Content.style.width = "calc(100% - 50px)";
+			if (pageProperty_lockSidebar == 1){
+				Content.style.width = "100%";
+			}
+		} else {
+			Content.style.width = "100%";
+		}
+		// Content.style.width = "100%";
+		for (a = 0; a < Subwindows.length; a++){
+			Subwindows[a].style.margin = "auto";
+			Subwindows[a].style.minWidth = "0%";
+			Subwindows[a].style.minHeight = "0%";
+		}
+		for (a = 0; a < Modals.length; a++){
+			Modals[a].style.margin = "auto";
+			Modals[a].style.minWidth = "0%";
+			Modals[a].style.minHeight = "0%";
+		}
+		Footer_VersionTitle.style.display = "flex";
+	}
+	
+	/* // Mobile
+	if (windowSizePreset == "normal" && isMobileDevice == true){
+		Header.style.height = "100px";
+		Content.style.marginTop = "100px";
+		Sidebar.style.marginTop = "100px";
+		Sidebar.style.width = "100px";
+		pageProperty_sidebarExpandedWidth = 500;
+		pageProperty_sidebarCompactedWidth = 100;
+		document.getElementById("Header_PageNavi_Title").style.fontSize = "50px";
+	} else {
+	
+	} */
+	
+	
+}
+
+/*document.onkeypress = function (f) {
+    //space = space || window.event;
+	toggle_Category_All();
+};*/
+
+let keysPressed = {}; 
+document.addEventListener('keydown', (event) => {
+	keysPressed[event.key] = true;
+	
+	if (keysPressed['Control'] && event.key == 'q') {
+		toggle_Category_All();
+		
+	}
+	//if (PageName == "DL_ShortcutEditor.html"){
+	if (keysPressed['Control'] && event.key == ' ') {
+		if(PageName == "WA_Main.html"){
+			generateImage();
+			} else {
+			if(document.getElementById("subwindow_AddItem").style.display == "none"){
+				open_Subwindow("AddItem");
+				} else {
+				close_Subwindow("AddItem");
+			}
+		}
+		
+	}
+	if (keysPressed['Control'] && event.key == 'b') {
+		if (pageProperty_enableClockScreen == 1){
+			open_SessionScreen();
+		}
+	}
+	if (keysPressed['Control'] && event.key == 'ArrowRight') {
+		if (pageProperty_enableSidebar == 1){
+			toggle_Sidebar();
+		}
+		/* if(PageName == "WA_Main.html"){
+			WA_Next_Image();
+		} */
+	}
+	if (keysPressed['Control'] && event.key == 'ArrowLeft') {
+		if(PageName == "WA_Main.html"){
+			WA_Previous_Image();
+		}
+	}
+	
+	if (keysPressed['Control'] && event.key == 'CapsLock') {
+		if(PageName == "WA_Main.html"){
+			WA_Reset();
+		}
+	}
+	
+	if (keysPressed['Control'] && event.key == 'Shift') {
+		if(pageProperty_enableQuickSearch == 1){
+			toggle_SearchBar();
+		}
+	}
+	
+	if (keysPressed['Control'] && event.key == 'i') {
+		trigger_Open_ExperimentSelector();
+		
+	}
+	
+	
+	if (keysPressed['Control'] && event.key == 'Alt') {
+		if (dev_debug_ElementOutlines == 0){
+			var stylesheet = document.querySelector(':root');
+			stylesheet.style.setProperty("--Debug-ElementOutline", "solid red");
+			dev_debug_ElementOutlines = 1;
+			console.log("Outlines on");
+			} else if (dev_debug_ElementOutlines == 1){
+			var stylesheet = document.querySelector(':root');
+			stylesheet.style.setProperty("--Debug-ElementOutline", "none");
+			dev_debug_ElementOutlines = 0;
+			console.log("Outlines off");
+		}
+	}
+	
+	
+	if (keysPressed['Escape']){
+		if (subwindow_activeSubwindow != "none"){
+			close_Subwindow(subwindow_activeSubwindow);
+		}
+		
+	}
+	
+	/*if (keysPressed['Enter'] && (document.getElementById("pageElement_SearchQuery") === document.activeElement)){
+		search_Query("headerMain");
+		let keysPressed = {};
+		}
+		
+		if (keysPressed['Enter'] && (document.getElementById("pageElement_SearchQuery2") === document.activeElement)){
+		search_Query("headerMenu");
+		let keysPressed = {};
+		}
+		
+		if (keysPressed['Enter'] && (document.getElementById("pageElement_SearchQuery_3") === document.activeElement)){
+		search_Query("toggleable");
+		let keysPressed = {};
+	}*/
+	
+	/*var searchBar1 = document.querySelector('.Header_QuickSearchBar_Input');
+		if(searchBar1 === document.activeElement){
+		if (keysPressed['Enter']) {
+		search_Query("headerMain");	
+		}
+	}*/
+	
+	/*var searchBar2 = document.querySelector('.Header_QuickSearchBar_Input2');
+		if(searchBar2 === document.activeElement){
+		if (keysPressed['Enter']) {
+		search_Query("headerMenu");	
+		}
+	}*/
+	
+	/*var searchBar3 = document.querySelector('.ToggleableSearchBar_SearchBar_Input');
+		if(searchBar3 === document.activeElement){
+		if (keysPressed['Enter']) {
+		search_Query("toggleable");	
+		}
+	}*/
+	//}
+});
+
+document.addEventListener('keyup', (event) => {
+	delete keysPressed[event.key];
+});
+
+//Toggle search bar
+function toggle_SearchBar(){
+	var SearchBar = document.getElementById("pageElement_Toggleable_SearchBar");
+	if (SearchBar.style.display == "none"){
+		SearchBar.style.display = "grid";
+		SearchBar.style.animationFillMode = "forwards";
+		SearchBar.style.animationName = "opening_SearchBar";
+		SearchBar.style.animationDuration = "0.3s";
+		document.getElementById("pageElement_SearchQuery_3").focus();
+		document.getElementById("pageElement_SearchQuery_3").focus();
+		document.getElementById("pageElement_SearchQuery_3") === document.activeElement;
+		} else {
+		SearchBar.style.animationName = "closing_SearchBar";
+		SearchBar.style.animationDuration = "0.3s";
+		SearchBar.style.animationFillMode = "forwards";
+		setTimeout(function(){SearchBar.style.display = "none";}, 300);
+	}
+}
+
+//Toggle sidebar
+var Sidebar_State = "Contracted";
+function toggle_Sidebar(){
+	var Sidebar = document.getElementById("pageElement_Content");
+	var toggle_Sidebar_GridTemplateColumns = "50px 1fr";
+	if (pageProperty_enableSidebar == 1){
+		if (pageProperty_lockSidebar == 0){
+			if (Sidebar_State == "Contracted"){
+				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarExpandedWidth + "px";
+				if (pageProperty_sidebarMoveContent == 1){
+					document.getElementById("pageElement_Content").style.marginLeft = pageProperty_sidebarExpandedWidth + "px";
+				}
+				Sidebar_State = "Expanded";
+			} else if (Sidebar_State == "Expanded"){
+				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarCompactedWidth +"px";
+				document.getElementById("pageElement_Content").style.marginLeft = "50px";
+				// var toggle_Sidebar_GridTemplateColumns = "50px 1fr";
+				Sidebar_State = "Contracted";
+			}
+		} else if (pageProperty_lockSidebar == 1){
+			if (Sidebar_State == "Contracted"){
+				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarExpandedWidth + "px";
+				if (pageProperty_sidebarMoveContent == 1){
+					document.getElementById("pageElement_Content").style.marginLeft = pageProperty_sidebarExpandedWidth + "px";
+				}
+				Sidebar_State = "Expanded";
+			} else if (Sidebar_State == "Expanded"){
+				document.getElementById("pageElement_Sidebar").style.width = "0px";
+				document.getElementById("pageElement_Content").style.marginLeft = "0px";
+				Sidebar_State = "Contracted";
+			}
+		}
+		// document.getElementById("pageElement_Content").style.gridTemplateColumns = toggle_Sidebar_GridTemplateColumns;
+	}
+}
+
+//Toggle categories
+function toggle_Category(catID){ //Gets the id of the element that runs the function and stores it in catID
+	var categoryID = catID; //Set value of categoryID to the value of catID
+	var container = document.getElementById("content_"+categoryID); //The id of the div container of the category
+	var containerArrow = document.getElementById("arrow_"+categoryID); //The id of the arrow icon of the category
+	
+	var selectedCSSObject = categoryID.replace('category_','');
+	
+	container.style.animationName = "tabOpening"; //Opening animation
+	container.style.animationDuration = "var(--Element-Transition-Delay)"; //Animation duration
+	if (container.style.display != "none"){ //If the container is not closed
+		container.style.animationName = "tabClosing"; //Closing animation
+		container.style.animationFillMode = "forwards";
+		container.style.animationDuration = "0.3s";
+		setTimeout( function() { container.style.display = "none";}, 300);
+		containerArrow.src = "Assets/Icons/icon_downArrow.png"	//Change arrow icon
+		} else { //If the container is closed
+		container.style.display = "block"; //then open it
+		container.style.animationName = "tabOpening"; //Opening animation
+		container.style.animationDuration = "0.3s"; //Animation duration
+		containerArrow.src = "Assets/Icons/icon_upArrow.png" //Change arrow icon
+	}
+	
+	
+}
+
+//Toggle all categories
+var categoryToggleAll = 1;
+
+function toggle_Category_All(){
+	//var categoryID = document.querySelectorAll('[id^="category_"]');
+	//console.log(categoryID);
+	//var categoryCount = document.querySelectorAll('[id^="category_"]').length;
+	//console.log(categoryCount);
+	var Category = document.querySelectorAll(".Category_Content_Container");
+	var categorySelect_Toggle = document.querySelectorAll(".Category_Label_Toggle");
+	if (categoryToggleAll == 1){ //Hide all
+		for (var a = 0; a < Category.length; a++) {			
+			var categorySelect = Category[a];
+			
+			categorySelect.style.display = "none";
+			
+			var categorySelect_Toggle = Category[a];
+			categorySelect_Toggle.src = "Assets/Icons/icon_downArrow.png"
+			
+			if(a == (Category.length - 1)){
+				categoryToggleAll = 0;
+			}
+			
+		}
+		
+		} else { //Show all
+		for (var a = 0; a < Category.length; a++) {			
+			var categorySelect = Category[a];
+			categorySelect.style.display = "block";
+			categorySelect.style.animationName = "tabOpening"; //Opening animation
+			categorySelect.style.animationDuration = "var(--Element-Transition-Delay)";
+			
+			var categorySelect_Toggle = Category[a];
+			categorySelect_Toggle.src = "Assets/Icons/icon_downArrow.png"
+			
+			if(a == (Category.length - 1)){
+				categoryToggleAll = 1;
+			}
+		}
+	}
+}
+
+var subwindow_activeSubwindow;
+function open_Subwindow(ID){
+	document.getElementById("pageElement_Subwindows").style.display = "flex";
+	document.getElementById("pageElement_Subwindows").style.opacity = "100%";
+	var subwindowElement = document.getElementById("subwindow_"+ID);
+	subwindowElement.style.display = "block";
+	subwindowElement.style.animationFillMode = "forwards";
+	subwindowElement.style.animationName = "opening_Subwindow";
+	subwindowElement.style.animationDuration = "0.3s";
+	subwindow_activeSubwindow = ID;
+}
+
+function close_Subwindow(ID){
+	document.getElementById("pageElement_Subwindows").style.opacity = "0%";
+	var subwindowElement = document.getElementById("subwindow_"+ID);
+	subwindowElement.style.animationName = "closing_Subwindow";
+	subwindowElement.style.animationDuration = "0.3s";
+	subwindowElement.style.animationFillMode = "forwards";
+	subwindow_activeSubwindow = "none";
+	setTimeout(function(){subwindowElement.style.display = "none"; document.getElementById("pageElement_Subwindows").style.display = "none";}, 300);
+	
+}
+
+function trigger_toggle_Textbox(ID){
+	var textboxID = document.getElementById(ID + "_Textbox");
+	var textboxContentsID = document.getElementById(ID + "_Textbox_Content");
+	if (textboxID.style.display == "none"){
+		textboxID.style.display = "block";
+		textboxID.style.animationFillMode = "forwards";
+		textboxID.style.animationName = "open_Textbox";
+		textboxID.style.animationDuration = "var(--Element-Transition-Delay)";
+		
+		textboxContentsID.style.display = "block";
+		textboxContentsID.style.animationFillMode = "forwards";
+		textboxContentsID.style.animationName = "open_Textbox_Contents";
+		textboxContentsID.style.animationDuration = "var(--Element-Transition-Delay)";
+		textboxContentsID.style.animationDelay= "0.21s";
+		} else {
+		// textboxID.style.display = "none";
+		textboxID.style.animationFillMode = "forwards";
+		textboxID.style.animationName = "close_Textbox";
+		textboxID.style.animationDuration = "var(--Element-Transition-Delay)";
+		setTimeout(function(){textboxID.style.display = "none";}, 500);
+		
+		// textboxContentsID.style.display = "none";
+		textboxContentsID.style.animationFillMode = "forwards";
+		textboxContentsID.style.animationName = "close_Textbox_Contents";
+		textboxContentsID.style.animationDuration = "0.3s";
+		textboxContentsID.style.opacity = "0%";
+		setTimeout(function(){textboxContentsID.style.display = "none";}, 200);
+	}
+	
+	
+}
+
+function startTime() {
+	const today = new Date();
+	let h = today.getHours();
+	let m = today.getMinutes();
+	let s = today.getSeconds();
+	m = checkTime(m);
+	s = checkTime(s);
+	//var = displayTime;
+	
+	var displayHour;
+	
+	switch(h){
+		case 0:
+		var displayHour = 12;
+		break;
+		case 13:
+		var displayHour = 1;
+		break;
+		case 14:
+		var displayHour = 2;
+		break;
+		case 15:
+		var displayHour = 3;
+		break;
+		case 16:
+		var displayHour = 4;
+		break;
+		case 17:
+		var displayHour = 5;
+		break;
+		case 18:
+		var displayHour = 6;
+		break;
+		case 19:
+		var displayHour = 7;
+		break;
+		case 20:
+		var displayHour = 8;
+		break;
+		case 21:
+		var displayHour = 9;
+		break;
+		case 22:
+		var displayHour = 10;
+		break;
+		case 23:
+		var displayHour = 11;
+		break;
+		default:
+		var displayHour = h;
+	}
+	if (pageProperty_enableGreetings == 1){
+		if(Behavior_DisplayGreetings == true){
+			if (h >= 0 && h<=6){
+				document.getElementById('pageElement_Greeting').innerHTML = "Good Evening";
+			}
+			if (h >= 6 && h<=11){
+				document.getElementById('pageElement_Greeting').innerHTML = "Good Morning";
+			}
+			if (h >= 12 && h<=18){
+				document.getElementById('pageElement_Greeting').innerHTML = "Good Afternoon";
+			}
+			if (h >= 19 && h<=24){
+				document.getElementById('pageElement_Greeting').innerHTML = "Good Evening";
+			}
+			if(Behavior_DisplayGreetings_DisplayName == true){
+				if (h >= 0 && h<=6){
+					document.getElementById('pageElement_Greeting').innerHTML = "Good Evening, "+Behavior_DisplayGreetings_DisplayName_Text;
+				}
+				if (h >= 6 && h<=11){
+					document.getElementById('pageElement_Greeting').innerHTML = "Good Morning, "+Behavior_DisplayGreetings_DisplayName_Text;
+				}
+				if (h >= 12 && h<=18){
+					document.getElementById('pageElement_Greeting').innerHTML = "Good Afternoon, "+Behavior_DisplayGreetings_DisplayName_Text;
+				}
+				if (h >= 19 && h<=24){
+					document.getElementById('pageElement_Greeting').innerHTML = "Good Evening, "+Behavior_DisplayGreetings_DisplayName_Text;
+				}
+			}
+			} else {
+			document.getElementById('pageElement_Greeting').style.display = "none";
+		}
+	}
+	
+	var AMPM;
+	if (h <= 12 && h >= 0){
+		var AMPM = "AM";
+		} else {
+		var AMPM = "PM";
+	}
+	if (pageProperty_enableStatusBar == 1){
+		if (document.getElementById('pageElement_Header_Clock').style.display == "block"){
+			document.getElementById('Clock_Time').innerHTML =  displayHour + ":" + m + " " + AMPM;
+			
+		}
+		if (document.getElementById('pageElement_Header_StatusTray_Textbox').style.display == "block"){
+			document.getElementById('StatusMenu_Clock_Time').innerHTML =  displayHour + ":" + m + " " + AMPM;
+			
+		}
+	}
+	
+	// document.getElementById("Sidebar_Clock_Time").innerHTML = displayHour + ":" + m + ":" + s + " "+AMPM;
+	if (pageProperty_enableClockScreen == 1){
+		if (document.getElementById('pageElement_SessionScreen').style.display == "block"){
+			document.getElementById('Clock_Time_SessionScreen').innerHTML =  displayHour + ":" + m;
+			
+		}
+	}
+	
+	
+	if (pageProperty_enableStatusBar == 1){
+		var battery_level;
+		navigator.getBattery()
+		.then(function(battery) {
+			var battery_level = Math.round((battery.level)*100);
+			if (document.getElementById('pageElement_Header_Battery').style.display == "block"){
+				document.getElementById('Battery_Level').innerHTML =  battery_level+"%";
+			}
+			if (document.getElementById('pageElement_Header_StatusTray_Textbox').style.display == "block"){
+				document.getElementById('StatusMenu_Battery_Level').innerHTML =  battery_level+"%";
+				document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Estimated " + Math.round(battery.dischargingTime / 60) + " minutes remaining";
+			}
+		});
+	}
+	if (battery_level <= 15){
+		document.getElementById('Battery_Level').style.color = "#ff3c19";
+	}
+	//check_Connection();
+	setTimeout(startTime, 1000);
+	
+}
+
+function checkTime(i) {
+	if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+	return i;
+}
+var date;
+function startDate(){
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+	today = mm + '/' + dd + '/' + yyyy;
+	date = today;
+	//document.write(today);
+	//document.getElementById('DateClass').innerHTML =  today;
+	displayDay();
+}
+var day;
+function displayDay() {
+	var d = new Date();
+	var n = d.getDay();
+	if (n == 0){
+		var day = "Sunday";
+	}
+	if (n == 1){
+		var day = "Monday";
+	}
+	if (n == 2){
+		var day = "Tuesday";
+	}
+	if (n == 3){
+		var day = "Wednesday";
+	}
+	if (n == 4){
+		var day = "Thursday";
+	}
+	if (n == 5){
+		var day = "Friday";
+	}
+	if (n == 6){
+		var day = "Saturday";
+	}
+	if (pageProperty_enableStatusBar == 1){
+		document.getElementById("StatusMenu_Clock_Date_2").innerHTML = day + ", "+ date;
+	}
+	// document.getElementById("Clock_Date_2").innerHTML = day + ", "+ date;
+	// document.getElementById("Sidebar_Clock_Date").innerHTML = day + ", "+ date;
+	if (pageProperty_enableClockScreen == 1){
+		document.getElementById("Clock_Date_SessionScreen").innerHTML = day + ", "+ date;
+	}
+	setTimeout(displayDay, 5000);
+}
+
+
+
+
+function formatAMPM(date) {
+	var hours = date.getHours();
+	var minutes = date.getMinutes();
+	var ampm = hours >= 12 ? 'pm' : 'am';
+	hours = hours % 12;
+	hours = hours ? hours : 12; // the hour '0' should be '12'
+	minutes = minutes < 10 ? '0'+minutes : minutes;
+	var strTime = hours + ':' + minutes + ' ' + ampm;
+	return strTime;
+	document.getElementById('ClockClass2').innerHTML =  strTime;
+}
+
+/*navigator.getBattery()
+	.then(function(battery) {
+	var battery_level = Math.round((battery.level)*100);
+	document.getElementById('Battery_Level').innerHTML =  battery_level+"%";
+});*/
+
+var SE_CreateItem_categoryTitle; //For SE_CreateItem; Used to display category title on toast notifications
+var SE_CreateItem_ShortcutText; //For SE_CreateItem
+var SE_CreateItem_ShortcutURL; //For SE_CreateItem
+var toast_Count = 1;
+function trigger_createToast(type){
+	/* if (document.getElementById("button_PageNavi_textbox").style.display == "block"){
+		document.getElementById("pageElement_ToastDrawer").style.paddingTop = "400px";
+		} else {
+		document.getElementById("pageElement_ToastDrawer").style.paddingTop = "75px";
+	} */
+	if (Behavior_DisplayToasts == true){
+		var toast_Div = document.createElement('div');
+		toast_Div.classList.add("ToastNotif_Toast");
+		toast_Div.setAttribute("id", "toast_Div_"+toast_Count);
+		toast_Div.setAttribute("onclick", "trigger_closeToast(this.id)");
+		toast_Div.style.transform = "translateX(-100%)";
+		toast_Div.style.animationName = "opening_ToastNotif";
+		toast_Div.style.animationDuration = "0.3s";
+		toast_Div.style.animationFillMode = "forwards";
+		setTimeout(function(){
+			toast_Div.style.animationName = "closing_ToastNotif";
+			toast_Div.style.animationDuration = "0.3s";
+			toast_Div.style.animationFillMode = "forwards";
+			setTimeout(function(){
+				toast_Div.style.display = "none";
+			}, 300);
+		}, 3000);
+		var toast_Icon = document.createElement('img');
+		toast_Icon.classList.add("ToastNotif_Toast_Icon");
+		toast_Icon.setAttribute("id", "toast_Icon_"+toast_Count);
+		document.getElementById("pageElement_ToastDrawer").appendChild(toast_Div);
+		
+		var toast_Title = document.createElement('h1');
+		toast_Title.classList.add("ToastNotif_Toast_Title");
+		
+		var toast_Subtitle = document.createElement('p');
+		toast_Subtitle.classList.add("ToastNotif_Toast_URL");
+		switch(type){
+			case "success":
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkAdded.png");
+			toast_Title.innerHTML = "I am success";
+			toast_Subtitle.innerHTML = "LMAO its SuccessToastYT he's roasty toasty who would've thought it would make the news papers LMAO LOL FR FR TBH";
+			break;
+			case "failed":
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkError.png");
+			toast_Title.innerHTML = "Fail :(";
+			toast_Subtitle.innerHTML = "uncooked toast";
+			break;
+			case "SE_FormNotFilled": //When not all of the required fields are filled
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkError.png");
+			toast_Title.innerHTML = "Item not added";
+			toast_Subtitle.innerHTML = "Make sure that you've filled all of the required fields";
+			break;
+			case "SE_CategoryCreated": //When a category in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkAdded.png");
+			toast_Title.innerHTML = "Category added";
+			toast_Subtitle.innerHTML = "Category named '"+SE_CreateItem_categoryTitle+"' has been created.";
+			break;
+			case "SE_ShortcutCreated": //When a shortcut in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkAdded.png");
+			toast_Title.innerHTML = "Shortcut added";
+			toast_Subtitle.innerHTML = "Shortcut named '"+SE_CreateItem_ShortcutText+"' with a URL of '"+SE_CreateItem_ShortcutURL+"' has been created.";
+			break;
+			case "Settings_FileNotFound": //When a shortcut in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_error.png");
+			toast_Title.innerHTML = "Error";
+			toast_Subtitle.innerHTML = "We couldn't find the file you're referring to. Double check the file name, type, and make sure it is in the Assets/Background folder.";
+			break;
+			case "Settings_SaveSuccess": //When a shortcut in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
+			toast_Title.innerHTML = "Settings saved";
+			toast_Subtitle.innerHTML = "Settings have been successfully saved and applied.";
+			break;
+			case "ShortcutEditor_ListUpdated": //When a shortcut in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
+			toast_Title.innerHTML = "List updated";
+			toast_Subtitle.innerHTML = "Changes had been saved.";
+			break;
+			case "ShortcutEditor_CopiedToClipboard": //When a shortcut in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_changelog.png");
+			toast_Title.innerHTML = "Copied!";
+			toast_Subtitle.innerHTML = "Text has been copied to the clipboard.";
+			break;
+			case "SearchBar_NoQuery": //When a shortcut in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_Search.png");
+			toast_Title.innerHTML = "Search not made";
+			toast_Subtitle.innerHTML = "Type something in the search bar to do the search.";
+			break;
+			case "Presets_Set": //When a shortcut in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
+			toast_Title.innerHTML = "Preset applied";
+			toast_Subtitle.innerHTML = "The selected preset has been successfully applied to the values table. Click 'Save Settings' to save changes.";
+			break;
+			case "Settings_FormEmpty": //When a shortcut in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_error.png");
+			toast_Title.innerHTML = "Error";
+			toast_Subtitle.innerHTML = "The input box required is empty.";
+			break;
+			case "LaunchCategory_Before":
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_others.png");
+			toast_Title.innerHTML = "Launching...";
+			toast_Subtitle.innerHTML = "Your shortcuts should be opening on their new tabs now.";
+			break;
+			case "LaunchCategory_After":
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_others.png");
+			toast_Title.innerHTML = "Shortcuts launched";
+			toast_Subtitle.innerHTML = "All shortcuts from the category has been opened.";
+			break;
+			case "ShortcutEditor_InvalidCharacter": //When a shortcut in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_error.png");
+			toast_Title.innerHTML = "Error";
+			toast_Subtitle.innerHTML = "The character ';' is not accepted.";
+			break;
+			case "NotImplemented": //When a shortcut in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/favicon.png");
+			toast_Title.innerHTML = "Not available";
+			toast_Subtitle.innerHTML = "This feature is not implemented properly yet.";
+			break;
+			case "WA_ProcessingImage": //When a shortcut in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_schedules.png");
+			toast_Title.innerHTML = "Processing Image...";
+			toast_Subtitle.innerHTML = "Your image is being processed. Please wait...";
+			break;
+			case "WA_ProcessingFinished": //When a shortcut in Shortcut Editor is successfully created
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
+			toast_Title.innerHTML = "Processing Finished";
+			toast_Subtitle.innerHTML = "The image has been processed. You can now save it.";
+			break;
+			case "dev_EnableCounter":
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
+			toast_Title.innerHTML = "Dev Counter Enabled";
+			toast_Subtitle.innerHTML = "Enabled";
+			break;
+			case "dev_EnableCounter":
+			toast_Icon.setAttribute("src", "Assets/Icons/icon_close.png");
+			toast_Title.innerHTML = "Dev Counter Disabled";
+			toast_Subtitle.innerHTML = "Disabled";
+			break;
+		}
+		document.getElementById("toast_Div_"+toast_Count).appendChild(toast_Icon);
+		document.getElementById("toast_Div_"+toast_Count).appendChild(toast_Title);
+		document.getElementById("toast_Div_"+toast_Count).appendChild(toast_Subtitle);
+		toast_Count++;
+	}
+}
+
+function trigger_closeToast(id){
+	toast_Div = document.getElementById(id);
+	toast_Div.style.animationName = "closing_ToastNotif";
+	toast_Div.style.animationDuration = "0.3s";
+	toast_Div.style.animationFillMode = "forwards";
+	setTimeout(function(){
+		toast_Div.style.display = "none";
+	}, 300);
+	
+}
+
+
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+	pageElement_CornerButtons = document.getElementById("pageElement_CornerButtons");
+	if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 20) {
+		pageElement_CornerButtons.style.display = "block";
+		} else {
+		pageElement_CornerButtons.style.display = "none";
+	}
+}
+
+
+
+function trigger_toggleDropdown(ID){	
+	var dropdownMenu = document.getElementById("dropdownMenu_"+ID);
+	var dropdownButton = document.getElementById(ID);
+	var dropdownItems = document.querySelectorAll("[id='dropdownItem_"+ID+"']");	
+	if (dropdownMenu.style.display == "none"){
+		dropdownMenu.parentElement.style.height = "250px";
+		dropdownMenu.style.display = "block";
+		dropdownMenu.style.animationName = "opening_Dropdown";
+		dropdownMenu.style.animationDuration = "0.3s";
+		dropdownMenu.style.animationFillMode = "forwards";
+		for (var a = 0; a < dropdownItems.length; a++){
+			var dropdownItems_Select = dropdownItems[a];
+			dropdownItems_Select.style.animationName = "opening_Dropdown_Items";
+			dropdownItems_Select.style.animationDuration = "0.3s";
+			dropdownItems_Select.style.animationFillMode = "forwards";
+		}
+		dropdownButton.style.backgroundColor = "#292930";
+		dropdownButton.style.borderTopStyle = "solid";
+		dropdownButton.style.borderBottomStyle = "none";
+		} else {
+		dropdownMenu.parentElement.style.height = "auto";
+		dropdownMenu.style.animationName = "closing_Dropdown";
+		dropdownMenu.style.animationDuration = "0.3s";
+		dropdownMenu.style.animationFillMode = "forwards";
+		for (var a = 0; a < dropdownItems.length; a++){
+			var dropdownItems_Select = dropdownItems[a];
+			dropdownItems_Select.style.animationName = "closing_Dropdown_Items";
+			dropdownItems_Select.style.animationDuration = "0.3s";
+			dropdownItems_Select.style.animationFillMode = "forwards";
+		}
+		setTimeout(function(){dropdownMenu.style.display = "none";}, 300);
+		dropdownButton.style.backgroundColor = "#121212";
+		dropdownButton.style.borderTopStyle = "none";
+		dropdownButton.style.borderBottomStyle = "solid";
+	}
+}
+
+function trigger_dropdownItemSelected(ID, text){
+	var trimmedID = ID.slice(13);
+	console.log(trimmedID);
+	document.getElementById(trimmedID).innerHTML = text;
+	trigger_toggleDropdown(trimmedID);
+}
+
+
+function search_Query(position){
+	var setting_PreferredSearchEngine = Behavior_DisplaySearchBar_PreferredEngine; 
+	switch (position){
+		case "headerMain":
+		var searchQuery = document.getElementById("pageElement_SearchQuery").value;
+		document.getElementById("pageElement_SearchQuery").value = "";
+		break;
+		case "headerMenu":
+		var searchQuery = document.getElementById("pageElement_SearchQuery2").value;
+		document.getElementById("pageElement_SearchQuery2").value = "";
+		break;
+		case "toggleable":
+		var searchQuery = document.getElementById("pageElement_SearchQuery_3").value;
+		document.getElementById("pageElement_SearchQuery_3").value = "";
+		break;
+	}
+	if(searchQuery != ""){
+		switch (setting_PreferredSearchEngine){
+			case "Ecosia":
+			window.open("https://www.ecosia.org/search?method=index&q="+searchQuery);
+			break;
+			case "Google":
+			window.open("http://google.com/search?q="+searchQuery);
+			break;
+			case "Bing":
+			window.open("https://www.bing.com/search?q="+searchQuery);
+			break;
+			case "DuckDuckGo":
+			window.open("https://duckduckgo.com/?q="+searchQuery);
+			break;
+			case "Yahoo!":
+			window.open("https://search.yahoo.com/search?p="+searchQuery);
+			break;
+		}
+		} else {
+		trigger_createToast("SearchBar_NoQuery");
+	}
+}
+
+// SETTINGS //
+function trigger_ChangeTab(ID){
+	var Tab_Container = document.querySelectorAll(".Tab_Container");
+	var Sidebar_Icon = document.querySelectorAll(".Sidebar_Icon");
+	for (a = 0; a != Tab_Container.length; a++){
+		Tab_Container[a].style.display = "none";
+		
+	}
+	for (b = 0; b != Sidebar_Icon.length; b++){
+		Sidebar_Icon[b].style.backgroundColor = "var(--Menus-BGColor)";
+	}
+	var selectedTab = document.getElementById(ID+"_Container");
+	selectedTab.style.display = "block";
+	selectedTab.style.animationName = "opening_pageTab";
+	selectedTab.style.animationDuration = "0.3s";
+	selectedTab.style.animationFillMode = "forwards";
+	var selectedIcon = document.getElementById(ID+"_Icon");
+	selectedIcon.style.backgroundColor = "var(--Accent-Color)";
+	
+	if(PageName == "DL_Settings.html"){
+		document.getElementById("pageElement_Tab_Title").style.display = "none";
+		document.getElementById("pageElement_Tab_Description").style.display = "none";
+		document.getElementById("Settings_Home_Container").style.display = "none";
+	}
+	if(PageName == "DL_ReminderAndTodoList.html"){
+		document.getElementById("pageElement_Tab_Title").style.display = "none";
+		document.getElementById("pageElement_Tab_Description").style.display = "none";
+	}
+	reset_toDefaultAnimations();
+}
+
+var wallpaperImagePath;
+
+function Settings_DetectImageFile(){
+	var rawFileName = document.getElementById("form_Settings_WallpaperName").value;
+	var rawFileType = document.getElementById("dropdownButton_ImageType").innerText;
+	var combinedFileName = rawFileName + rawFileType;
+	console.log(combinedFileName);
+	var imagePath = "Assets/Background/"+combinedFileName;
+	wallpaperImagePath = imagePath;
+	console.log(imagePath);
+	console.log("wallpaperImagePath: "+wallpaperImagePath);
+	document.getElementById("Settings_WallpaperPreview").src = imagePath;
+	document.getElementById("Settings_WallpaperPreview").style.display = "block";
+	
+}
+
+function Settings_FileNotFound(){
+	document.getElementById("Settings_WallpaperPreview").style.display = "none";
+	trigger_createToast("Settings_FileNotFound");
+}
+
+function Settings_DisplayGreetingName_Check(){
+	var Checked_BH_TG_DisplayGreetings_DisplayName = document.getElementById("BH-TG-DisplayGreetings_DisplayName");
+	var BH_TG_DisplayGreetings_DisplayName = Checked_BH_TG_DisplayGreetings_DisplayName.checked;
+	if (BH_TG_DisplayGreetings_DisplayName == true){
+		if (document.getElementById("form_Settings_GreetingName").value == ""){
+			trigger_createToast("Settings_FormEmpty");
+			close_Subwindow("CustomizeGreetingText");
+		}
+	}
+	close_Subwindow("CustomizeGreetingText");
+}
+
+var key_Settings_Appearance = "DL_Settings_Appearance";
+var key_Settings_Behaviors = "DL_Settings_Behaviors";
+function Settings_ApplyChanges(){
+	Settings_DetectImageFile();
+	console.log("Setting variable values from input values...");
+	// Get the value from input fields and variables
+	var appearance_Wallpaper_Img = wallpaperImagePath;
+	var rawWallpaperFileName = document.getElementById("form_Settings_WallpaperName").value;
+	var WallpaperFileType = document.getElementById("dropdownButton_ImageType").innerHTML; //The value from the dropdown
+	var rawWallpaperFileType = ""; //The filtered variable
+	for( var i = 0; i < WallpaperFileType.length; i++ ) { //Filters \n and \t from the string
+		if( !(WallpaperFileType[i] == '\n' || WallpaperFileType[i] == '\t') ){
+		rawWallpaperFileType += WallpaperFileType[i];}
+	} //Thanks geeksforgeeks!
+	var AP_CL_AccentColor = document.getElementById("AP-CL-AccentColor").value;
+	var AP_CL_AccentColor_Hover = document.getElementById("AP-CL-AccentColor-Hover").value;
+	var AP_CL_BGColor_General = document.getElementById("AP-CL-BGColor-General").value;
+	var AP_CL_HoverColor = document.getElementById("AP-CL-HoverColor").value;
+	var AP_CL_BGColor_Menu = document.getElementById("AP-CL-BGColor-Menu").value;
+	var AP_CL_BGColor_Subwindow = document.getElementById("AP-CL-BGColor-Subwindow").value;
+	var AP_CL_BGColor_Dropdown = document.getElementById("AP-CL-BGColor-Dropdown").value;
+	var AP_CL_BGColor_Opacitated = document.getElementById("AP-CL-BGColor-Opacitated").value;
+	hexToRgbA(AP_CL_BGColor_Opacitated); //Convert HEX to RGBA
+	
+	
+	function hexToRgbA(hex){
+		var c;
+		if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+			c= hex.substring(1).split('');
+			if(c.length== 3){
+				c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+			}
+			c= '0x'+c.join('');
+			AP_CL_BGColor_Opacitated = 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.5)';
+		}
+	}
+	
+	var AP_CL_BGColor_ShortcutButton = document.getElementById("AP-CL-BGColor-ShortcutButton").value;
+	var AP_CL_BGColor_GeneralButton = document.getElementById("AP-CL-BGColor-GeneralButton").value;
+	var AP_CL_BGColor_Input = document.getElementById("AP-CL-BGColor-Input").value;
+	var AP_CL_BGColor_Divider = document.getElementById("AP-CL-BGColor-Divider").value;
+	var AP_TX_Font_Primary = document.getElementById("AP-TX-Font-Primary").value;
+	var AP_TX_Font_Secondary = document.getElementById("AP-TX-Font-Secondary").value;
+	var AP_TX_Font_Numbers= document.getElementById("AP-TX-Font-Numbers").value;
+	var AP_TX_Font_Color = document.getElementById("AP-TX-Font-Color").value;
+	var AP_CL_IconBrightness = document.getElementById("AP-CL-IconBrightness").value;
+	var Checked_AP_WP_CB_EnableWallpapers = document.getElementById("AP-WP-CB-EnableWallpapers");
+	var AP_WP_CB_EnableWallpapers = Checked_AP_WP_CB_EnableWallpapers.checked;
+	// var Checked_AP_WP_CB_BlurHomeWallpaper= document.getElementById("AP-WP-CB-BlurHomeWallpaper");
+	// var AP_WP_CB_BlurHomeWallpaper = Checked_AP_WP_CB_BlurHomeWallpaper.checked;
+	console.log("Setting values to object...");
+	// Set the values to the object
+	const Settings_Appearance_Obj = {
+		appearance_Wallpaper_Img: appearance_Wallpaper_Img,
+		AP_CL_AccentColor: AP_CL_AccentColor,
+		AP_CL_AccentColor_Hover: AP_CL_AccentColor_Hover,
+		AP_CL_BGColor_General: AP_CL_BGColor_General,
+		AP_CL_HoverColor: AP_CL_HoverColor,
+		AP_CL_BGColor_Menu: AP_CL_BGColor_Menu,
+		AP_CL_BGColor_Subwindow: AP_CL_BGColor_Subwindow,
+		AP_CL_BGColor_Dropdown: AP_CL_BGColor_Dropdown,
+		AP_CL_BGColor_Opacitated: AP_CL_BGColor_Opacitated,
+		AP_CL_BGColor_ShortcutButton: AP_CL_BGColor_ShortcutButton,
+		AP_CL_BGColor_GeneralButton: AP_CL_BGColor_GeneralButton,
+		AP_CL_BGColor_Input: AP_CL_BGColor_Input,
+		AP_CL_BGColor_Divider: AP_CL_BGColor_Divider,
+		rawWallpaperFileName: rawWallpaperFileName,
+		rawWallpaperFileType: rawWallpaperFileType,
+		AP_TX_Font_Primary: AP_TX_Font_Primary,
+		AP_TX_Font_Secondary: AP_TX_Font_Secondary,
+		AP_TX_Font_Numbers: AP_TX_Font_Numbers,
+		AP_TX_Font_Color: AP_TX_Font_Color,
+		AP_CL_IconBrightness: AP_CL_IconBrightness,
+		AP_WP_CB_EnableWallpapers: AP_WP_CB_EnableWallpapers,
+		// AP_WP_CB_BlurHomeWallpaper: AP_WP_CB_BlurHomeWallpaper,
+	}
+	
+	// Behaviors
+	//BH: Behavior; TG: Toggle; Checked_: Not saved, the id of the element to be checked; DD: Dropdown
+	var Checked_BH_TG_BlurEffects = document.getElementById("BH-TG-BlurEffects");
+	var BH_TG_BlurEffects = Checked_BH_TG_BlurEffects.checked;
+	var Checked_BH_TG_DisplayTimeAndDate = document.getElementById("BH-TG-DisplayTimeAndDate");
+	var BH_TG_DisplayTimeAndDate = Checked_BH_TG_DisplayTimeAndDate.checked;
+	var Checked_BH_TG_DisplayBattery = document.getElementById("BH-TG-DisplayBattery");
+	var BH_TG_DisplayBattery = Checked_BH_TG_DisplayBattery.checked;
+	var Checked_BH_TG_DisplayInternetStatus = document.getElementById("BH-TG-DisplayInternetStatus");
+	var BH_TG_DisplayInternetStatus = Checked_BH_TG_DisplayInternetStatus.checked;
+	var Checked_BH_TG_NotifyForUpdates = document.getElementById("BH-TG-NotifyForUpdates");
+	var BH_TG_NotifyForUpdates = Checked_BH_TG_NotifyForUpdates.checked;
+	var Checked_BH_TG_DisplayCategoryNavigation = document.getElementById("BH-TG-DisplayCategoryNavigation");
+	var BH_TG_DisplayCategoryNavigation = Checked_BH_TG_DisplayCategoryNavigation.checked;
+	
+	var Checked_BH_TG_DisplaySearchBar = document.getElementById("BH-TG-DisplaySearchBar");
+	var BH_TG_DisplaySearchBar = Checked_BH_TG_DisplaySearchBar.checked;
+	var BH_DD_PreferredSearchEngine = document.getElementById("dropdownButton_SeaEng").innerText;
+	
+	var Checked_BH_TG_DisplayToasts = document.getElementById("BH-TG-DisplayToasts");
+	var BH_TG_DisplayToasts = Checked_BH_TG_DisplayToasts.checked;	
+	var Checked_BH_TG_DisplayGreetings = document.getElementById("BH-TG-DisplayGreetings");
+	var BH_TG_DisplayGreetings = Checked_BH_TG_DisplayGreetings.checked;	
+	var Checked_BH_TG_DisplayGreetings_DisplayName = document.getElementById("BH-TG-DisplayGreetings_DisplayName");
+	var BH_TG_DisplayGreetings_DisplayName = Checked_BH_TG_DisplayGreetings_DisplayName.checked;	
+	var BH_TG_DisplayGreetings_DisplayName_Text = document.getElementById("form_Settings_GreetingName").value;
+	
+	var Checked_BH_TG_SE_CloseWindowAfterAction= document.getElementById("BH-TG-SE_CloseWindowAfterAction");
+	var BH_TG_SE_CloseWindowAfterAction = Checked_BH_TG_SE_CloseWindowAfterAction.checked;	
+	var Checked_BH_TG_SE_ClearFieldsAfterCreation = document.getElementById("BH-TG-SE_ClearFieldsAfterCreation");
+	var BH_TG_SE_ClearFieldsAfterCreation = Checked_BH_TG_SE_ClearFieldsAfterCreation.checked;	
+	
+	console.log("Setting values to object...");
+	// Set the values to the object
+	const Settings_Behavior_Obj = {
+		BH_TG_BlurEffects: BH_TG_BlurEffects,
+		BH_TG_DisplayTimeAndDate: BH_TG_DisplayTimeAndDate,
+		BH_TG_DisplayBattery: BH_TG_DisplayBattery,
+		BH_TG_DisplayInternetStatus: BH_TG_DisplayInternetStatus,
+		BH_TG_NotifyForUpdates: BH_TG_NotifyForUpdates,
+		BH_TG_DisplayCategoryNavigation: BH_TG_DisplayCategoryNavigation,
+		BH_TG_DisplaySearchBar: BH_TG_DisplaySearchBar,
+		BH_DD_PreferredSearchEngine: BH_DD_PreferredSearchEngine,
+		BH_TG_DisplayToasts: BH_TG_DisplayToasts,
+		BH_TG_DisplayGreetings: BH_TG_DisplayGreetings,
+		BH_TG_DisplayGreetings_DisplayName: BH_TG_DisplayGreetings_DisplayName,
+		BH_TG_DisplayGreetings_DisplayName_Text: BH_TG_DisplayGreetings_DisplayName_Text,
+		BH_TG_SE_CloseWindowAfterAction: BH_TG_SE_CloseWindowAfterAction,
+		BH_TG_SE_ClearFieldsAfterCreation: BH_TG_SE_ClearFieldsAfterCreation,
+	}
+	
+	
+	console.log("Saving objects to local storage...");
+	window.localStorage.setItem("DL_Settings_Appearance",JSON.stringify(Settings_Appearance_Obj));
+	window.localStorage.setItem("DL_Settings_Behaviors",JSON.stringify(Settings_Behavior_Obj));
+	
+	console.log("Settings have been saved");
+	trigger_createToast("Settings_SaveSuccess");
+	Settings_LoadAppearance();
+	Settings_LoadBehaviors();
+}
+
+function Settings_CheckSettingFile(){
+	//Check if the appearance settings key exist
+	if(localStorage.getItem("DL_Settings_Appearance") == null){
+		console.log("DL_Settings_Appearance does not exist. Creating default file.");
+		const Settings_Appearance_Obj = {
+			appearance_Wallpaper_Img: "url(../Assets/Background/default_New.png)",
+			AP_CL_AccentColor: "#cf5520",
+			AP_CL_AccentColor_Hover: "#a03d13",
+			AP_CL_BGColor_General: "#171010",
+			AP_CL_HoverColor: "#242424",
+			AP_CL_BGColor_Menu: "#171010",
+			AP_CL_BGColor_Subwindow: "#292929",
+			AP_CL_BGColor_Dropdown: "#171010",
+			AP_CL_BGColor_Opacitated: "rgba(28, 28, 28, 0.5)",
+			AP_CL_BGColor_ShortcutButton: "#1E1E24",
+			AP_CL_BGColor_GeneralButton: "#1E1E24",
+			AP_CL_BGColor_Input: "#121212",
+			AP_CL_BGColor_Divider: "#282830",
+			rawWallpaperFileName: "default_New",
+			rawWallpaperFileType: ".png",
+			AP_TX_Font_Primary: "Raleway",
+			AP_TX_Font_Secondary: "Roboto",
+			AP_TX_Font_Numbers: "Roboto",
+			AP_TX_Font_Color: "white",
+			AP_CL_IconBrightness: "100",
+			AP_WP_CB_EnableWallpapers: true,
+			// AP_WP_CB_AP_WP_CB_BlurHomeWallpaper: false,
+		}
+		window.localStorage.setItem("DL_Settings_Appearance",JSON.stringify(Settings_Appearance_Obj));
+		Settings_CheckSettingFile();
+		} else {
+		Settings_LoadAppearance();
+	}
+	if(localStorage.getItem("DL_Settings_Appearance") == null){
+		console.log("DL_Settings_Behaviors does not exist. Creating default file.");
+		const Settings_Behavior_Obj = {
+			BH_TG_BlurEffects: true,
+			BH_TG_DisplayTimeAndDate: true,
+			BH_TG_DisplayBattery: true,
+			BH_TG_DisplayInternetStatus: true,
+			BH_TG_NotifyForUpdates: true,
+			BH_TG_DisplayCategoryNavigation: true,
+			BH_TG_DisplaySearchBar: true,
+			BH_DD_PreferredSearchEngine: "Ecosia",
+			BH_TG_DisplayToasts: BH_TG_DisplayToasts,
+			BH_TG_DisplayGreetings: false,
+			BH_TG_DisplayGreetings_DisplayName: false,
+			BH_TG_DisplayGreetings_DisplayName_Text: "",
+			BH_TG_SE_CloseWindowAfterAction: true,
+			BH_TG_SE_ClearFieldsAfterCreation: true,
+		}
+		window.localStorage.setItem("DL_Settings_Behaviors",JSON.stringify(Settings_Behavior_Obj));
+		Settings_LoadBehaviors();
+		} else {
+		Settings_LoadBehaviors();
+	}
+	Settings_LoadAppearance();
+}
+
+
+function Settings_LoadAppearance(){
+	var stylesheet = document.querySelector(':root');
+	
+	var records = window.localStorage.getItem(key_Settings_Appearance); //searches for the keyAppearance in localStorage
+	var data = JSON.parse(localStorage.getItem("DL_Settings_Appearance"));
+	var style = Object.values(data);
+	
+	if (PageName == "DL_Settings.html"){
+		document.getElementById("Settings_WallpaperPreview").src = style[0];
+	}
+	var wallpaperPath = 'url(../'+style[0]+')';
+	if (style[20] == true){
+		stylesheet.style.setProperty("--BG-WallpaperImg", wallpaperPath);
+		} else {
+		stylesheet.style.setProperty("--BG-WallpaperImg", "none");
+	}
+	//stylesheet.style.setProperty("--BG-WallpaperImg", wallpaperPath);
+	stylesheet.style.setProperty("--Accent-Color", style[1]);
+	stylesheet.style.setProperty("--Accent-Color-Hover", style[2]);
+	stylesheet.style.setProperty("--BGColor-General", style[3]);
+	stylesheet.style.setProperty("--BGColor-Hover", style[4]);
+	stylesheet.style.setProperty("--BGColor-Menus", style[5]);
+	stylesheet.style.setProperty("--BGColor-Subwindows", style[6]);
+	stylesheet.style.setProperty("--BGColor-Dropdowns", style[7]);
+	stylesheet.style.setProperty("--BGColor-Opacitated", style[8]);
+	stylesheet.style.setProperty("--BGColor-ShortcutButtons", style[9]);
+	stylesheet.style.setProperty("--BGColor-Buttons", style[10]);
+	stylesheet.style.setProperty("--BGColor-Input", style[11]);
+	stylesheet.style.setProperty("--Color-Dividers", style[12]);
+	//13-14 is skipped since it is only needed on the Settings page
+	stylesheet.style.setProperty("--Text-Font-Primary", style[15]);
+	stylesheet.style.setProperty("--Text-Font-Secondary", style[16]);
+	stylesheet.style.setProperty("--Text-Font-Numbers", style[17]);
+	stylesheet.style.setProperty("--Text-Color", style[18]);
+	var iconBrightness = style[19]/100;
+	stylesheet.style.setProperty("--Element-Icon-Brightness", "brightness("+iconBrightness+")");
+	Appearance_Behavior_BlurHomeWallpaper = style[21];
+	
+	
+	
+	Settings_LoadBehaviors();
+}
+
+function Settings_LoadBehaviors(){
+	var records = window.localStorage.getItem(key_Settings_Behaviors); //searches for the keyAppearance in localStorage
+	var dataSettings = JSON.parse(localStorage.getItem("DL_Settings_Behaviors"));
+	var behavior = Object.values(dataSettings);
+	
+	Behavior_EnableBlurEffects = behavior[0];
+	Behavior_DisplayTimeAndDate = behavior[1];
+	Behavior_DisplayBattery = behavior[2];
+	Behavior_DisplayInternetStatus = behavior[3];
+	Behavior_NotifyForUpdates = behavior[4];
+	Behavior_DisplayCategoryNavigation = behavior[5];
+	Behavior_DisplaySearchBar = behavior[6];
+	Behavior_DisplaySearchBar_PreferredEngine = behavior[7];
+	Behavior_DisplayToasts = behavior[8];
+	Behavior_DisplayGreetings = behavior[9];
+	Behavior_DisplayGreetings_DisplayName = behavior[10];
+	Behavior_DisplayGreetings_DisplayName_Text = behavior[11];
+	Behavior_SE_CloseWindowAfterAction = behavior[12];
+	Behavior_SE_ClearFieldsAfterCreation = behavior[13];
+	apply_Behaviors();
+	
+	
+}
+
+function Settings_LoadSettingValues(){
+	var records = window.localStorage.getItem(key_Settings_Appearance); //searches for the keyAppearance in localStorage
+	var data = JSON.parse(localStorage.getItem("DL_Settings_Appearance"));
+	var style = Object.values(data);
+	
+	document.getElementById("Settings_WallpaperPreview").src = style[0];
+	document.getElementById("AP-CL-AccentColor").value = style[1];
+	document.getElementById("AP-CL-AccentColor-Hover").value = style[2];
+	document.getElementById("AP-CL-BGColor-General").value = style[3];
+	document.getElementById("AP-CL-HoverColor").value = style[4];
+	document.getElementById("AP-CL-BGColor-Menu").value = style[5];
+	document.getElementById("AP-CL-BGColor-Subwindow").value = style[6];
+	document.getElementById("AP-CL-BGColor-Dropdown").value = style[7];
+	document.getElementById("AP-CL-BGColor-Opacitated").value = style[8];
+	document.getElementById("AP-CL-BGColor-ShortcutButton").value = style[9];
+	document.getElementById("AP-CL-BGColor-GeneralButton").value = style[10];
+	document.getElementById("AP-CL-BGColor-Input").value = style[11];
+	document.getElementById("AP-CL-BGColor-Divider").value = style[12];
+	document.getElementById("form_Settings_WallpaperName").value = style[13];
+	document.getElementById("dropdownButton_ImageType").innerHTML = style[14];
+	document.getElementById("AP-TX-Font-Primary").value = style[15];
+	document.getElementById("AP-TX-Font-Secondary").value = style[16];
+	document.getElementById("AP-TX-Font-Numbers").value = style[17];
+	document.getElementById("AP-TX-Font-Color").value = style[18];
+	document.getElementById("AP-CL-IconBrightness").value = style[19];
+	document.getElementById("AP-WP-CB-EnableWallpapers").checked = style[20];
+	// document.getElementById("AP-WP-CB-BlurHomeWallpaper").checked = style[21];
+	Settings_RangeValueChanged("AP-CL-IconBrightness");
+	
+	var records = window.localStorage.getItem(key_Settings_Behaviors); //searches for the keyAppearance in localStorage
+	var dataSettings = JSON.parse(localStorage.getItem("DL_Settings_Behaviors"));
+	var behavior = Object.values(dataSettings);
+	
+	document.getElementById("BH-TG-BlurEffects").checked = behavior[0];
+	document.getElementById("BH-TG-DisplayTimeAndDate").checked = behavior[1];
+	document.getElementById("BH-TG-DisplayBattery").checked = behavior[2];
+	document.getElementById("BH-TG-DisplayInternetStatus").checked = behavior[3];
+	document.getElementById("BH-TG-NotifyForUpdates").checked = behavior[4];
+	document.getElementById("BH-TG-DisplayCategoryNavigation").checked = behavior[5];
+	document.getElementById("BH-TG-DisplaySearchBar").checked = behavior[6];
+	document.getElementById("dropdownButton_SeaEng").innerText = behavior[7];
+	document.getElementById("BH-TG-DisplayToasts").checked = behavior[8];
+	document.getElementById("BH-TG-DisplayGreetings").checked = behavior[9];
+	document.getElementById("BH-TG-DisplayGreetings_DisplayName").checked = behavior[10];
+	document.getElementById("form_Settings_GreetingName").value = behavior[11];
+	document.getElementById("BH-TG-SE_CloseWindowAfterAction").checked = behavior[12];
+	document.getElementById("BH-TG-SE_ClearFieldsAfterCreation").checked = behavior[13];
+}
+
+function Settings_LoadPresets(presetID){
+	switch (presetID){
+		case "lightmode":
+		document.getElementById("AP-CL-AccentColor").value = "#a2b4fb";
+		document.getElementById("AP-CL-AccentColor-Hover").value = "#4664dd";
+		document.getElementById("AP-CL-BGColor-General").value = "#ffffff";
+		document.getElementById("AP-CL-HoverColor").value = "#a6a6a6";
+		document.getElementById("AP-CL-BGColor-Menu").value = "#cccccc";
+		document.getElementById("AP-CL-BGColor-Subwindow").value = "#cccccc";
+		document.getElementById("AP-CL-BGColor-Dropdown").value = "#bfbfbf";
+		//document.getElementById("AP-CL-BGColor-Opacitated").value = "rgba(28, 28, 28, 0.5)";
+		document.getElementById("AP-CL-BGColor-Opacitated").value = "#ffffff";
+		
+		document.getElementById("AP-CL-BGColor-ShortcutButton").value = "#e6e6e6";
+		document.getElementById("AP-CL-BGColor-GeneralButton").value = "#ffffff";
+		document.getElementById("AP-CL-BGColor-Input").value = "#c2c2c2";
+		document.getElementById("AP-CL-BGColor-Divider").value = "#878787";
+		document.getElementById("AP-TX-Font-Color").value = "#3b3b3b";
+		document.getElementById("AP-CL-IconBrightness").value = "0";
+		document.getElementById("form_Settings_WallpaperName").value = "default_lightmode";
+		document.getElementById("dropdownButton_ImageType").innerText = ".jpg";
+		document.getElementById("AP-WP-CB-EnableWallpapers").checked = "true";
+		break;
+		case "darkmode":
+		document.getElementById("AP-CL-AccentColor").value = "#cf5520";
+		document.getElementById("AP-CL-AccentColor-Hover").value = "#a03d13";
+		document.getElementById("AP-CL-BGColor-General").value = "#171010";
+		document.getElementById("AP-CL-HoverColor").value = "#242424";
+		document.getElementById("AP-CL-BGColor-Menu").value = "#171010";
+		document.getElementById("AP-CL-BGColor-Subwindow").value = "#292929";
+		document.getElementById("AP-CL-BGColor-Dropdown").value = "#171010";
+		//document.getElementById("AP-CL-BGColor-Opacitated").value = "rgba(28, 28, 28, 0.5)";
+		document.getElementById("AP-CL-BGColor-Opacitated").value = "#1c1c1c";
+		
+		document.getElementById("AP-CL-BGColor-ShortcutButton").value = "#1E1E24";
+		document.getElementById("AP-CL-BGColor-GeneralButton").value = "#1E1E24";
+		document.getElementById("AP-CL-BGColor-Input").value = "#121212";
+		document.getElementById("AP-CL-BGColor-Divider").value = "#282830";
+		document.getElementById("AP-TX-Font-Color").value = "#FFFFFF";
+		document.getElementById("AP-CL-IconBrightness").value = "100";
+		document.getElementById("form_Settings_WallpaperName").value = "default_New";
+		document.getElementById("dropdownButton_ImageType").innerText = ".png";
+		document.getElementById("AP-WP-CB-EnableWallpapers").checked = "true";
+		// document.getElementById("AP-WP-CB-BlurHomeWallpaper").checked = "false";
+		break;
+		case "gardenofwords":
+		document.getElementById("AP-CL-AccentColor").value = "#9f4f52";
+		document.getElementById("AP-CL-AccentColor-Hover").value = "#9f4f52";
+		document.getElementById("AP-CL-BGColor-General").value = "#171010";
+		document.getElementById("AP-CL-HoverColor").value = "#242424";
+		document.getElementById("AP-CL-BGColor-Menu").value = "#171010";
+		document.getElementById("AP-CL-BGColor-Subwindow").value = "#292929";
+		document.getElementById("AP-CL-BGColor-Dropdown").value = "#171010";
+		//document.getElementById("AP-CL-BGColor-Opacitated").value = "rgba(28, 28, 28, 0.5)";
+		document.getElementById("AP-CL-BGColor-Opacitated").value = "#1c1c1c";
+		
+		document.getElementById("AP-CL-BGColor-ShortcutButton").value = "#1E1E24";
+		document.getElementById("AP-CL-BGColor-GeneralButton").value = "#1E1E24";
+		document.getElementById("AP-CL-BGColor-Input").value = "#121212";
+		document.getElementById("AP-CL-BGColor-Divider").value = "#282830";
+		document.getElementById("AP-TX-Font-Color").value = "#FFFFFF";
+		document.getElementById("AP-CL-IconBrightness").value = "100";
+		document.getElementById("form_Settings_WallpaperName").value = "gardenofwords";
+		document.getElementById("dropdownButton_ImageType").innerText = ".jpg";
+		document.getElementById("AP-WP-CB-EnableWallpapers").checked = "true";
+		break;
+		break;
+		case "underwater":
+		document.getElementById("AP-CL-AccentColor").value = "#bd7b87";
+		document.getElementById("AP-CL-AccentColor-Hover").value = "#a05482";
+		document.getElementById("AP-CL-BGColor-General").value = "#012754";
+		document.getElementById("AP-CL-HoverColor").value = "#03316d";
+		document.getElementById("AP-CL-BGColor-Menu").value = "#012754";
+		document.getElementById("AP-CL-BGColor-Subwindow").value = "#00305d";
+		document.getElementById("AP-CL-BGColor-Dropdown").value = "#004775";
+		//document.getElementById("AP-CL-BGColor-Opacitated").value = "rgba(28, 28, 28, 0.5)";
+		document.getElementById("AP-CL-BGColor-Opacitated").value = "#011b3c";
+		
+		document.getElementById("AP-CL-BGColor-ShortcutButton").value = "#00628e";
+		document.getElementById("AP-CL-BGColor-GeneralButton").value = "#027cad";
+		document.getElementById("AP-CL-BGColor-Input").value = "#00305d";
+		document.getElementById("AP-CL-BGColor-Divider").value = "#47c2d4";
+		document.getElementById("AP-TX-Font-Color").value = "#FFFFFF";
+		document.getElementById("AP-CL-IconBrightness").value = "100";
+		document.getElementById("form_Settings_WallpaperName").value = "underwater";
+		document.getElementById("dropdownButton_ImageType").innerText = ".jpg";
+		document.getElementById("AP-WP-CB-EnableWallpapers").checked = "true";
+		break;
+		
+		
+		case "intendedfonts":
+		document.getElementById("AP-TX-Font-Primary").value = "Raleway";
+		document.getElementById("AP-TX-Font-Secondary").value = "Roboto";
+		document.getElementById("AP-TX-Font-Numbers").value = "Roboto";
+		break;
+	}
+	//trigger_createToast("Presets_Set");
+	Settings_ApplyChanges();
+}
+
+function check_SettingsFileExistence(){
+	if(localStorage.getItem("DL_Settings_Appearance") == null || localStorage.getItem("DL_Settings_Behaviors") == null){
+		const Settings_Appearance_Obj = {
+			appearance_Wallpaper_Img: "Assets/Background/default_New.png",
+			AP_CL_AccentColor: "#cf5520",
+			AP_CL_AccentColor_Hover: "#a03d13",
+			AP_CL_BGColor_General: "#171010",
+			AP_CL_HoverColor: "#242424",
+			AP_CL_BGColor_Menu: "#171010",
+			AP_CL_BGColor_Subwindow: "#292929",
+			AP_CL_BGColor_Dropdown: "#171010",
+			AP_CL_BGColor_Opacitated: "rgba(28, 28, 28, 0.5)",
+			AP_CL_BGColor_ShortcutButton: "#1E1E24",
+			AP_CL_BGColor_GeneralButton: "#1E1E24",
+			AP_CL_BGColor_Input: "#121212",
+			AP_CL_BGColor_Divider: "#282830",
+			rawWallpaperFileName: "default_New",
+			rawWallpaperFileType: ".png",
+			AP_TX_Font_Primary: "Raleway",
+			AP_TX_Font_Secondary: "Roboto",
+			AP_TX_Font_Numbers: "Roboto",
+			AP_TX_Font_Color: "#FFFFFF",
+			AP_CL_IconBrightness: "100",
+			AP_WP_CB_EnableWallpapers: true,
+			// AP_WP_CB_BlurHomeWallpaper: false,
+			
+		}
+		window.localStorage.setItem("DL_Settings_Appearance",JSON.stringify(Settings_Appearance_Obj));
+		
+		const Settings_Behavior_Obj = {
+			BH_TG_BlurEffects: true,
+			BH_TG_DisplayTimeAndDate: true,
+			BH_TG_DisplayBattery: true,
+			BH_TG_DisplayInternetStatus: true,
+			BH_TG_NotifyForUpdates: true,
+			BH_TG_DisplayCategoryNavigation: true,
+			BH_TG_DisplaySearchBar: true,
+			BH_DD_PreferredSearchEngine: "Ecosia",
+			BH_TG_DisplayToasts: true,
+			BH_TG_DisplayGreetings: false,
+			BH_TG_DisplayGreetings_DisplayName: false,
+			BH_TG_DisplayGreetings_DisplayName_Text: "",
+			BH_TG_SE_CloseWindowAfterAction: true,
+		}
+		window.localStorage.setItem("DL_Settings_Behaviors",JSON.stringify(Settings_Behavior_Obj));
+		Settings_LoadAppearance();
+	}
+	
+}
+
+function Settings_RangeValueChanged(id){
+	RangeValue = document.getElementById(id).value;
+	document.getElementById(id+"_ValueDisplay").innerHTML = RangeValue + "%";
+}
+
+function Settings_PrintResult(id){
+	var checkbox = document.getElementById(id);
+	console.log(checkbox.checked);
+	var checkboxStatus = checkbox.checked;
+	console.log(checkboxStatus);
+	if (checkboxStatus == true){
+		console.log("Feature active");
+		} else {
+		console.log("Feature Inactive");
+	}
+}
+
+
+////////////////////////////////
+
+function OnloadTasks_depracated(){	
 	check_SettingsFileExistence();
 	//Settings_LoadAppearance();
 	set_Version_General();
@@ -562,32 +2272,16 @@ function set_Version_General(){
 	document.getElementById("pageElement_Footer_VersionTitle").innerHTML = VersionTitle;
 	document.getElementById("pageElement_Footer_Copyright").innerHTML = CopyrightTitle;
 	document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle + " - " + pageProperty_PageTitle;
-	
-	/* switch (PageName){
-		case "DL_Main.html":
-		document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle + " - " + "Home";
-		break;
-		case "DL_ShortcutEditor.html":
-		document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle + " - " + "Shortcut Editor";
-		break;
-		case "DL_Settings.html":
-		document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle + " - " + "Settings";
-		break;
-		case "DL_ReminderAndTodoList.html":
-		document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle + " - " + "Tasker";
-		break;
-		default:
-		document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle;
-		break;
-	} */
-	
+
 	// Set loading screen elements visible
-	document.getElementById("LoadingScreen_UpperSection").style.animationName = "open_LoadingScreen_Elements";
-	document.getElementById("LoadingScreen_UpperSection").style.animationDuration = "0.5s";
-	document.getElementById("LoadingScreen_UpperSection").style.animationFillMode = "forwards";
-	document.getElementById("LoadingScreen_CopyrightSection").style.animationName = "open_LoadingScreen_Elements";
-	document.getElementById("LoadingScreen_CopyrightSection").style.animationDuration = "0.5s";
-	document.getElementById("LoadingScreen_CopyrightSection").style.animationFillMode = "forwards";
+	if (pageProperty_enableLoadingScreen == 1){
+		document.getElementById("LoadingScreen_UpperSection").style.animationName = "open_LoadingScreen_Elements";
+		document.getElementById("LoadingScreen_UpperSection").style.animationDuration = "0.5s";
+		document.getElementById("LoadingScreen_UpperSection").style.animationFillMode = "forwards";
+		document.getElementById("LoadingScreen_CopyrightSection").style.animationName = "open_LoadingScreen_Elements";
+		document.getElementById("LoadingScreen_CopyrightSection").style.animationDuration = "0.5s";
+		document.getElementById("LoadingScreen_CopyrightSection").style.animationFillMode = "forwards";
+	}
 	close_LoadingScreen();
 }
 
@@ -600,133 +2294,7 @@ function set_Version_Settings(){
 	document.getElementById("pageElement_Version_Copyright").innerHTML = "Copyright "+CopyrightTitle;
 }
 
-function close_LoadingScreen(){
-	setTimeout( function() { wait_LoadingScreen(); }, 3000);
-	
-}
 
-function wait_LoadingScreen(){
-	// document.getElementById("LoadingScreen_Text").innerHTML = "Welcome back!";
-	var x = document.getElementById("LoadingScreen");
-	x.style.animationName = "blurOut";
-	x.style.animationDuration = "0.5s";
-	x.addEventListener("animationend",remove_LoadingScreen);
-}
-function remove_LoadingScreen(){
-	var x = document.getElementById("LoadingScreen");
-	x.style.display = "none";
-	//x.parentNode.removeChild(x);
-	start_Animations();
-}
-
-function check_Connection(){
-	if (navigator.onLine) {
-		document.getElementById('button_Wifi').src = "Assets/Icons/icon_wifi_online.png";
-		document.getElementById('textboxElement_Wifi').innerHTML = "You're connected";
-		document.getElementById('pageElement_Connection').innerHTML = "You are connected to the internet. The launcher will function as intended and shortcuts will open properly."
-		document.getElementById("pageElement_Connection_Speedtest").style.display = "block";
-		} else {
-		document.getElementById('button_Wifi').src = "Assets/Icons/icon_wifi_offline.png";
-		document.getElementById('textboxElement_Wifi').innerHTML = "No connection";
-		document.getElementById('pageElement_Connection').innerHTML = "Since you're not connected to the internet, links will not open properly. Connect to a Wi-Fi network and refresh the page."
-		document.getElementById("pageElement_Connection_Speedtest").style.display = "none";
-	}
-}
-
-function generate_Launcher_NavigationList(){
-	let navigationListItems = ["Old UI", "Home", "Shortcut Editor", "Settings", "Pomodoro Timer", "Watermark Applier", "Template V1"]; //Launcher navigation text
-	let navigationListItems_Link = ["file:///C:/Users/Elmer%20Jr%20G%20Felisilda/Documents/HTML%20Projects/Doodle%20Launcher/DL_Main.html", "DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html", "WA_Main.html", "DL_Template_V1.html"]; //Launcher navigation links
-	let navigationListItems_Icon = ["favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png"];
-	
-	for (var i = 0; i < navigationListItems.length; i++) {
-		var navigationListItems_Select = navigationListItems[i]; //Contains the selected pagenavi text
-		var navigationListItems_Link_Select = navigationListItems_Link[i]; //Contains the selected pagenavi link
-		
-		//Attaches to the page
-		var listItemLink = document.createElement('a'); //Creates an a element
-		listItemLink.href = navigationListItems_Link_Select; //Adds the link
-		listItemLink.setAttribute("id", "pageElement_PageNaviList_Item_"+i); //Adds an id to attach the text
-		document.getElementById("pageElement_MainMenu_NavigationList").appendChild(listItemLink); //Attaches the a element to the page navi element
-		
-		var listItemLink_Div = document.createElement('div');
-		listItemLink_Div.classList.add("Header_MainMenu_Navigation_Item");
-		listItemLink_Div.setAttribute("id", "pageElement_PageNaviList_Item_Div_"+i);
-		document.getElementById("pageElement_PageNaviList_Item_"+i).appendChild(listItemLink_Div);
-		
-		listItemLink_Icon = document.createElement('img');
-		listItemLink_Icon.src = "Assets/Icons/"+ navigationListItems_Icon[i];
-		listItemLink_Icon.classList.add("Header_MainMenu_Navigation_Item_Icon");
-		document.getElementById("pageElement_PageNaviList_Item_Div_"+i).appendChild(listItemLink_Icon);
-		
-		var listItemLink_Text = document.createElement('p'); //Creates a text p element
-		listItemLink_Text.innerHTML = navigationListItems_Select; //Sets text to selected page navi text
-		listItemLink_Text.classList.add("Header_MainMenu_Navigation_Item_Text"); //Adds the styling to the object
-		document.getElementById("pageElement_PageNaviList_Item_Div_"+i).appendChild(listItemLink_Text); //Attaches object to the a object
-	}
-	
-	
-}
-
-function generate_Launcher_HeaderButtons(pageName){
-	let Generator_HeaderButtons_Text = [];
-	let Generator_HeaderButtons_Icon = [];
-	let Generator_HeaderButtons_ID = [];
-	let Generator_HeaderButtons_OnclickAction = [];
-	switch (pageName){
-		case "DL_Main.html":
-		Generator_HeaderButtons_Text = ["Internet search", "Category Navigation"];
-		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
-		Generator_HeaderButtons_ID = ["", ""];
-		Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()", "toggle_Sidebar_CategoryNavigation()"];
-		var Generator_DisplayInHeader = false;
-		break;
-		case "DL_ShortcutEditor.html":
-		Generator_HeaderButtons_Text = ["Add Item", "Re-order categories", "Re-order shortcuts", "How to use"];
-		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
-		Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
-		Generator_HeaderButtons_OnclickAction = ["open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
-		var Generator_DisplayInHeader = true;
-		break;
-		case "DL_Settings.html":
-		Generator_HeaderButtons_Text = ["Save changes"];
-		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png"];
-		Generator_HeaderButtons_ID = [""];
-		Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
-		var Generator_DisplayInHeader = true;
-		break;
-	}
-	
-	if(Generator_DisplayInHeader == true){
-		for (a = 0; a != Generator_HeaderButtons_Text.length; a++){
-			var HeaderButton_Text = document.createElement('h3');
-			HeaderButton_Text.innerHTML = Generator_HeaderButtons_Text[a];
-			HeaderButton_Text.classList.add("Header_Buttons_Item");
-			HeaderButton_Text.setAttribute("id", Generator_HeaderButtons_ID[a]);
-			HeaderButton_Text.setAttribute("onclick", Generator_HeaderButtons_OnclickAction[a]);
-			document.getElementById("pageElement_Header_Buttons").appendChild(HeaderButton_Text);
-		}
-	}
-	
-	for (i = 0; i != Generator_HeaderButtons_Text.length; i++){		
-		//Attaches to the page
-		var listItemLink_Div = document.createElement('div');
-		listItemLink_Div.classList.add("Header_MainMenu_Navigation_Item");
-		listItemLink_Div.setAttribute("id", "pageElement_PageActionsList_Item_Div_"+i);
-		listItemLink_Div.setAttribute("onclick", Generator_HeaderButtons_OnclickAction[i]);
-		document.getElementById("pageElement_PageActionsList").appendChild(listItemLink_Div);
-		
-		listItemLink_Icon = document.createElement('img');
-		listItemLink_Icon.src = Generator_HeaderButtons_Icon[i];
-		listItemLink_Icon.classList.add("Header_MainMenu_Navigation_Item_Icon");
-		document.getElementById("pageElement_PageActionsList_Item_Div_"+i).appendChild(listItemLink_Icon);
-		
-		var listItemLink_Text = document.createElement('p'); //Creates a text p element
-		listItemLink_Text.innerHTML = Generator_HeaderButtons_Text[i]; //Sets text to selected page navi text
-		listItemLink_Text.classList.add("Header_MainMenu_Navigation_Item_Text"); //Adds the styling to the object
-		document.getElementById("pageElement_PageActionsList_Item_Div_"+i).appendChild(listItemLink_Text); //Attaches object to the a object
-	}
-	
-}
 
 function hide_ToggleableElements(){
 	document.getElementById("pageElement_Toggleable_SearchBar").style.display = "none";
@@ -831,190 +2399,9 @@ function reset_toDefaultAnimations(){
 	}
 }
 
-var sessionScreenState;
-function sessionCheck(){
-	if (sessionStorage.getItem("DL2_UserOpened") === null) {
-		console.log("Session key does not exist");
-		sessionStorage.setItem("DL2_UserOpened", "yes");
-		console.log("Added session key");
-		sessionScreenState = "visible";
-		console.log(sessionScreenState);
-		
-		var today = new Date();
-		var dd = String(today.getDate()).padStart(2, '0');
-		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-		var yyyy = today.getFullYear();
-		today = mm + '/' + dd + '/' + yyyy;
-		date = today;
-		var d = new Date();
-		var n = d.getDay();
-		if (n == 0){
-			var day = "Sunday";
-		}
-		if (n == 1){
-			var day = "Monday";
-		}
-		if (n == 2){
-			var day = "Tuesday";
-		}
-		if (n == 3){
-			var day = "Wednesday";
-		}
-		if (n == 4){
-			var day = "Thursday";
-		}
-		if (n == 5){
-			var day = "Friday";
-		}
-		if (n == 6){
-			var day = "Saturday";
-		}
-		} else {
-		var SessionScreen = document.getElementById("pageElement_SessionScreen");
-		SessionScreen.style.display = "none";
-		sessionScreenState = "invisible";
-		//start_Animations();
-	}
-}
 
-function open_SessionScreen(){
-	sessionScreenState = "visible";
-	var x = document.getElementById("pageElement_SessionScreen");
-	x.style.animationName = "open_SessionScreen";
-	x.style.animationDuration = "0.5s";
-	x.style.animationFillMode = "forwards";
-	x.style.display = "block"
-	setTimeout(function(){x.style.display = "block"; start_Animations();}, 500);
-	
-	x.addEventListener("animationend", function(){
-		var shortcutObjects = document.querySelectorAll(".Shortcut_Item");
-		for (var a = 0; a < shortcutObjects.length; a++) {
-			shortcutObjects[a].style.display = "none";
-		}
-	});
-	
-}
 
-function close_SessionScreen(){
-	sessionScreenState = "invisible";
-	console.log(sessionScreenState);
-	var x = document.getElementById("pageElement_SessionScreen");
-	x.style.animationName = "close_SessionScreen";
-	x.style.animationDuration = "0.3s";
-	x.style.animationFillMode = "forwards";
-	setTimeout(function(){x.style.display = "none"; start_Animations();}, 500);
-	start_Animations();
-	
-}
 
-var windowSizePreset = "normal";
-var windowDeviceType = "Desktop";
-window.addEventListener('resize', check_WindowSize_test);
-let details = navigator.userAgent;
-let regexp = /android|iphone|kindle|ipad/i;
-let isMobileDevice = regexp.test(details);
-function check_WindowSize_test(){
-	var Content = document.getElementById("pageElement_Content");
-	var MainContent = document.getElementById("Page_MainContent");
-	var Header = document.getElementById("pageElement_Header");
-	var Header_PageTitle = document.getElementById("Header_PageNavi_Title");
-	var Header_Buttons = document.querySelectorAll(".Header_Content_Button");
-	var Header_Buttons_Text = document.querySelectorAll(".Header_Content_Button_Text");
-	var Header_StatusTray_Clock = document.getElementById("pageElement_Header_Clock");
-	var Header_StatusTray_Battery = document.getElementById("pageElement_Header_Battery");
-	var Sidebar = document.getElementById("pageElement_Sidebar");
-	var MainMenu = document.getElementById("pageElement_Header_MainMenu_Textbox");
-	var StatusMenu = document.getElementById("pageElement_Header_StatusTray_Textbox");
-	var Subwindows = document.querySelectorAll(".Subwindow");
-	var Modals = document.querySelectorAll(".Modal");
-	var Footer_VersionTitle = document.getElementById("pageElement_Footer_VersionTitle");
-	windowWidth = window.innerWidth;
-	windowHeight = window.innerHeight;
-	if (windowWidth < 750){ //Small size
-		windowSizePreset = "small";
-		} else { //Normal size
-		windowSizePreset = "normal";
-	}
-	
-	MainMenu.style.maxHeight = windowHeight-90 + "px";
-	StatusMenu.style.maxHeight = windowHeight-90 + "px";
-	
-	
-	// Desktop
-	if(windowSizePreset == "small"){
-		if (windowWidth < 400){
-			for (a = 0; a < Header_Buttons.length; a++){
-				Header_Buttons[a].style.display = "none";
-			}
-		} else {
-			for (a = 0; a < Header_Buttons.length; a++){
-				Header_Buttons[a].style.display = "grid";
-			}
-		}
-		MainContent.style.marginLeft = "3%";
-		Header_PageTitle.style.display = "none";
-		Header_StatusTray_Clock.style.display = "none";
-		Header_StatusTray_Battery.style.display = "none";
-		for (a = 0; a < Header_Buttons_Text.length; a++){
-			Header_Buttons_Text[a].style.display = "none";
-		}
-		MainMenu.style.width = "85%";
-		StatusMenu.style.width = "85%";
-		StatusMenu.style.float = "left";
-		StatusMenu.style.left = "20px";
-		Content.style.width = "95%";
-		for (a = 0; a < Subwindows.length; a++){
-			Subwindows[a].style.margin = "0";
-			Subwindows[a].style.minWidth = "100%";
-			Subwindows[a].style.minHeight = "100%";
-		}
-		for (a = 0; a < Modals.length; a++){
-			Modals[a].style.margin = "0";
-			Modals[a].style.minWidth = "100%";
-			Modals[a].style.minHeight = "100%";
-		}
-		Footer_VersionTitle.style.display = "none";
-	} else if (windowSizePreset == "normal"){
-		MainContent.style.marginLeft = "10%";
-		Header_PageTitle.style.display = "block";
-		Header_StatusTray_Clock.style.display = "block";
-		Header_StatusTray_Battery.style.display = "block";
-		for (a = 0; a < Header_Buttons_Text.length; a++){
-			Header_Buttons_Text[a].style.display = "block";
-		}
-		MainMenu.style.width = "350px";
-		StatusMenu.style.width = "350px";
-		StatusMenu.style.float = "right";
-		StatusMenu.style.left = "";
-		Content.style.width = "100%";
-		for (a = 0; a < Subwindows.length; a++){
-			Subwindows[a].style.margin = "auto";
-			Subwindows[a].style.minWidth = "0%";
-			Subwindows[a].style.minHeight = "0%";
-		}
-		for (a = 0; a < Modals.length; a++){
-			Modals[a].style.margin = "auto";
-			Modals[a].style.minWidth = "0%";
-			Modals[a].style.minHeight = "0%";
-		}
-		Footer_VersionTitle.style.display = "flex";
-	}
-	
-	/* // Mobile
-	if (windowSizePreset == "normal" && isMobileDevice == true){
-		Header.style.height = "100px";
-		Content.style.marginTop = "100px";
-		Sidebar.style.marginTop = "100px";
-		Sidebar.style.width = "100px";
-		pageProperty_sidebarExpandedWidth = 500;
-		pageProperty_sidebarCompactedWidth = 100;
-		document.getElementById("Header_PageNavi_Title").style.fontSize = "50px";
-	} else {
-	
-	} */
-	
-	
-}
 
 function check_WindowSize(){
 	windowWidth = window.innerWidth;
@@ -1091,131 +2478,6 @@ function check_WindowSize(){
 	console.log(windowSizePreset);
 }
 
-/*document.onkeypress = function (f) {
-    //space = space || window.event;
-	toggle_Category_All();
-};*/
-
-let keysPressed = {}; 
-document.addEventListener('keydown', (event) => {
-	keysPressed[event.key] = true;
-	
-	if (keysPressed['Control'] && event.key == 'q') {
-		toggle_Category_All();
-		
-	}
-	//if (PageName == "DL_ShortcutEditor.html"){
-	if (keysPressed['Control'] && event.key == ' ') {
-		if(PageName == "WA_Main.html"){
-			generateImage();
-			} else {
-			if(document.getElementById("subwindow_AddItem").style.display == "none"){
-				open_Subwindow("AddItem");
-				} else {
-				close_Subwindow("AddItem");
-			}
-		}
-		
-	}
-	if (keysPressed['Control'] && event.key == 'b') {
-		if (pageProperty_enableClockScreen == 1){
-			open_SessionScreen();
-		}
-	}
-	if (keysPressed['Control'] && event.key == 'ArrowRight') {
-		if (pageProperty_enableSidebar == 1){
-			toggle_Sidebar();
-		}
-		/* if(PageName == "WA_Main.html"){
-			WA_Next_Image();
-		} */
-	}
-	if (keysPressed['Control'] && event.key == 'ArrowLeft') {
-		if(PageName == "WA_Main.html"){
-			WA_Previous_Image();
-		}
-	}
-	
-	if (keysPressed['Control'] && event.key == 'CapsLock') {
-		if(PageName == "WA_Main.html"){
-			WA_Reset();
-		}
-	}
-	
-	if (keysPressed['Control'] && event.key == 'Shift') {
-		toggle_SearchBar();
-		
-	}
-	
-	if (keysPressed['Control'] && event.key == 'i') {
-		trigger_Open_ExperimentSelector();
-		
-	}
-	
-	
-	if (keysPressed['Control'] && event.key == 'Alt') {
-		if (dev_debug_ElementOutlines == 0){
-			var stylesheet = document.querySelector(':root');
-			stylesheet.style.setProperty("--Debug-ElementOutline", "solid red");
-			dev_debug_ElementOutlines = 1;
-			console.log("Outlines on");
-			} else if (dev_debug_ElementOutlines == 1){
-			var stylesheet = document.querySelector(':root');
-			stylesheet.style.setProperty("--Debug-ElementOutline", "none");
-			dev_debug_ElementOutlines = 0;
-			console.log("Outlines off");
-		}
-	}
-	
-	
-	if (keysPressed['Escape']){
-		if (subwindow_activeSubwindow != "none"){
-			close_Subwindow(subwindow_activeSubwindow);
-		}
-		
-	}
-	
-	/*if (keysPressed['Enter'] && (document.getElementById("pageElement_SearchQuery") === document.activeElement)){
-		search_Query("headerMain");
-		let keysPressed = {};
-		}
-		
-		if (keysPressed['Enter'] && (document.getElementById("pageElement_SearchQuery2") === document.activeElement)){
-		search_Query("headerMenu");
-		let keysPressed = {};
-		}
-		
-		if (keysPressed['Enter'] && (document.getElementById("pageElement_SearchQuery_3") === document.activeElement)){
-		search_Query("toggleable");
-		let keysPressed = {};
-	}*/
-	
-	/*var searchBar1 = document.querySelector('.Header_QuickSearchBar_Input');
-		if(searchBar1 === document.activeElement){
-		if (keysPressed['Enter']) {
-		search_Query("headerMain");	
-		}
-	}*/
-	
-	/*var searchBar2 = document.querySelector('.Header_QuickSearchBar_Input2');
-		if(searchBar2 === document.activeElement){
-		if (keysPressed['Enter']) {
-		search_Query("headerMenu");	
-		}
-	}*/
-	
-	/*var searchBar3 = document.querySelector('.ToggleableSearchBar_SearchBar_Input');
-		if(searchBar3 === document.activeElement){
-		if (keysPressed['Enter']) {
-		search_Query("toggleable");	
-		}
-	}*/
-	//}
-});
-
-document.addEventListener('keyup', (event) => {
-	delete keysPressed[event.key];
-});
 
 /*window.onkeydown= function(singleKeyPress){
 	var searchBar2 = document.querySelector('.Header_QuickSearchBar_Input2');
@@ -1231,56 +2493,7 @@ document.addEventListener('keyup', (event) => {
 	};
 };*/
 
-//Toggle search bar
-function toggle_SearchBar(){
-	var SearchBar = document.getElementById("pageElement_Toggleable_SearchBar");
-	if (SearchBar.style.display == "none"){
-		SearchBar.style.display = "grid";
-		SearchBar.style.animationFillMode = "forwards";
-		SearchBar.style.animationName = "opening_SearchBar";
-		SearchBar.style.animationDuration = "0.3s";
-		document.getElementById("pageElement_SearchQuery_3").focus();
-		document.getElementById("pageElement_SearchQuery_3").focus();
-		document.getElementById("pageElement_SearchQuery_3") === document.activeElement;
-		} else {
-		SearchBar.style.animationName = "closing_SearchBar";
-		SearchBar.style.animationDuration = "0.3s";
-		SearchBar.style.animationFillMode = "forwards";
-		setTimeout(function(){SearchBar.style.display = "none";}, 300);
-	}
-}
 
-//Toggle sidebar
-var Sidebar_State = "Contracted";
-function toggle_Sidebar(){
-	var Sidebar = document.getElementById("pageElement_Content");
-	var toggle_Sidebar_GridTemplateColumns = "50px 1fr";
-	if (pageProperty_enableSidebar == 1){
-		if (pageProperty_lockSidebar == 0){
-			if (Sidebar_State == "Contracted"){
-				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarExpandedWidth + "px";
-				document.getElementById("pageElement_Content").style.marginLeft = pageProperty_sidebarExpandedWidth + "px"
-				Sidebar_State = "Expanded";
-				} else if (Sidebar_State == "Expanded"){
-				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarCompactedWidth +"px";
-				document.getElementById("pageElement_Content").style.marginLeft = "50px"
-				// var toggle_Sidebar_GridTemplateColumns = "50px 1fr";
-				Sidebar_State = "Contracted";
-			}
-			} else if (pageProperty_lockSidebar == 1){
-			if (Sidebar_State == "Contracted"){
-				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarExpandedWidth + "px";
-				document.getElementById("pageElement_Content").style.marginLeft = pageProperty_sidebarExpandedWidth + "px"
-				Sidebar_State = "Expanded";
-				} else if (Sidebar_State == "Expanded"){
-				document.getElementById("pageElement_Sidebar").style.width = "0px";
-				document.getElementById("pageElement_Content").style.marginLeft = "0px"
-				Sidebar_State = "Contracted";
-			}
-		}
-		// document.getElementById("pageElement_Content").style.gridTemplateColumns = toggle_Sidebar_GridTemplateColumns;
-	}
-}
 
 //Toggle sidebar category navigation
 function toggle_Sidebar_CategoryNavigation(){
@@ -1298,128 +2511,7 @@ function toggle_Sidebar_CategoryNavigation(){
 
 
 
-//Toggle categories
-function toggle_Category(catID){ //Gets the id of the element that runs the function and stores it in catID
-	var categoryID = catID; //Set value of categoryID to the value of catID
-	var container = document.getElementById("content_"+categoryID); //The id of the div container of the category
-	var containerArrow = document.getElementById("arrow_"+categoryID); //The id of the arrow icon of the category
-	
-	var selectedCSSObject = categoryID.replace('category_','');
-	
-	container.style.animationName = "tabOpening"; //Opening animation
-	container.style.animationDuration = "var(--Element-Transition-Delay)"; //Animation duration
-	if (container.style.display != "none"){ //If the container is not closed
-		container.style.animationName = "tabClosing"; //Closing animation
-		container.style.animationFillMode = "forwards";
-		container.style.animationDuration = "0.3s";
-		setTimeout( function() { container.style.display = "none";}, 300);
-		containerArrow.src = "Assets/Icons/icon_downArrow.png"	//Change arrow icon
-		} else { //If the container is closed
-		container.style.display = "block"; //then open it
-		container.style.animationName = "tabOpening"; //Opening animation
-		container.style.animationDuration = "0.3s"; //Animation duration
-		containerArrow.src = "Assets/Icons/icon_upArrow.png" //Change arrow icon
-	}
-	
-	
-}
 
-//Toggle all categories
-var categoryToggleAll = 1;
-
-function toggle_Category_All(){
-	//var categoryID = document.querySelectorAll('[id^="category_"]');
-	//console.log(categoryID);
-	//var categoryCount = document.querySelectorAll('[id^="category_"]').length;
-	//console.log(categoryCount);
-	var Category = document.querySelectorAll(".Category_Content_Container");
-	var categorySelect_Toggle = document.querySelectorAll(".Category_Label_Toggle");
-	if (categoryToggleAll == 1){ //Hide all
-		for (var a = 0; a < Category.length; a++) {			
-			var categorySelect = Category[a];
-			
-			categorySelect.style.display = "none";
-			
-			var categorySelect_Toggle = Category[a];
-			categorySelect_Toggle.src = "Assets/Icons/icon_downArrow.png"
-			
-			if(a == (Category.length - 1)){
-				categoryToggleAll = 0;
-			}
-			
-		}
-		
-		} else { //Show all
-		for (var a = 0; a < Category.length; a++) {			
-			var categorySelect = Category[a];
-			categorySelect.style.display = "block";
-			categorySelect.style.animationName = "tabOpening"; //Opening animation
-			categorySelect.style.animationDuration = "var(--Element-Transition-Delay)";
-			
-			var categorySelect_Toggle = Category[a];
-			categorySelect_Toggle.src = "Assets/Icons/icon_downArrow.png"
-			
-			if(a == (Category.length - 1)){
-				categoryToggleAll = 1;
-			}
-		}
-	}
-}
-
-var subwindow_activeSubwindow;
-function open_Subwindow(ID){
-	document.getElementById("pageElement_Subwindows").style.display = "flex";
-	document.getElementById("pageElement_Subwindows").style.opacity = "100%";
-	var subwindowElement = document.getElementById("subwindow_"+ID);
-	subwindowElement.style.display = "block";
-	subwindowElement.style.animationFillMode = "forwards";
-	subwindowElement.style.animationName = "opening_Subwindow";
-	subwindowElement.style.animationDuration = "0.3s";
-	subwindow_activeSubwindow = ID;
-}
-
-function close_Subwindow(ID){
-	document.getElementById("pageElement_Subwindows").style.opacity = "0%";
-	var subwindowElement = document.getElementById("subwindow_"+ID);
-	subwindowElement.style.animationName = "closing_Subwindow";
-	subwindowElement.style.animationDuration = "0.3s";
-	subwindowElement.style.animationFillMode = "forwards";
-	subwindow_activeSubwindow = "none";
-	setTimeout(function(){subwindowElement.style.display = "none"; document.getElementById("pageElement_Subwindows").style.display = "none";}, 300);
-	
-}
-
-function trigger_toggle_Textbox(ID){
-	var textboxID = document.getElementById(ID + "_Textbox");
-	var textboxContentsID = document.getElementById(ID + "_Textbox_Content");
-	if (textboxID.style.display == "none"){
-		textboxID.style.display = "block";
-		textboxID.style.animationFillMode = "forwards";
-		textboxID.style.animationName = "open_Textbox";
-		textboxID.style.animationDuration = "var(--Element-Transition-Delay)";
-		
-		textboxContentsID.style.display = "block";
-		textboxContentsID.style.animationFillMode = "forwards";
-		textboxContentsID.style.animationName = "open_Textbox_Contents";
-		textboxContentsID.style.animationDuration = "var(--Element-Transition-Delay)";
-		textboxContentsID.style.animationDelay= "0.21s";
-		} else {
-		// textboxID.style.display = "none";
-		textboxID.style.animationFillMode = "forwards";
-		textboxID.style.animationName = "close_Textbox";
-		textboxID.style.animationDuration = "var(--Element-Transition-Delay)";
-		setTimeout(function(){textboxID.style.display = "none";}, 500);
-		
-		// textboxContentsID.style.display = "none";
-		textboxContentsID.style.animationFillMode = "forwards";
-		textboxContentsID.style.animationName = "close_Textbox_Contents";
-		textboxContentsID.style.animationDuration = "0.3s";
-		textboxContentsID.style.opacity = "0%";
-		setTimeout(function(){textboxContentsID.style.display = "none";}, 200);
-	}
-	
-	
-}
 
 function trigger_Open_SubWindow(ID){
 	var subwindowID = ID;
@@ -1472,210 +2564,7 @@ function trigger_Close_SubWindow(ID){
 	setTimeout(function(){windowElement.style.display = "none";}, 300);
 }
 
-function startTime() {
-	const today = new Date();
-	let h = today.getHours();
-	let m = today.getMinutes();
-	let s = today.getSeconds();
-	m = checkTime(m);
-	s = checkTime(s);
-	//var = displayTime;
-	
-	var displayHour;
-	
-	switch(h){
-		case 0:
-		var displayHour = 12;
-		break;
-		case 13:
-		var displayHour = 1;
-		break;
-		case 14:
-		var displayHour = 2;
-		break;
-		case 15:
-		var displayHour = 3;
-		break;
-		case 16:
-		var displayHour = 4;
-		break;
-		case 17:
-		var displayHour = 5;
-		break;
-		case 18:
-		var displayHour = 6;
-		break;
-		case 19:
-		var displayHour = 7;
-		break;
-		case 20:
-		var displayHour = 8;
-		break;
-		case 21:
-		var displayHour = 9;
-		break;
-		case 22:
-		var displayHour = 10;
-		break;
-		case 23:
-		var displayHour = 11;
-		break;
-		default:
-		var displayHour = h;
-	}
-	if (pageProperty_enableGreetings == 1){
-		if(Behavior_DisplayGreetings == true){
-			if (h >= 0 && h<=6){
-				document.getElementById('pageElement_Greeting').innerHTML = "Good Evening";
-			}
-			if (h >= 6 && h<=11){
-				document.getElementById('pageElement_Greeting').innerHTML = "Good Morning";
-			}
-			if (h >= 12 && h<=18){
-				document.getElementById('pageElement_Greeting').innerHTML = "Good Afternoon";
-			}
-			if (h >= 19 && h<=24){
-				document.getElementById('pageElement_Greeting').innerHTML = "Good Evening";
-			}
-			if(Behavior_DisplayGreetings_DisplayName == true){
-				if (h >= 0 && h<=6){
-					document.getElementById('pageElement_Greeting').innerHTML = "Good Evening, "+Behavior_DisplayGreetings_DisplayName_Text;
-				}
-				if (h >= 6 && h<=11){
-					document.getElementById('pageElement_Greeting').innerHTML = "Good Morning, "+Behavior_DisplayGreetings_DisplayName_Text;
-				}
-				if (h >= 12 && h<=18){
-					document.getElementById('pageElement_Greeting').innerHTML = "Good Afternoon, "+Behavior_DisplayGreetings_DisplayName_Text;
-				}
-				if (h >= 19 && h<=24){
-					document.getElementById('pageElement_Greeting').innerHTML = "Good Evening, "+Behavior_DisplayGreetings_DisplayName_Text;
-				}
-			}
-			} else {
-			document.getElementById('pageElement_Greeting').style.display = "none";
-		}
-	}
-	
-	var AMPM;
-	if (h <= 12 && h >= 0){
-		var AMPM = "AM";
-		} else {
-		var AMPM = "PM";
-	}
-	if (pageProperty_enableStatusBar == 1){
-		if (document.getElementById('pageElement_Header_Clock').style.display == "block"){
-			document.getElementById('Clock_Time').innerHTML =  displayHour + ":" + m + " " + AMPM;
-			
-		}
-		if (document.getElementById('pageElement_Header_StatusTray_Textbox').style.display == "block"){
-			document.getElementById('StatusMenu_Clock_Time').innerHTML =  displayHour + ":" + m + " " + AMPM;
-			
-		}
-	}
-	
-	// document.getElementById("Sidebar_Clock_Time").innerHTML = displayHour + ":" + m + ":" + s + " "+AMPM;
-	if (pageProperty_enableClockScreen == 1){
-		if (document.getElementById('pageElement_SessionScreen').style.display == "block"){
-			document.getElementById('Clock_Time_SessionScreen').innerHTML =  displayHour + ":" + m;
-			
-		}
-	}
-	
-	
-	if (pageProperty_enableStatusBar == 1){
-		var battery_level;
-		navigator.getBattery()
-		.then(function(battery) {
-			var battery_level = Math.round((battery.level)*100);
-			if (document.getElementById('pageElement_Header_Battery').style.display == "block"){
-				document.getElementById('Battery_Level').innerHTML =  battery_level+"%";
-			}
-			if (document.getElementById('pageElement_Header_StatusTray_Textbox').style.display == "block"){
-				document.getElementById('StatusMenu_Battery_Level').innerHTML =  battery_level+"%";
-				document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Estimated " + Math.round(battery.dischargingTime / 60) + " minutes remaining";
-			}
-		});
-	}
-	if (battery_level <= 15){
-		document.getElementById('Battery_Level').style.color = "#ff3c19";
-	}
-	//check_Connection();
-	setTimeout(startTime, 1000);
-	
-}
 
-function checkTime(i) {
-	if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-	return i;
-}
-var date;
-function startDate(){
-	var today = new Date();
-	var dd = String(today.getDate()).padStart(2, '0');
-	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-	var yyyy = today.getFullYear();
-	today = mm + '/' + dd + '/' + yyyy;
-	date = today;
-	//document.write(today);
-	//document.getElementById('DateClass').innerHTML =  today;
-	displayDay();
-}
-var day;
-function displayDay() {
-	var d = new Date();
-	var n = d.getDay();
-	if (n == 0){
-		var day = "Sunday";
-	}
-	if (n == 1){
-		var day = "Monday";
-	}
-	if (n == 2){
-		var day = "Tuesday";
-	}
-	if (n == 3){
-		var day = "Wednesday";
-	}
-	if (n == 4){
-		var day = "Thursday";
-	}
-	if (n == 5){
-		var day = "Friday";
-	}
-	if (n == 6){
-		var day = "Saturday";
-	}
-	if (pageProperty_enableStatusBar == 1){
-		document.getElementById("StatusMenu_Clock_Date_2").innerHTML = day + ", "+ date;
-	}
-	// document.getElementById("Clock_Date_2").innerHTML = day + ", "+ date;
-	// document.getElementById("Sidebar_Clock_Date").innerHTML = day + ", "+ date;
-	if (pageProperty_enableClockScreen == 1){
-		document.getElementById("Clock_Date_SessionScreen").innerHTML = day + ", "+ date;
-	}
-	setTimeout(displayDay, 5000);
-}
-
-
-
-
-function formatAMPM(date) {
-	var hours = date.getHours();
-	var minutes = date.getMinutes();
-	var ampm = hours >= 12 ? 'pm' : 'am';
-	hours = hours % 12;
-	hours = hours ? hours : 12; // the hour '0' should be '12'
-	minutes = minutes < 10 ? '0'+minutes : minutes;
-	var strTime = hours + ':' + minutes + ' ' + ampm;
-	return strTime;
-	document.getElementById('ClockClass2').innerHTML =  strTime;
-}
-
-/*navigator.getBattery()
-	.then(function(battery) {
-	var battery_level = Math.round((battery.level)*100);
-	document.getElementById('Battery_Level').innerHTML =  battery_level+"%";
-});*/
 
 function toggle_Textbox(id){
 	var textboxElement = document.getElementById(id+"_textbox");
@@ -1718,259 +2607,7 @@ function toggle_Navigator(id){
 }
 
 
-var SE_CreateItem_categoryTitle; //For SE_CreateItem; Used to display category title on toast notifications
-var SE_CreateItem_ShortcutText; //For SE_CreateItem
-var SE_CreateItem_ShortcutURL; //For SE_CreateItem
-var toast_Count = 1;
-function trigger_createToast(type){
-	/* if (document.getElementById("button_PageNavi_textbox").style.display == "block"){
-		document.getElementById("pageElement_ToastDrawer").style.paddingTop = "400px";
-		} else {
-		document.getElementById("pageElement_ToastDrawer").style.paddingTop = "75px";
-	} */
-	if (Behavior_DisplayToasts == true){
-		var toast_Div = document.createElement('div');
-		toast_Div.classList.add("ToastNotif_Toast");
-		toast_Div.setAttribute("id", "toast_Div_"+toast_Count);
-		toast_Div.setAttribute("onclick", "trigger_closeToast(this.id)");
-		toast_Div.style.transform = "translateX(-100%)";
-		toast_Div.style.animationName = "opening_ToastNotif";
-		toast_Div.style.animationDuration = "0.3s";
-		toast_Div.style.animationFillMode = "forwards";
-		setTimeout(function(){
-			toast_Div.style.animationName = "closing_ToastNotif";
-			toast_Div.style.animationDuration = "0.3s";
-			toast_Div.style.animationFillMode = "forwards";
-			setTimeout(function(){
-				toast_Div.style.display = "none";
-			}, 300);
-		}, 3000);
-		var toast_Icon = document.createElement('img');
-		toast_Icon.classList.add("ToastNotif_Toast_Icon");
-		toast_Icon.setAttribute("id", "toast_Icon_"+toast_Count);
-		document.getElementById("pageElement_ToastDrawer").appendChild(toast_Div);
-		
-		var toast_Title = document.createElement('h1');
-		toast_Title.classList.add("ToastNotif_Toast_Title");
-		
-		var toast_Subtitle = document.createElement('p');
-		toast_Subtitle.classList.add("ToastNotif_Toast_URL");
-		switch(type){
-			case "success":
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkAdded.png");
-			toast_Title.innerHTML = "I am success";
-			toast_Subtitle.innerHTML = "LMAO its SuccessToastYT he's roasty toasty who would've thought it would make the news papers LMAO LOL FR FR TBH";
-			break;
-			case "failed":
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkError.png");
-			toast_Title.innerHTML = "Fail :(";
-			toast_Subtitle.innerHTML = "uncooked toast";
-			break;
-			case "SE_FormNotFilled": //When not all of the required fields are filled
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkError.png");
-			toast_Title.innerHTML = "Item not added";
-			toast_Subtitle.innerHTML = "Make sure that you've filled all of the required fields";
-			break;
-			case "SE_CategoryCreated": //When a category in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkAdded.png");
-			toast_Title.innerHTML = "Category added";
-			toast_Subtitle.innerHTML = "Category named '"+SE_CreateItem_categoryTitle+"' has been created.";
-			break;
-			case "SE_ShortcutCreated": //When a shortcut in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_linkAdded.png");
-			toast_Title.innerHTML = "Shortcut added";
-			toast_Subtitle.innerHTML = "Shortcut named '"+SE_CreateItem_ShortcutText+"' with a URL of '"+SE_CreateItem_ShortcutURL+"' has been created.";
-			break;
-			case "Settings_FileNotFound": //When a shortcut in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_error.png");
-			toast_Title.innerHTML = "Error";
-			toast_Subtitle.innerHTML = "We couldn't find the file you're referring to. Double check the file name, type, and make sure it is in the Assets/Background folder.";
-			break;
-			case "Settings_SaveSuccess": //When a shortcut in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
-			toast_Title.innerHTML = "Settings saved";
-			toast_Subtitle.innerHTML = "Settings have been successfully saved and applied.";
-			break;
-			case "ShortcutEditor_ListUpdated": //When a shortcut in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
-			toast_Title.innerHTML = "List updated";
-			toast_Subtitle.innerHTML = "Changes had been saved.";
-			break;
-			case "ShortcutEditor_CopiedToClipboard": //When a shortcut in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_changelog.png");
-			toast_Title.innerHTML = "Copied!";
-			toast_Subtitle.innerHTML = "Text has been copied to the clipboard.";
-			break;
-			case "SearchBar_NoQuery": //When a shortcut in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_Search.png");
-			toast_Title.innerHTML = "Search not made";
-			toast_Subtitle.innerHTML = "Type something in the search bar to do the search.";
-			break;
-			case "Presets_Set": //When a shortcut in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
-			toast_Title.innerHTML = "Preset applied";
-			toast_Subtitle.innerHTML = "The selected preset has been successfully applied to the values table. Click 'Save Settings' to save changes.";
-			break;
-			case "Settings_FormEmpty": //When a shortcut in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_error.png");
-			toast_Title.innerHTML = "Error";
-			toast_Subtitle.innerHTML = "The input box required is empty.";
-			break;
-			case "LaunchCategory_Before":
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_others.png");
-			toast_Title.innerHTML = "Launching...";
-			toast_Subtitle.innerHTML = "Your shortcuts should be opening on their new tabs now.";
-			break;
-			case "LaunchCategory_After":
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_others.png");
-			toast_Title.innerHTML = "Shortcuts launched";
-			toast_Subtitle.innerHTML = "All shortcuts from the category has been opened.";
-			break;
-			case "ShortcutEditor_InvalidCharacter": //When a shortcut in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_error.png");
-			toast_Title.innerHTML = "Error";
-			toast_Subtitle.innerHTML = "The character ';' is not accepted.";
-			break;
-			case "NotImplemented": //When a shortcut in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/favicon.png");
-			toast_Title.innerHTML = "Not available";
-			toast_Subtitle.innerHTML = "This feature is not implemented properly yet.";
-			break;
-			case "WA_ProcessingImage": //When a shortcut in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_schedules.png");
-			toast_Title.innerHTML = "Processing Image...";
-			toast_Subtitle.innerHTML = "Your image is being processed. Please wait...";
-			break;
-			case "WA_ProcessingFinished": //When a shortcut in Shortcut Editor is successfully created
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
-			toast_Title.innerHTML = "Processing Finished";
-			toast_Subtitle.innerHTML = "The image has been processed. You can now save it.";
-			break;
-			case "dev_EnableCounter":
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_check.png");
-			toast_Title.innerHTML = "Dev Counter Enabled";
-			toast_Subtitle.innerHTML = "Enabled";
-			break;
-			case "dev_EnableCounter":
-			toast_Icon.setAttribute("src", "Assets/Icons/icon_close.png");
-			toast_Title.innerHTML = "Dev Counter Disabled";
-			toast_Subtitle.innerHTML = "Disabled";
-			break;
-		}
-		document.getElementById("toast_Div_"+toast_Count).appendChild(toast_Icon);
-		document.getElementById("toast_Div_"+toast_Count).appendChild(toast_Title);
-		document.getElementById("toast_Div_"+toast_Count).appendChild(toast_Subtitle);
-		toast_Count++;
-	}
-}
 
-function trigger_closeToast(id){
-	toast_Div = document.getElementById(id);
-	toast_Div.style.animationName = "closing_ToastNotif";
-	toast_Div.style.animationDuration = "0.3s";
-	toast_Div.style.animationFillMode = "forwards";
-	setTimeout(function(){
-		toast_Div.style.display = "none";
-	}, 300);
-	
-}
-
-
-window.onscroll = function() {scrollFunction()};
-function scrollFunction() {
-	pageElement_CornerButtons = document.getElementById("pageElement_CornerButtons");
-	if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 20) {
-		pageElement_CornerButtons.style.display = "block";
-		} else {
-		pageElement_CornerButtons.style.display = "none";
-	}
-}
-
-
-
-function trigger_toggleDropdown(ID){	
-	var dropdownMenu = document.getElementById("dropdownMenu_"+ID);
-	var dropdownButton = document.getElementById(ID);
-	var dropdownItems = document.querySelectorAll("[id='dropdownItem_"+ID+"']");	
-	if (dropdownMenu.style.display == "none"){
-		dropdownMenu.parentElement.style.height = "250px";
-		dropdownMenu.style.display = "block";
-		dropdownMenu.style.animationName = "opening_Dropdown";
-		dropdownMenu.style.animationDuration = "0.3s";
-		dropdownMenu.style.animationFillMode = "forwards";
-		for (var a = 0; a < dropdownItems.length; a++){
-			var dropdownItems_Select = dropdownItems[a];
-			dropdownItems_Select.style.animationName = "opening_Dropdown_Items";
-			dropdownItems_Select.style.animationDuration = "0.3s";
-			dropdownItems_Select.style.animationFillMode = "forwards";
-		}
-		dropdownButton.style.backgroundColor = "#292930";
-		dropdownButton.style.borderTopStyle = "solid";
-		dropdownButton.style.borderBottomStyle = "none";
-		} else {
-		dropdownMenu.parentElement.style.height = "auto";
-		dropdownMenu.style.animationName = "closing_Dropdown";
-		dropdownMenu.style.animationDuration = "0.3s";
-		dropdownMenu.style.animationFillMode = "forwards";
-		for (var a = 0; a < dropdownItems.length; a++){
-			var dropdownItems_Select = dropdownItems[a];
-			dropdownItems_Select.style.animationName = "closing_Dropdown_Items";
-			dropdownItems_Select.style.animationDuration = "0.3s";
-			dropdownItems_Select.style.animationFillMode = "forwards";
-		}
-		setTimeout(function(){dropdownMenu.style.display = "none";}, 300);
-		dropdownButton.style.backgroundColor = "#121212";
-		dropdownButton.style.borderTopStyle = "none";
-		dropdownButton.style.borderBottomStyle = "solid";
-	}
-}
-
-function trigger_dropdownItemSelected(ID, text){
-	var trimmedID = ID.slice(13);
-	console.log(trimmedID);
-	document.getElementById(trimmedID).innerHTML = text;
-	trigger_toggleDropdown(trimmedID);
-}
-
-
-function search_Query(position){
-	var setting_PreferredSearchEngine = Behavior_DisplaySearchBar_PreferredEngine; 
-	switch (position){
-		case "headerMain":
-		var searchQuery = document.getElementById("pageElement_SearchQuery").value;
-		document.getElementById("pageElement_SearchQuery").value = "";
-		break;
-		case "headerMenu":
-		var searchQuery = document.getElementById("pageElement_SearchQuery2").value;
-		document.getElementById("pageElement_SearchQuery2").value = "";
-		break;
-		case "toggleable":
-		var searchQuery = document.getElementById("pageElement_SearchQuery_3").value;
-		document.getElementById("pageElement_SearchQuery_3").value = "";
-		break;
-	}
-	if(searchQuery != ""){
-		switch (setting_PreferredSearchEngine){
-			case "Ecosia":
-			window.open("https://www.ecosia.org/search?method=index&q="+searchQuery);
-			break;
-			case "Google":
-			window.open("http://google.com/search?q="+searchQuery);
-			break;
-			case "Bing":
-			window.open("https://www.bing.com/search?q="+searchQuery);
-			break;
-			case "DuckDuckGo":
-			window.open("https://duckduckgo.com/?q="+searchQuery);
-			break;
-			case "Yahoo!":
-			window.open("https://search.yahoo.com/search?p="+searchQuery);
-			break;
-		}
-		} else {
-		trigger_createToast("SearchBar_NoQuery");
-	}
-}
 
 
 // Shortcut editor
@@ -3755,551 +4392,6 @@ function render_Shortcuts_TableView(){
 	}
 }
 
-// SETTINGS //
-function trigger_ChangeTab(ID){
-	var Tab_Container = document.querySelectorAll(".Tab_Container");
-	var Sidebar_Icon = document.querySelectorAll(".Sidebar_Icon");
-	for (a = 0; a != Tab_Container.length; a++){
-		Tab_Container[a].style.display = "none";
-		
-	}
-	for (b = 0; b != Sidebar_Icon.length; b++){
-		Sidebar_Icon[b].style.backgroundColor = "var(--Menus-BGColor)";
-	}
-	var selectedTab = document.getElementById(ID+"_Container");
-	selectedTab.style.display = "block";
-	selectedTab.style.animationName = "opening_pageTab";
-	selectedTab.style.animationDuration = "0.3s";
-	selectedTab.style.animationFillMode = "forwards";
-	var selectedIcon = document.getElementById(ID+"_Icon");
-	selectedIcon.style.backgroundColor = "var(--Accent-Color)";
-	
-	if(PageName == "DL_Settings.html"){
-		document.getElementById("pageElement_Tab_Title").style.display = "none";
-		document.getElementById("pageElement_Tab_Description").style.display = "none";
-		document.getElementById("Settings_Home_Container").style.display = "none";
-	}
-	if(PageName == "DL_ReminderAndTodoList.html"){
-		document.getElementById("pageElement_Tab_Title").style.display = "none";
-		document.getElementById("pageElement_Tab_Description").style.display = "none";
-	}
-	reset_toDefaultAnimations();
-}
-
-var wallpaperImagePath;
-
-function Settings_DetectImageFile(){
-	var rawFileName = document.getElementById("form_Settings_WallpaperName").value;
-	var rawFileType = document.getElementById("dropdownButton_ImageType").innerText;
-	var combinedFileName = rawFileName + rawFileType;
-	console.log(combinedFileName);
-	var imagePath = "Assets/Background/"+combinedFileName;
-	wallpaperImagePath = imagePath;
-	console.log(imagePath);
-	console.log("wallpaperImagePath: "+wallpaperImagePath);
-	document.getElementById("Settings_WallpaperPreview").src = imagePath;
-	document.getElementById("Settings_WallpaperPreview").style.display = "block";
-	
-}
-
-function Settings_FileNotFound(){
-	document.getElementById("Settings_WallpaperPreview").style.display = "none";
-	trigger_createToast("Settings_FileNotFound");
-}
-
-function Settings_DisplayGreetingName_Check(){
-	var Checked_BH_TG_DisplayGreetings_DisplayName = document.getElementById("BH-TG-DisplayGreetings_DisplayName");
-	var BH_TG_DisplayGreetings_DisplayName = Checked_BH_TG_DisplayGreetings_DisplayName.checked;
-	if (BH_TG_DisplayGreetings_DisplayName == true){
-		if (document.getElementById("form_Settings_GreetingName").value == ""){
-			trigger_createToast("Settings_FormEmpty");
-			close_Subwindow("CustomizeGreetingText");
-		}
-	}
-	close_Subwindow("CustomizeGreetingText");
-}
-
-var key_Settings_Appearance = "DL_Settings_Appearance";
-var key_Settings_Behaviors = "DL_Settings_Behaviors";
-function Settings_ApplyChanges(){
-	Settings_DetectImageFile();
-	console.log("Setting variable values from input values...");
-	// Get the value from input fields and variables
-	var appearance_Wallpaper_Img = wallpaperImagePath;
-	var rawWallpaperFileName = document.getElementById("form_Settings_WallpaperName").value;
-	var WallpaperFileType = document.getElementById("dropdownButton_ImageType").innerHTML; //The value from the dropdown
-	var rawWallpaperFileType = ""; //The filtered variable
-	for( var i = 0; i < WallpaperFileType.length; i++ ) { //Filters \n and \t from the string
-		if( !(WallpaperFileType[i] == '\n' || WallpaperFileType[i] == '\t') ){
-		rawWallpaperFileType += WallpaperFileType[i];}
-	} //Thanks geeksforgeeks!
-	var AP_CL_AccentColor = document.getElementById("AP-CL-AccentColor").value;
-	var AP_CL_AccentColor_Hover = document.getElementById("AP-CL-AccentColor-Hover").value;
-	var AP_CL_BGColor_General = document.getElementById("AP-CL-BGColor-General").value;
-	var AP_CL_HoverColor = document.getElementById("AP-CL-HoverColor").value;
-	var AP_CL_BGColor_Menu = document.getElementById("AP-CL-BGColor-Menu").value;
-	var AP_CL_BGColor_Subwindow = document.getElementById("AP-CL-BGColor-Subwindow").value;
-	var AP_CL_BGColor_Dropdown = document.getElementById("AP-CL-BGColor-Dropdown").value;
-	var AP_CL_BGColor_Opacitated = document.getElementById("AP-CL-BGColor-Opacitated").value;
-	hexToRgbA(AP_CL_BGColor_Opacitated); //Convert HEX to RGBA
-	
-	
-	function hexToRgbA(hex){
-		var c;
-		if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
-			c= hex.substring(1).split('');
-			if(c.length== 3){
-				c= [c[0], c[0], c[1], c[1], c[2], c[2]];
-			}
-			c= '0x'+c.join('');
-			AP_CL_BGColor_Opacitated = 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.5)';
-		}
-	}
-	
-	var AP_CL_BGColor_ShortcutButton = document.getElementById("AP-CL-BGColor-ShortcutButton").value;
-	var AP_CL_BGColor_GeneralButton = document.getElementById("AP-CL-BGColor-GeneralButton").value;
-	var AP_CL_BGColor_Input = document.getElementById("AP-CL-BGColor-Input").value;
-	var AP_CL_BGColor_Divider = document.getElementById("AP-CL-BGColor-Divider").value;
-	var AP_TX_Font_Primary = document.getElementById("AP-TX-Font-Primary").value;
-	var AP_TX_Font_Secondary = document.getElementById("AP-TX-Font-Secondary").value;
-	var AP_TX_Font_Numbers= document.getElementById("AP-TX-Font-Numbers").value;
-	var AP_TX_Font_Color = document.getElementById("AP-TX-Font-Color").value;
-	var AP_CL_IconBrightness = document.getElementById("AP-CL-IconBrightness").value;
-	var Checked_AP_WP_CB_EnableWallpapers = document.getElementById("AP-WP-CB-EnableWallpapers");
-	var AP_WP_CB_EnableWallpapers = Checked_AP_WP_CB_EnableWallpapers.checked;
-	// var Checked_AP_WP_CB_BlurHomeWallpaper= document.getElementById("AP-WP-CB-BlurHomeWallpaper");
-	// var AP_WP_CB_BlurHomeWallpaper = Checked_AP_WP_CB_BlurHomeWallpaper.checked;
-	console.log("Setting values to object...");
-	// Set the values to the object
-	const Settings_Appearance_Obj = {
-		appearance_Wallpaper_Img: appearance_Wallpaper_Img,
-		AP_CL_AccentColor: AP_CL_AccentColor,
-		AP_CL_AccentColor_Hover: AP_CL_AccentColor_Hover,
-		AP_CL_BGColor_General: AP_CL_BGColor_General,
-		AP_CL_HoverColor: AP_CL_HoverColor,
-		AP_CL_BGColor_Menu: AP_CL_BGColor_Menu,
-		AP_CL_BGColor_Subwindow: AP_CL_BGColor_Subwindow,
-		AP_CL_BGColor_Dropdown: AP_CL_BGColor_Dropdown,
-		AP_CL_BGColor_Opacitated: AP_CL_BGColor_Opacitated,
-		AP_CL_BGColor_ShortcutButton: AP_CL_BGColor_ShortcutButton,
-		AP_CL_BGColor_GeneralButton: AP_CL_BGColor_GeneralButton,
-		AP_CL_BGColor_Input: AP_CL_BGColor_Input,
-		AP_CL_BGColor_Divider: AP_CL_BGColor_Divider,
-		rawWallpaperFileName: rawWallpaperFileName,
-		rawWallpaperFileType: rawWallpaperFileType,
-		AP_TX_Font_Primary: AP_TX_Font_Primary,
-		AP_TX_Font_Secondary: AP_TX_Font_Secondary,
-		AP_TX_Font_Numbers: AP_TX_Font_Numbers,
-		AP_TX_Font_Color: AP_TX_Font_Color,
-		AP_CL_IconBrightness: AP_CL_IconBrightness,
-		AP_WP_CB_EnableWallpapers: AP_WP_CB_EnableWallpapers,
-		// AP_WP_CB_BlurHomeWallpaper: AP_WP_CB_BlurHomeWallpaper,
-	}
-	
-	// Behaviors
-	//BH: Behavior; TG: Toggle; Checked_: Not saved, the id of the element to be checked; DD: Dropdown
-	var Checked_BH_TG_BlurEffects = document.getElementById("BH-TG-BlurEffects");
-	var BH_TG_BlurEffects = Checked_BH_TG_BlurEffects.checked;
-	var Checked_BH_TG_DisplayTimeAndDate = document.getElementById("BH-TG-DisplayTimeAndDate");
-	var BH_TG_DisplayTimeAndDate = Checked_BH_TG_DisplayTimeAndDate.checked;
-	var Checked_BH_TG_DisplayBattery = document.getElementById("BH-TG-DisplayBattery");
-	var BH_TG_DisplayBattery = Checked_BH_TG_DisplayBattery.checked;
-	var Checked_BH_TG_DisplayInternetStatus = document.getElementById("BH-TG-DisplayInternetStatus");
-	var BH_TG_DisplayInternetStatus = Checked_BH_TG_DisplayInternetStatus.checked;
-	var Checked_BH_TG_NotifyForUpdates = document.getElementById("BH-TG-NotifyForUpdates");
-	var BH_TG_NotifyForUpdates = Checked_BH_TG_NotifyForUpdates.checked;
-	var Checked_BH_TG_DisplayCategoryNavigation = document.getElementById("BH-TG-DisplayCategoryNavigation");
-	var BH_TG_DisplayCategoryNavigation = Checked_BH_TG_DisplayCategoryNavigation.checked;
-	
-	var Checked_BH_TG_DisplaySearchBar = document.getElementById("BH-TG-DisplaySearchBar");
-	var BH_TG_DisplaySearchBar = Checked_BH_TG_DisplaySearchBar.checked;
-	var BH_DD_PreferredSearchEngine = document.getElementById("dropdownButton_SeaEng").innerText;
-	
-	var Checked_BH_TG_DisplayToasts = document.getElementById("BH-TG-DisplayToasts");
-	var BH_TG_DisplayToasts = Checked_BH_TG_DisplayToasts.checked;	
-	var Checked_BH_TG_DisplayGreetings = document.getElementById("BH-TG-DisplayGreetings");
-	var BH_TG_DisplayGreetings = Checked_BH_TG_DisplayGreetings.checked;	
-	var Checked_BH_TG_DisplayGreetings_DisplayName = document.getElementById("BH-TG-DisplayGreetings_DisplayName");
-	var BH_TG_DisplayGreetings_DisplayName = Checked_BH_TG_DisplayGreetings_DisplayName.checked;	
-	var BH_TG_DisplayGreetings_DisplayName_Text = document.getElementById("form_Settings_GreetingName").value;
-	
-	var Checked_BH_TG_SE_CloseWindowAfterAction= document.getElementById("BH-TG-SE_CloseWindowAfterAction");
-	var BH_TG_SE_CloseWindowAfterAction = Checked_BH_TG_SE_CloseWindowAfterAction.checked;	
-	var Checked_BH_TG_SE_ClearFieldsAfterCreation = document.getElementById("BH-TG-SE_ClearFieldsAfterCreation");
-	var BH_TG_SE_ClearFieldsAfterCreation = Checked_BH_TG_SE_ClearFieldsAfterCreation.checked;	
-	
-	console.log("Setting values to object...");
-	// Set the values to the object
-	const Settings_Behavior_Obj = {
-		BH_TG_BlurEffects: BH_TG_BlurEffects,
-		BH_TG_DisplayTimeAndDate: BH_TG_DisplayTimeAndDate,
-		BH_TG_DisplayBattery: BH_TG_DisplayBattery,
-		BH_TG_DisplayInternetStatus: BH_TG_DisplayInternetStatus,
-		BH_TG_NotifyForUpdates: BH_TG_NotifyForUpdates,
-		BH_TG_DisplayCategoryNavigation: BH_TG_DisplayCategoryNavigation,
-		BH_TG_DisplaySearchBar: BH_TG_DisplaySearchBar,
-		BH_DD_PreferredSearchEngine: BH_DD_PreferredSearchEngine,
-		BH_TG_DisplayToasts: BH_TG_DisplayToasts,
-		BH_TG_DisplayGreetings: BH_TG_DisplayGreetings,
-		BH_TG_DisplayGreetings_DisplayName: BH_TG_DisplayGreetings_DisplayName,
-		BH_TG_DisplayGreetings_DisplayName_Text: BH_TG_DisplayGreetings_DisplayName_Text,
-		BH_TG_SE_CloseWindowAfterAction: BH_TG_SE_CloseWindowAfterAction,
-		BH_TG_SE_ClearFieldsAfterCreation: BH_TG_SE_ClearFieldsAfterCreation,
-	}
-	
-	
-	console.log("Saving objects to local storage...");
-	window.localStorage.setItem("DL_Settings_Appearance",JSON.stringify(Settings_Appearance_Obj));
-	window.localStorage.setItem("DL_Settings_Behaviors",JSON.stringify(Settings_Behavior_Obj));
-	
-	console.log("Settings have been saved");
-	trigger_createToast("Settings_SaveSuccess");
-	Settings_LoadAppearance();
-	Settings_LoadBehaviors();
-}
-
-function Settings_CheckSettingFile(){
-	//Check if the appearance settings key exist
-	if(localStorage.getItem("DL_Settings_Appearance") == null){
-		console.log("DL_Settings_Appearance does not exist. Creating default file.");
-		const Settings_Appearance_Obj = {
-			appearance_Wallpaper_Img: "url(../Assets/Background/default_New.png)",
-			AP_CL_AccentColor: "#cf5520",
-			AP_CL_AccentColor_Hover: "#a03d13",
-			AP_CL_BGColor_General: "#171010",
-			AP_CL_HoverColor: "#242424",
-			AP_CL_BGColor_Menu: "#171010",
-			AP_CL_BGColor_Subwindow: "#292929",
-			AP_CL_BGColor_Dropdown: "#171010",
-			AP_CL_BGColor_Opacitated: "rgba(28, 28, 28, 0.5)",
-			AP_CL_BGColor_ShortcutButton: "#1E1E24",
-			AP_CL_BGColor_GeneralButton: "#1E1E24",
-			AP_CL_BGColor_Input: "#121212",
-			AP_CL_BGColor_Divider: "#282830",
-			rawWallpaperFileName: "default_New",
-			rawWallpaperFileType: ".png",
-			AP_TX_Font_Primary: "Raleway",
-			AP_TX_Font_Secondary: "Roboto",
-			AP_TX_Font_Numbers: "Roboto",
-			AP_TX_Font_Color: "white",
-			AP_CL_IconBrightness: "100",
-			AP_WP_CB_EnableWallpapers: true,
-			// AP_WP_CB_AP_WP_CB_BlurHomeWallpaper: false,
-		}
-		window.localStorage.setItem("DL_Settings_Appearance",JSON.stringify(Settings_Appearance_Obj));
-		Settings_CheckSettingFile();
-		} else {
-		Settings_LoadAppearance();
-	}
-	if(localStorage.getItem("DL_Settings_Appearance") == null){
-		console.log("DL_Settings_Behaviors does not exist. Creating default file.");
-		const Settings_Behavior_Obj = {
-			BH_TG_BlurEffects: true,
-			BH_TG_DisplayTimeAndDate: true,
-			BH_TG_DisplayBattery: true,
-			BH_TG_DisplayInternetStatus: true,
-			BH_TG_NotifyForUpdates: true,
-			BH_TG_DisplayCategoryNavigation: true,
-			BH_TG_DisplaySearchBar: true,
-			BH_DD_PreferredSearchEngine: "Ecosia",
-			BH_TG_DisplayToasts: BH_TG_DisplayToasts,
-			BH_TG_DisplayGreetings: false,
-			BH_TG_DisplayGreetings_DisplayName: false,
-			BH_TG_DisplayGreetings_DisplayName_Text: "",
-			BH_TG_SE_CloseWindowAfterAction: true,
-			BH_TG_SE_ClearFieldsAfterCreation: true,
-		}
-		window.localStorage.setItem("DL_Settings_Behaviors",JSON.stringify(Settings_Behavior_Obj));
-		Settings_LoadBehaviors();
-		} else {
-		Settings_LoadBehaviors();
-	}
-	Settings_LoadAppearance();
-}
-
-
-function Settings_LoadAppearance(){
-	var stylesheet = document.querySelector(':root');
-	
-	var records = window.localStorage.getItem(key_Settings_Appearance); //searches for the keyAppearance in localStorage
-	var data = JSON.parse(localStorage.getItem("DL_Settings_Appearance"));
-	var style = Object.values(data);
-	
-	if (PageName == "DL_Settings.html"){
-		document.getElementById("Settings_WallpaperPreview").src = style[0];
-	}
-	var wallpaperPath = 'url(../'+style[0]+')';
-	if (style[20] == true){
-		stylesheet.style.setProperty("--BG-WallpaperImg", wallpaperPath);
-		} else {
-		stylesheet.style.setProperty("--BG-WallpaperImg", "none");
-	}
-	//stylesheet.style.setProperty("--BG-WallpaperImg", wallpaperPath);
-	stylesheet.style.setProperty("--Accent-Color", style[1]);
-	stylesheet.style.setProperty("--Accent-Color-Hover", style[2]);
-	stylesheet.style.setProperty("--BGColor-General", style[3]);
-	stylesheet.style.setProperty("--BGColor-Hover", style[4]);
-	stylesheet.style.setProperty("--BGColor-Menus", style[5]);
-	stylesheet.style.setProperty("--BGColor-Subwindows", style[6]);
-	stylesheet.style.setProperty("--BGColor-Dropdowns", style[7]);
-	stylesheet.style.setProperty("--BGColor-Opacitated", style[8]);
-	stylesheet.style.setProperty("--BGColor-ShortcutButtons", style[9]);
-	stylesheet.style.setProperty("--BGColor-Buttons", style[10]);
-	stylesheet.style.setProperty("--BGColor-Input", style[11]);
-	stylesheet.style.setProperty("--Color-Dividers", style[12]);
-	//13-14 is skipped since it is only needed on the Settings page
-	stylesheet.style.setProperty("--Text-Font-Primary", style[15]);
-	stylesheet.style.setProperty("--Text-Font-Secondary", style[16]);
-	stylesheet.style.setProperty("--Text-Font-Numbers", style[17]);
-	stylesheet.style.setProperty("--Text-Color", style[18]);
-	var iconBrightness = style[19]/100;
-	stylesheet.style.setProperty("--Element-Icon-Brightness", "brightness("+iconBrightness+")");
-	Appearance_Behavior_BlurHomeWallpaper = style[21];
-	
-	
-	
-	Settings_LoadBehaviors();
-}
-
-function Settings_LoadBehaviors(){
-	var records = window.localStorage.getItem(key_Settings_Behaviors); //searches for the keyAppearance in localStorage
-	var dataSettings = JSON.parse(localStorage.getItem("DL_Settings_Behaviors"));
-	var behavior = Object.values(dataSettings);
-	
-	Behavior_EnableBlurEffects = behavior[0];
-	Behavior_DisplayTimeAndDate = behavior[1];
-	Behavior_DisplayBattery = behavior[2];
-	Behavior_DisplayInternetStatus = behavior[3];
-	Behavior_NotifyForUpdates = behavior[4];
-	Behavior_DisplayCategoryNavigation = behavior[5];
-	Behavior_DisplaySearchBar = behavior[6];
-	Behavior_DisplaySearchBar_PreferredEngine = behavior[7];
-	Behavior_DisplayToasts = behavior[8];
-	Behavior_DisplayGreetings = behavior[9];
-	Behavior_DisplayGreetings_DisplayName = behavior[10];
-	Behavior_DisplayGreetings_DisplayName_Text = behavior[11];
-	Behavior_SE_CloseWindowAfterAction = behavior[12];
-	Behavior_SE_ClearFieldsAfterCreation = behavior[13];
-	apply_Behaviors();
-	
-	
-}
-
-function Settings_LoadSettingValues(){
-	var records = window.localStorage.getItem(key_Settings_Appearance); //searches for the keyAppearance in localStorage
-	var data = JSON.parse(localStorage.getItem("DL_Settings_Appearance"));
-	var style = Object.values(data);
-	
-	document.getElementById("Settings_WallpaperPreview").src = style[0];
-	document.getElementById("AP-CL-AccentColor").value = style[1];
-	document.getElementById("AP-CL-AccentColor-Hover").value = style[2];
-	document.getElementById("AP-CL-BGColor-General").value = style[3];
-	document.getElementById("AP-CL-HoverColor").value = style[4];
-	document.getElementById("AP-CL-BGColor-Menu").value = style[5];
-	document.getElementById("AP-CL-BGColor-Subwindow").value = style[6];
-	document.getElementById("AP-CL-BGColor-Dropdown").value = style[7];
-	document.getElementById("AP-CL-BGColor-Opacitated").value = style[8];
-	document.getElementById("AP-CL-BGColor-ShortcutButton").value = style[9];
-	document.getElementById("AP-CL-BGColor-GeneralButton").value = style[10];
-	document.getElementById("AP-CL-BGColor-Input").value = style[11];
-	document.getElementById("AP-CL-BGColor-Divider").value = style[12];
-	document.getElementById("form_Settings_WallpaperName").value = style[13];
-	document.getElementById("dropdownButton_ImageType").innerHTML = style[14];
-	document.getElementById("AP-TX-Font-Primary").value = style[15];
-	document.getElementById("AP-TX-Font-Secondary").value = style[16];
-	document.getElementById("AP-TX-Font-Numbers").value = style[17];
-	document.getElementById("AP-TX-Font-Color").value = style[18];
-	document.getElementById("AP-CL-IconBrightness").value = style[19];
-	document.getElementById("AP-WP-CB-EnableWallpapers").checked = style[20];
-	// document.getElementById("AP-WP-CB-BlurHomeWallpaper").checked = style[21];
-	Settings_RangeValueChanged("AP-CL-IconBrightness");
-	
-	var records = window.localStorage.getItem(key_Settings_Behaviors); //searches for the keyAppearance in localStorage
-	var dataSettings = JSON.parse(localStorage.getItem("DL_Settings_Behaviors"));
-	var behavior = Object.values(dataSettings);
-	
-	document.getElementById("BH-TG-BlurEffects").checked = behavior[0];
-	document.getElementById("BH-TG-DisplayTimeAndDate").checked = behavior[1];
-	document.getElementById("BH-TG-DisplayBattery").checked = behavior[2];
-	document.getElementById("BH-TG-DisplayInternetStatus").checked = behavior[3];
-	document.getElementById("BH-TG-NotifyForUpdates").checked = behavior[4];
-	document.getElementById("BH-TG-DisplayCategoryNavigation").checked = behavior[5];
-	document.getElementById("BH-TG-DisplaySearchBar").checked = behavior[6];
-	document.getElementById("dropdownButton_SeaEng").innerText = behavior[7];
-	document.getElementById("BH-TG-DisplayToasts").checked = behavior[8];
-	document.getElementById("BH-TG-DisplayGreetings").checked = behavior[9];
-	document.getElementById("BH-TG-DisplayGreetings_DisplayName").checked = behavior[10];
-	document.getElementById("form_Settings_GreetingName").value = behavior[11];
-	document.getElementById("BH-TG-SE_CloseWindowAfterAction").checked = behavior[12];
-	document.getElementById("BH-TG-SE_ClearFieldsAfterCreation").checked = behavior[13];
-}
-
-function Settings_LoadPresets(presetID){
-	switch (presetID){
-		case "lightmode":
-		document.getElementById("AP-CL-AccentColor").value = "#a2b4fb";
-		document.getElementById("AP-CL-AccentColor-Hover").value = "#4664dd";
-		document.getElementById("AP-CL-BGColor-General").value = "#ffffff";
-		document.getElementById("AP-CL-HoverColor").value = "#a6a6a6";
-		document.getElementById("AP-CL-BGColor-Menu").value = "#cccccc";
-		document.getElementById("AP-CL-BGColor-Subwindow").value = "#cccccc";
-		document.getElementById("AP-CL-BGColor-Dropdown").value = "#bfbfbf";
-		//document.getElementById("AP-CL-BGColor-Opacitated").value = "rgba(28, 28, 28, 0.5)";
-		document.getElementById("AP-CL-BGColor-Opacitated").value = "#ffffff";
-		
-		document.getElementById("AP-CL-BGColor-ShortcutButton").value = "#e6e6e6";
-		document.getElementById("AP-CL-BGColor-GeneralButton").value = "#ffffff";
-		document.getElementById("AP-CL-BGColor-Input").value = "#c2c2c2";
-		document.getElementById("AP-CL-BGColor-Divider").value = "#878787";
-		document.getElementById("AP-TX-Font-Color").value = "#3b3b3b";
-		document.getElementById("AP-CL-IconBrightness").value = "0";
-		document.getElementById("form_Settings_WallpaperName").value = "default_lightmode";
-		document.getElementById("dropdownButton_ImageType").innerText = ".jpg";
-		document.getElementById("AP-WP-CB-EnableWallpapers").checked = "true";
-		break;
-		case "darkmode":
-		document.getElementById("AP-CL-AccentColor").value = "#cf5520";
-		document.getElementById("AP-CL-AccentColor-Hover").value = "#a03d13";
-		document.getElementById("AP-CL-BGColor-General").value = "#171010";
-		document.getElementById("AP-CL-HoverColor").value = "#242424";
-		document.getElementById("AP-CL-BGColor-Menu").value = "#171010";
-		document.getElementById("AP-CL-BGColor-Subwindow").value = "#292929";
-		document.getElementById("AP-CL-BGColor-Dropdown").value = "#171010";
-		//document.getElementById("AP-CL-BGColor-Opacitated").value = "rgba(28, 28, 28, 0.5)";
-		document.getElementById("AP-CL-BGColor-Opacitated").value = "#1c1c1c";
-		
-		document.getElementById("AP-CL-BGColor-ShortcutButton").value = "#1E1E24";
-		document.getElementById("AP-CL-BGColor-GeneralButton").value = "#1E1E24";
-		document.getElementById("AP-CL-BGColor-Input").value = "#121212";
-		document.getElementById("AP-CL-BGColor-Divider").value = "#282830";
-		document.getElementById("AP-TX-Font-Color").value = "#FFFFFF";
-		document.getElementById("AP-CL-IconBrightness").value = "100";
-		document.getElementById("form_Settings_WallpaperName").value = "default_New";
-		document.getElementById("dropdownButton_ImageType").innerText = ".png";
-		document.getElementById("AP-WP-CB-EnableWallpapers").checked = "true";
-		// document.getElementById("AP-WP-CB-BlurHomeWallpaper").checked = "false";
-		break;
-		case "gardenofwords":
-		document.getElementById("AP-CL-AccentColor").value = "#9f4f52";
-		document.getElementById("AP-CL-AccentColor-Hover").value = "#9f4f52";
-		document.getElementById("AP-CL-BGColor-General").value = "#171010";
-		document.getElementById("AP-CL-HoverColor").value = "#242424";
-		document.getElementById("AP-CL-BGColor-Menu").value = "#171010";
-		document.getElementById("AP-CL-BGColor-Subwindow").value = "#292929";
-		document.getElementById("AP-CL-BGColor-Dropdown").value = "#171010";
-		//document.getElementById("AP-CL-BGColor-Opacitated").value = "rgba(28, 28, 28, 0.5)";
-		document.getElementById("AP-CL-BGColor-Opacitated").value = "#1c1c1c";
-		
-		document.getElementById("AP-CL-BGColor-ShortcutButton").value = "#1E1E24";
-		document.getElementById("AP-CL-BGColor-GeneralButton").value = "#1E1E24";
-		document.getElementById("AP-CL-BGColor-Input").value = "#121212";
-		document.getElementById("AP-CL-BGColor-Divider").value = "#282830";
-		document.getElementById("AP-TX-Font-Color").value = "#FFFFFF";
-		document.getElementById("AP-CL-IconBrightness").value = "100";
-		document.getElementById("form_Settings_WallpaperName").value = "gardenofwords";
-		document.getElementById("dropdownButton_ImageType").innerText = ".jpg";
-		document.getElementById("AP-WP-CB-EnableWallpapers").checked = "true";
-		break;
-		break;
-		case "underwater":
-		document.getElementById("AP-CL-AccentColor").value = "#bd7b87";
-		document.getElementById("AP-CL-AccentColor-Hover").value = "#a05482";
-		document.getElementById("AP-CL-BGColor-General").value = "#012754";
-		document.getElementById("AP-CL-HoverColor").value = "#03316d";
-		document.getElementById("AP-CL-BGColor-Menu").value = "#012754";
-		document.getElementById("AP-CL-BGColor-Subwindow").value = "#00305d";
-		document.getElementById("AP-CL-BGColor-Dropdown").value = "#004775";
-		//document.getElementById("AP-CL-BGColor-Opacitated").value = "rgba(28, 28, 28, 0.5)";
-		document.getElementById("AP-CL-BGColor-Opacitated").value = "#011b3c";
-		
-		document.getElementById("AP-CL-BGColor-ShortcutButton").value = "#00628e";
-		document.getElementById("AP-CL-BGColor-GeneralButton").value = "#027cad";
-		document.getElementById("AP-CL-BGColor-Input").value = "#00305d";
-		document.getElementById("AP-CL-BGColor-Divider").value = "#47c2d4";
-		document.getElementById("AP-TX-Font-Color").value = "#FFFFFF";
-		document.getElementById("AP-CL-IconBrightness").value = "100";
-		document.getElementById("form_Settings_WallpaperName").value = "underwater";
-		document.getElementById("dropdownButton_ImageType").innerText = ".jpg";
-		document.getElementById("AP-WP-CB-EnableWallpapers").checked = "true";
-		break;
-		
-		
-		case "intendedfonts":
-		document.getElementById("AP-TX-Font-Primary").value = "Raleway";
-		document.getElementById("AP-TX-Font-Secondary").value = "Roboto";
-		document.getElementById("AP-TX-Font-Numbers").value = "Roboto";
-		break;
-	}
-	//trigger_createToast("Presets_Set");
-	Settings_ApplyChanges();
-}
-
-function check_SettingsFileExistence(){
-	if(localStorage.getItem("DL_Settings_Appearance") == null || localStorage.getItem("DL_Settings_Behaviors") == null){
-		const Settings_Appearance_Obj = {
-			appearance_Wallpaper_Img: "Assets/Background/default_New.png",
-			AP_CL_AccentColor: "#cf5520",
-			AP_CL_AccentColor_Hover: "#a03d13",
-			AP_CL_BGColor_General: "#171010",
-			AP_CL_HoverColor: "#242424",
-			AP_CL_BGColor_Menu: "#171010",
-			AP_CL_BGColor_Subwindow: "#292929",
-			AP_CL_BGColor_Dropdown: "#171010",
-			AP_CL_BGColor_Opacitated: "rgba(28, 28, 28, 0.5)",
-			AP_CL_BGColor_ShortcutButton: "#1E1E24",
-			AP_CL_BGColor_GeneralButton: "#1E1E24",
-			AP_CL_BGColor_Input: "#121212",
-			AP_CL_BGColor_Divider: "#282830",
-			rawWallpaperFileName: "default_New",
-			rawWallpaperFileType: ".png",
-			AP_TX_Font_Primary: "Raleway",
-			AP_TX_Font_Secondary: "Roboto",
-			AP_TX_Font_Numbers: "Roboto",
-			AP_TX_Font_Color: "#FFFFFF",
-			AP_CL_IconBrightness: "100",
-			AP_WP_CB_EnableWallpapers: true,
-			// AP_WP_CB_BlurHomeWallpaper: false,
-			
-		}
-		window.localStorage.setItem("DL_Settings_Appearance",JSON.stringify(Settings_Appearance_Obj));
-		
-		const Settings_Behavior_Obj = {
-			BH_TG_BlurEffects: true,
-			BH_TG_DisplayTimeAndDate: true,
-			BH_TG_DisplayBattery: true,
-			BH_TG_DisplayInternetStatus: true,
-			BH_TG_NotifyForUpdates: true,
-			BH_TG_DisplayCategoryNavigation: true,
-			BH_TG_DisplaySearchBar: true,
-			BH_DD_PreferredSearchEngine: "Ecosia",
-			BH_TG_DisplayToasts: true,
-			BH_TG_DisplayGreetings: false,
-			BH_TG_DisplayGreetings_DisplayName: false,
-			BH_TG_DisplayGreetings_DisplayName_Text: "",
-			BH_TG_SE_CloseWindowAfterAction: true,
-		}
-		window.localStorage.setItem("DL_Settings_Behaviors",JSON.stringify(Settings_Behavior_Obj));
-		Settings_LoadAppearance();
-	}
-	
-}
-
-function Settings_RangeValueChanged(id){
-	RangeValue = document.getElementById(id).value;
-	document.getElementById(id+"_ValueDisplay").innerHTML = RangeValue + "%";
-}
-
-function Settings_PrintResult(id){
-	var checkbox = document.getElementById(id);
-	console.log(checkbox.checked);
-	var checkboxStatus = checkbox.checked;
-	console.log(checkboxStatus);
-	if (checkboxStatus == true){
-		console.log("Feature active");
-		} else {
-		console.log("Feature Inactive");
-	}
-}
 
 // ONBOARDING //
 function begin_OnboardingSequence(){

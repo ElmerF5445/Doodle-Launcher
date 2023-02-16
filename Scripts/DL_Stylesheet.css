@@ -148,18 +148,22 @@ img::before{
 	grid-template-columns: 50px auto 1fr auto; 
 	align-items: center;
 	user-select: none;
+	overflow-y: hidden;
+	z-index: 50;
 }
 
 .Page_Content{
 	margin-top: 50px;
 	margin-left: 50px;
 	position: fixed;
-	width: 100%;
-	height: 100%;
+	width: calc(100% - 50px);
+	height: calc(100% - 50px);
 	/* display: grid; */
 	/* grid-template-columns: 50px 1fr; */
 	transition: var(--Element-Transition-Delay);
 	overflow: auto;
+	display: flex;
+	justify-content: center;
 }
 
 .Page_Sidebar{
@@ -171,6 +175,7 @@ img::before{
 	height: 100%;
 	position: fixed;
 	transition: var(--Element-Transition-Delay);
+	z-index: 50;
 }
 
 .Page_Sidebar_Content{
@@ -368,7 +373,7 @@ img::before{
 	z-index: 100;
 	/* justify-content: center; */
 	/* flex-direction: column; */
-	display: grid;
+	display: none;
 	grid-template-rows: 1fr 125px;
 }
 
@@ -1019,7 +1024,7 @@ img::before{
 	backdrop-filter: var(--Element-BackdropBlur);
 	box-shadow: var(--Element-BoxShadow);
 	position: fixed;
-	top: 55px;
+	top: 50px;
 	padding: 5px;
 	z-index: 49;
 	display: none;
@@ -1397,7 +1402,7 @@ img::before{
 }
 
 
-.Sidebar_Icon{
+.Sidebar_Item_Icon{
 	width: 30px;
 	height: 30px;
 	padding: 5px;
@@ -1408,11 +1413,11 @@ img::before{
 	filter: var(--Element-Icon-Brightness);
 }
 
-.Sidebar_Icon:hover{
+.Sidebar_Item_Icon:hover{
 	background-color: var(--BGColor-Hover);
 }
 
-.Sidebar_Icon:active{
+.Sidebar_Item_Icon:active{
 	transform: scale(0.95);
 }
 
@@ -2532,6 +2537,7 @@ input:checked + .slider:before {
 .General_Paragraph{
 	font-family: var(--Text-Font-Secondary), "Arial", "Helvetica";
 	color: var(--Text-Color);
+	text-align: justify;
 }
 
 .General_Title{

@@ -41,8 +41,8 @@ The first pre-release version of the launcher contains a rework of the layouts a
 - Fixed the change wallpaper detect button using a primary font instead of the secondary one
 - Fixed the Table View UI not overflowing properly
 - Fixed the Table View UI Subwindow not playing the opening animation
-- Optimized subwindow layouts for mobile
-- Optimized page element sizes for mobile
+- Fixed page size being too small when viewed on mobile devices
+- Optimized page layout for mobile devices
 
 
 v.1.15 [Public Preview 4] (December 1, 2022)

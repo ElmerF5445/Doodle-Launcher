@@ -17,7 +17,7 @@
 		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;800&family=Roboto&display=swap" rel="stylesheet">
 		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
 	</head>
-	<body class="MainPage" onload="dev_OnloadTasks()">
+	<body class="MainPage" onload="OnloadTasks()">
 		<script src="Scripts/DL_Javascript.js"></script>
 		<div class="LoadingScreen" id="LoadingScreen">
 			<div class="LoadingScreen_UpperSection" id="LoadingScreen_UpperSection">
@@ -103,16 +103,18 @@
 			</div>
 		</div>
 		<div class="ToastNotif" id="pageElement_ToastDrawer">
-			</div>
+		</div>
 		<div class="Page_Overlays">
 			<div class="Header_MainMenu_Container" style="display: none" id="pageElement_Header_MainMenu_Textbox">
 				<div id="pageElement_Header_MainMenu_Textbox_Content" style="opacity: 0%">
+					<a href="DL_ProfileScreen.html">
 					<div class="Header_MainMenu_Profile" id="pageElement_Header_MainMenu_ProfileButton">
 						<img class="Header_MainMenu_Profile_Image" src="Assets/Icons/icon_user.png"></img>
 						<h3 class="Header_MainMenu_Profile_Name">
 							Jemma Regalados
 						</h3>
 					</div>
+					</a>
 					<!-- <div class="Header_MainMenu_SearchBar">
 						<input type="text" class="Header_MainMenu_SearchBar_Input"></input>
 						<img class="Header_MainMenu_SearchBar_Button" src="Assets/Icons/icon_search.png"></img>
@@ -181,6 +183,13 @@
 					</div>
 				</div>
 			</div>
+			<div class="ToggleableSearchBar" id="pageElement_Toggleable_SearchBar" style="display: none">
+				<div class="ToggleableSearchBar_SearchBar">
+				<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3" onkeydown="if (event.keyCode == 13) {search_Query('toggleable')}"></input>
+				<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
+			</div>
+			<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
+			</div>
 		</div>
 		<header class="Page_Header" id="pageElement_Header">
 			<img class="Sidebar_CategoryNavigation_Toggle" id="pageElement_Header_SidebarToggle" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar()"></img>
@@ -224,12 +233,25 @@
 			</div>
 		</header>
 		<div class="Page_Sidebar" id="pageElement_Sidebar">
-			d
+			<div class="Sidebar_Item" id="TabIDHere" onclick="trigger_ChangeTab_test(this.id)">
+				<img class="Sidebar_Item_Icon" id="tabIcon_TabIDHere" src="Assets/Icons/icon_softwareUpdate.png"></img>
+				<p class="Sidebar_Item_Text">
+					Launcher Update
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="TabIDHere2" onclick="trigger_ChangeTab_test(this.id)">
+				<div class="Sidebar_Item_Letter" id="tabIcon_TabIDHere2">
+					<h2 class="Sidebar_Item_Letter_Text"> 2 </h2>
+				</div>
+				<p class="Sidebar_Item_Text">
+					Launcher Update
+				</p>
+			</div>
 		</div>
 		<main class="Page_Content" id="pageElement_Content">
-			<div>
-				<div class="Page_MainContent" id="Page_MainContent">
-					
+			
+			<div class="Page_MainContent" id="Page_MainContent">
+				<div class="Tab_Container" id="tab_TabIDHere">
 					<h1 class="General_Title">
 						Section
 					</h1>
@@ -267,6 +289,121 @@
 						</p>
 					</div>
 					
+					<p class="General_Paragraph">
+						[Intro]
+						Get ready, wake your psyche up, MOB!
+						Get ready, dig your anger up, MOB!
+						Get ready, wake your psyche up, MOB!
+						Get ready!
+						
+						[Verse 1]
+						Coming down
+						Could you fill your satisfaction?
+						You're a MOB
+						Can't you feel your own frustration?
+						Coming down
+						Could you fill your satisfaction?
+						You're a MOB
+						What do you want to be?
+						
+						
+						
+						[Pre-Chorus]
+						Ima, hanran shite iku kanjou o mi ni matotte break it down
+						Genkai koe, mieru keshiki wa
+						(99.9! 99.9!)
+						Shoutai fumei no paasenteeji
+						
+						[Chorus]
+						Kurai my life
+						Kurai my psyche
+						Kurai my heart in such commonplaces!
+						Is that your ideal?
+						Is that your mind?
+						Hyaku ni naru toki hajimaru
+						The MOB is alive
+						The MOB is high
+						The MOB is staying frustrated, aren't you?
+						Is that your ideal?
+						Is that your mind?
+						Ima sugu
+						Your life is your own
+						
+						[Post-Chorus]
+						Get ready, wake your psyche up, MOB!
+						Get ready, dig your anger up, MOB!
+						Get ready, wake your psyche up, MOB!
+						Get ready!
+						
+						You might also like
+						Mob Choir - 99 (Romanized)
+						Genius Romanizations
+						MOB CHOIR - 1 (Romanized)
+						Genius Romanizations
+						99.9
+						MOB CHOIR
+						
+						[Verse 2]
+						Coming down
+						Could you fill your satisfaction?
+						You're a MOB
+						Can't you feel your frustration?
+						Coming down
+						Could you fill your satisfaction?
+						You're a MOB
+						What do you want to be?
+						Kono butai no shuyaku wa boku da
+						
+						[Interlude]
+						Kurai my life
+						Kurai my psyche
+						Kurai my heart in such commonplaces!
+						Is this my ideal?
+						Is this my mind?
+						Mada kotae wo sagashiteru
+						The MOB is alive
+						The MOB is high
+						The MOB is staying frustrated, aren't you?
+						Is this the day?
+						Is this the time?
+						Ah, desperately
+						
+						[Chorus]
+						Kurai my life
+						Kurai my psyche
+						Kurai my heart in such commonplaces!
+						Is that your ideal?
+						Is that your mind?
+						Hyaku ni naru toki hajimaru
+						The MOB is alive
+						The MOB is high
+						The MOB is staying frustrated, aren't you?
+						Is that your ideal?
+						Is that your mind?
+						Ima sugu
+						Your life is your own
+						
+						
+						[Outro]
+						Get ready, wake your psyche up, MOB!
+						Get ready, dig your anger up, MOB!
+						Get ready, wake your psyche up, MOB!
+						Get ready!
+						
+					</p>
+				</div>
+				<div class="Tab_Container" id="tab_TabIDHere2">
+					<h1 class="General_Title">
+						Tabs
+					</h1>
+					<p class="General_Paragraph">
+						First create a sidebar item on the sidebar (copy paste code). Replace the ID of the Sidebar_Item div with the name of the tab. <br>
+						If an icon is used, add the id "tabIcon_" + the ID of Sidebar_Item to ".Sidebar_Item_Icon". If a letter is used, add the ID "tabIcon_" + the ID of Sidebar_Item to ".Sidebar_Item_Letter" <br>
+						Enclose the content you want to put inside a tab with a div that has the CSS class ".Tab_Container" and an ID of "tab_" + the ID of Sidebar_Item. <br>
+						The first tab will always be displayed first when the page loads.
+					</p>
+				</div>
+					
 					<footer class="Page_Footer">
 						<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
 							Doodle Launcher Release 1.0
@@ -278,7 +415,7 @@
 					</footer>
 				</div>
 				
-			</div>
-		</main>
-	</body>
-</html>
+				
+			</main>
+		</body>
+	</html>	
