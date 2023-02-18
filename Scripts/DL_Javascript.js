@@ -71,10 +71,10 @@ function OnloadTasks(){
 	console.log("Setting page properties for page '" + PageName + "'...");
 	switch (PageName){
 		case "DL_Template_V1.html":
-			pageProperty_pageIcon = "placeholder.png";
+			pageProperty_pageIcon = "ContentByElmerF.png";
 			pageProperty_MenuName = "Doodle Launcher";
 			pageProperty_PageTitle = "Template";
-			pageProperty_enableGreetings = 0;
+			pageProperty_enableGreetings = 1;
 			pageProperty_enableSidebar = 1;
 			pageProperty_enableCategoryLabelIcons = 0;
 			pageProperty_lockSidebar = 0;
@@ -89,22 +89,29 @@ function OnloadTasks(){
 			pageProperty_sidebarMoveContent = 0;
 			pageProperty_enableQuickSearch = 1;
 			pageProperty_quickSearch_addTopPadding = 1;
+			tabs_DisplayFirstPage();
 		break;
-		case "DL_SearchScreen.html":
+		case "DL_Main.html":
 			pageProperty_pageIcon = "favicon.png";
 			pageProperty_MenuName = "Doodle Launcher";
-			pageProperty_PageTitle = "Search Screen";
-			pageProperty_enableGreetings = 0;
-			pageProperty_enableSidebar = 0;
+			pageProperty_PageTitle = "Home";
+			pageProperty_enableGreetings = 1;
+			pageProperty_enableSidebar = 1;
 			pageProperty_enableCategoryLabelIcons = 0;
 			pageProperty_lockSidebar = 0;
-			pageProperty_enableStatusBar = 0;
-			pageProperty_useProfileSystem = 0;
-			pageProperty_useSettingsSystem = 0;
+			pageProperty_enableStatusBar = 1;
+			pageProperty_useProfileSystem = 1;
+			pageProperty_useSettingsSystem = 1;
 			pageProperty_sidebarExpandedWidth = 300;
-			pageProperty_backgroundState = 2;
-			pageProperty_enableClockScreen = 0;
-			pageProperty_enableCategoryNavigation = 0;
+			pageProperty_backgroundState = 1;
+			pageProperty_enableClockScreen = 1;
+			pageProperty_enableCategoryNavigation = 1;
+			pageProperty_enableLoadingScreen = 1;
+			pageProperty_enableHeader = 1;
+			pageProperty_sidebarMoveContent = 0;
+			pageProperty_enableQuickSearch = 1;
+			pageProperty_quickSearch_addTopPadding = 1;
+			Generator_Render_Categories();
 		break;
 		case "DL_Main_Dev.html":
 			pageProperty_pageIcon = "favicon.png";
@@ -216,6 +223,7 @@ function SetPageProperties(){
 	document.getElementById("pageElement_Header_MainMenu_Textbox_Content_PageName").innerHTML = pageProperty_MenuName;
 	
 	document.getElementById("Header_PageNavi_Title").innerHTML = pageProperty_PageTitle;
+	document.getElementById("Header_MainMenu_PageName_Text").innerHTML = pageProperty_PageTitle;
 	
 	if (pageProperty_useSettingsSystem == 1){
 		Settings_LoadAppearance();
@@ -223,13 +231,13 @@ function SetPageProperties(){
 	
 	document.getElementById("pageElement_favicon").setAttribute("href", "Assets/Icons/"+pageProperty_pageIcon);
 	document.getElementById("Header_PageIcon").src = "Assets/Icons/"+pageProperty_pageIcon;
+	document.getElementById("Header_MainMenu_PageName_Icon").src = "Assets/Icons/"+pageProperty_pageIcon;
 	document.getElementById("LoadingScreen_Icon").src = "Assets/Icons/"+pageProperty_pageIcon;
 	
 	document.getElementById("Page_MainContent").style.width = pageProperty_mainContentWidth + "%";
 	
 	console.log("Page properties has been set successfully");
 	check_WindowSize_test();
-	tabs_DisplayFirstPage();
 	set_Version_General();
 	
 }
@@ -308,37 +316,54 @@ function generate_Launcher_HeaderButtons(pageName){
 	let Generator_HeaderButtons_ID = [];
 	let Generator_HeaderButtons_OnclickAction = [];
 	switch (pageName){
+		case "DL_Template_V1.html":
+			Generator_HeaderButtons_Text = ["Button 1", "Button 2", "Button 3", "Button 4", "Button 5", "Button 6"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
+			Generator_HeaderButtons_ID = ["", "", "", "", "", ""];
+			Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()", "toggle_Sidebar_CategoryNavigation()", "", "", "", ""];
+			var Generator_DisplayInHeader = true;
+		break;
 		case "DL_Main.html":
-		Generator_HeaderButtons_Text = ["Internet search", "Category Navigation"];
-		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
-		Generator_HeaderButtons_ID = ["", ""];
-		Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()", "toggle_Sidebar_CategoryNavigation()"];
-		var Generator_DisplayInHeader = false;
+			Generator_HeaderButtons_Text = ["Internet search"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png"];
+			Generator_HeaderButtons_ID = [""];
+			Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()"];
+			var Generator_DisplayInHeader = false;
 		break;
 		case "DL_ShortcutEditor.html":
-		Generator_HeaderButtons_Text = ["Add Item", "Re-order categories", "Re-order shortcuts", "How to use"];
-		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png", "Assets/Icons/icon_ExperimentalFeature.png"];
-		Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
-		Generator_HeaderButtons_OnclickAction = ["open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
-		var Generator_DisplayInHeader = true;
+			Generator_HeaderButtons_Text = ["Add Item", "Re-order categories", "Re-order shortcuts", "How to use"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
+			Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
+			Generator_HeaderButtons_OnclickAction = ["open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
+			var Generator_DisplayInHeader = true;
 		break;
 		case "DL_Settings.html":
-		Generator_HeaderButtons_Text = ["Save changes"];
-		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png"];
-		Generator_HeaderButtons_ID = [""];
-		Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
-		var Generator_DisplayInHeader = true;
+			Generator_HeaderButtons_Text = ["Save changes"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png"];
+			Generator_HeaderButtons_ID = [""];
+			Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
+			var Generator_DisplayInHeader = true;
 		break;
 	}
 	
 	if(Generator_DisplayInHeader == true){
 		for (a = 0; a != Generator_HeaderButtons_Text.length; a++){
-			var HeaderButton_Text = document.createElement('h3');
-			HeaderButton_Text.innerHTML = Generator_HeaderButtons_Text[a];
-			HeaderButton_Text.classList.add("Header_Buttons_Item");
-			HeaderButton_Text.setAttribute("id", Generator_HeaderButtons_ID[a]);
-			HeaderButton_Text.setAttribute("onclick", Generator_HeaderButtons_OnclickAction[a]);
-			document.getElementById("pageElement_Header_Buttons").appendChild(HeaderButton_Text);
+			//Attaches to the page
+			var listItemLink_Div = document.createElement('div');
+			listItemLink_Div.classList.add("Header_Content_Button");
+			listItemLink_Div.setAttribute("id", "Header_Content_Item_Div_"+a);
+			listItemLink_Div.setAttribute("onclick", Generator_HeaderButtons_OnclickAction[a]);
+			document.getElementById("pageElement_Header_Actions").appendChild(listItemLink_Div);
+			
+			listItemLink_Icon = document.createElement('img');
+			listItemLink_Icon.src = Generator_HeaderButtons_Icon[a];
+			listItemLink_Icon.classList.add("Header_Content_Button_Icon");
+			document.getElementById("Header_Content_Item_Div_"+a).appendChild(listItemLink_Icon);
+			
+			var listItemLink_Text = document.createElement('h3'); //Creates a text p element
+			listItemLink_Text.innerHTML = Generator_HeaderButtons_Text[a]; //Sets text to selected page navi text
+			listItemLink_Text.classList.add("Header_Content_Button_Text"); //Adds the styling to the object
+			document.getElementById("Header_Content_Item_Div_"+a).appendChild(listItemLink_Text); //Attaches object to the a object
 		}
 	}
 	
@@ -458,10 +483,10 @@ function trigger_ChangeTab_test(ID){
 		
 	}
 	for (b = 0; b != Sidebar_Icon.length; b++){
-		Sidebar_Icon[b].style.backgroundColor = "var(--Menus-BGColor)";
+		Sidebar_Icon[b].style.backgroundColor = "var(--BGColor-Buttons)";
 	}
 	for (c = 0; c != Sidebar_Letters.length; c++){
-		Sidebar_Letters[c].style.backgroundColor = "var(--Menus-BGColor)";
+		Sidebar_Letters[c].style.backgroundColor = "var(--BGColor-Buttons)";
 	}
 	var selectedTab = document.getElementById("tab_"+ID);
 	selectedTab.style.display = "block";
@@ -489,6 +514,7 @@ function check_WindowSize_test(){
 	var Header_StatusTray_Battery = document.getElementById("pageElement_Header_Battery");
 	var Sidebar = document.getElementById("pageElement_Sidebar");
 	var MainMenu = document.getElementById("pageElement_Header_MainMenu_Textbox");
+	var MainMenu_PageName = document.getElementById("Header_MainMenu_PageName");
 	var StatusMenu = document.getElementById("pageElement_Header_StatusTray_Textbox");
 	var Subwindows = document.querySelectorAll(".Subwindow");
 	var Modals = document.querySelectorAll(".Modal");
@@ -548,6 +574,7 @@ function check_WindowSize_test(){
 			Modals[a].style.minHeight = "100%";
 		}
 		Footer_VersionTitle.style.display = "none";
+		MainMenu_PageName.style.display = "flex";
 	} else if (windowSizePreset == "normal"){
 		MainContent.style.width = pageProperty_mainContentWidth + "%";
 		MainContent.style.marginLeft = "10%";
@@ -581,6 +608,7 @@ function check_WindowSize_test(){
 			Modals[a].style.minHeight = "0%";
 		}
 		Footer_VersionTitle.style.display = "flex";
+		MainMenu_PageName.style.display = "none";
 	}
 	
 	/* // Mobile
@@ -2237,13 +2265,13 @@ function apply_Behaviors(){
 		document.getElementById("button_Update").style.display = "block";
 	}*/
 	
-	if (PageName == "DL_Main.html"){
+	/* if (PageName == "DL_Main.html"){
 		if(Behavior_DisplaySearchBar == false){
 			document.getElementById("pageElement_QuickSearchBar").style.display = "none";
 			} else {
 			document.getElementById("pageElement_QuickSearchBar").style.display = "grid";
 		}
-	}
+	} */
 	
 	
 	
@@ -2719,7 +2747,7 @@ function render_Categories(){
 		var categoryDiv = document.createElement('div'); //Creates the container div element
 		categoryDiv.setAttribute("id", "pageElement_CategoryDiv_"+a); //Adds id to div
 		categoryDiv.classList.add("Category"); //Adds CSS to div
-		document.getElementById("pageElement_ContentContainer").appendChild(categoryDiv);
+		document.getElementById("Page_Shortcuts_Container").appendChild(categoryDiv);
 		
 		var categoryLabel = document.createElement('div'); //Creates the label div
 		categoryLabel.setAttribute("id", "category_"+a); //Adds id to label
@@ -3341,12 +3369,12 @@ function Generator_Render_Categories(){
 		var categoryAnchor = document.createElement('span'); //Creates the container div element
 		categoryAnchor.setAttribute("id", "anchor_category_"+a); //Adds id to div
 		categoryAnchor.classList.add("anchor_category"); //Adds CSS to div
-		document.getElementById("pageElement_ContentContainer").appendChild(categoryAnchor);
+		document.getElementById("Page_Shortcuts_Container").appendChild(categoryAnchor);
 		
 		var categoryDiv = document.createElement('div'); //Creates the container div element
 		categoryDiv.setAttribute("id", "pageElement_CategoryDiv_"+a); //Adds id to div
 		categoryDiv.classList.add("Category"); //Adds CSS to div
-		document.getElementById("pageElement_ContentContainer").appendChild(categoryDiv);
+		document.getElementById("Page_Shortcuts_Container").appendChild(categoryDiv);
 		
 		/* Label container */
 		var categoryLabel = document.createElement('div'); //Creates the label div
@@ -3381,7 +3409,7 @@ function Generator_Render_Categories(){
 		document.getElementById("content_category_"+a).appendChild(categoryShortcuts);
 		
 		/* Category navigation sidebar generation */
-		if(PageName == "DL_Main_Dev.html" && pageProperty_enableCategoryNavigation == 1){
+		if(PageName == "DL_Main.html" && pageProperty_enableCategoryNavigation == 1){
 			var categoryNavigation_Div = document.createElement('div');
 			categoryNavigation_Div.classList.add("Sidebar_Item");
 			categoryNavigation_Div.setAttribute("id", "categoryNavigation_"+a);
@@ -3509,7 +3537,7 @@ function Generator_Render_Categories_TableView(){
 		var categoryDiv = document.createElement('div'); //Creates the container div element
 		categoryDiv.setAttribute("id", "pageElement_CategoryDiv_TableView_"+a); //Adds id to div
 		categoryDiv.classList.add("Category"); //Adds CSS to div
-		document.getElementById("pageElement_ContentContainer_TableView").appendChild(categoryDiv);
+		document.getElementById("Page_MainContent_TableView").appendChild(categoryDiv);
 		
 		var categoryLabel = document.createElement('div'); //Creates the label div
 		categoryLabel.setAttribute("id", "categoryTable_"+a); //Adds id to label

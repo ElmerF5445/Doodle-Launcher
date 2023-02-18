@@ -208,6 +208,7 @@ img::before{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	overflow-x: auto;
 }
 
 .Header_Content_Button{
@@ -628,6 +629,27 @@ img::before{
 	margin-bottom: 15px;
 	/* display: none; */
 	transition: var(--Element-Transition-Delay);
+}
+
+.Header_MainMenu_PageName{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	border-bottom-style: solid;
+	border-bottom-color: var(--Color-Dividers);
+	padding-bottom: 6px;
+}
+
+.Header_MainMenu_PageName_Icon{
+	width: 20px;
+	margin-right: 10px;
+}
+
+.Header_MainMenu_PageName_Text{
+	font-family: var(--Text-Font-Primary);
+	color: var(--Text-Color);
+	margin: 0;
 }
 
 .Header_MainMenu_Title{
@@ -1407,7 +1429,7 @@ img::before{
 	height: 30px;
 	padding: 5px;
 	margin: 0;
-	background-color: none;
+	background-color: var(--BGColor-Buttons);
 	border-radius: 5px;
 	transition: var(--Element-Transition-Delay);
 	filter: var(--Element-Icon-Brightness);

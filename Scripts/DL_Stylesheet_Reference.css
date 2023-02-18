@@ -7,7 +7,7 @@
 	/* Root values. This will be loaded when loadSettings() is triggered. */
 	--Debug-ElementOutline: none;
 	/*--BG-WallpaperImg: url(../Assets/Background/default_New.png);*/
-	--BG-WallpaperImg: url(../Assets/Background/city.jpg);
+	--BG-WallpaperImg: none;
 	
 	--Element-Transition-Delay: 0.3s; /*Delay on transition */
 	--Element-BoxShadow: 0cm 0cm 0.28218705792108cm 0.03527338224013cm rgb( 0, 0, 0, 0.50); /*Box shadow property */
