@@ -112,6 +112,32 @@ function OnloadTasks(){
 			pageProperty_enableQuickSearch = 1;
 			pageProperty_quickSearch_addTopPadding = 1;
 			Generator_Render_Categories();
+			
+		break;
+		case "DL_ShortcutEditor_Dev.html":
+			pageProperty_pageIcon = "favicon.png";
+			pageProperty_MenuName = "Doodle Launcher";
+			pageProperty_PageTitle = "Shortcut Editor";
+			pageProperty_enableGreetings = 0;
+			pageProperty_enableSidebar = 1;
+			pageProperty_enableCategoryLabelIcons = 0;
+			pageProperty_lockSidebar = 0;
+			pageProperty_enableStatusBar = 1;
+			pageProperty_useProfileSystem = 1;
+			pageProperty_useSettingsSystem = 1;
+			pageProperty_sidebarExpandedWidth = 300;
+			pageProperty_backgroundState = 2;
+			pageProperty_enableClockScreen = 1;
+			pageProperty_enableCategoryNavigation = 0;
+			pageProperty_enableLoadingScreen = 1;
+			pageProperty_enableHeader = 1;
+			pageProperty_sidebarMoveContent = 0;
+			pageProperty_enableQuickSearch = 1;
+			pageProperty_quickSearch_addTopPadding = 1;
+			SE_CreateDropdown();
+			Generator_Render_Categories();
+			Generator_Render_Categories_TableView();
+			tabs_DisplayFirstPage();
 		break;
 		case "DL_Main_Dev.html":
 			pageProperty_pageIcon = "favicon.png";
@@ -277,9 +303,9 @@ function check_Connection(){
 }
 
 function generate_Launcher_NavigationList(){
-	let navigationListItems = ["Old UI", "Home", "Shortcut Editor", "Settings", "Pomodoro Timer", "Watermark Applier", "Template V1"]; //Launcher navigation text
-	let navigationListItems_Link = ["file:///C:/Users/Elmer%20Jr%20G%20Felisilda/Documents/HTML%20Projects/Doodle%20Launcher/DL_Main.html", "DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html", "WA_Main.html", "DL_Template_V1.html"]; //Launcher navigation links
-	let navigationListItems_Icon = ["favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png"];
+	let navigationListItems = ["Old UI", "Home", "Shortcut Editor", "Settings", "Pomodoro Timer", "Watermark Applier", "Template V1", "Shortcut Editor Dev"]; //Launcher navigation text
+	let navigationListItems_Link = ["file:///C:/Users/Elmer%20Jr%20G%20Felisilda/Documents/HTML%20Projects/Doodle%20Launcher/DL_Main.html", "DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html", "WA_Main.html", "DL_Template_V1.html", "DL_ShortcutEditor_Dev.html"]; //Launcher navigation links
+	let navigationListItems_Icon = ["favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png"];
 	
 	for (var i = 0; i < navigationListItems.length; i++) {
 		var navigationListItems_Select = navigationListItems[i]; //Contains the selected pagenavi text
@@ -330,7 +356,7 @@ function generate_Launcher_HeaderButtons(pageName){
 			Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()"];
 			var Generator_DisplayInHeader = false;
 		break;
-		case "DL_ShortcutEditor.html":
+		case "DL_ShortcutEditor_Dev.html":
 			Generator_HeaderButtons_Text = ["Add Item", "Re-order categories", "Re-order shortcuts", "How to use"];
 			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
 			Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
@@ -346,24 +372,30 @@ function generate_Launcher_HeaderButtons(pageName){
 		break;
 	}
 	
+	for (a = 0; a != Generator_HeaderButtons_ID.length; a++){
+		if (Generator_HeaderButtons_ID[a] == ""){
+			Generator_HeaderButtons_ID[a] = "Header_Button_NoSpecifiedID_"+a;
+		}
+	}
+	
 	if(Generator_DisplayInHeader == true){
 		for (a = 0; a != Generator_HeaderButtons_Text.length; a++){
 			//Attaches to the page
 			var listItemLink_Div = document.createElement('div');
 			listItemLink_Div.classList.add("Header_Content_Button");
-			listItemLink_Div.setAttribute("id", "Header_Content_Item_Div_"+a);
+			listItemLink_Div.setAttribute("id", Generator_HeaderButtons_ID[a]);
 			listItemLink_Div.setAttribute("onclick", Generator_HeaderButtons_OnclickAction[a]);
 			document.getElementById("pageElement_Header_Actions").appendChild(listItemLink_Div);
 			
 			listItemLink_Icon = document.createElement('img');
 			listItemLink_Icon.src = Generator_HeaderButtons_Icon[a];
 			listItemLink_Icon.classList.add("Header_Content_Button_Icon");
-			document.getElementById("Header_Content_Item_Div_"+a).appendChild(listItemLink_Icon);
+			document.getElementById(Generator_HeaderButtons_ID[a]).appendChild(listItemLink_Icon);
 			
 			var listItemLink_Text = document.createElement('h3'); //Creates a text p element
 			listItemLink_Text.innerHTML = Generator_HeaderButtons_Text[a]; //Sets text to selected page navi text
 			listItemLink_Text.classList.add("Header_Content_Button_Text"); //Adds the styling to the object
-			document.getElementById("Header_Content_Item_Div_"+a).appendChild(listItemLink_Text); //Attaches object to the a object
+			document.getElementById(Generator_HeaderButtons_ID[a]).appendChild(listItemLink_Text); //Attaches object to the a object
 		}
 	}
 	
@@ -2933,11 +2965,11 @@ function SE_CreateDropdown(){
 		var dropdown_Shortcut = document.createElement('p');
 		dropdown_Shortcut.classList.add("Input_Dropdown_Item");
 		dropdown_Shortcut.innerHTML = Renderer_Category_Array[b];
-		dropdown_Shortcut.setAttribute("id", "dropdownItem_Shrtct"+Renderer_Category_Array[b]);
-		dropdown_Shortcut.setAttribute("onclick", "trigger_dropdownItemSelected(this.id)");
-		document.getElementById("menu_dropdownButton_AddItem_Shortcut1").appendChild(dropdown_Shortcut);
+		dropdown_Shortcut.setAttribute("id", "dropdownItem_AddItem_Shortcut1");
+		dropdown_Shortcut.setAttribute("onclick", "trigger_dropdownItemSelected(this.id, this.innerText)");
+		document.getElementById("dropdownMenu_AddItem_Shortcut1").appendChild(dropdown_Shortcut);
 	}
-	for (c = 1; c != CategoryCount; c++){ // Import shortcuts category selector
+	/* for (c = 1; c != CategoryCount; c++){ // Import shortcuts category selector
 		var dropdown_Shortcut = document.createElement('p');
 		dropdown_Shortcut.classList.add("Input_Dropdown_Item");
 		dropdown_Shortcut.innerHTML = Renderer_Category_Array[c];
@@ -2952,7 +2984,7 @@ function SE_CreateDropdown(){
 		dropdown_Shortcut.setAttribute("id", "dropdownItem_ExpSct"+Renderer_Category_Array[d]);
 		dropdown_Shortcut.setAttribute("onclick", "trigger_dropdownItemSelected(this.id)");
 		document.getElementById("menu_dropdownButton_Export_Shortcut").appendChild(dropdown_Shortcut);
-	}
+	} */
 }
 
 
