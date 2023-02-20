@@ -170,6 +170,27 @@ function OnloadTasks(){
 			pageProperty_enableClockScreen = 1;
 			pageProperty_enableCategoryNavigation = 0;
 		break;
+		case "WA_Main.html":
+			pageProperty_pageIcon = "ContentByElmerF.png";
+			pageProperty_MenuName = "Watermark Applier";
+			pageProperty_PageTitle = "Watermark Applier Beta";
+			pageProperty_enableGreetings = 0;
+			pageProperty_enableSidebar = 1;
+			pageProperty_enableCategoryLabelIcons = 0;
+			pageProperty_lockSidebar = 1;
+			pageProperty_enableStatusBar = 0;
+			pageProperty_useProfileSystem = 0;
+			pageProperty_sidebarExpandedWidth = 300;
+			pageProperty_backgroundState = 2;
+			pageProperty_enableClockScreen = 1;
+			pageProperty_enableCategoryNavigation = 0;
+			pageProperty_enableLoadingScreen = 1;
+			pageProperty_enableHeader = 1;
+			pageProperty_sidebarMoveContent = 1;
+			pageProperty_enableQuickSearch = 0;
+			pageProperty_quickSearch_addTopPadding = 1;
+			pageProperty_useSettingsSystem = 1;
+		break;
 	}
 	generate_Launcher_NavigationList();
 	SetPageProperties();
@@ -368,6 +389,13 @@ function generate_Launcher_HeaderButtons(pageName){
 			Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png"];
 			Generator_HeaderButtons_ID = [""];
 			Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
+			var Generator_DisplayInHeader = true;
+		break;
+		case "WA_Main.html":
+			Generator_HeaderButtons_Text = ["Take Screenshot", "Import File Names", "Import Watermark Names" , "Change Image", "Change Watermark", "Reset"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
+			Generator_HeaderButtons_ID = ["", "", "", "", "", ""];
+			Generator_HeaderButtons_OnclickAction = ["generateImage()", "open_Subwindow('ImportFileNames')", "open_Subwindow('ImportWatermarkNames')", "open_Subwindow('ChangeImageFile')", "open_Subwindow('ChangeWatermarkFile')", "WA_Reset()"];
 			var Generator_DisplayInHeader = true;
 		break;
 	}
@@ -694,11 +722,14 @@ document.addEventListener('keydown', (event) => {
 		if (pageProperty_enableSidebar == 1){
 			toggle_Sidebar();
 		}
-		/* if(PageName == "WA_Main.html"){
-			WA_Next_Image();
-		} */
+		
 	}
-	if (keysPressed['Control'] && event.key == 'ArrowLeft') {
+	if (keysPressed['Control'] && event.key == '.') {
+		if(PageName == "WA_Main.html"){
+			WA_Next_Image();
+		} 
+	}
+	if (keysPressed['Control'] && event.key == ',') {
 		if(PageName == "WA_Main.html"){
 			WA_Previous_Image();
 		}
@@ -2969,22 +3000,23 @@ function SE_CreateDropdown(){
 		dropdown_Shortcut.setAttribute("onclick", "trigger_dropdownItemSelected(this.id, this.innerText)");
 		document.getElementById("dropdownMenu_AddItem_Shortcut1").appendChild(dropdown_Shortcut);
 	}
-	/* for (c = 1; c != CategoryCount; c++){ // Import shortcuts category selector
+	for (c = 1; c != CategoryCount; c++){ // Import shortcuts category selector
 		var dropdown_Shortcut = document.createElement('p');
 		dropdown_Shortcut.classList.add("Input_Dropdown_Item");
 		dropdown_Shortcut.innerHTML = Renderer_Category_Array[c];
-		dropdown_Shortcut.setAttribute("id", "dropdownItem_ImpSct"+Renderer_Category_Array[c]);
-		dropdown_Shortcut.setAttribute("onclick", "trigger_dropdownItemSelected(this.id)");
-		document.getElementById("menu_dropdownButton_Import_Shortcut").appendChild(dropdown_Shortcut);
+		dropdown_Shortcut.setAttribute("id", "dropdownItem_ImportShortcut");
+		dropdown_Shortcut.setAttribute("onclick", "trigger_dropdownItemSelected(this.id, this.innerText)");
+		document.getElementById("dropdownMenu_ImportShortcut").appendChild(dropdown_Shortcut);
 	}
+	
 	for (d = 1; d != CategoryCount; d++){ // Export shortcuts category selector
 		var dropdown_Shortcut = document.createElement('p');
 		dropdown_Shortcut.classList.add("Input_Dropdown_Item");
 		dropdown_Shortcut.innerHTML = Renderer_Category_Array[d];
-		dropdown_Shortcut.setAttribute("id", "dropdownItem_ExpSct"+Renderer_Category_Array[d]);
-		dropdown_Shortcut.setAttribute("onclick", "trigger_dropdownItemSelected(this.id)");
-		document.getElementById("menu_dropdownButton_Export_Shortcut").appendChild(dropdown_Shortcut);
-	} */
+		dropdown_Shortcut.setAttribute("id", "dropdownItem_ExportShortcut");
+		dropdown_Shortcut.setAttribute("onclick", "trigger_dropdownItemSelected(this.id, this.innerText)");
+		document.getElementById("dropdownMenu_ExportShortcut").appendChild(dropdown_Shortcut);
+	} 
 }
 
 
@@ -3231,7 +3263,7 @@ function SE_AddItem_AddElementToPage(ItemType){
 }
 
 function SE_Generate_ExportList(){
-	var Renderer_Selected_Category = dropdownButton_Export_Shortcut.innerText; //The selected category
+	var Renderer_Selected_Category = document.getElementById("ExportShortcut").innerText; //The selected category
 	var Renderer_Selected_Category_Name = "DL_Content_"+Renderer_Selected_Category;
 	var Renderer_Selected_Category_URL = "DL_Content_URL_"+Renderer_Selected_Category;
 	console.log("Renderer_Loop #"+Renderer_SelectedCategoryItem+" | "+Renderer_Selected_Category_Name+" | "+Renderer_Selected_Category_URL);
@@ -3353,6 +3385,7 @@ function SE_Import_ShortcutList(){
 		}
 	}
 	// Creates shortcut buttons on the selected category
+	dropdownButton_Import_Shortcut = document.getElementById("ImportShortcut");
 	if (dropdownButton_Import_Shortcut.innerText != "No selected"){
 		SE_Array_ListText = []; //Resets the array
 		var SE_CreateItem_CategoryKey = "DL_Content_"+dropdownButton_Import_Shortcut.innerText;
@@ -4021,32 +4054,32 @@ function SE_TV_DeleteCategory(categoryNumber){
 
 function refresh_ShortcutEditor(){
 	/* Normal view */
-	var normalView = document.getElementById("pageElement_ContentContainer");
+	var normalView = document.getElementById("Page_Shortcuts_Container");
 	normalView.parentNode.removeChild(normalView);
 	
 	var normalViewDiv = document.createElement('div'); //Creates the container div element
-	normalViewDiv.setAttribute("id", "pageElement_ContentContainer"); //Adds id to div
-	document.getElementById("ShortcutEditor_Tab_NormalView_Container").appendChild(normalViewDiv);	
+	normalViewDiv.setAttribute("id", "Page_Shortcuts_Container"); //Adds id to div
+	document.getElementById("tab_NormalView").appendChild(normalViewDiv);	
 	
 	/* Table view */
-	var tableView = document.getElementById("pageElement_ContentContainer_TableView");
+	var tableView = document.getElementById("Page_MainContent_TableView");
 	tableView.parentNode.removeChild(tableView);
 	
 	var tableViewDiv = document.createElement('div'); //Creates the container div element
-	tableViewDiv.setAttribute("id", "pageElement_ContentContainer_TableView"); //Adds id to div
-	document.getElementById("ShortcutEditor_Tab_TableView_Container").appendChild(tableViewDiv);
+	tableViewDiv.setAttribute("id", "Page_MainContent_TableView"); //Adds id to div
+	document.getElementById("tab_TableView").appendChild(tableViewDiv);
 	
 	/* Dropdown */
-	document.getElementById("menu_dropdownButton_AddItem_Shortcut1").innerHTML = ("");
+	document.getElementById("AddItem_Shortcut1").innerHTML = ("");
 	
 	/* Dropdown - Import shortcuts */
-	document.getElementById("menu_dropdownButton_Import_Shortcut").innerHTML = ("");
+	document.getElementById("ImportShortcut").innerHTML = ("");
 	
 	/* Dropdown - Export shortcuts */
-	document.getElementById("menu_dropdownButton_Export_Shortcut").innerHTML = ("");
+	document.getElementById("ExportShortcut").innerHTML = ("");
 	
 	/* Item Swapper Shortcut */
-	var list = document.getElementById("pageElement_ShortcutEditor_SwapList_List_Shortcuts");
+	/*var list = document.getElementById("pageElement_ShortcutEditor_SwapList_List_Shortcuts");
 	list.parentNode.removeChild(list);
 	
 	var listDiv = document.createElement('div'); //Creates the container div element
@@ -4062,18 +4095,18 @@ function refresh_ShortcutEditor(){
 	SE_Swappper_Shortcut_URL_Array = [];
 	
 	SE_Create_SwapperList_Shortcuts();
-	// SE_Swapper_SelectItem_Shortcut_Stage1(SE_Swapper_SelectedCategory_RefreshShortcutEditor);
+	// SE_Swapper_SelectItem_Shortcut_Stage1(SE_Swapper_SelectedCategory_RefreshShortcutEditor);*/
 	
 	/* Item Swapper Categories */
 	
-	// Change content
+	/*// Change content
 	var list = document.getElementById("pageElement_ShortcutEditor_SwapList_List");
 	list.parentNode.removeChild(list);
 	
 	var listDiv = document.createElement('div'); //Creates the container div element
 	listDiv.setAttribute("id", "pageElement_ShortcutEditor_SwapList_List"); //Adds id to div
 	document.getElementById("pageElement_SwapList_Subwindow_Content_Category").appendChild(listDiv);	
-	SE_Create_SwapperList();
+	SE_Create_SwapperList();*/
 	
 	
 	

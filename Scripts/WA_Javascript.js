@@ -89,6 +89,7 @@ function WA_Reset(){
 	var WA_ImageClientWidth = document.getElementById("pageElement_WA_ImageContainer").clientWidth;
 	// WA_ImageClientHeight = document.getElementById("WA_Image").clientHeight;
 	// document.getElementById("TESTDIV").style.width = WA_ImageClientWidth;
+	resetContainerDimensions();
 }
 
 function generateImage(){
@@ -97,12 +98,13 @@ function generateImage(){
 	var WA_ImageClientHeight = document.getElementById("WA_Image").style.clientHeight;
 	document.getElementById("pageElement_WA_ImageContainer").style.width = WA_ImageClientWidth;
 	document.getElementById("pageElement_WA_ImageContainer").style.height = WA_ImageClientHeight;
+	var scale = 2;
 	domtoimage.toPng(document.getElementById('pageElement_WA_ImageContainer'), {
 		width: WA_ImageClientWidth,
 		height: WA_ImageClientHeight,
 		style: {
-			'width': WA_ImageClientWidth,
-			'height': WA_ImageClientHeight
+			'width': WA_ImageClientWidth * scale,
+			'height': WA_ImageClientHeight * scale
 		}
 		}).then(function(data) {
 		var img = new Image();
@@ -190,6 +192,14 @@ function WA_Sidebar_ChangeTab(page){
 
 var node = document.getElementById('TESTDIV');
 
+function WA_SetWatermarkToTop(){
+	document.getElementById("WA_Watermark").style.bottom = null;
+}
+
+function WA_SetWatermarkToBottom(){
+	document.getElementById("WA_Watermark").style.bottom = "0px";
+}
+
 /* domtoimage.toPng(node)
     .then(function (dataUrl) {
 	var img = new Image();
@@ -200,3 +210,30 @@ var node = document.getElementById('TESTDIV');
 	console.error('oops, something went wrong!', error);
 }); */
 
+let keysPressed_WA = {}; 
+document.addEventListener('keydown', (event) => {
+	keysPressed_WA[event.key] = true;
+
+	if (keysPressed_WA['Control'] && event.key == '/') {
+		WA_Next_Image();
+	}
+	if (keysPressed_WA['Control'] && event.key == '.') {
+		WA_Previous_Image();
+	}
+	if (keysPressed_WA['Control'] && event.key == 'ArrowUp') {
+		WA_SetWatermarkToTop();
+	}
+	if (keysPressed_WA['Control'] && event.key == 'ArrowDown') {
+		WA_SetWatermarkToBottom();
+	}
+	
+
+	
+
+	
+
+});
+
+document.addEventListener('keyup', (event) => {
+	delete keysPressed[event.key];
+});
