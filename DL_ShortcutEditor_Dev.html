@@ -154,9 +154,9 @@
 					</div>
 				</div>
 				<div class="Subwindow_Bottom">
-						<h1 class="Subwindow_Bottom_Button_PrimaryAction" onclick="SE_CreateItem_StringTextTest()">
-							Create item
-						</h1>
+					<h1 class="Subwindow_Bottom_Button_PrimaryAction" onclick="SE_CreateItem_StringTextTest()">
+						Create item
+					</h1>
 				</div>
 			</div>
 			<div class="Modal" id="subwindow_Test_Modal">
@@ -269,10 +269,10 @@
 			</div>
 			<div class="ToggleableSearchBar" id="pageElement_Toggleable_SearchBar" style="display: none">
 				<div class="ToggleableSearchBar_SearchBar">
-				<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3" onkeydown="if (event.keyCode == 13) {search_Query('toggleable')}"></input>
-				<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
-			</div>
-			<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
+					<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3" onkeydown="if (event.keyCode == 13) {search_Query('toggleable')}"></input>
+					<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
+				</div>
+				<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
 			</div>
 		</div>
 		<header class="Page_Header" id="pageElement_Header">
@@ -287,13 +287,13 @@
 				<!-- <div class="Header_Content_Button" onclick="trigger_createToast('success')">
 					<img class="Header_Content_Button_Icon" src="Assets/Icons/favicon_old.png"></img>
 					<h3 class="Header_Content_Button_Text">
-						Button 1
+					Button 1
 					</h3>
-				</div>
-				<div class="Header_Content_Button">
+					</div>
+					<div class="Header_Content_Button">
 					<img class="Header_Content_Button_Icon" src="Assets/Icons/favicon_old.png"></img>
 					<h3 class="Header_Content_Button_Text">
-						Button 2
+					Button 2
 					</h3>
 				</div> -->
 			</div>
@@ -344,7 +344,7 @@
 						Normal View
 					</h1>
 					<div id="Page_Shortcuts_Container">
-				
+						
 					</div>
 				</div>
 				<div class="Tab_Container" id="tab_TableView">
@@ -352,10 +352,10 @@
 						Table View
 					</h1>
 					<div id="Page_MainContent_TableView">
-					
+						
 					</div>
 				</div>
-				<div class="Tab_Container" id="tab_ImportExport">
+				<div class="Tab_Container" id="tab_ImportExport" style="display: flex; flex-direction: column;">
 					<h1 class="General_Title">
 						Import / Export Shortcuts
 					</h1>
@@ -372,18 +372,16 @@
 							<p class="General_Paragraph">
 								Copy and paste the shortcut list text into the input box below. 
 							</p>
-							<p class="Subwindow_Content_Text">
-									Select a category to insert the shortcut:
-							</p>
+							
 							<!-- <p class="Input_Dropdown_SelectedItem" id="dropdownButton_Import_Shortcut" onclick="trigger_toggleDropdown(this.id)">
 								No selected
-							</p>
-							<div class="Input_Dropdown" id="menu_dropdownButton_Import_Shortcut">
+								</p>
+								<div class="Input_Dropdown" id="menu_dropdownButton_Import_Shortcut">
 								<!--<p class="Input_Dropdown_Item">
-									Category 1
-									</p>
-									Content is created by JS function SE_CreateDropdown()
-							--><!--
+								Category 1
+								</p>
+								Content is created by JS function SE_CreateDropdown()
+								--><!--
 							</div>-->
 							<p class="Input_Dropdown_SelectedItem" id="ImportShortcut" onclick="trigger_toggleDropdown(this.id)">
 								No selected
@@ -393,6 +391,9 @@
 									Item 1
 								</p> -->
 							</div>
+							<p class="General_Paragraph">
+								Select a category to insert the shortcut:
+							</p>
 							<input type="text" class="Input_Text_Long" placeholder="Paste import shortcut list here" id="pageElement_Input_Text"></input>
 							<h1 class="General_Button" onclick="SE_Import_ShortcutList()">
 								Import shortcuts
@@ -413,20 +414,19 @@
 								Click "Generate" below to begin generating the shortcut list text string for each category. You can then copy and paste each shortcut lists to someone else or to another computer or browser to import the links and text for each shortcut. This is only available on Public Preview 4 and up.
 							</p>
 							<p class="Subwindow_Content_Text">
-									Select a category to create a list from:
+								Select a category to create a list from:
 							</p>
 							<!--<p class="Input_Dropdown_SelectedItem" id="dropdownButton_Export_Shortcut" onclick="trigger_toggleDropdown(this.id)">
 								No selected
-							</p>
-							<div class="Input_Dropdown" id="menu_dropdownButton_Export_Shortcut">
+								</p>
+								<div class="Input_Dropdown" id="menu_dropdownButton_Export_Shortcut">
 								<!--<p class="Input_Dropdown_Item">
-									Category 1
-									</p>
-									Content is created by JS function SE_CreateDropdown()
-								-->
-							</div>-->
+								Category 1
+								</p>
+								Content is created by JS function SE_CreateDropdown()
+							-->
 							<p class="Input_Dropdown_SelectedItem" id="ExportShortcut" onclick="trigger_toggleDropdown(this.id)">
-								Selected dropdown
+								No selected
 							</p>
 							<div class="Input_Dropdown" id="dropdownMenu_ExportShortcut" style="display: none">
 								<!-- <p class="Input_Dropdown_Item" id="dropdownItem_ImportShortcut" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
@@ -442,21 +442,24 @@
 								</p>
 							</div>
 						</div>
+						
 					</div>
 				</div>
-					
-					<footer class="Page_Footer">
-						<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
-							Doodle Launcher Release 1.0
-						</h1>
-						<img class="Footer_Image" src="Assets/Icons/favicon.png"></img>
-						<h1 class="Footer_Text" id="pageElement_Footer_Copyright">
-							Copyright Content By ElmerF 2023
-						</h1>
-					</footer>
-				</div>
-				
-				
-			</main>
-		</body>
-	</html>	
+				<footer class="Page_Footer">
+					<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
+						Doodle Launcher Release 1.0
+					</h1>
+					<img class="Footer_Image" src="Assets/Icons/favicon.png"></img>
+					<h1 class="Footer_Text" id="pageElement_Footer_Copyright">
+						Copyright Content By ElmerF 2023
+					</h1>
+				</footer>
+			</div>
+			
+			
+		</div>
+		
+		
+	</main>
+</body>
+</html>	
