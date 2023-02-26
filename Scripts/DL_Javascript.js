@@ -115,7 +115,7 @@ function OnloadTasks(){
 			
 		break;
 		case "DL_ShortcutEditor_Dev.html":
-			pageProperty_pageIcon = "favicon.png";
+			pageProperty_pageIcon = "iconNew_edit.png";
 			pageProperty_MenuName = "Doodle Launcher";
 			pageProperty_PageTitle = "Shortcut Editor";
 			pageProperty_enableGreetings = 0;
@@ -531,6 +531,8 @@ function tabs_DisplayFirstPage(){
 			Tab_Container[a].style.display = "none";
 			
 		}
+		var Tab_Icon = document.querySelectorAll(".Sidebar_Item_Icon");
+		Tab_Icon[0].style.backgroundColor = "var(--Accent-Color)";
 	}
 }
 
@@ -1135,7 +1137,11 @@ function startTime() {
 			}
 			if (document.getElementById('pageElement_Header_StatusTray_Textbox').style.display == "block"){
 				document.getElementById('StatusMenu_Battery_Level').innerHTML =  battery_level+"%";
-				document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Estimated " + Math.round(battery.dischargingTime / 60) + " minutes remaining";
+				if (isFinite(battery.dischargingTime / 60) == true){
+					document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Estimated " + Math.round(battery.dischargingTime / 60) + " minutes remaining";
+				} else {
+					document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Plugged in, charging";
+				}
 			}
 		});
 	}
