@@ -13,6 +13,8 @@ The first pre-release version of the launcher contains a rework of the layouts a
 - Added an option to show the seconds on the clock on Settings > Behavior > Clock
 - Added an option to adjust the update duration of the clock, internet status, and battery percentage on Settings > Behavior > Clock
 - Added an option to blur the background of the home screen in Settings > Appearance > Wallpaper
+- Added an option to open shortcuts in the same tab on Settings > Behavior
+- Added several options to adjust how the background wallpaper is handled
 - Added Page Action buttons on the Home page
 === Changes ===
 - Updated the general UI system
@@ -23,6 +25,16 @@ The first pre-release version of the launcher contains a rework of the layouts a
 - Updated the Sidebar UI system to only use one Sidebar type for all types of content
 - Updated several subwindow UIs
 - Updated the category navigation UI
+- Renamed Table View into Edit Items on Shortcut Editor
+- Updated how items are displayed on the Edit Items tab
+- Long strings of text on Edit Items are now restricted to a set width
+- Moved the Re-order Categories and Shortcuts button on its own tab
+- Updated the Re-order Categories and Shortcuts system to let you insert the selected item instead of swapping it with another
+- The Import list input field on Import / Export Shortcuts tab is no longer restricted to one line of text and is now larger in height and adjustable
+- Importing Shortcuts now lets you see the shortcuts being added and can be previewed before actually importing it to the selected category
+- The export list box will no longer appear when it has no content initially
+- A pop-up notification will now appear when importing / exporting shortcuts when no categories have been selected
+- A pop-up notification will now appear when attempting to create an item with a semi-colon on its name (this has been made prohibited because it messes with the Import / Export Shortcut system)
 - Onboarding system has been put into its own page
 - Login system has been put into its own page
 - Fixed subwindows not being centered properly
@@ -30,7 +42,6 @@ The first pre-release version of the launcher contains a rework of the layouts a
 - Fixed Sidebar item distancing problems when the window is tall enough
 - Made the loading screen icon and the favicon of pages consistent
 - Removed action buttons on pages that don't need them
-- Fixed the page not scrolling smoothly when navigating
 - Categories will momentarily flash when its button is pressed in Category Navigation
 - Pressing Enter while in the search box will now do a search
 - Hovering over a button will now change the color of its shadow into the accent hover color
@@ -39,10 +50,9 @@ The first pre-release version of the launcher contains a rework of the layouts a
 - The clock, battery percentage, and internet icon will now open the same textbox when clicked
 - The clock, date, and battery percentage will now only update when it's visible.
 - Fixed the change wallpaper detect button using a primary font instead of the secondary one
-- Fixed the Table View UI not overflowing properly
-- Fixed the Table View UI Subwindow not playing the opening animation
 - Fixed page size being too small when viewed on mobile devices
 - Optimized page layout for mobile devices
+- Subwindows will now open in full screen when the window is small enough
 
 
 v.1.15 [Public Preview 4] (December 1, 2022)

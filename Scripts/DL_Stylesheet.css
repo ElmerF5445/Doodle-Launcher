@@ -2375,7 +2375,7 @@ img::before{
 	padding: 10px;
 	height: 35px;
 	border-radius: 5px;
-	width: auto;
+	width: 100%;
 	box-shadow: var(--Element-BoxShadow);
 	transition: var(--Element-Transition-Delay);
 }
@@ -2395,13 +2395,15 @@ img::before{
 	border-bottom-style: solid;
 	/* border-bottom-color: var(--BGColor-Input); */
 	border-bottom-color: var(--Accent-Color-Hover);
+	border-bottom-width: 3px;
 	font-size: 17px;
 	padding: 10px;
-	height: 35px;
+	height: 250px;
 	border-radius: 5px;
-	width: 95%;
+	width: 100%;
 	box-shadow: var(--Element-BoxShadow);
 	transition: var(--Element-Transition-Delay);
+	resize: vertical;
 }
 
 .Input_Text_Long:focus{
@@ -2690,10 +2692,125 @@ th{
 	padding-right: 5px;
 }
 
-.ShortcutEditor_TableView{
-	display: none;
+.ShortcutEditor_TableView_Category_Label{
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 50px;
+	grid-column-gap: 5px;
+	align-items: center;
+	user-select: none;
+	transition: var(--Element-Transition-Delay);
 }
 
+.ShortcutEditor_TableView_Category_Label_Text{
+	font-family: var(--Text-Font-Primary);
+	color: var(--Text-Color);
+	transition: var(--Element-Transition-Delay);
+	border-radius: 5px;
+	padding: 15px;
+	padding-left: 10px;
+}
+
+.ShortcutEditor_TableView_Category_Label_Text:hover{
+	background-color: var(--BGColor-Hover);
+}
+
+.ShortcutEditor_TableView_Category_Label_Delete{
+	width: 25px;
+    height: 25px;
+    padding: 15px;
+	border-radius: 5px;
+    transition: var(--Element-Transition-Delay);
+    filter: var(--Element-Icon-Brightness);
+}
+
+.ShortcutEditor_TableView_Category_Label_Delete:hover{
+	background-color: rgba(190, 43, 43, 0.5);
+}
+
+.ShortcutEditor_TableView_Category_Content{
+	display: grid;
+	grid-template-columns: 1fr 50px;
+	grid-gap: 5px;
+	align-items: center;
+	padding-left: 20px;
+}
+
+.ShortcutEditor_TableView_Item{
+	/* width: calc(100% - 8px); */
+	width: 100%;
+	height: 50px;
+	display: grid;
+	grid-template-columns: 0.75fr 1fr;
+	grid-gap: 10px;
+	transition: var(--Element-Transition-Delay);
+	border-radius: 5px;
+	align-items: center;
+	background-color: none;
+}
+
+.ShortcutEditor_TableView_Item:nth-child(odd){
+	background-color: var(--BGColor-Opacitated);
+}
+
+.ShortcutEditor_TableView_Item:hover{
+	background-color: var(--BGColor-Hover);
+}
+
+.ShortcutEditor_TableView_Item_Delete{
+	width: 20px;
+	height: 20px;
+	padding: 15px;
+	transition: var(--Element-Transition-Delay);
+}
+
+.ShortcutEditor_TableView_Item_Delete:hover{
+	background-color: rgba(190, 43, 43, 0.5);
+	border-radius: 5px;
+}
+
+.ShortcutEditor_TableView_Item_Content{
+	width: 100%;
+	height: 100%;
+	background-color: none;
+	display: grid;
+	grid-template-columns: 0.75fr 1fr;
+	/* padding: 10px; */
+	transition: var(--Element-Transition-Delay);
+}
+
+
+
+.ShortcutEditor_TableView_Item_Content:hover{
+	background-color: var(--BGColor-Hover);
+}
+
+.ShortcutEditor_TableView_Item_ShortcutTitle{
+	font-weight: bold;
+	font-family: var(--Text-Font-Secondary);
+	color: var(--Text-Color);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 0;
+	padding-left: 10px;
+}
+
+.ShortcutEditor_TableView_Item_ShortcutURL{
+	font-family: var(--Text-Font-Secondary);
+	color: var(--Text-Color);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	margin: 0;
+}
+
+
+
+/* .ShortcutEditor_TableView{
+	display: none;
+}
+ */
 .ShortcutEditor_SwapList{
 	display: none;
 	width: 100%;

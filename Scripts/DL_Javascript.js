@@ -671,6 +671,26 @@ function check_WindowSize_test(){
 		MainMenu_PageName.style.display = "none";
 	}
 	
+	if (PageName == "DL_ShortcutEditor_Dev.html"){
+		var SE_TableView_Item = document.querySelectorAll(".ShortcutEditor_TableView_Item");
+		var SE_TableView_Item_URL = document.querySelectorAll(".ShortcutEditor_TableView_Item_ShortcutURL");
+		if (windowSizePreset == "small"){
+			for (a = 0; a < SE_TableView_Item.length; a++){
+				SE_TableView_Item[a].style.gridTemplateColumns = "1fr";
+			}
+			for (a = 0; a < SE_TableView_Item_URL.length; a++){
+				SE_TableView_Item_URL[a].style.display = "none";
+			}
+		} else if (windowSizePreset == "normal"){
+			for (a = 0; a < SE_TableView_Item.length; a++){
+				SE_TableView_Item[a].style.gridTemplateColumns = "0.75fr 1fr";
+			}
+			for (a = 0; a < SE_TableView_Item_URL.length; a++){
+				SE_TableView_Item_URL[a].style.display = "block";
+			}
+		}
+	}
+	
 	/* // Mobile
 	if (windowSizePreset == "normal" && isMobileDevice == true){
 		Header.style.height = "100px";
@@ -3585,7 +3605,7 @@ function Generator_Render_Shortcuts(){
 	setTimeout(reset_toDefaultAnimations, 2500);
 }
 
-function Generator_Render_Categories_TableView(){
+function Generator_Render_Categories_TableView_deprecated(){
 	var Renderer_Category_Count = Object.keys(JSON.parse(localStorage.getItem("DL_CategoryIndex"))).length;
 	console.log("Renderer_CategoryCount: "+Renderer_Category_Count);
 	
@@ -3639,7 +3659,123 @@ function Generator_Render_Categories_TableView(){
 	Generator_Render_Shortcuts_TableView();
 }
 
+var ShortcutLibrary_CategoryIndex = "DL_CategoryIndex";
+function Generator_Render_Categories_TableView(){
+	var Renderer_Category_Count = Object.keys(JSON.parse(localStorage.getItem(ShortcutLibrary_CategoryIndex))).length;
+	
+	/* Create the category index*/
+	var Renderer_Category_Array = [];
+	var Renderer_Category_Array_Data = Object.values(JSON.parse(localStorage.getItem(ShortcutLibrary_CategoryIndex))); //Stor the category index to a temporary variable
+	for (b = 0; b != Renderer_Category_Count; b++){ //Puts all the content of the selected key into the array
+		Renderer_Category_Array.push(Renderer_Category_Array_Data[b]); 
+		//Push the data into the actual array
+	}
+	
+	/* Generate the category containers */
+	for (a = 1; a != Renderer_Category_Count; a++){
+		var categoryDiv = document.createElement('div'); //Creates the container div element
+		categoryDiv.setAttribute("id", "pageElement_CategoryDiv_TableView_"+a); //Adds id to div
+		categoryDiv.classList.add("Category"); //Adds CSS to div
+		document.getElementById("Page_MainContent_TableView").appendChild(categoryDiv);
+		
+		var categoryLabel = document.createElement('div'); //Creates the label div
+		categoryLabel.setAttribute("id", "categoryTable_"+a); //Adds id to label
+		categoryLabel.classList.add("ShortcutEditor_TableView_Category_Label"); //Adds CSS to label
+		document.getElementById("pageElement_CategoryDiv_TableView_"+a).appendChild(categoryLabel);
+		
+		var categoryLabelText = document.createElement('h2'); //Creates h1 element
+		categoryLabelText.classList.add("ShortcutEditor_TableView_Category_Label_Text"); //Adds CSS to h1 element
+		categoryLabelText.innerHTML = Renderer_Category_Array[a]; //Adds text
+		categoryLabelText.setAttribute("onclick", "SE_TV_EditCategory(this.parentNode.id)");
+		document.getElementById("categoryTable_"+a).appendChild(categoryLabelText);
+		
+		//Delete Icon
+		var categoryLabelImg = document.createElement('img'); //Creates an img element
+		categoryLabelImg.src = "Assets/Icons/iconNew_delete.png"; //Sets image source
+		categoryLabelImg.setAttribute("onclick", "SE_TV_OpenConfirm_IdentifyType('Category'), SE_TV_OpenConfirm_DeleteElement(this.parentNode.id)");
+		//categoryLabelImg.setAttribute("onclick", "SE_TV_DeleteCategory(this.parentNode.id), SE_TV_OpenConfirm_IdentifyType('Category')");
+		categoryLabelImg.classList.add("ShortcutEditor_TableView_Category_Label_Delete"); //Adds CSS to toggle
+		document.getElementById("categoryTable_"+a).appendChild(categoryLabelImg);
+		
+		var categoryContent = document.createElement('div'); //Creates the content container div
+		categoryContent.setAttribute("id", "content_TableView_category_"+a); //Adds id to container
+		categoryContent.classList.add("ShortcutEditor_TableView_Category_Content");
+		document.getElementById("pageElement_CategoryDiv_TableView_"+a).appendChild(categoryContent);
+	}
+	Generator_Render_Shortcuts_TableView();
+}
+
 function Generator_Render_Shortcuts_TableView(){
+	var Renderer_Category_Count = Object.keys(JSON.parse(localStorage.getItem(ShortcutLibrary_CategoryIndex))).length;
+	console.log("Renderer_CategoryCount: "+Renderer_Category_Count);
+	
+	/* Create the category index*/
+	var Renderer_Category_Array = [];
+	var Renderer_Category_Array_Data = Object.values(JSON.parse(localStorage.getItem(ShortcutLibrary_CategoryIndex))); //Stor the category index to a temporary variable
+	for (b = 0; b != Renderer_Category_Count; b++){ //Puts all the content of the selected key into the array
+		Renderer_Category_Array.push(Renderer_Category_Array_Data[b]); 
+		//Push the data into the actual array
+	}
+	
+	for (Renderer_SelectedCategoryItem = 1; Renderer_SelectedCategoryItem != Renderer_Category_Count; Renderer_SelectedCategoryItem++){ //Loops the code for each category item stored in key_Index_Category
+		
+		var Renderer_Selected_Category = Renderer_Category_Array[Renderer_SelectedCategoryItem]; //The selected category
+		var Renderer_Selected_Category_Name = "DL_Content_"+Renderer_Selected_Category;
+		var Renderer_Selected_Category_URL = "DL_Content_URL_"+Renderer_Selected_Category;
+		console.log("Renderer_Loop #"+Renderer_SelectedCategoryItem+" | "+Renderer_Selected_Category_Name+" | "+Renderer_Selected_Category_URL);
+		
+		/* Transfer the shortcut names into the array */
+		var Renderer_Shortcut_LinkCount = Object.keys(JSON.parse(localStorage.getItem(Renderer_Selected_Category_Name))).length; //Gets the length of the shortcut key
+		var Renderer_Shortcut_LinkArray = [];
+		var Renderer_Shortcut_LinkArray_Data = Object.values(JSON.parse(localStorage.getItem(Renderer_Selected_Category_Name))); //Temporarily transfer items into temporary variable
+		for (a = 1; a != Renderer_Shortcut_LinkCount; a++){
+			Renderer_Shortcut_LinkArray.push(Renderer_Shortcut_LinkArray_Data[a]); //Transfers all data from variable into array
+		}
+		
+		/* Transfer the shortcut URLs into the array */
+		var Renderer_Shortcut_URLCount = Object.keys(JSON.parse(localStorage.getItem(Renderer_Selected_Category_URL))).length; //Gets the length of the shortcut key
+		var Renderer_Shortcut_URLArray = [];
+		var Renderer_Shortcut_URLArray_Data = Object.values(JSON.parse(localStorage.getItem(Renderer_Selected_Category_URL))); //Temporarily transfer items into temporary variable
+		for (b = 1; b != Renderer_Shortcut_URLCount; b++){
+			Renderer_Shortcut_URLArray.push(Renderer_Shortcut_URLArray_Data[b]); //Transfers all data from variable into array
+		}
+		
+		console.log("Renderer_Shortcut_LinkCount: "+Renderer_Shortcut_LinkCount);
+		console.log("Renderer_Shortcut_URLCount: "+Renderer_Shortcut_URLCount);
+		for (c = 0; c <= Renderer_Shortcut_LinkArray.length - 1; c++){
+			var tableItem = document.createElement('div');
+			tableItem.classList.add("ShortcutEditor_TableView_Item");
+			tableItem.setAttribute("onclick", "SE_TV_EditElement_GetCategoryNumber(this.id), SE_TV_EditElement(parentNode.parentNode.id)");
+			tableItem.setAttribute("id", "Item_"+Renderer_SelectedCategoryItem+c);
+			document.getElementById("content_TableView_category_"+Renderer_SelectedCategoryItem).appendChild(tableItem);
+			
+			var tableItem_Title = document.createElement('p');
+			tableItem_Title.classList.add("ShortcutEditor_TableView_Item_ShortcutTitle");
+			tableItem_Title.innerHTML = Renderer_Shortcut_LinkArray[c];
+			document.getElementById("Item_"+Renderer_SelectedCategoryItem+c).appendChild(tableItem_Title);
+			
+			var tableItem_URL= document.createElement('p');
+			tableItem_URL.classList.add("ShortcutEditor_TableView_Item_ShortcutURL");
+			tableItem_URL.innerHTML = Renderer_Shortcut_URLArray[c];
+			document.getElementById("Item_"+Renderer_SelectedCategoryItem+c).appendChild(tableItem_URL);
+			
+			var tableItem_Delete = document.createElement('img');
+			tableItem_Delete.classList.add("ShortcutEditor_TableView_Item_Delete");
+			tableItem_Delete.setAttribute("src", "Assets/Icons/iconNew_delete.png");
+			tableItem_Delete.setAttribute("id", "Delete_"+Renderer_SelectedCategoryItem+c);
+			tableItem_Delete.setAttribute("onclick", "SE_TV_DeleteElement_GetCategoryNumber(this.id), SE_TV_OpenConfirm_IdentifyType('Shortcut'), SE_TV_OpenConfirm_DeleteElement(parentNode.parentNode.id)");
+			document.getElementById("content_TableView_category_"+Renderer_SelectedCategoryItem).appendChild(tableItem_Delete);
+		}
+	}
+	/* var SE_TableView_Item = document.querySelectorAll(".ShortcutEditor_TableView_Item");
+	for (a = 0; a < SE_TableView_Item.length; a++){
+		if (a % 2 == 1){
+			SE_TableView_Item[a].style.backgroundColor.hover = "rgba(0, 0, 0, 0.0)";
+		}
+	} */
+}
+
+function Generator_Render_Shortcuts_TableView_deprecated(){
 	var Renderer_Category_Count = Object.keys(JSON.parse(localStorage.getItem("DL_CategoryIndex"))).length;
 	console.log("Renderer_CategoryCount: "+Renderer_Category_Count);
 	
@@ -3650,7 +3786,6 @@ function Generator_Render_Shortcuts_TableView(){
 		Renderer_Category_Array.push(Renderer_Category_Array_Data[b]); 
 		//Push the data into the actual array
 	}
-	
 	
 	for (Renderer_SelectedCategoryItem = 1; Renderer_SelectedCategoryItem != Renderer_Category_Count; Renderer_SelectedCategoryItem++){ //Loops the code for each category item stored in key_Index_Category
 		

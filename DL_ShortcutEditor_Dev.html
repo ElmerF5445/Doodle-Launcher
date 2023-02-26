@@ -159,23 +159,74 @@
 					</h1>
 				</div>
 			</div>
-			<div class="Modal" id="subwindow_Test_Modal">
+			
+			<div class="Subwindow" id="subwindow_EditItem"> 
+				<div class="Subwindow_TitleBar">
+					<h2 class="Subwindow_TitleBar_Title" id="EditItem_SubwindowTitle">
+						Edit item '[itemName]'
+					</h2>
+					<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="EditItem" onclick="close_Subwindow(this.id)">
+					</img>
+				</div>
+				<div class="Subwindow_Content">
+					<p class="Subwindow_Content_Text">
+						You're currently editing:
+					</p>
+					<label class="Subwindow_Content_Text" for="form_SE_EditItem_Shortcut_Title">
+						Shortcut title:
+					</label>
+					<input class="Input_Text" placeholder="New title of the shortcut here" id="form_SE_EditItem_Shortcut_Title"></input>
+					<label class="Subwindow_Content_Text" for="form_SE_EditItem_Shortcut_URL">
+						Shortcut URL:
+					</label>
+					<input class="Input_Text" placeholder="New title of the shortcut here" id="form_SE_EditItem_Shortcut_URL"></input>
+					
+				</div>
+				<div class="Subwindow_Bottom">
+					<h1 class="Subwindow_Bottom_Button_PrimaryAction" onclick="SE_TV_EditElement_SaveChanges()">
+						Save changes
+					</h1>
+				</div>
+			</div>
+			
+			<div class="Subwindow" id="subwindow_EditCategory"> 
+				<div class="Subwindow_TitleBar">
+					<h2 class="Subwindow_TitleBar_Title" id="EditCategory_SubwindowTitle">
+						Edit category '[itemName]'
+					</h2>
+					<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="EditCategory" onclick="close_Subwindow(this.id)">
+					</img>
+				</div>
+				<div class="Subwindow_Content">
+					<label class="Subwindow_Content_Text" for="form_SE_EditCategory_Name">
+						Category name:
+					</label>
+					<input class="Input_Text" placeholder="New title of the category here" id="form_SE_EditCategory_Name"></input>
+				</div>
+				<div class="Subwindow_Bottom">
+					<h1 class="Subwindow_Bottom_Button_PrimaryAction" onclick="SE_TV_EditElement_SaveChanges()">
+						Save changes
+					</h1>
+				</div>
+			</div>
+			
+			<div class="Modal" id="subwindow_Confirmation_DeleteItem">
 				<div class="Modal_TitleBar">
 					<h2 class="Modal_TitleBar_Title">
-						Modal / Confirmation
+						Confirm deletion
 					</h2>
 				</div>
 				<div class="Modal_Content">
 					<p class="General_Paragraph">
-						In this format, the box closes if either the Esc button is pressed, or the user clicks any of the button in the bottom section of the window.
+						Are you sure you want to delete [item_name]?
 					</p>
 				</div>
 				<div class="Modal_Content_Bottom">
-					<div class="Subwindow_Bottom_Button_SecondaryAction">
-						Secondary action
+					<div class="Subwindow_Bottom_Button_SecondaryAction" onclick="close_Subwindow('Confirmation_DeleteItem')">
+						Cancel
 					</div>
 					<div class="Subwindow_Bottom_Button_PrimaryAction">
-						Primary action
+						Delete Item
 					</div>
 				</div>
 			</div>
@@ -323,10 +374,22 @@
 					Normal View
 				</p>
 			</div>
-			<div class="Sidebar_Item" id="TableView" onclick="trigger_ChangeTab_test(this.id)">
-				<img class="Sidebar_Item_Icon" id="tabIcon_TableView" src="Assets/Icons/iconNew_table.png"></img>
+			<div class="Sidebar_Item" id="EditItems" onclick="trigger_ChangeTab_test(this.id)">
+				<img class="Sidebar_Item_Icon" id="tabIcon_EditItems" src="Assets/Icons/iconNew_table.png"></img>
 				<p class="Sidebar_Item_Text">
-					Table View
+					Edit Items
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="RearrangeCategories" onclick="trigger_ChangeTab_test(this.id)">
+				<img class="Sidebar_Item_Icon" id="tabIcon_RearrangeCategories" src="Assets/Icons/iconNew_table.png"></img>
+				<p class="Sidebar_Item_Text">
+					Re-arrange Categories
+				</p>
+			</div>
+			<div class="Sidebar_Item" id="RearrangeShortcuts" onclick="trigger_ChangeTab_test(this.id)">
+				<img class="Sidebar_Item_Icon" id="tabIcon_RearrangeShortcuts" src="Assets/Icons/iconNew_table.png"></img>
+				<p class="Sidebar_Item_Text">
+					Re-arrange Shortcuts
 				</p>
 			</div>
 			<div class="Sidebar_Item" id="ImportExport" onclick="trigger_ChangeTab_test(this.id)">
@@ -347,12 +410,34 @@
 						
 					</div>
 				</div>
-				<div class="Tab_Container" id="tab_TableView">
+				<div class="Tab_Container" id="tab_EditItems">
 					<h1 class="General_Title">
-						Table View
+						Edit Categories and Shortcuts
 					</h1>
+					<p class="General_Paragraph">
+						Click on an item to edit an item's contents, or click the trashcan icon beside it to delete it. 
+					</p>
 					<div id="Page_MainContent_TableView">
-						
+						<!-- <div id="pageElement_CategoryDiv_TableView_1" class="Category">
+							<div id="categoryTable_1" class="ShortcutEditor_TableView_Category_Label">
+								<h2 class="ShortcutEditor_TableView_Category_Label_Text" onclick="open_Subwindow('EditCategory')">
+									College Sites
+								</h2>
+								<img src="Assets/Icons/iconNew_delete.png" onclick="SE_TV_OpenConfirm_IdentifyType('Category'), SE_TV_OpenConfirm_DeleteElement(this.parentNode.id)" class="ShortcutEditor_TableView_Category_Label_Delete">
+							</div>
+							<div id="content_category_1" class=" ShortcutEditor_TableView_Category_Content">
+								<div class="ShortcutEditor_TableView_Item" onclick="open_Subwindow('EditItem')">
+									<p class="ShortcutEditor_TableView_Item_ShortcutTitle">
+										Item
+									</p>
+									<p class="ShortcutEditor_TableView_Item_ShortcutURL">	
+										Link
+									</p>
+								</div>
+								<img src="Assets/Icons/iconNew_delete.png" class="ShortcutEditor_TableView_Item_Delete" onclick="open_Subwindow('Confirmation_DeleteItem')"></img>
+								
+							</div>
+						</div> -->
 					</div>
 				</div>
 				<div class="Tab_Container" id="tab_ImportExport" style="display: flex; flex-direction: column;">
@@ -394,7 +479,8 @@
 							<p class="General_Paragraph">
 								Select a category to insert the shortcut:
 							</p>
-							<input type="text" class="Input_Text_Long" placeholder="Paste import shortcut list here" id="pageElement_Input_Text"></input>
+							<!-- <input type="text" class="Input_Text_Long" placeholder="Paste import shortcut list here" id="pageElement_Input_Text"></input> -->
+							<textarea type="text" class="Input_Text_Long" placeholder="Paste import shortcut list here" id="pageElement_Input_Text"></textarea>
 							<h1 class="General_Button" onclick="SE_Import_ShortcutList()">
 								Import shortcuts
 							</h1>
