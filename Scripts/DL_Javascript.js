@@ -1140,7 +1140,11 @@ function startTime() {
 				if (isFinite(battery.dischargingTime / 60) == true){
 					document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Estimated " + Math.round(battery.dischargingTime / 60) + " minutes remaining";
 				} else {
-					document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Plugged in, charging";
+					if (battery_level == 100){
+						document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Fully charged";
+					} else {
+						document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Plugged in, charging";
+					}
 				}
 			}
 		});
@@ -3751,7 +3755,7 @@ function Generator_Render_Shortcuts_TableView(){
 		for (c = 0; c <= Renderer_Shortcut_LinkArray.length - 1; c++){
 			var tableItem = document.createElement('div');
 			tableItem.classList.add("ShortcutEditor_TableView_Item");
-			tableItem.setAttribute("onclick", "SE_TV_EditElement_GetCategoryNumber(this.id), SE_TV_EditElement(parentNode.parentNode.id)");
+			tableItem.setAttribute("onclick", "SE_TV_EditElement_GetCategoryNumber(parentNode.id), SE_TV_EditElement(childNodes[0].innerText)");
 			tableItem.setAttribute("id", "Item_"+Renderer_SelectedCategoryItem+c);
 			document.getElementById("content_TableView_category_"+Renderer_SelectedCategoryItem).appendChild(tableItem);
 			
@@ -3768,8 +3772,8 @@ function Generator_Render_Shortcuts_TableView(){
 			var tableItem_Delete = document.createElement('img');
 			tableItem_Delete.classList.add("ShortcutEditor_TableView_Item_Delete");
 			tableItem_Delete.setAttribute("src", "Assets/Icons/iconNew_delete.png");
-			tableItem_Delete.setAttribute("id", "Delete_"+Renderer_SelectedCategoryItem+c);
-			tableItem_Delete.setAttribute("onclick", "SE_TV_DeleteElement_GetCategoryNumber(this.id), SE_TV_OpenConfirm_IdentifyType('Shortcut'), SE_TV_OpenConfirm_DeleteElement(parentNode.parentNode.id)");
+			tableItem_Delete.setAttribute("id", "Delete_"+Renderer_SelectedCategoryItem);
+			tableItem_Delete.setAttribute("onclick", "SE_TV_DeleteElement_GetCategoryNumber(this.id), SE_TV_OpenConfirm_IdentifyType('Shortcut'), SE_TV_OpenConfirm_DeleteElement(parentNode.id)");
 			document.getElementById("content_TableView_category_"+Renderer_SelectedCategoryItem).appendChild(tableItem_Delete);
 		}
 	}
@@ -3894,7 +3898,7 @@ function trigger_categoryNavigation_Anchor(ID){
 // Table View
 var SE_EE_CategoryNumber;
 function SE_TV_EditElement_GetCategoryNumber(id){ //Gets the category number that the item belongs in through the edit buttons ID
-	SE_EE_CategoryNumber = id;
+	SE_EE_CategoryNumber = id.substr(27);
 	console.log("Category number: "+SE_EE_CategoryNumber);
 	
 }
@@ -3904,7 +3908,7 @@ let SE_EE_Array_ListText = ["unusedItem"];
 let SE_EE_Array_ListURL = ["unusedItem"];
 var SE_EE_Item_Index;
 function SE_TV_EditElement(id){
-	trigger_Open_SubWindow("EditItem"); //Open the window
+	open_Subwindow("EditItem"); //Open the window
 	SE_EE_ItemName = id; //Sets the selected item name value to the id given
 	document.getElementById("EditItem_SubwindowTitle").innerHTML = "Edit item '"+SE_EE_ItemName+"'"; //Renames the window title
 	console.log("Item name: "+SE_EE_ItemName); //Debug
@@ -3991,7 +3995,7 @@ function SE_TV_EditElement_SaveChanges(id){
 /* Delete item */
 var SE_DE_CategoryNumber;
 function SE_TV_DeleteElement_GetCategoryNumber(id){ //Gets the category number that the item belongs in through the edit buttons ID
-	SE_DE_CategoryNumber = id;
+	SE_DE_CategoryNumber = id.substr(7);
 	console.log("Category number: "+SE_DE_CategoryNumber);
 	
 }
@@ -4010,11 +4014,11 @@ function SE_TV_OpenConfirm_IdentifyType(type){
 function SE_TV_OpenConfirm_DeleteElement(selectedID){
 	open_Subwindow("Confirmation_DeleteItem");
 	if (SE_DE_SelectedType == "Category"){
-		categoryNumber = selectedID.substr(14);
+		categoryNumber = selectedID.substr(27);
 		categoryName = SE_Array_Category_Index[categoryNumber];
-		document.getElementById("pageElement_Confirmation_DeleteItem").innerHTML = "Are you sure you want to delete "+categoryName+"?";
-		} else {
-		document.getElementById("pageElement_Confirmation_DeleteItem").innerHTML = "Are you sure you want to delete "+selectedID+"?";
+		document.getElementById("pageElement_Confirmation_DeleteItem").innerHTML = "Are you sure you want to delete category "+categoryName+"?";
+	} else {
+		document.getElementById("pageElement_Confirmation_DeleteItem").innerHTML = "Are you sure you want to delete shortcut "+selectedID+"?";
 	}
 	
 	SE_DE_SelectedElement = selectedID;
@@ -4208,7 +4212,7 @@ function refresh_ShortcutEditor(){
 	
 	var tableViewDiv = document.createElement('div'); //Creates the container div element
 	tableViewDiv.setAttribute("id", "Page_MainContent_TableView"); //Adds id to div
-	document.getElementById("tab_TableView").appendChild(tableViewDiv);
+	document.getElementById("tab_EditItems").appendChild(tableViewDiv);
 	
 	/* Dropdown */
 	document.getElementById("AddItem_Shortcut1").innerHTML = ("");
