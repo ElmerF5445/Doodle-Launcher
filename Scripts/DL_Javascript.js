@@ -3702,7 +3702,7 @@ function Generator_Render_Categories_TableView(){
 		//Delete Icon
 		var categoryLabelImg = document.createElement('img'); //Creates an img element
 		categoryLabelImg.src = "Assets/Icons/iconNew_delete.png"; //Sets image source
-		categoryLabelImg.setAttribute("onclick", "SE_TV_OpenConfirm_IdentifyType('Category'), SE_TV_OpenConfirm_DeleteElement(this.parentNode.id)");
+		categoryLabelImg.setAttribute("onclick", "SE_TV_OpenConfirm_IdentifyType('Category'), SE_TV_OpenConfirm_DeleteElement(parentNode.id)");
 		//categoryLabelImg.setAttribute("onclick", "SE_TV_DeleteCategory(this.parentNode.id), SE_TV_OpenConfirm_IdentifyType('Category')");
 		categoryLabelImg.classList.add("ShortcutEditor_TableView_Category_Label_Delete"); //Adds CSS to toggle
 		document.getElementById("categoryTable_"+a).appendChild(categoryLabelImg);
@@ -3762,6 +3762,7 @@ function Generator_Render_Shortcuts_TableView(){
 			var tableItem_Title = document.createElement('p');
 			tableItem_Title.classList.add("ShortcutEditor_TableView_Item_ShortcutTitle");
 			tableItem_Title.innerHTML = Renderer_Shortcut_LinkArray[c];
+			tableItem_Title.setAttribute("id", "Item_Title_"+Renderer_SelectedCategoryItem+"_"+(c+1));
 			document.getElementById("Item_"+Renderer_SelectedCategoryItem+c).appendChild(tableItem_Title);
 			
 			var tableItem_URL= document.createElement('p');
@@ -3772,8 +3773,8 @@ function Generator_Render_Shortcuts_TableView(){
 			var tableItem_Delete = document.createElement('img');
 			tableItem_Delete.classList.add("ShortcutEditor_TableView_Item_Delete");
 			tableItem_Delete.setAttribute("src", "Assets/Icons/iconNew_delete.png");
-			tableItem_Delete.setAttribute("id", "Delete_"+Renderer_SelectedCategoryItem);
-			tableItem_Delete.setAttribute("onclick", "SE_TV_DeleteElement_GetCategoryNumber(this.id), SE_TV_OpenConfirm_IdentifyType('Shortcut'), SE_TV_OpenConfirm_DeleteElement(parentNode.id)");
+			tableItem_Delete.setAttribute("id", "Delete_"+(c+1));
+			tableItem_Delete.setAttribute("onclick", "SE_TV_DeleteElement_GetCategoryNumber(parentNode.id), SE_TV_OpenConfirm_IdentifyType('Shortcut'), SE_TV_OpenConfirm_DeleteElement(this.id)");
 			document.getElementById("content_TableView_category_"+Renderer_SelectedCategoryItem).appendChild(tableItem_Delete);
 		}
 	}
@@ -3995,7 +3996,7 @@ function SE_TV_EditElement_SaveChanges(id){
 /* Delete item */
 var SE_DE_CategoryNumber;
 function SE_TV_DeleteElement_GetCategoryNumber(id){ //Gets the category number that the item belongs in through the edit buttons ID
-	SE_DE_CategoryNumber = id.substr(7);
+	SE_DE_CategoryNumber = id.substr(27);
 	console.log("Category number: "+SE_DE_CategoryNumber);
 	
 }
@@ -4013,15 +4014,20 @@ function SE_TV_OpenConfirm_IdentifyType(type){
 
 function SE_TV_OpenConfirm_DeleteElement(selectedID){
 	open_Subwindow("Confirmation_DeleteItem");
+	SE_DE_SelectedElement = selectedID;
 	if (SE_DE_SelectedType == "Category"){
-		categoryNumber = selectedID.substr(27);
+		categoryNumber = selectedID.substr(14);
 		categoryName = SE_Array_Category_Index[categoryNumber];
+		console.log(categoryNumber);
 		document.getElementById("pageElement_Confirmation_DeleteItem").innerHTML = "Are you sure you want to delete category "+categoryName+"?";
 	} else {
-		document.getElementById("pageElement_Confirmation_DeleteItem").innerHTML = "Are you sure you want to delete shortcut "+selectedID+"?";
+		SE_DE_SelectedElement = selectedID.substr(7);
+		SE_DE_SelectedElementPlus1 = SE_DE_SelectedElement + 1;
+		document.getElementById("pageElement_Confirmation_DeleteItem").innerHTML = "Are you sure you want to delete shortcut "+document.getElementById('Item_Title_'+SE_DE_CategoryNumber+'_'+SE_DE_SelectedElement).innerText+"?";
+		console.log(SE_DE_SelectedElement);
 	}
 	
-	SE_DE_SelectedElement = selectedID;
+	console.log(SE_DE_SelectedElement);
 	
 }
 
@@ -4036,6 +4042,7 @@ function SE_TV_Confirm_DeleteElement(){
 }
 
 function SE_TV_DeleteElement(id){
+	SE_DE_Item_Index = id;
 	SE_DE_ItemName = id; //Sets the selected item name value to the id given
 	document.getElementById("EditItem_SubwindowTitle").innerHTML = "Edit item '"+SE_DE_ItemName+"'"; //Renames the window title
 	console.log("Item name: "+SE_DE_ItemName); //Debug
