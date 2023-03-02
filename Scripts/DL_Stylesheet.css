@@ -2103,6 +2103,9 @@ img::before{
 	cursor: pointer;
 	box-shadow: var(--Element-BoxShadow);
 	opacity: 0%;
+	animation-name: ShortcutEditor_NormalView_Item_Opening;
+	animation-duration: 0.3s;
+	animation-fill-mode: forwards;
 	transition: var(--Element-Transition-Delay);
 	user-select: none;
 }
@@ -2747,6 +2750,9 @@ th{
 	border-radius: 5px;
 	align-items: center;
 	background-color: none;
+	animation-name: ShortcutEditor_TableView_Item_Opening;
+	animation-duration: 0.3s;
+	animation-fill-mode: forwards;
 }
 
 .ShortcutEditor_TableView_Item:nth-child(odd){

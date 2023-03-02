@@ -381,7 +381,7 @@ function generate_Launcher_HeaderButtons(pageName){
 			Generator_HeaderButtons_Text = ["Add Item", "Re-order categories", "Re-order shortcuts", "How to use"];
 			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
 			Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
-			Generator_HeaderButtons_OnclickAction = ["open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
+			Generator_HeaderButtons_OnclickAction = ["open_Subwindow('AddItem')", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
 			var Generator_DisplayInHeader = true;
 		break;
 		case "DL_Settings.html":
@@ -2448,22 +2448,29 @@ function start_Animations(){
 		Header_Button_Item.style.animationDelay = delay + "s";
 		Header_Button_Item.style.animationFillMode = "forwards";
 	}
-	for (var a = 0; a < Shortcut_Item.length; a++) {
-		var Shortcut_Item_Select = Shortcut_Item[a];
-		Shortcut_Item_Select.style.opacity = "0%";
-		Shortcut_Item_Select.style.display = "block";
-		Shortcut_Item_Select.style.animationName = "opening_ShortcutItems";
-		Shortcut_Item_Select.style.animationDuration = "0.5s";
-		var delay2 = 0.1 + a / 15;
-		
-		Shortcut_Item_Select.style.animationDelay = delay2 + "s";
-		Shortcut_Item_Select.style.animationFillMode = "forwards";
-		if(a == (Shortcut_Item.length - 1)){
-			AnimationFinish++;
-			check_AnimationFinish();
-			console.log("Finished items"+AnimationFinish);
-		}
-	}
+	
+		/* for (var a = 0; a < Shortcut_Item.length; a++) {
+			var Shortcut_Item_Select = Shortcut_Item[a];
+			Shortcut_Item_Select.style.opacity = "0%";
+			Shortcut_Item_Select.style.display = "block";
+			
+			if (PageName != "DL_ShortcutEditor.html" || PageName != "DL_ShortcutEditor_Dev.html"){
+				Shortcut_Item_Select.style.animationName = "opening_ShortcutItems";
+			} else {
+				Shortcut_Item_Select.style.animationName = "ShortcutEditor_NormalView_Item_Opening";
+			}
+			Shortcut_Item_Select.style.animationDuration = "0.5s";
+			var delay2 = 0.1 + a / 15;
+			
+			Shortcut_Item_Select.style.animationDelay = delay2 + "s";
+			Shortcut_Item_Select.style.animationFillMode = "forwards";
+			if(a == (Shortcut_Item.length - 1)){
+				AnimationFinish++;
+				check_AnimationFinish();
+				console.log("Finished items"+AnimationFinish);
+			}
+		} */
+	
 	for (var b = 0; b < Shortcut_Folder.length; b++) {
 		var Shortcut_Folder_Select = Shortcut_Folder[b];
 		Shortcut_Folder_Select.style.opacity = "0%";
@@ -3025,6 +3032,7 @@ function SE_CreateDropdown(){
 	for (b = 1; b != CategoryCount; b++){
 		var dropdown_Shortcut = document.createElement('p');
 		dropdown_Shortcut.classList.add("Input_Dropdown_Item");
+		dropdown_Shortcut.classList.add("SE_DropdownItem");
 		dropdown_Shortcut.innerHTML = Renderer_Category_Array[b];
 		dropdown_Shortcut.setAttribute("id", "dropdownItem_AddItem_Shortcut1");
 		dropdown_Shortcut.setAttribute("onclick", "trigger_dropdownItemSelected(this.id, this.innerText)");
@@ -4222,13 +4230,32 @@ function refresh_ShortcutEditor(){
 	document.getElementById("tab_EditItems").appendChild(tableViewDiv);
 	
 	/* Dropdown */
-	document.getElementById("AddItem_Shortcut1").innerHTML = ("");
+	var SE_ListRefresher_ParentElement = document.getElementById("dropdownMenu_AddItem_Shortcut1");
+	// Loops the code as long as the parent element has a first child
+	while (SE_ListRefresher_ParentElement.firstChild){
+		// Deletes the first child
+		SE_ListRefresher_ParentElement.removeChild(SE_ListRefresher_ParentElement.firstChild);
+	}
+	
+	document.getElementById("AddItem_Shortcut1").innerHTML = ("No selected");
 	
 	/* Dropdown - Import shortcuts */
-	document.getElementById("ImportShortcut").innerHTML = ("");
+	var SE_ListRefresher_ParentElement = document.getElementById("dropdownMenu_ImportShortcut");
+	// Loops the code as long as the parent element has a first child
+	while (SE_ListRefresher_ParentElement.firstChild){
+		// Deletes the first child
+		SE_ListRefresher_ParentElement.removeChild(SE_ListRefresher_ParentElement.firstChild);
+	}
+	document.getElementById("ImportShortcut").innerHTML = ("No selected");
 	
 	/* Dropdown - Export shortcuts */
-	document.getElementById("ExportShortcut").innerHTML = ("");
+	var SE_ListRefresher_ParentElement = document.getElementById("dropdownMenu_ExportShortcut");
+	// Loops the code as long as the parent element has a first child
+	while (SE_ListRefresher_ParentElement.firstChild){
+		// Deletes the first child
+		SE_ListRefresher_ParentElement.removeChild(SE_ListRefresher_ParentElement.firstChild);
+	}
+	document.getElementById("ExportShortcut").innerHTML = ("No selected");
 	
 	/* Item Swapper Shortcut */
 	/*var list = document.getElementById("pageElement_ShortcutEditor_SwapList_List_Shortcuts");

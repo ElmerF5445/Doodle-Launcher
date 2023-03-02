@@ -215,3 +215,13 @@
 	from {opacity: 100%;}
 	to {opacity: 0%;}
 }
+
+@keyframes ShortcutEditor_TableView_Item_Opening{
+	from {transform: scale(1.1);}
+	to {transform: scale(1);}
+}
+
+@keyframes ShortcutEditor_NormalView_Item_Opening{
+	from {transform: scale(1.1);}
+	to {transform: scale(1);}
+}

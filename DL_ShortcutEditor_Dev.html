@@ -406,6 +406,9 @@
 					<h1 class="General_Title">
 						Normal View
 					</h1>
+					<p class="General_Paragraph">
+						A view on what your Shortcut Library looks like in the home page. To edit or re-arrange elements, click an option on the sidebar.
+					</p>
 					<div id="Page_Shortcuts_Container">
 						
 					</div>
@@ -440,10 +443,35 @@
 						</div> -->
 					</div>
 				</div>
+				<div class="Tab_Container" id="tab_RearrangeCategories">
+					<h1 class="General_Title">
+						Re-arrange Categories
+					</h1>
+					<p class="General_Paragraph">
+						Change a category's position in the list by first clicking it and then clicking on another category you want to swap places with. <br> Alternatively, you can insert a category between two others by clicking on the small line between them.
+					</p>
+					<i><p class="General_Paragraph">
+						This is still experimental and may cause issues.
+					</p></i>
+				</div>
+				<div class="Tab_Container" id="tab_RearrangeShortcuts">
+					<h1 class="General_Title">
+						Re-arrange Shortcuts
+					</h1>
+					<p class="General_Paragraph">
+						To change a shortcut's position in the list, first select a category from the dropdown. Afterwards, click the shortcut then click another shortcut you want to swap places with.<br> Alternatively, you can insert a shortcut between two others by clicking on the small line between them.
+					</p>
+					<i><p class="General_Paragraph">
+						This is still experimental and may cause issues.
+					</p></i>
+				</div>
 				<div class="Tab_Container" id="tab_ImportExport" style="display: flex; flex-direction: column;">
 					<h1 class="General_Title">
 						Import / Export Shortcuts
 					</h1>
+					<p class="General_Paragraph">
+						Generate a list of all the shortcuts inside a category that can be copied and pasted and be shared with someone or to another device.<br> You can turn a generated shortcut list into shortcuts that can be imported and saved to a category of choice.
+					</p>
 					<div class="Category">
 						<span class="anchor" id="anchor_category_ShortcutEditor"></span>
 						<div class="Category_Label" id="category_Import" onclick="toggle_Category(this.id)">
@@ -455,9 +483,8 @@
 						</div>
 						<div id="content_category_Import" class="Category_Content_Container">
 							<p class="General_Paragraph">
-								Copy and paste the shortcut list text into the input box below. 
+								Select a category to insert the shortcut(s):
 							</p>
-							
 							<!-- <p class="Input_Dropdown_SelectedItem" id="dropdownButton_Import_Shortcut" onclick="trigger_toggleDropdown(this.id)">
 								No selected
 								</p>
@@ -477,7 +504,7 @@
 								</p> -->
 							</div>
 							<p class="General_Paragraph">
-								Select a category to insert the shortcut:
+								Copy and paste the shortcut list text into the input box below. 
 							</p>
 							<!-- <input type="text" class="Input_Text_Long" placeholder="Paste import shortcut list here" id="pageElement_Input_Text"></input> -->
 							<textarea type="text" class="Input_Text_Long" placeholder="Paste import shortcut list here" id="pageElement_Input_Text"></textarea>
@@ -497,7 +524,7 @@
 						</div>
 						<div id="content_category_Export" class="Category_Content_Container">
 							<p class="General_Paragraph">
-								Click "Generate" below to begin generating the shortcut list text string for each category. You can then copy and paste each shortcut lists to someone else or to another computer or browser to import the links and text for each shortcut. This is only available on Public Preview 4 and up.
+								Choose a category from your Shortcut Library that you want to create a shortcut list of.<br> Click "Generate" to then create the list.
 							</p>
 							<p class="Subwindow_Content_Text">
 								Select a category to create a list from:
@@ -522,6 +549,9 @@
 							<h1 class="General_Button" onclick="SE_Generate_ExportList()">
 								Generate
 							</h1>
+							<p class="Subwindow_Content_Text">
+								Click the box below to copy the generated list:
+							</p>
 							<div class="ShortcutEditor_Export_Container"onclick="SE_Export_CopyToClipboard()">
 								<p class="ShortcutEditor_Export_Text" id="pageElement_Export_Text" >
 									
