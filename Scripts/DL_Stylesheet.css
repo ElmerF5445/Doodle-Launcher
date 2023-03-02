@@ -1665,6 +1665,7 @@ img::before{
 	grid-template-columns: 1fr 30px;
 	align-items: center;
 	margin-top: 5px;
+	box-shadow: var(--Element-BoxShadow-Subwindow-TitleBar);
 }
 
 .Subwindow_TitleBar_Title{
@@ -2601,6 +2602,7 @@ input:checked + .slider:before {
 	cursor: pointer;
 	font-size: 20px;
 	text-align: center;
+	user-select: none;
 	transition: var(--Element-Transition-Delay);
 }
 

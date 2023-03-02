@@ -12,6 +12,7 @@
 	--Element-Transition-Delay: 0.3s; /*Delay on transition */
 	--Element-BoxShadow: 0cm 0cm 0.28218705792108cm 0.03527338224013cm rgb( 0, 0, 0, 0.50); /*Box shadow property */
 	--Element-BoxShadow-Hover:0cm 0cm 0.28218705792108cm 0.03527338224013cm var(--Accent-Color-Hover);
+	--Element-BoxShadow-Subwindow-TitleBar: 0px 5px 10px 0px rgb( 0, 0, 0, 0.25); /*Box shadow property for subwindow title bars*/
 	
 	--Element-Icon-Brightness: brightness(1);
 	--Element-Icon-Brightness-Focus: brightness(0);
