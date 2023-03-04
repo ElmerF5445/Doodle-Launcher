@@ -39,7 +39,7 @@ var pageProperty_enableHeader = 1; // Refers to whether the header will be displ
 var pageProperty_sidebarMoveContent = 1; // Refers to whether the main content moves when the sidebar is opened
 var pageProperty_enableQuickSearch = 0; // Refers to whether to display the quick search bar when Ctrl + Shift is pressed.
 var pageProperty_quickSearch_addTopPadding = 1; // Refers to whether the quick search bar will have a top padding to give space to the Header element. If pageProperty_enableHeader is set to 0, this property is set to 0.
-
+var pageProperty_sidebar_UsesTabs = 0; // Refers to whether the page uses the tabs system or only uses it for hyperlinks/lists
 
 var Behavior_EnableBlurEffects;
 var Behavior_DisplayTimeAndDate;
@@ -134,6 +134,7 @@ function OnloadTasks(){
 			pageProperty_sidebarMoveContent = 0;
 			pageProperty_enableQuickSearch = 1;
 			pageProperty_quickSearch_addTopPadding = 1;
+			pageProperty_sidebar_UsesTabs = 1;
 			SE_CreateDropdown();
 			Generator_Render_Categories();
 			Generator_Render_Categories_TableView();
@@ -282,6 +283,14 @@ function SetPageProperties(){
 	document.getElementById("LoadingScreen_Icon").src = "Assets/Icons/"+pageProperty_pageIcon;
 	
 	document.getElementById("Page_MainContent").style.width = pageProperty_mainContentWidth + "%";
+	
+	if (pageProperty_enableSidebar == 1){
+		Tab_Items = document.querySelectorAll('.Sidebar_Item');
+		Tab_Items_IDArray = [];
+		for (a = 0; a != Tab_Items.length; a++){
+			Tab_Items_IDArray.push(Tab_Items[a].id);
+		}
+	}
 	
 	console.log("Page properties has been set successfully");
 	check_WindowSize_test();
@@ -536,7 +545,38 @@ function tabs_DisplayFirstPage(){
 	}
 }
 
+var Tab_Items = document.querySelectorAll('.Sidebar_Item');
+var Tab_Items_IDArray = [];
+var Tab_Items_ClickedItemIndex;
+var Tab_Items_CurrentTab = 0;
+var Tab_Items_Keyboard_NewTab;
+function trigger_ChangeTab_Keyboard(Direction){
+	if (pageProperty_sidebar_UsesTabs == 1){
+		if (Direction == "downwards"){
+			Tab_Items_Keyboard_NewTab = Tab_Items_CurrentTab + 1;
+			if (Tab_Items_Keyboard_NewTab > Tab_Items_IDArray.length - 1){
+				Tab_Items_Keyboard_NewTab = 0;
+			}
+			trigger_ChangeTab_test(Tab_Items_IDArray[Tab_Items_Keyboard_NewTab]);
+		} else if (Direction == "upwards"){
+			Tab_Items_Keyboard_NewTab = Tab_Items_CurrentTab - 1;
+			if (Tab_Items_Keyboard_NewTab < 0){
+				Tab_Items_Keyboard_NewTab = Tab_Items.length - 1;
+			}
+			trigger_ChangeTab_test(Tab_Items_IDArray[Tab_Items_Keyboard_NewTab]);
+		}
+	}
+}
+
 function trigger_ChangeTab_test(ID){
+	Tab_Items = document.querySelectorAll('.Sidebar_Item');
+	// Tab_Items_IDArray = [];
+	// for (a = 0; a != Tab_Items.length; a++){
+		// Tab_Items_IDArray.push(Tab_Items[a].id);
+	// }
+	Tab_Items_ClickedItemIndex = Tab_Items_IDArray.indexOf(ID);
+	
+	
 	var Tab_Container = document.querySelectorAll(".Tab_Container");
 	var Sidebar_Icon = document.querySelectorAll(".Sidebar_Item_Icon");
 	var Sidebar_Letters = document.querySelectorAll(".Sidebar_Item_Letter");
@@ -552,11 +592,19 @@ function trigger_ChangeTab_test(ID){
 	}
 	var selectedTab = document.getElementById("tab_"+ID);
 	selectedTab.style.display = "block";
-	selectedTab.style.animationName = "opening_pageTab";
+	if (Tab_Items_CurrentTab > Tab_Items_ClickedItemIndex){ //The clicked sidebar tab is above the currently opened tab (Up animation)
+		selectedTab.style.animationName = "opening_pageTab_Upwards";
+		Tab_Items_CurrentTab = Tab_Items_ClickedItemIndex;
+	} else if (Tab_Items_CurrentTab < Tab_Items_ClickedItemIndex){ //The clicked sidebar tab is below the currently opened tab (Down animation)
+		selectedTab.style.animationName = "opening_pageTab_Downwards";
+		Tab_Items_CurrentTab = Tab_Items_ClickedItemIndex;
+	}
+	// selectedTab.style.animationName = "opening_pageTab";
 	selectedTab.style.animationDuration = "0.3s";
 	selectedTab.style.animationFillMode = "forwards";
 	var selectedIcon = document.getElementById("tabIcon_"+ID);
 	selectedIcon.style.backgroundColor = "var(--Accent-Color)";
+	
 }
 
 var windowSizePreset = "normal";
@@ -795,6 +843,18 @@ document.addEventListener('keydown', (event) => {
 			close_Subwindow(subwindow_activeSubwindow);
 		}
 		
+	}
+	
+	if (keysPressed['Alt'] && event.key == 'ArrowDown') {
+		if(pageProperty_enableSidebar == 1){
+			trigger_ChangeTab_Keyboard("downwards");
+		}
+	}
+	
+	if (keysPressed['Alt'] && event.key == 'ArrowUp') {
+		if(pageProperty_enableSidebar == 1){
+			trigger_ChangeTab_Keyboard("upwards");
+		}
 	}
 	
 	/*if (keysPressed['Enter'] && (document.getElementById("pageElement_SearchQuery") === document.activeElement)){

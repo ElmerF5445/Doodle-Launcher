@@ -53,7 +53,8 @@ The first pre-release version of the launcher contains a rework of the layouts a
 - Fixed page size being too small when viewed on mobile devices
 - Optimized page layout for mobile devices
 - Subwindows will now open in full screen when the window is small enough
-
+- Page tabs now change animation based on whether the sidebar tab you clicked is above the currently open tab or below it.
+- Page tabs can now be switched when either Tab + Up Arrow or Down Arrow. 
 
 v.1.15 [Public Preview 4] (December 1, 2022)
 This version adds a way to launch or open all the shortcuts in a category. It also adds a way to import and export shortcuts using text strings that stores the shortcut name and urls.

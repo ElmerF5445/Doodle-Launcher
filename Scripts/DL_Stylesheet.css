@@ -2571,6 +2571,7 @@ input:checked + .slider:before {
 .General_Title{
 	font-family: var(--Text-Font-Primary), "Arial", "Helvetica";
 	color: var(--Text-Color);
+	margin: 0;
 	margin-bottom: 3px;
 }
 
