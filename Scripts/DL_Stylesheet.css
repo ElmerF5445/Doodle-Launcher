@@ -190,7 +190,7 @@ img::before{
 	margin-right: 10%;
 	padding: 10px;
 	padding-bottom: 50px;
-	
+	position: relative;
 }
 
 .Page_Footer{
@@ -218,6 +218,7 @@ img::before{
 	margin-right: 5px;
 	user-select: none;
 	cursor: pointer;
+	transform: translateY(-100%);
 	transition: var(--Element-Transition-Delay);
 }
 
@@ -1409,6 +1410,7 @@ img::before{
 	padding: 5px;
 	margin: 0;
 	margin-bottom: -5px;
+	transform: translateX(-100%);
 	transition: var(--Element-Transition-Delay);
 	overflow-x: hidden;
 }
@@ -2103,10 +2105,12 @@ img::before{
 	border-bottom-width: 3px;
 	cursor: pointer;
 	box-shadow: var(--Element-BoxShadow);
-	opacity: 0%;
-	animation-name: ShortcutEditor_NormalView_Item_Opening;
-	animation-duration: 0.3s;
-	animation-fill-mode: forwards;
+	opacity: 100%;
+	display: none; 
+	/* visibility: hidden; */
+	/* animation-name: ShortcutEditor_NormalView_Item_Opening; */
+	/* animation-duration: 0.3s; */
+	/* animation-fill-mode: forwards; */
 	transition: var(--Element-Transition-Delay);
 	user-select: none;
 }
@@ -2756,6 +2760,8 @@ th{
 	animation-name: ShortcutEditor_TableView_Item_Opening;
 	animation-duration: 0.3s;
 	animation-fill-mode: forwards;
+	cursor: pointer;
+	user-select: none;
 }
 
 .ShortcutEditor_TableView_Item:nth-child(odd){
@@ -2770,6 +2776,7 @@ th{
 	width: 20px;
 	height: 20px;
 	padding: 15px;
+	user-select: none;
 	transition: var(--Element-Transition-Delay);
 }
 
@@ -2814,6 +2821,75 @@ th{
 	margin: 0;
 }
 
+.ShortcutEditor_Rearrange_Item{
+	/* width: calc(100% - 8px); */
+	width: 100%;
+	height: 50px;
+	display: grid;
+	grid-template-columns: 0.75fr 1fr;
+	grid-gap: 10px;
+	transition: var(--Element-Transition-Delay);
+	border-radius: 5px;
+	align-items: center;
+	margin-bottom: 5px;
+	background-color: var(--BGColor-Opacitated);
+	animation-name: ShortcutEditor_TableView_Item_Opening;
+	animation-duration: 0.3s;
+	animation-fill-mode: forwards;
+	cursor: pointer;
+	user-select: none;
+}
+
+.ShortcutEditor_Rearrange_Item:hover{
+	background-color: var(--BGColor-Hover);
+}
+
+.ShortcutEditor_Rearrange_Item_ShortcutTitle{
+	font-weight: bold;
+	font-family: var(--Text-Font-Secondary);
+	color: var(--Text-Color);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 0;
+	padding-left: 10px;
+}
+
+.ShortcutEditor_Rearrange_Item_InBetween{
+	/* width: calc(100% - 8px); */
+	width: calc(100% - 40px);
+	height: 25px;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-gap: 10px;
+	transition: var(--Element-Transition-Delay);
+	border-radius: 5px;
+	align-items: center;
+	margin-bottom: 5px;
+	margin-left: 20px;
+	margin-right: 20px;
+	background-color: var(--BGColor-Opacitated);
+	animation-name: ShortcutEditor_TableView_Item_Opening;
+	animation-duration: 0.3s;
+	animation-fill-mode: forwards;
+	cursor: pointer;
+	user-select: none;
+}
+
+.ShortcutEditor_Rearrange_Item_InBetween:hover{
+	background-color: var(--BGColor-Hover);
+}
+
+.ShortcutEditor_Rearrange_Item_InBetween_Text{
+	font-style: italic;
+	font-family: var(--Text-Font-Secondary);
+	color: var(--Text-Color);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 0;
+	padding-left: 50px;
+}
 
 
 /* .ShortcutEditor_TableView{

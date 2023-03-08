@@ -285,15 +285,19 @@ function SetPageProperties(){
 	document.getElementById("Page_MainContent").style.width = pageProperty_mainContentWidth + "%";
 	
 	if (pageProperty_enableSidebar == 1){
-		Tab_Items = document.querySelectorAll('.Sidebar_Item');
-		Tab_Items_IDArray = [];
-		for (a = 0; a != Tab_Items.length; a++){
-			Tab_Items_IDArray.push(Tab_Items[a].id);
+		if (pageProperty_sidebar_UsesTabs == 1){
+			Tab_Items = document.querySelectorAll('.Sidebar_Item');
+			Tab_Items_IDArray = [];
+			for (a = 0; a != Tab_Items.length; a++){
+				Tab_Items_IDArray.push(Tab_Items[a].id);
+			}
+			tabs_DisplayFirstPage();
 		}
 	}
 	
 	console.log("Page properties has been set successfully");
 	check_WindowSize_test();
+	// start_Animations();
 	set_Version_General();
 	
 }
@@ -307,6 +311,7 @@ function wait_LoadingScreen(){
 	// document.getElementById("LoadingScreen_Text").innerHTML = "Welcome back!";
 	var x = document.getElementById("LoadingScreen");
 	x.style.animationName = "blurOut";
+	x.style.animationFillMode = "forwards";
 	x.style.animationDuration = "0.5s";
 	setTimeout( function() { remove_LoadingScreen(); }, 500);
 	// x.addEventListener("animationend",remove_LoadingScreen);
@@ -314,8 +319,9 @@ function wait_LoadingScreen(){
 function remove_LoadingScreen(){
 	var x = document.getElementById("LoadingScreen");
 	x.style.display = "none";
-	//x.parentNode.removeChild(x);
 	start_Animations();
+	//x.parentNode.removeChild(x);
+	
 }
 
 function check_Connection(){
@@ -495,12 +501,14 @@ function sessionCheck(){
 		if (n == 6){
 			var day = "Saturday";
 		}
-		} else {
+		document.getElementById('pageElement_SessionScreen').style.display == "block"
+	} else {
 		var SessionScreen = document.getElementById("pageElement_SessionScreen");
 		SessionScreen.style.display = "none";
 		sessionScreenState = "invisible";
 		//start_Animations();
 	}
+	startTime();
 }
 
 function open_SessionScreen(){
@@ -512,12 +520,12 @@ function open_SessionScreen(){
 	x.style.display = "block"
 	setTimeout(function(){x.style.display = "block"; start_Animations();}, 500);
 	
-	x.addEventListener("animationend", function(){
+	setTimeout(function(){
 		var shortcutObjects = document.querySelectorAll(".Shortcut_Item");
 		for (var a = 0; a < shortcutObjects.length; a++) {
 			shortcutObjects[a].style.display = "none";
 		}
-	});
+	}, 500);
 	
 }
 
@@ -528,8 +536,8 @@ function close_SessionScreen(){
 	x.style.animationName = "close_SessionScreen";
 	x.style.animationDuration = "0.3s";
 	x.style.animationFillMode = "forwards";
-	setTimeout(function(){x.style.display = "none"; start_Animations();}, 500);
-	start_Animations();
+	setTimeout(function(){x.style.display = "none"; start_Animations();}, 200);
+	// start_Animations();
 	
 }
 
@@ -540,6 +548,8 @@ function tabs_DisplayFirstPage(){
 			Tab_Container[a].style.display = "none";
 			
 		}
+		selectedTab = document.getElementById("tab_"+Tab_Items_IDArray[0]);
+		closingTab = selectedTab
 		var Tab_Icon = document.querySelectorAll(".Sidebar_Item_Icon");
 		Tab_Icon[0].style.backgroundColor = "var(--Accent-Color)";
 	}
@@ -568,43 +578,49 @@ function trigger_ChangeTab_Keyboard(Direction){
 	}
 }
 
+var Tabs_FirstRun_TabOpened = 0;
+var closingTab;
+var selectedTab;
 function trigger_ChangeTab_test(ID){
+	Tabs_FirstRun_TabOpened = 1;
 	Tab_Items = document.querySelectorAll('.Sidebar_Item');
-	// Tab_Items_IDArray = [];
-	// for (a = 0; a != Tab_Items.length; a++){
-		// Tab_Items_IDArray.push(Tab_Items[a].id);
-	// }
 	Tab_Items_ClickedItemIndex = Tab_Items_IDArray.indexOf(ID);
 	
 	
 	var Tab_Container = document.querySelectorAll(".Tab_Container");
 	var Sidebar_Icon = document.querySelectorAll(".Sidebar_Item_Icon");
 	var Sidebar_Letters = document.querySelectorAll(".Sidebar_Item_Letter");
-	for (a = 0; a != Tab_Container.length; a++){
+	/* for (a = 0; a != Tab_Container.length; a++){
 		Tab_Container[a].style.display = "none";
 		
-	}
+	} */
 	for (b = 0; b != Sidebar_Icon.length; b++){
 		Sidebar_Icon[b].style.backgroundColor = "var(--BGColor-Buttons)";
 	}
 	for (c = 0; c != Sidebar_Letters.length; c++){
 		Sidebar_Letters[c].style.backgroundColor = "var(--BGColor-Buttons)";
 	}
-	var selectedTab = document.getElementById("tab_"+ID);
+	
+	closingTab = document.getElementById("tab_"+Tab_Items_IDArray[Tab_Items_CurrentTab]);
+	selectedTab = document.getElementById("tab_"+ID);
 	selectedTab.style.display = "block";
 	if (Tab_Items_CurrentTab > Tab_Items_ClickedItemIndex){ //The clicked sidebar tab is above the currently opened tab (Up animation)
 		selectedTab.style.animationName = "opening_pageTab_Upwards";
+		closingTab.style.animationName = "closing_pageTab_Downwards";
 		Tab_Items_CurrentTab = Tab_Items_ClickedItemIndex;
 	} else if (Tab_Items_CurrentTab < Tab_Items_ClickedItemIndex){ //The clicked sidebar tab is below the currently opened tab (Down animation)
 		selectedTab.style.animationName = "opening_pageTab_Downwards";
+		closingTab.style.animationName = "closing_pageTab_Upwards";
 		Tab_Items_CurrentTab = Tab_Items_ClickedItemIndex;
 	}
 	// selectedTab.style.animationName = "opening_pageTab";
+	closingTab.style.animationDuration = "0.3s";
+	closingTab.style.animationFillMode = "forwards";
 	selectedTab.style.animationDuration = "0.3s";
 	selectedTab.style.animationFillMode = "forwards";
 	var selectedIcon = document.getElementById("tabIcon_"+ID);
 	selectedIcon.style.backgroundColor = "var(--Accent-Color)";
-	
+	closingTab.addEventListener("animationend", function(){closingTab.style.display = "none";});
 }
 
 var windowSizePreset = "normal";
@@ -1180,10 +1196,10 @@ function startTime() {
 	
 	// document.getElementById("Sidebar_Clock_Time").innerHTML = displayHour + ":" + m + ":" + s + " "+AMPM;
 	if (pageProperty_enableClockScreen == 1){
-		if (document.getElementById('pageElement_SessionScreen').style.display == "block"){
+		// if (document.getElementById('pageElement_SessionScreen').style.display == "block"){
 			document.getElementById('Clock_Time_SessionScreen').innerHTML =  displayHour + ":" + m;
 			
-		}
+		// }
 	}
 	
 	
@@ -2486,82 +2502,48 @@ function hide_ToggleableElements(){
 	}
 }
 
-var AnimationFinish = 0;
+
 
 function start_Animations(){
-	var Header_Buttons_Item = document.querySelectorAll(".Header_Buttons_Item");
-	var Header_Clock = document.querySelectorAll(".Header_Clock");
-	var Header_Battery = document.querySelectorAll(".Header_Battery");
-	var Header_RightMenu = document.querySelectorAll("Header_RightMenu");
-	var Shortcut_Item = document.querySelectorAll(".Shortcut_Item");
-	var Shortcut_Folder = document.querySelectorAll(".Category_Folder_Item");
-	var Category = document.querySelectorAll(".Category");
-	
-	for (var i = 0; i < Header_Buttons_Item.length; i++) {
-		var Header_Button_Item = Header_Buttons_Item[i];
-		Header_Button_Item.style.transform = "translateY(-100%)";
-		Header_Button_Item.style.display = "block";
-		Header_Button_Item.style.animationName = "opening_HeaderButtons";
-		Header_Button_Item.style.animationDuration = "0.5s";
-		var delay = 0.3 + i / 5;
-		
-		Header_Button_Item.style.animationDelay = delay + "s";
-		Header_Button_Item.style.animationFillMode = "forwards";
+	var Sidebar_Items = document.querySelectorAll(".Sidebar_Item");
+	for (a = 0; a != Sidebar_Items.length; a++){
+		Sidebar_Items_Select = Sidebar_Items[a];
+		Sidebar_Items_Select.style.transform = "translateX(-100%)";
+		Sidebar_Items_Select.style.animationName = "opening_SidebarItems";
+		Sidebar_Items_Select.style.animationDuration = "0.5s";
+		Sidebar_Items_Select.style.animationDelay = 0.1 + (a / 30) + "s";
+		Sidebar_Items_Select.style.animationFillMode = "forwards";
 	}
-	
-		/* for (var a = 0; a < Shortcut_Item.length; a++) {
-			var Shortcut_Item_Select = Shortcut_Item[a];
-			Shortcut_Item_Select.style.opacity = "0%";
-			Shortcut_Item_Select.style.display = "block";
-			
-			if (PageName != "DL_ShortcutEditor.html" || PageName != "DL_ShortcutEditor_Dev.html"){
-				Shortcut_Item_Select.style.animationName = "opening_ShortcutItems";
-			} else {
-				Shortcut_Item_Select.style.animationName = "ShortcutEditor_NormalView_Item_Opening";
-			}
-			Shortcut_Item_Select.style.animationDuration = "0.5s";
-			var delay2 = 0.1 + a / 15;
-			
-			Shortcut_Item_Select.style.animationDelay = delay2 + "s";
-			Shortcut_Item_Select.style.animationFillMode = "forwards";
-			if(a == (Shortcut_Item.length - 1)){
-				AnimationFinish++;
-				check_AnimationFinish();
-				console.log("Finished items"+AnimationFinish);
-			}
-		} */
-	
-	for (var b = 0; b < Shortcut_Folder.length; b++) {
-		var Shortcut_Folder_Select = Shortcut_Folder[b];
-		Shortcut_Folder_Select.style.opacity = "0%";
-		Shortcut_Folder_Select.style.display = "grid";
-		Shortcut_Folder_Select.style.animationName = "opening_ShortcutItems";
-		Shortcut_Folder_Select.style.animationDuration = "0.5s";
-		var delay3 = 0.1 + b / 15;
-		
-		Shortcut_Folder_Select.style.animationDelay = delay3 + "s";
-		Shortcut_Folder_Select.style.animationFillMode = "forwards";
-		if(b == (Shortcut_Folder.length - 1)){
-			AnimationFinish++;
-			check_AnimationFinish();
-			console.log("Finished items"+AnimationFinish);
-		}
+	var Shortcut_Items = document.querySelectorAll(".Shortcut_Item");
+	for (b = 0; b != Shortcut_Items.length; b++){
+		Shortcut_Items_Select = Shortcut_Items[b];
+		Shortcut_Items_Select.style.display = "block";
+		Shortcut_Items_Select.style.opacity = "0%";
+		Shortcut_Items_Select.style.animationName = "opening_ShortcutItems";
+		Shortcut_Items_Select.style.animationDuration = "0.5s";
+		Sidebar_Items_Select.style.animationDelay = "2s";
+		Shortcut_Items_Select.style.animationFillMode = "forwards";
 	}
-	
-	
-	
-	
+	var Header_Items = document.querySelectorAll(".Header_Content_Button");
+	for (c = 0; c != Header_Items.length; c++){
+		Header_Items_Select = Header_Items[c];
+		Header_Items_Select.style.transform = "translateY(-100%)";
+		Header_Items_Select.style.animationName = "opening_HeaderButtons";
+		Header_Items_Select.style.animationDuration = "0.5s";
+		Header_Items_Select.style.animationDelay = 0.1 + (c / 30) + "s";
+		Header_Items_Select.style.animationFillMode = "forwards";
+	}
 }
 
 function check_AnimationFinish(){
-	if(AnimationFinish == 2){
+	if(AnimationFinish == 1){
 		setTimeout(reset_toDefaultAnimations, 2500);
 		console.log("Reset");
 	}
 }
 
 function reset_toDefaultAnimations(){
-	var Shortcut_Item = document.querySelectorAll(".Shortcut_Item");
+	/* var Shortcut_Item = document.querySelectorAll(".Shortcut_Item");
 	var Shortcut_Folder = document.querySelectorAll(".Category_Folder_Item");
 	for (var a = 0; a < Shortcut_Item.length; a++) {
 		var Shortcut_Item_Select = Shortcut_Item[a];
@@ -2584,7 +2566,7 @@ function reset_toDefaultAnimations(){
 		
 		Shortcut_Folder_Select.style.animationDelay = delay3 + "s";
 		Shortcut_Folder_Select.style.animationFillMode = "forwards";
-	}
+	} */
 }
 
 

@@ -91,6 +91,12 @@
 	to {opacity: 100%; transform: translateY(0px);}
 }
 
+@keyframes opening_SidebarItems{
+	0% { transform: translateX(-100%); }
+	50% { transform: translateX(10px);}
+	100% { transform: translateX(0px);}
+}
+
 @keyframes opening_Category{
 	from {opacity: 0%; transform: translateX(30px);}
 	to {opacity: 100%; transform: translateX(0px);}
@@ -124,6 +130,16 @@
 @keyframes opening_pageTab_Downwards{
 	from {opacity: 0%; transform: translateY(50px);}
 	to {opacity: 100%; transform: translateY(0px);}
+}
+
+@keyframes closing_pageTab_Upwards{
+	from {opacity: 100%; transform: translateY(0px); max-height: 0%;}
+	to {opacity: 0%; transform: translateY(-50px); max-height: 0%;}
+}
+
+@keyframes closing_pageTab_Downwards{
+	from {opacity: 100%; transform: translateY(0px); max-height: 0%;}
+	to {opacity: 0%; transform: translateY(50px); max-height: 0%;}
 }
 
 @keyframes opening_Dropdown{
