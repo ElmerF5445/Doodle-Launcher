@@ -40,6 +40,8 @@ var pageProperty_sidebarMoveContent = 1; // Refers to whether the main content m
 var pageProperty_enableQuickSearch = 0; // Refers to whether to display the quick search bar when Ctrl + Shift is pressed.
 var pageProperty_quickSearch_addTopPadding = 1; // Refers to whether the quick search bar will have a top padding to give space to the Header element. If pageProperty_enableHeader is set to 0, this property is set to 0.
 var pageProperty_sidebar_UsesTabs = 0; // Refers to whether the page uses the tabs system or only uses it for hyperlinks/lists
+var pageProperty_resizer_ChangeContentMargin = 1; // Refers to whether the main content container takes the entire available space or if it will have a margin on both left and right sides
+var pageProperty_hideFooter = 1; // Refers to whether to hide the footer (it's buggy af)
 
 var Behavior_EnableBlurEffects;
 var Behavior_DisplayTimeAndDate;
@@ -59,6 +61,7 @@ var Appearance_Behavior_BlurHomeWallpaper;
 
 
 function OnloadTasks(){
+	check_SettingsFileExistence();
 	startTime();
 	startDate();
 	displayDay();
@@ -71,126 +74,151 @@ function OnloadTasks(){
 	console.log("Setting page properties for page '" + PageName + "'...");
 	switch (PageName){
 		case "DL_Template_V1.html":
-			pageProperty_pageIcon = "ContentByElmerF.png";
-			pageProperty_MenuName = "Doodle Launcher";
-			pageProperty_PageTitle = "Template";
-			pageProperty_enableGreetings = 1;
-			pageProperty_enableSidebar = 1;
-			pageProperty_enableCategoryLabelIcons = 0;
-			pageProperty_lockSidebar = 0;
-			pageProperty_enableStatusBar = 1;
-			pageProperty_useProfileSystem = 1;
-			pageProperty_sidebarExpandedWidth = 300;
-			pageProperty_backgroundState = 2;
-			pageProperty_enableClockScreen = 1;
-			pageProperty_enableCategoryNavigation = 0;
-			pageProperty_enableLoadingScreen = 1;
-			pageProperty_enableHeader = 1;
-			pageProperty_sidebarMoveContent = 0;
-			pageProperty_enableQuickSearch = 1;
-			pageProperty_quickSearch_addTopPadding = 1;
-			tabs_DisplayFirstPage();
+		pageProperty_pageIcon = "ContentByElmerF.png";
+		pageProperty_MenuName = "Doodle Launcher";
+		pageProperty_PageTitle = "Template";
+		pageProperty_enableGreetings = 1;
+		pageProperty_enableSidebar = 1;
+		pageProperty_enableCategoryLabelIcons = 0;
+		pageProperty_lockSidebar = 0;
+		pageProperty_enableStatusBar = 1;
+		pageProperty_useProfileSystem = 1;
+		pageProperty_sidebarExpandedWidth = 300;
+		pageProperty_backgroundState = 2;
+		pageProperty_enableClockScreen = 1;
+		pageProperty_enableCategoryNavigation = 0;
+		pageProperty_enableLoadingScreen = 1;
+		pageProperty_enableHeader = 1;
+		pageProperty_sidebarMoveContent = 0;
+		pageProperty_enableQuickSearch = 1;
+		pageProperty_quickSearch_addTopPadding = 1;
+		pageProperty_sidebar_UsesTabs = 1;
+		tabs_DisplayFirstPage();
 		break;
 		case "DL_Main.html":
-			pageProperty_pageIcon = "favicon.png";
-			pageProperty_MenuName = "Doodle Launcher";
-			pageProperty_PageTitle = "Home";
-			pageProperty_enableGreetings = 1;
-			pageProperty_enableSidebar = 1;
-			pageProperty_enableCategoryLabelIcons = 0;
-			pageProperty_lockSidebar = 0;
-			pageProperty_enableStatusBar = 1;
-			pageProperty_useProfileSystem = 1;
-			pageProperty_useSettingsSystem = 1;
-			pageProperty_sidebarExpandedWidth = 300;
-			pageProperty_backgroundState = 1;
-			pageProperty_enableClockScreen = 1;
-			pageProperty_enableCategoryNavigation = 1;
-			pageProperty_enableLoadingScreen = 1;
-			pageProperty_enableHeader = 1;
-			pageProperty_sidebarMoveContent = 0;
-			pageProperty_enableQuickSearch = 1;
-			pageProperty_quickSearch_addTopPadding = 1;
-			Generator_Render_Categories();
-			
+		pageProperty_pageIcon = "favicon.png";
+		pageProperty_MenuName = "Doodle Launcher";
+		pageProperty_PageTitle = "Home";
+		pageProperty_enableGreetings = 1;
+		pageProperty_enableSidebar = 1;
+		pageProperty_enableCategoryLabelIcons = 0;
+		pageProperty_lockSidebar = 0;
+		pageProperty_enableStatusBar = 1;
+		pageProperty_useProfileSystem = 1;
+		pageProperty_useSettingsSystem = 1;
+		pageProperty_sidebarExpandedWidth = 300;
+		pageProperty_backgroundState = 1;
+		pageProperty_enableClockScreen = 1;
+		pageProperty_enableCategoryNavigation = 1;
+		pageProperty_enableLoadingScreen = 1;
+		pageProperty_enableHeader = 1;
+		pageProperty_sidebarMoveContent = 0;
+		pageProperty_enableQuickSearch = 1;
+		pageProperty_quickSearch_addTopPadding = 1;
+		Generator_Render_Categories();
+		
 		break;
 		case "DL_ShortcutEditor_Dev.html":
-			pageProperty_pageIcon = "iconNew_edit.png";
-			pageProperty_MenuName = "Doodle Launcher";
-			pageProperty_PageTitle = "Shortcut Editor";
-			pageProperty_enableGreetings = 0;
-			pageProperty_enableSidebar = 1;
-			pageProperty_enableCategoryLabelIcons = 0;
-			pageProperty_lockSidebar = 0;
-			pageProperty_enableStatusBar = 1;
-			pageProperty_useProfileSystem = 1;
-			pageProperty_useSettingsSystem = 1;
-			pageProperty_sidebarExpandedWidth = 300;
-			pageProperty_backgroundState = 2;
-			pageProperty_enableClockScreen = 1;
-			pageProperty_enableCategoryNavigation = 0;
-			pageProperty_enableLoadingScreen = 1;
-			pageProperty_enableHeader = 1;
-			pageProperty_sidebarMoveContent = 0;
-			pageProperty_enableQuickSearch = 1;
-			pageProperty_quickSearch_addTopPadding = 1;
-			pageProperty_sidebar_UsesTabs = 1;
-			SE_CreateDropdown();
-			Generator_Render_Categories();
-			Generator_Render_Categories_TableView();
-			tabs_DisplayFirstPage();
+		pageProperty_pageIcon = "iconNew_edit.png";
+		pageProperty_MenuName = "Doodle Launcher";
+		pageProperty_PageTitle = "Shortcut Editor";
+		pageProperty_enableGreetings = 0;
+		pageProperty_enableSidebar = 1;
+		pageProperty_enableCategoryLabelIcons = 0;
+		pageProperty_lockSidebar = 0;
+		pageProperty_enableStatusBar = 1;
+		pageProperty_useProfileSystem = 1;
+		pageProperty_useSettingsSystem = 1;
+		pageProperty_sidebarExpandedWidth = 300;
+		pageProperty_backgroundState = 2;
+		pageProperty_enableClockScreen = 1;
+		pageProperty_enableCategoryNavigation = 0;
+		pageProperty_enableLoadingScreen = 1;
+		pageProperty_enableHeader = 1;
+		pageProperty_sidebarMoveContent = 0;
+		pageProperty_enableQuickSearch = 1;
+		pageProperty_quickSearch_addTopPadding = 1;
+		pageProperty_sidebar_UsesTabs = 1;
+		SE_CreateDropdown();
+		Generator_Render_Categories();
+		Generator_Render_Categories_TableView();
+		Generator_Render_Categories_ReArranger();
+		tabs_DisplayFirstPage();
 		break;
 		case "DL_Main_Dev.html":
-			pageProperty_pageIcon = "favicon.png";
-			pageProperty_MenuName = "Doodle Launcher";
-			pageProperty_PageTitle = "Home";
-			pageProperty_enableGreetings = 1;
-			pageProperty_enableSidebar = 1;
-			pageProperty_enableCategoryLabelIcons = 0;
-			pageProperty_lockSidebar = 0;
-			pageProperty_enableStatusBar = 1;
-			pageProperty_useProfileSystem = 1;
-			pageProperty_sidebarExpandedWidth = 300;
-			pageProperty_backgroundState = 1;
-			pageProperty_enableClockScreen = 1;
-			pageProperty_enableCategoryNavigation = 1;
-			Generator_Render_Categories();
+		pageProperty_pageIcon = "favicon.png";
+		pageProperty_MenuName = "Doodle Launcher";
+		pageProperty_PageTitle = "Home";
+		pageProperty_enableGreetings = 1;
+		pageProperty_enableSidebar = 1;
+		pageProperty_enableCategoryLabelIcons = 0;
+		pageProperty_lockSidebar = 0;
+		pageProperty_enableStatusBar = 1;
+		pageProperty_useProfileSystem = 1;
+		pageProperty_sidebarExpandedWidth = 300;
+		pageProperty_backgroundState = 1;
+		pageProperty_enableClockScreen = 1;
+		pageProperty_enableCategoryNavigation = 1;
+		Generator_Render_Categories();
 		break;
 		case "DL_Settings_Dev.html":
-			pageProperty_pageIcon = "icon_settings.png";
-			pageProperty_MenuName = "Doodle Launcher";
-			pageProperty_PageTitle = "Settings";
-			pageProperty_enableGreetings = 0;
-			pageProperty_enableSidebar = 1;
-			pageProperty_enableCategoryLabelIcons = 0;
-			pageProperty_lockSidebar = 0;
-			pageProperty_enableStatusBar = 1;
-			pageProperty_useProfileSystem = 1;
-			pageProperty_sidebarExpandedWidth = 300;
-			pageProperty_backgroundState = 2;
-			pageProperty_enableClockScreen = 1;
-			pageProperty_enableCategoryNavigation = 0;
+		pageProperty_pageIcon = "icon_settings.png";
+		pageProperty_MenuName = "Doodle Launcher";
+		pageProperty_PageTitle = "Settings";
+		pageProperty_enableGreetings = 0;
+		pageProperty_enableSidebar = 1;
+		pageProperty_enableCategoryLabelIcons = 0;
+		pageProperty_lockSidebar = 0;
+		pageProperty_enableStatusBar = 1;
+		pageProperty_useProfileSystem = 1;
+		pageProperty_sidebarExpandedWidth = 300;
+		pageProperty_backgroundState = 2;
+		pageProperty_enableClockScreen = 1;
+		pageProperty_enableCategoryNavigation = 0;
 		break;
 		case "WA_Main.html":
-			pageProperty_pageIcon = "ContentByElmerF.png";
-			pageProperty_MenuName = "Watermark Applier";
-			pageProperty_PageTitle = "Watermark Applier Beta";
-			pageProperty_enableGreetings = 0;
-			pageProperty_enableSidebar = 1;
-			pageProperty_enableCategoryLabelIcons = 0;
-			pageProperty_lockSidebar = 1;
-			pageProperty_enableStatusBar = 0;
-			pageProperty_useProfileSystem = 0;
-			pageProperty_sidebarExpandedWidth = 300;
-			pageProperty_backgroundState = 2;
-			pageProperty_enableClockScreen = 1;
-			pageProperty_enableCategoryNavigation = 0;
-			pageProperty_enableLoadingScreen = 1;
-			pageProperty_enableHeader = 1;
-			pageProperty_sidebarMoveContent = 1;
-			pageProperty_enableQuickSearch = 0;
-			pageProperty_quickSearch_addTopPadding = 1;
-			pageProperty_useSettingsSystem = 1;
+		pageProperty_pageIcon = "ContentByElmerF.png";
+		pageProperty_MenuName = "Watermark Applier";
+		pageProperty_PageTitle = "Watermark Applier Beta";
+		pageProperty_enableGreetings = 0;
+		pageProperty_enableSidebar = 1;
+		pageProperty_enableCategoryLabelIcons = 0;
+		pageProperty_lockSidebar = 0;
+		pageProperty_enableStatusBar = 0;
+		pageProperty_useProfileSystem = 0;
+		pageProperty_sidebarExpandedWidth = 300;
+		pageProperty_backgroundState = 0;
+		pageProperty_enableClockScreen = 1;
+		pageProperty_enableCategoryNavigation = 0;
+		pageProperty_enableLoadingScreen = 1;
+		pageProperty_enableHeader = 1;
+		pageProperty_sidebarMoveContent = 1;
+		pageProperty_enableQuickSearch = 0;
+		pageProperty_quickSearch_addTopPadding = 1;
+		pageProperty_useSettingsSystem = 1;
+		pageProperty_sidebar_UsesTabs = 1;
+		pageProperty_resizer_ChangeContentMargin = 0;
+		break;
+		case "STI_Timer.html":
+		pageProperty_pageIcon = "icon_schedules.png";
+		pageProperty_MenuName = "Impromptu Speech";
+		pageProperty_PageTitle = "TNT Timer";
+		pageProperty_enableGreetings = 0;
+		pageProperty_enableSidebar = 0;
+		pageProperty_enableCategoryLabelIcons = 0;
+		pageProperty_lockSidebar = 0;
+		pageProperty_enableStatusBar = 1;
+		pageProperty_useProfileSystem = 0;
+		pageProperty_sidebarExpandedWidth = 300;
+		pageProperty_backgroundState = 0;
+		pageProperty_enableClockScreen = 0;
+		pageProperty_enableCategoryNavigation = 0;
+		pageProperty_enableLoadingScreen = 1;
+		pageProperty_enableHeader = 1;
+		pageProperty_sidebarMoveContent = 0;
+		pageProperty_enableQuickSearch = 0;
+		pageProperty_quickSearch_addTopPadding = 1;
+		pageProperty_sidebar_UsesTabs = 0;
 		break;
 	}
 	generate_Launcher_NavigationList();
@@ -200,6 +228,9 @@ function OnloadTasks(){
 
 
 function SetPageProperties(){
+	if (pageProperty_hideFooter == 1){
+		document.querySelectorAll(".Page_Footer")[0].style.display = "none";
+	}
 	if (pageProperty_enableLoadingScreen == 1){
 		document.getElementById("LoadingScreen").style.display = "grid";
 	}
@@ -295,11 +326,19 @@ function SetPageProperties(){
 		}
 	}
 	
+	if (pageProperty_resizer_ChangeContentMargin == 0){
+		document.getElementById("Page_MainContent").style.marginLeft = "0%";
+		document.getElementById("Page_MainContent").style.marginRight = "0%";
+	}
+	
 	console.log("Page properties has been set successfully");
 	check_WindowSize_test();
 	// start_Animations();
 	set_Version_General();
 	
+	if (enable_Dev_Counter == true){
+		dev_update_RefreshNumber();
+	}
 }
 
 function close_LoadingScreen(){
@@ -339,9 +378,9 @@ function check_Connection(){
 }
 
 function generate_Launcher_NavigationList(){
-	let navigationListItems = ["Old UI", "Home", "Shortcut Editor", "Settings", "Pomodoro Timer", "Watermark Applier", "Template V1", "Shortcut Editor Dev"]; //Launcher navigation text
-	let navigationListItems_Link = ["file:///C:/Users/Elmer%20Jr%20G%20Felisilda/Documents/HTML%20Projects/Doodle%20Launcher/DL_Main.html", "DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html", "WA_Main.html", "DL_Template_V1.html", "DL_ShortcutEditor_Dev.html"]; //Launcher navigation links
-	let navigationListItems_Icon = ["favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png"];
+	let navigationListItems = ["Old UI", "Home", "Shortcut Editor", "Settings", "Pomodoro Timer", "Watermark Applier", "Template V1", "Shortcut Editor Dev", "STI TNT Timer"]; //Launcher navigation text
+	let navigationListItems_Link = ["file:///C:/Users/Elmer%20Jr%20G%20Felisilda/Documents/HTML%20Projects/Doodle%20Launcher/DL_Main.html", "DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html", "WA_Main.html", "DL_Template_V1.html", "DL_ShortcutEditor_Dev.html", "STI_Timer.html"]; //Launcher navigation links
+	let navigationListItems_Icon = ["favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png"];
 	
 	for (var i = 0; i < navigationListItems.length; i++) {
 		var navigationListItems_Select = navigationListItems[i]; //Contains the selected pagenavi text
@@ -379,39 +418,39 @@ function generate_Launcher_HeaderButtons(pageName){
 	let Generator_HeaderButtons_OnclickAction = [];
 	switch (pageName){
 		case "DL_Template_V1.html":
-			Generator_HeaderButtons_Text = ["Button 1", "Button 2", "Button 3", "Button 4", "Button 5", "Button 6"];
-			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
-			Generator_HeaderButtons_ID = ["", "", "", "", "", ""];
-			Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()", "toggle_Sidebar_CategoryNavigation()", "", "", "", ""];
-			var Generator_DisplayInHeader = true;
+		Generator_HeaderButtons_Text = ["Button 1", "Button 2", "Button 3", "Button 4", "Button 5", "Button 6"];
+		Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
+		Generator_HeaderButtons_ID = ["", "", "", "", "", ""];
+		Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()", "toggle_Sidebar_CategoryNavigation()", "", "", "", ""];
+		var Generator_DisplayInHeader = true;
 		break;
 		case "DL_Main.html":
-			Generator_HeaderButtons_Text = ["Internet search"];
-			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png"];
-			Generator_HeaderButtons_ID = [""];
-			Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()"];
-			var Generator_DisplayInHeader = false;
+		Generator_HeaderButtons_Text = ["Internet search"];
+		Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png"];
+		Generator_HeaderButtons_ID = [""];
+		Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()"];
+		var Generator_DisplayInHeader = false;
 		break;
 		case "DL_ShortcutEditor_Dev.html":
-			Generator_HeaderButtons_Text = ["Add Item", "Re-order categories", "Re-order shortcuts", "How to use"];
-			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
-			Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
-			Generator_HeaderButtons_OnclickAction = ["open_Subwindow('AddItem')", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
-			var Generator_DisplayInHeader = true;
+		Generator_HeaderButtons_Text = ["Add Item", "Re-order categories", "Re-order shortcuts", "How to use"];
+		Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
+		Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
+		Generator_HeaderButtons_OnclickAction = ["open_Subwindow('AddItem')", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
+		var Generator_DisplayInHeader = true;
 		break;
 		case "DL_Settings.html":
-			Generator_HeaderButtons_Text = ["Save changes"];
-			Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png"];
-			Generator_HeaderButtons_ID = [""];
-			Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
-			var Generator_DisplayInHeader = true;
+		Generator_HeaderButtons_Text = ["Save changes"];
+		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png"];
+		Generator_HeaderButtons_ID = [""];
+		Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
+		var Generator_DisplayInHeader = true;
 		break;
 		case "WA_Main.html":
-			Generator_HeaderButtons_Text = ["Take Screenshot", "Import File Names", "Import Watermark Names" , "Change Image", "Change Watermark", "Reset"];
-			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
-			Generator_HeaderButtons_ID = ["", "", "", "", "", ""];
-			Generator_HeaderButtons_OnclickAction = ["generateImage()", "open_Subwindow('ImportFileNames')", "open_Subwindow('ImportWatermarkNames')", "open_Subwindow('ChangeImageFile')", "open_Subwindow('ChangeWatermarkFile')", "WA_Reset()"];
-			var Generator_DisplayInHeader = true;
+		Generator_HeaderButtons_Text = ["Take Screenshot", "Import File Names", "Import Watermark Names" , "Change Image", "Change Watermark", "Reset"];
+		Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
+		Generator_HeaderButtons_ID = ["", "", "", "", "", ""];
+		Generator_HeaderButtons_OnclickAction = ["generateImage()", "open_Subwindow('ImportFileNames')", "open_Subwindow('ImportWatermarkNames')", "open_Subwindow('ChangeImageFile')", "open_Subwindow('ChangeWatermarkFile')", "WA_Reset()"];
+		var Generator_DisplayInHeader = true;
 		break;
 	}
 	
@@ -502,7 +541,7 @@ function sessionCheck(){
 			var day = "Saturday";
 		}
 		document.getElementById('pageElement_SessionScreen').style.display == "block"
-	} else {
+		} else {
 		var SessionScreen = document.getElementById("pageElement_SessionScreen");
 		SessionScreen.style.display = "none";
 		sessionScreenState = "invisible";
@@ -568,7 +607,7 @@ function trigger_ChangeTab_Keyboard(Direction){
 				Tab_Items_Keyboard_NewTab = 0;
 			}
 			trigger_ChangeTab_test(Tab_Items_IDArray[Tab_Items_Keyboard_NewTab]);
-		} else if (Direction == "upwards"){
+			} else if (Direction == "upwards"){
 			Tab_Items_Keyboard_NewTab = Tab_Items_CurrentTab - 1;
 			if (Tab_Items_Keyboard_NewTab < 0){
 				Tab_Items_Keyboard_NewTab = Tab_Items.length - 1;
@@ -608,7 +647,7 @@ function trigger_ChangeTab_test(ID){
 		selectedTab.style.animationName = "opening_pageTab_Upwards";
 		closingTab.style.animationName = "closing_pageTab_Downwards";
 		Tab_Items_CurrentTab = Tab_Items_ClickedItemIndex;
-	} else if (Tab_Items_CurrentTab < Tab_Items_ClickedItemIndex){ //The clicked sidebar tab is below the currently opened tab (Down animation)
+		} else if (Tab_Items_CurrentTab < Tab_Items_ClickedItemIndex){ //The clicked sidebar tab is below the currently opened tab (Down animation)
 		selectedTab.style.animationName = "opening_pageTab_Downwards";
 		closingTab.style.animationName = "closing_pageTab_Upwards";
 		Tab_Items_CurrentTab = Tab_Items_ClickedItemIndex;
@@ -663,13 +702,15 @@ function check_WindowSize_test(){
 			for (a = 0; a < Header_Buttons.length; a++){
 				Header_Buttons[a].style.display = "none";
 			}
-		} else {
+			} else {
 			for (a = 0; a < Header_Buttons.length; a++){
 				Header_Buttons[a].style.display = "grid";
 			}
 		}
 		MainContent.style.width = "100%";
-		MainContent.style.marginLeft = "3%";
+		if (pageProperty_resizer_ChangeContentMargin == 1){
+			MainContent.style.marginLeft = "3%";
+		}
 		Header_PageTitle.style.display = "none";
 		Header_StatusTray_Clock.style.display = "none";
 		Header_StatusTray_Battery.style.display = "none";
@@ -686,7 +727,7 @@ function check_WindowSize_test(){
 			if (pageProperty_lockSidebar == 1){
 				Content.style.width = "100%";
 			}
-		} else {
+			} else {
 			Content.style.width = "100%";
 		}
 		for (a = 0; a < Subwindows.length; a++){
@@ -701,9 +742,12 @@ function check_WindowSize_test(){
 		}
 		Footer_VersionTitle.style.display = "none";
 		MainMenu_PageName.style.display = "flex";
-	} else if (windowSizePreset == "normal"){
+		} else if (windowSizePreset == "normal"){
+		
 		MainContent.style.width = pageProperty_mainContentWidth + "%";
-		MainContent.style.marginLeft = "10%";
+		if (pageProperty_resizer_ChangeContentMargin == 1){
+			MainContent.style.marginLeft = "10%";
+		}
 		Header_PageTitle.style.display = "block";
 		Header_StatusTray_Clock.style.display = "block";
 		Header_StatusTray_Battery.style.display = "block";
@@ -719,7 +763,7 @@ function check_WindowSize_test(){
 			if (pageProperty_lockSidebar == 1){
 				Content.style.width = "100%";
 			}
-		} else {
+			} else {
 			Content.style.width = "100%";
 		}
 		// Content.style.width = "100%";
@@ -747,7 +791,7 @@ function check_WindowSize_test(){
 			for (a = 0; a < SE_TableView_Item_URL.length; a++){
 				SE_TableView_Item_URL[a].style.display = "none";
 			}
-		} else if (windowSizePreset == "normal"){
+			} else if (windowSizePreset == "normal"){
 			for (a = 0; a < SE_TableView_Item.length; a++){
 				SE_TableView_Item[a].style.gridTemplateColumns = "0.75fr 1fr";
 			}
@@ -758,7 +802,7 @@ function check_WindowSize_test(){
 	}
 	
 	/* // Mobile
-	if (windowSizePreset == "normal" && isMobileDevice == true){
+		if (windowSizePreset == "normal" && isMobileDevice == true){
 		Header.style.height = "100px";
 		Content.style.marginTop = "100px";
 		Sidebar.style.marginTop = "100px";
@@ -766,8 +810,8 @@ function check_WindowSize_test(){
 		pageProperty_sidebarExpandedWidth = 500;
 		pageProperty_sidebarCompactedWidth = 100;
 		document.getElementById("Header_PageNavi_Title").style.fontSize = "50px";
-	} else {
-	
+		} else {
+		
 	} */
 	
 	
@@ -947,20 +991,20 @@ function toggle_Sidebar(){
 					document.getElementById("pageElement_Content").style.marginLeft = pageProperty_sidebarExpandedWidth + "px";
 				}
 				Sidebar_State = "Expanded";
-			} else if (Sidebar_State == "Expanded"){
+				} else if (Sidebar_State == "Expanded"){
 				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarCompactedWidth +"px";
 				document.getElementById("pageElement_Content").style.marginLeft = "50px";
 				// var toggle_Sidebar_GridTemplateColumns = "50px 1fr";
 				Sidebar_State = "Contracted";
 			}
-		} else if (pageProperty_lockSidebar == 1){
+			} else if (pageProperty_lockSidebar == 1){
 			if (Sidebar_State == "Contracted"){
 				document.getElementById("pageElement_Sidebar").style.width = pageProperty_sidebarExpandedWidth + "px";
 				if (pageProperty_sidebarMoveContent == 1){
 					document.getElementById("pageElement_Content").style.marginLeft = pageProperty_sidebarExpandedWidth + "px";
 				}
 				Sidebar_State = "Expanded";
-			} else if (Sidebar_State == "Expanded"){
+				} else if (Sidebar_State == "Expanded"){
 				document.getElementById("pageElement_Sidebar").style.width = "0px";
 				document.getElementById("pageElement_Content").style.marginLeft = "0px";
 				Sidebar_State = "Contracted";
@@ -1197,8 +1241,8 @@ function startTime() {
 	// document.getElementById("Sidebar_Clock_Time").innerHTML = displayHour + ":" + m + ":" + s + " "+AMPM;
 	if (pageProperty_enableClockScreen == 1){
 		// if (document.getElementById('pageElement_SessionScreen').style.display == "block"){
-			document.getElementById('Clock_Time_SessionScreen').innerHTML =  displayHour + ":" + m;
-			
+		document.getElementById('Clock_Time_SessionScreen').innerHTML =  displayHour + ":" + m;
+		
 		// }
 	}
 	
@@ -1215,10 +1259,10 @@ function startTime() {
 				document.getElementById('StatusMenu_Battery_Level').innerHTML =  battery_level+"%";
 				if (isFinite(battery.dischargingTime / 60) == true){
 					document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Estimated " + Math.round(battery.dischargingTime / 60) + " minutes remaining";
-				} else {
+					} else {
 					if (battery_level == 100){
 						document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Fully charged";
-					} else {
+						} else {
 						document.getElementById("StatusMenu_Battery_TimeRemaining").innerHTML = "Plugged in, charging";
 					}
 				}
@@ -2332,9 +2376,7 @@ function OnloadTasks_depracated(){
 	
 	document.getElementById("pageElement_SearchQuery_3").placeholder = "Search using "+Behavior_DisplaySearchBar_PreferredEngine;
 	
-	if (enable_Dev_Counter == true){
-		dev_update_RefreshNumber();
-	}
+	
 }
 
 function check_Version(){
@@ -2436,9 +2478,9 @@ function apply_Behaviors(){
 	
 	/* if (PageName == "DL_Main.html"){
 		if(Behavior_DisplaySearchBar == false){
-			document.getElementById("pageElement_QuickSearchBar").style.display = "none";
-			} else {
-			document.getElementById("pageElement_QuickSearchBar").style.display = "grid";
+		document.getElementById("pageElement_QuickSearchBar").style.display = "none";
+		} else {
+		document.getElementById("pageElement_QuickSearchBar").style.display = "grid";
 		}
 	} */
 	
@@ -2458,6 +2500,7 @@ function dev_update_RefreshNumber(){
 		localStorage.setItem("dev_DL_refreshCount", JSON.stringify(dev_refreshCount));
 	}
 	document.getElementById("pageElement_Footer_VersionTitle").innerHTML = VersionTitle+" | Refreshes since 2/20/2022: "+dev_refreshCount;
+	console.log(VersionTitle+" | Refreshes since 2/20/2022: "+dev_refreshCount);
 	
 }
 
@@ -2469,7 +2512,7 @@ function set_Version_General(){
 	document.getElementById("pageElement_Footer_VersionTitle").innerHTML = VersionTitle;
 	document.getElementById("pageElement_Footer_Copyright").innerHTML = CopyrightTitle;
 	document.getElementById("pageElement_PageTitle").innerHTML = VersionTitle + " - " + pageProperty_PageTitle;
-
+	
 	// Set loading screen elements visible
 	if (pageProperty_enableLoadingScreen == 1){
 		document.getElementById("LoadingScreen_UpperSection").style.animationName = "open_LoadingScreen_Elements";
@@ -2506,7 +2549,7 @@ function hide_ToggleableElements(){
 
 function start_Animations(){
 	var Sidebar_Items = document.querySelectorAll(".Sidebar_Item");
-	for (a = 0; a != Sidebar_Items.length; a++){
+	for (a = 0; a < Sidebar_Items.length; a++){
 		Sidebar_Items_Select = Sidebar_Items[a];
 		Sidebar_Items_Select.style.transform = "translateX(-100%)";
 		Sidebar_Items_Select.style.animationName = "opening_SidebarItems";
@@ -2521,7 +2564,6 @@ function start_Animations(){
 		Shortcut_Items_Select.style.opacity = "0%";
 		Shortcut_Items_Select.style.animationName = "opening_ShortcutItems";
 		Shortcut_Items_Select.style.animationDuration = "0.5s";
-		Sidebar_Items_Select.style.animationDelay = "2s";
 		Shortcut_Items_Select.style.animationFillMode = "forwards";
 	}
 	var Header_Items = document.querySelectorAll(".Header_Content_Button");
@@ -2544,8 +2586,8 @@ function check_AnimationFinish(){
 
 function reset_toDefaultAnimations(){
 	/* var Shortcut_Item = document.querySelectorAll(".Shortcut_Item");
-	var Shortcut_Folder = document.querySelectorAll(".Category_Folder_Item");
-	for (var a = 0; a < Shortcut_Item.length; a++) {
+		var Shortcut_Folder = document.querySelectorAll(".Category_Folder_Item");
+		for (var a = 0; a < Shortcut_Item.length; a++) {
 		var Shortcut_Item_Select = Shortcut_Item[a];
 		Shortcut_Item_Select.style.opacity = "0%";
 		Shortcut_Item_Select.style.display = "block";
@@ -2555,8 +2597,8 @@ function reset_toDefaultAnimations(){
 		
 		Shortcut_Item_Select.style.animationDelay = delay2 + "s";
 		Shortcut_Item_Select.style.animationFillMode = "forwards";
-	}
-	for (var b = 0; b < Shortcut_Folder.length; b++) {
+		}
+		for (var b = 0; b < Shortcut_Folder.length; b++) {
 		var Shortcut_Folder_Select = Shortcut_Folder[b];
 		Shortcut_Folder_Select.style.opacity = "0%";
 		Shortcut_Folder_Select.style.display = "grid";
@@ -2813,7 +2855,7 @@ localStorage.setItem("Content_URL_Category 4", JSON.stringify(systemTest_Categor
 
 
 var key_Index_Category = "DL_CategoryIndex"; //Key that contains the index of categories to be created
-const SE_Array_Category_Index = []; //Creates the array of categories
+var SE_Array_Category_Index = []; //Creates the array of categories
 var SE_Category_Index = localStorage.getItem(key_Index_Category);
 var SE_Category_Count;
 if (SE_Category_Index){
@@ -3189,7 +3231,7 @@ function SE_CreateItem(){
 		case "select_Shortcut":
 		SE_CreateItem_ShortcutText = document.getElementById("form_SE_Shortcut_Title").value;
 		SE_CreateItem_ShortcutURL = document.getElementById("form_SE_Shortcut_URL").value;
-		SE_CreateItem_InsertInCategory = document.getElementById("dropdownButton_AddItem_Shortcut1").innerText;
+		SE_CreateItem_InsertInCategory = document.getElementById("AddItem_Shortcut1").innerText;
 		SE_CreateItem_CategoryKey = "DL_Content_"+SE_CreateItem_InsertInCategory;
 		SE_CreateItem_CategoryKeyURL = "DL_Content_URL_"+SE_CreateItem_InsertInCategory;
 		if ((SE_CreateItem_ShortcutText != "" && SE_CreateItem_ShortcutURL != "") && SE_CreateItem_InsertInCategory != "No selected"){
@@ -3562,6 +3604,7 @@ function Generator_Render_Categories(){
 			
 			var categoryNavigation_Letter_Anchor = document.createElement('a');
 			categoryNavigation_Letter_Anchor.setAttribute("id", "categoryNavigation_Letter_Anchor_"+a);
+			categoryNavigation_Letter_Anchor.classList.add("Sidebar_Item_Category");
 			categoryNavigation_Letter_Anchor.setAttribute("href", "#anchor_category_"+a);
 			document.getElementById("categoryNavigation_"+a).appendChild(categoryNavigation_Letter_Anchor);
 			
@@ -3829,14 +3872,232 @@ function Generator_Render_Shortcuts_TableView(){
 		}
 	}
 	/* var SE_TableView_Item = document.querySelectorAll(".ShortcutEditor_TableView_Item");
-	for (a = 0; a < SE_TableView_Item.length; a++){
+		for (a = 0; a < SE_TableView_Item.length; a++){
 		if (a % 2 == 1){
-			SE_TableView_Item[a].style.backgroundColor.hover = "rgba(0, 0, 0, 0.0)";
+		SE_TableView_Item[a].style.backgroundColor.hover = "rgba(0, 0, 0, 0.0)";
 		}
 	} */
 }
 
+function Generator_Render_Categories_ReArranger(){
+	var Renderer_Category_Count = Object.keys(JSON.parse(localStorage.getItem(ShortcutLibrary_CategoryIndex))).length;
+	
+	/* Create the category index*/
+	var Renderer_Category_Array = [];
+	var Renderer_Category_Array_Data = Object.values(JSON.parse(localStorage.getItem(ShortcutLibrary_CategoryIndex))); //Stor the category index to a temporary variable
+	for (b = 0; b != Renderer_Category_Count; b++){ //Puts all the content of the selected key into the array
+		Renderer_Category_Array.push(Renderer_Category_Array_Data[b]); 
+		//Push the data into the actual array
+	}
+	
+	var ReArranger_InBetween_Div = document.createElement('div');
+	ReArranger_InBetween_Div.classList.add("ShortcutEditor_Rearrange_Item_InBetween");
+	ReArranger_InBetween_Div.setAttribute("onclick", "SE_Swapper_SelectItem_Category_InBetween('1')");
+	ReArranger_InBetween_Div.setAttribute("id", "ReArranger_InBetween_0");
+	document.getElementById("pageElement_CategoryDiv_ReArrange_Categories").appendChild(ReArranger_InBetween_Div);
+	
+	var ReArranger_InBetween_Div_Title = document.createElement('p');
+	ReArranger_InBetween_Div_Title.classList.add("ShortcutEditor_Rearrange_Item_InBetween_Text");
+	ReArranger_InBetween_Div_Title.innerHTML = "Insert between";
+	ReArranger_InBetween_Div_Title.setAttribute("id", "");
+	document.getElementById("ReArranger_InBetween_0").appendChild(ReArranger_InBetween_Div_Title);
+	
+	/* Generate the category containers */
+	for (a = 1; a != Renderer_Category_Count; a++){
+		/* var categoryDiv = document.createElement('div'); //Creates the container div element
+			categoryDiv.setAttribute("id", "pageElement_CategoryDiv_TableView_"+a); //Adds id to div
+			categoryDiv.classList.add("Category"); //Adds CSS to div
+		document.getElementById("Page_MainContent_TableView").appendChild(categoryDiv); */
+		var ReArranger_Category_Div = document.createElement('div');
+		ReArranger_Category_Div.classList.add("ShortcutEditor_TableView_Item");
+		ReArranger_Category_Div.setAttribute("onclick", "SE_Swapper_SelectItem_Category(this.id)");
+		ReArranger_Category_Div.setAttribute("id", "ReArranger_Category_"+a);
+		document.getElementById("pageElement_CategoryDiv_ReArrange_Categories").appendChild(ReArranger_Category_Div);
+		
+		var ReArranger_Category_Div_Title = document.createElement('p');
+		ReArranger_Category_Div_Title.classList.add("ShortcutEditor_TableView_Item_ShortcutTitle");
+		ReArranger_Category_Div_Title.innerHTML = Renderer_Category_Array[a];
+		ReArranger_Category_Div_Title.setAttribute("id", "ReArranger_Category_Title_"+Renderer_SelectedCategoryItem+"_"+(a+1));
+		document.getElementById("ReArranger_Category_"+a).appendChild(ReArranger_Category_Div_Title);
+		
+		var ReArranger_InBetween_Div = document.createElement('div');
+		ReArranger_InBetween_Div.classList.add("ShortcutEditor_Rearrange_Item_InBetween");
+		ReArranger_InBetween_Div.setAttribute("onclick", "SE_Swapper_SelectItem_Category_InBetween('"+(a+1)+"')");
+		ReArranger_InBetween_Div.setAttribute("id", "ReArranger_InBetween_"+a);
+		document.getElementById("pageElement_CategoryDiv_ReArrange_Categories").appendChild(ReArranger_InBetween_Div);
+		
+		var ReArranger_InBetween_Div_Title = document.createElement('p');
+		ReArranger_InBetween_Div_Title.classList.add("ShortcutEditor_Rearrange_Item_InBetween_Text");
+		ReArranger_InBetween_Div_Title.innerHTML = "Insert between";
+		ReArranger_InBetween_Div_Title.setAttribute("id", "");
+		document.getElementById("ReArranger_InBetween_"+a).appendChild(ReArranger_InBetween_Div_Title);
+		
+		var ReArranger_Shortcuts_CategoryList = document.createElement('p');
+		ReArranger_Shortcuts_CategoryList.classList.add("Input_Dropdown_Item");
+		ReArranger_Shortcuts_CategoryList.setAttribute("onclick", "trigger_dropdownItemSelected(this.id, this.innerText), refresh_ShortcutEditor()");
+		ReArranger_Shortcuts_CategoryList.setAttribute("id", "dropdownItem_ReArranger_Shortcuts_CategoryList");
+		ReArranger_Shortcuts_CategoryList.innerHTML = Renderer_Category_Array[a];
+		document.getElementById("dropdownMenu_ReArranger_Shortcuts_CategoryList").appendChild(ReArranger_Shortcuts_CategoryList);
+	}
+	Generator_Render_Shortcuts_ReArranger();
+}
+var SE_ReArranger_ShortcutContent_Array = [];
+var SE_ReArranger_ShortcutURL_Array = [];
+var SE_ReArranger_ChosenCategory;
+function Generator_Render_Shortcuts_ReArranger(){
+	SE_Swapper_Shortcut_SwapStage = 1;
+	SE_ReArranger_ShortcutContent_Array = [];
+	SE_ReArranger_ShortcutURL_Array = [];
+	
+	if (document.getElementById("ReArranger_Shortcuts_CategoryList").innerText == "No selected"){
+		document.getElementById("ReArranger_Shortcuts_CategoryList").innerHTML = SE_Array_Category_Index[1];
+	}
+	
+	var ReArranger_Renderer_ChosenCategory = document.getElementById("ReArranger_Shortcuts_CategoryList").innerText;
+	SE_ReArranger_ChosenCategory = ReArranger_Renderer_ChosenCategory;
+	
+	console.log("Process started");
+	var ReArranger_Renderer_Key_ShortcutContent = "DL_Content_"+ReArranger_Renderer_ChosenCategory;
+	var ReArranger_Renderer_Key_ShortcutURL = "DL_Content_URL_"+ReArranger_Renderer_ChosenCategory;
+	var ReArranger_Renderer_Key_ShortcutContent_Length = Object.keys(JSON.parse(localStorage.getItem(ReArranger_Renderer_Key_ShortcutContent))).length; //Gets the length of the shortcut key
+	var ReArranger_Renderer_Key_ShortcutURL_Length = Object.keys(JSON.parse(localStorage.getItem(ReArranger_Renderer_Key_ShortcutURL))).length; //Gets the length of the shortcut key
+	
+	var ReArranger_Renderer_Key_ShortcutContent_Data = Object.values(JSON.parse(localStorage.getItem(ReArranger_Renderer_Key_ShortcutContent))); //Temporarily transfer items into temporary variable
+	for (a = 0; a != ReArranger_Renderer_Key_ShortcutContent_Length; a++){
+		SE_ReArranger_ShortcutContent_Array.push(ReArranger_Renderer_Key_ShortcutContent_Data[a]); //Transfers all data from variable into array
+	}
+	
+	var ReArranger_Renderer_Key_ShortcutURL_Data = Object.values(JSON.parse(localStorage.getItem(ReArranger_Renderer_Key_ShortcutURL))); //Temporarily transfer items into temporary variable
+	for (b = 0; b != ReArranger_Renderer_Key_ShortcutURL_Length; b++){
+		SE_ReArranger_ShortcutURL_Array.push(ReArranger_Renderer_Key_ShortcutURL_Data[b]); //Transfers all data from variable into array
+	}
+	
+	var ReArranger_InBetween_Div = document.createElement('div');
+	ReArranger_InBetween_Div.classList.add("ShortcutEditor_Rearrange_Item_InBetween");
+	ReArranger_InBetween_Div.setAttribute("onclick", "SE_Swapper_SelectItem_Shortcut_InBetween('1')");
+	ReArranger_InBetween_Div.setAttribute("id", "ReArranger_InBetween_Shortcuts_0");
+	document.getElementById("pageElement_ReArrange_Shortcuts_CategoryDiv").appendChild(ReArranger_InBetween_Div);
+	
+	var ReArranger_InBetween_Div_Title = document.createElement('p');
+	ReArranger_InBetween_Div_Title.classList.add("ShortcutEditor_Rearrange_Item_InBetween_Text");
+	ReArranger_InBetween_Div_Title.innerHTML = "Insert between";
+	ReArranger_InBetween_Div_Title.setAttribute("id", "");
+	document.getElementById("ReArranger_InBetween_Shortcuts_0").appendChild(ReArranger_InBetween_Div_Title);
+	
+	for (c = 1; c != ReArranger_Renderer_Key_ShortcutContent_Length; c++){
+		var ReArranger_Shortcut_Div = document.createElement('div');
+		ReArranger_Shortcut_Div.classList.add("ShortcutEditor_TableView_Item");
+		ReArranger_Shortcut_Div.setAttribute("onclick", "SE_Swapper_SelectItem_Shortcut(this.id)");
+		ReArranger_Shortcut_Div.setAttribute("id", "ReArranger_Shortcut_"+c);
+		document.getElementById("pageElement_ReArrange_Shortcuts_CategoryDiv").appendChild(ReArranger_Shortcut_Div);
+		
+		var ReArranger_Shortcut_Div_Title = document.createElement('p');
+		ReArranger_Shortcut_Div_Title.classList.add("ShortcutEditor_TableView_Item_ShortcutTitle");
+		ReArranger_Shortcut_Div_Title.innerHTML = SE_ReArranger_ShortcutContent_Array[c];
+		ReArranger_Shortcut_Div_Title.setAttribute("id", "ReArranger_Category_Title_"+Renderer_SelectedCategoryItem+"_"+(c+1));
+		document.getElementById("ReArranger_Shortcut_"+c).appendChild(ReArranger_Shortcut_Div_Title);
+		console.log("Rendered");
+		
+		var ReArranger_InBetween_Div = document.createElement('div');
+		ReArranger_InBetween_Div.classList.add("ShortcutEditor_Rearrange_Item_InBetween");
+		ReArranger_InBetween_Div.setAttribute("onclick", "SE_Swapper_SelectItem_Shortcut_InBetween('"+(c+1)+"')");
+		ReArranger_InBetween_Div.setAttribute("id", "ReArranger_InBetween_Shortcuts_"+c);
+		document.getElementById("pageElement_ReArrange_Shortcuts_CategoryDiv").appendChild(ReArranger_InBetween_Div);
+		
+		var ReArranger_InBetween_Div_Title = document.createElement('p');
+		ReArranger_InBetween_Div_Title.classList.add("ShortcutEditor_Rearrange_Item_InBetween_Text");
+		ReArranger_InBetween_Div_Title.innerHTML = "Insert between";
+		ReArranger_InBetween_Div_Title.setAttribute("id", "");
+		document.getElementById("ReArranger_InBetween_Shortcuts_"+c).appendChild(ReArranger_InBetween_Div_Title);
+		if (c > 100){
+			c = ReArranger_Renderer_Key_ShortcutContent_Length;
+			console.log("Infinite loop!");
+			console.log(ReArranger_Renderer_Key_ShortcutContent_Length);
+		}
+	}
+	
+	
+}
+
 function Generator_Render_Shortcuts_TableView_deprecated(){
+	var Renderer_Category_Count = Object.keys(JSON.parse(localStorage.getItem(ShortcutLibrary_CategoryIndex))).length;
+	
+	/* Create the category index*/
+	var Renderer_Category_Array = [];
+	var Renderer_Category_Array_Data = Object.values(JSON.parse(localStorage.getItem(ShortcutLibrary_CategoryIndex))); //Stor the category index to a temporary variable
+	for (b = 0; b != Renderer_Category_Count; b++){ //Puts all the content of the selected key into the array
+		Renderer_Category_Array.push(Renderer_Category_Array_Data[b]); 
+		//Push the data into the actual array
+	}
+	
+	var ReArranger_InBetween_Div = document.createElement('div');
+	ReArranger_InBetween_Div.classList.add("ShortcutEditor_Rearrange_Item_InBetween");
+	ReArranger_InBetween_Div.setAttribute("onclick", "SE_Swapper_SelectItem_Category_InBetween('1')");
+	ReArranger_InBetween_Div.setAttribute("id", "ReArranger_InBetween_0");
+	document.getElementById("pageElement_CategoryDiv_ReArrange_Categories").appendChild(ReArranger_InBetween_Div);
+	
+	var ReArranger_InBetween_Div_Title = document.createElement('p');
+	ReArranger_InBetween_Div_Title.classList.add("ShortcutEditor_Rearrange_Item_InBetween_Text");
+	ReArranger_InBetween_Div_Title.innerHTML = "Insert between";
+	ReArranger_InBetween_Div_Title.setAttribute("id", "");
+	document.getElementById("ReArranger_InBetween_0").appendChild(ReArranger_InBetween_Div_Title);
+	
+	/* Generate the category containers */
+	for (a = 1; a != Renderer_Category_Count; a++){
+		/* var categoryDiv = document.createElement('div'); //Creates the container div element
+			categoryDiv.setAttribute("id", "pageElement_CategoryDiv_TableView_"+a); //Adds id to div
+			categoryDiv.classList.add("Category"); //Adds CSS to div
+		document.getElementById("Page_MainContent_TableView").appendChild(categoryDiv); */
+		var ReArranger_Category_Div = document.createElement('div');
+		ReArranger_Category_Div.classList.add("ShortcutEditor_TableView_Item");
+		ReArranger_Category_Div.setAttribute("onclick", "SE_Swapper_SelectItem_Category(this.id)");
+		ReArranger_Category_Div.setAttribute("id", "ReArranger_Category_"+a);
+		document.getElementById("pageElement_CategoryDiv_ReArrange_Categories").appendChild(ReArranger_Category_Div);
+		
+		var ReArranger_Category_Div_Title = document.createElement('p');
+		ReArranger_Category_Div_Title.classList.add("ShortcutEditor_TableView_Item_ShortcutTitle");
+		ReArranger_Category_Div_Title.innerHTML = Renderer_Category_Array[a];
+		ReArranger_Category_Div_Title.setAttribute("id", "ReArranger_Category_Title_"+Renderer_SelectedCategoryItem+"_"+(a+1));
+		document.getElementById("ReArranger_Category_"+a).appendChild(ReArranger_Category_Div_Title);
+		
+		var ReArranger_InBetween_Div = document.createElement('div');
+		ReArranger_InBetween_Div.classList.add("ShortcutEditor_Rearrange_Item_InBetween");
+		ReArranger_InBetween_Div.setAttribute("onclick", "SE_Swapper_SelectItem_Category_InBetween('"+(a+1)+"')");
+		ReArranger_InBetween_Div.setAttribute("id", "ReArranger_InBetween_"+a);
+		document.getElementById("pageElement_CategoryDiv_ReArrange_Categories").appendChild(ReArranger_InBetween_Div);
+		
+		var ReArranger_InBetween_Div_Title = document.createElement('p');
+		ReArranger_InBetween_Div_Title.classList.add("ShortcutEditor_Rearrange_Item_InBetween_Text");
+		ReArranger_InBetween_Div_Title.innerHTML = "Insert between";
+		ReArranger_InBetween_Div_Title.setAttribute("id", "");
+		document.getElementById("ReArranger_InBetween_"+a).appendChild(ReArranger_InBetween_Div_Title);
+		
+		/* var categoryLabel = document.createElement('div'); //Creates the label div
+			categoryLabel.setAttribute("id", "ReArranger_Category_"+a); //Adds id to label
+			categoryLabel.classList.add("ShortcutEditor_TableView_Category_Label"); //Adds CSS to label
+			document.getElementById("pageElement_CategoryDiv_ReArrange_Categories").appendChild(categoryLabel);
+			
+			var categoryLabelText = document.createElement('h2'); //Creates h1 element
+			categoryLabelText.classList.add("ShortcutEditor_TableView_Category_Label_Text"); //Adds CSS to h1 element
+			categoryLabelText.innerHTML = Renderer_Category_Array[a]; //Adds text
+			categoryLabelText.setAttribute("onclick", "SE_TV_EditCategory(this.parentNode.id)");
+			document.getElementById("ReArranger_Category_"+a).appendChild(categoryLabelText);
+			
+			
+			var categoryContent = document.createElement('div'); //Creates the content container div
+			categoryContent.setAttribute("id", "content_TableView_category_"+a); //Adds id to container
+			categoryContent.classList.add("ShortcutEditor_TableView_Category_Content");
+		document.getElementById("pageElement_CategoryDiv_TableView_"+a).appendChild(categoryContent); */
+	}
+	// Generator_Render_Shortcuts_TableView();
+	
+	
+	
+	
+	
+	
+	
+	
 	var Renderer_Category_Count = Object.keys(JSON.parse(localStorage.getItem("DL_CategoryIndex"))).length;
 	console.log("Renderer_CategoryCount: "+Renderer_Category_Count);
 	
@@ -4070,7 +4331,7 @@ function SE_TV_OpenConfirm_DeleteElement(selectedID){
 		categoryName = SE_Array_Category_Index[categoryNumber];
 		console.log(categoryNumber);
 		document.getElementById("pageElement_Confirmation_DeleteItem").innerHTML = "Are you sure you want to delete category "+categoryName+"?";
-	} else {
+		} else {
 		SE_DE_SelectedElement = selectedID.substr(7);
 		SE_DE_SelectedElementPlus1 = SE_DE_SelectedElement + 1;
 		document.getElementById("pageElement_Confirmation_DeleteItem").innerHTML = "Are you sure you want to delete shortcut "+document.getElementById('Item_Title_'+SE_DE_CategoryNumber+'_'+SE_DE_SelectedElement).innerText+"?";
@@ -4301,38 +4562,48 @@ function refresh_ShortcutEditor(){
 	
 	/* Item Swapper Shortcut */
 	/*var list = document.getElementById("pageElement_ShortcutEditor_SwapList_List_Shortcuts");
-	list.parentNode.removeChild(list);
-	
-	var listDiv = document.createElement('div'); //Creates the container div element
-	listDiv.setAttribute("id", "pageElement_ShortcutEditor_SwapList_List_Shortcuts"); //Adds id to div
-	document.getElementById("pageElement_SwapList_Subwindow_Content").appendChild(listDiv);
-	SE_Swapper_Shortcut_SwapStage = 1;
-	SE_Swapper_Shortcut_Data_1 = "";
-	SE_Swapper_Shortcut_Data_2 = "";
-	SE_Swapper_Shortcut_ElementID_1 = 0;
-	SE_Swapper_Shortcut_ElementID_2 = 0;
-	SE_Swapper_Shortcut_IndexNumber = 0;
-	SE_Swappper_Shortcut_Array = [];
-	SE_Swappper_Shortcut_URL_Array = [];
-	
-	SE_Create_SwapperList_Shortcuts();
+		list.parentNode.removeChild(list);
+		
+		var listDiv = document.createElement('div'); //Creates the container div element
+		listDiv.setAttribute("id", "pageElement_ShortcutEditor_SwapList_List_Shortcuts"); //Adds id to div
+		document.getElementById("pageElement_SwapList_Subwindow_Content").appendChild(listDiv);
+		SE_Swapper_Shortcut_SwapStage = 1;
+		SE_Swapper_Shortcut_Data_1 = "";
+		SE_Swapper_Shortcut_Data_2 = "";
+		SE_Swapper_Shortcut_ElementID_1 = 0;
+		SE_Swapper_Shortcut_ElementID_2 = 0;
+		SE_Swapper_Shortcut_IndexNumber = 0;
+		SE_Swappper_Shortcut_Array = [];
+		SE_Swappper_Shortcut_URL_Array = [];
+		
+		SE_Create_SwapperList_Shortcuts();
 	// SE_Swapper_SelectItem_Shortcut_Stage1(SE_Swapper_SelectedCategory_RefreshShortcutEditor);*/
 	
 	/* Item Swapper Categories */
-	
-	/*// Change content
-	var list = document.getElementById("pageElement_ShortcutEditor_SwapList_List");
+	// Change content
+	var list = document.getElementById("pageElement_CategoryDiv_ReArrange_Categories");
 	list.parentNode.removeChild(list);
 	
 	var listDiv = document.createElement('div'); //Creates the container div element
-	listDiv.setAttribute("id", "pageElement_ShortcutEditor_SwapList_List"); //Adds id to div
-	document.getElementById("pageElement_SwapList_Subwindow_Content_Category").appendChild(listDiv);	
-	SE_Create_SwapperList();*/
+	listDiv.setAttribute("id", "pageElement_CategoryDiv_ReArrange_Categories"); //Adds id to div
+	document.getElementById("tab_RearrangeCategories").appendChild(listDiv);	
 	
 	
+	/* Item Swapper Shortcut Category List */
+	var ReArranger_Shortcuts_CategoryList = document.getElementById("dropdownMenu_ReArranger_Shortcuts_CategoryList");
+	while (ReArranger_Shortcuts_CategoryList.firstChild){
+		ReArranger_Shortcuts_CategoryList.removeChild(ReArranger_Shortcuts_CategoryList.lastChild);
+	}
 	
+	/* Item Swapper Shortcuts */
+	var ReArranger_Shortcuts = document.getElementById("pageElement_ReArrange_Shortcuts_CategoryDiv");
+	while (ReArranger_Shortcuts.firstChild){
+		ReArranger_Shortcuts.removeChild(ReArranger_Shortcuts.lastChild);
+	}
+	Generator_Render_Categories_ReArranger();
 	Generator_Render_Categories();
 	Generator_Render_Categories_TableView();
+	
 	//render_Categories_TableView();
 	SE_CreateDropdown();
 	start_Animations_ShortcutEditor();
@@ -4376,16 +4647,23 @@ var SE_Swapper_Data_1;
 var SE_Swapper_Data_2;
 var SE_Swapper_ElementID_1;
 var SE_Swapper_ElementID_2;
+var SE_Swapper_Index_1;
+var SE_Swapper_Index_2;
+
 function SE_Swapper_SelectItem_Category(id){
+	var id_Trimmed = id.substr(20);
+	console.log(id_Trimmed);
 	if (SE_Swapper_SwapStage == 1){
-		SE_Swapper_Data_1 = SE_Array_Category_Index[id];
-		SE_Swapper_ElementID_1 = id;
-		document.getElementById(SE_Swapper_ElementID_1).style.borderLeftWidth = "5px";
+		SE_Swapper_Index_1 = id_Trimmed;
+		SE_Swapper_Data_1 = SE_Array_Category_Index[id_Trimmed];
+		SE_Swapper_ElementID_1 = "ReArranger_Category_" + id_Trimmed;
+		document.getElementById(SE_Swapper_ElementID_1).style.boxShadow = "var(--Element-BoxShadow-Hover)";
 		console.log(SE_Swapper_Data_1);
 		SE_Swapper_SwapStage = 2;
 		} else if (SE_Swapper_SwapStage == 2){
-		SE_Swapper_Data_2 = SE_Array_Category_Index[id];
-		SE_Swapper_ElementID_2 = id;
+		SE_Swapper_Index_2 = id_Trimmed;
+		SE_Swapper_Data_2 = SE_Array_Category_Index[id_Trimmed];
+		SE_Swapper_ElementID_2 = "ReArranger_Category_" + id_Trimmed;
 		document.getElementById(SE_Swapper_ElementID_2).style.borderLeftWidth = "5px";
 		console.log(SE_Swapper_Data_2);
 		SE_Swapper_SwapData();
@@ -4394,15 +4672,42 @@ function SE_Swapper_SelectItem_Category(id){
 }
 
 function SE_Swapper_SwapData(){
-	SE_Array_Category_Index[SE_Swapper_ElementID_1] = SE_Swapper_Data_2;
-	SE_Array_Category_Index[SE_Swapper_ElementID_2] = SE_Swapper_Data_1;
+	SE_Array_Category_Index[SE_Swapper_Index_1] = SE_Swapper_Data_2;
+	SE_Array_Category_Index[SE_Swapper_Index_2] = SE_Swapper_Data_1;
 	console.log(SE_Array_Category_Index);
 	SE_Swapper_SwapStage = 1;
-	document.getElementById(SE_Swapper_ElementID_1).style.borderLeftWidth = "0px";
+	document.getElementById(SE_Swapper_ElementID_1).style.boxShadow = "none";
 	document.getElementById(SE_Swapper_ElementID_2).style.borderLeftWidth = "0px";
-	document.getElementById(SE_Swapper_ElementID_1).innerHTML = SE_Swapper_Data_2;
-	document.getElementById(SE_Swapper_ElementID_2).innerHTML = SE_Swapper_Data_1;
+	/* document.getElementById(SE_Swapper_ElementID_1).innerHTML = SE_Swapper_Data_2;
+	document.getElementById(SE_Swapper_ElementID_2).innerHTML = SE_Swapper_Data_1; */
 	localStorage.setItem("DL_CategoryIndex", JSON.stringify(SE_Array_Category_Index));
+	refresh_ShortcutEditor();
+}
+var SE_Swapper_InBetween_NewIndex;
+var SE_Swapper_InBetween_CurrentIndex;
+var SE_Swapper_InBetween_TemporaryArray = [];
+var SE_Swapper_InBetween_Index;
+function SE_Swapper_SelectItem_Category_InBetween(id){
+	SE_Swapper_InBetween_Index = id;
+	if (SE_Swapper_SwapStage == 2){
+		// Copies the category index to a temporary array
+		SE_Swapper_InBetween_TemporaryArray = SE_Array_Category_Index;
+		// Gets the item to move
+		SE_Swapper_InBetween_ItemToMove = SE_Array_Category_Index[SE_Swapper_Index_1];
+		// Deletes the original index of the item to move
+		SE_Swapper_InBetween_TemporaryArray.splice(SE_Swapper_Index_1, 1);
+		console.log(SE_Swapper_InBetween_TemporaryArray); //Debug
+		// Inserts the item to move into its new index
+		SE_Swapper_InBetween_TemporaryArray.splice(SE_Swapper_InBetween_Index, 0, SE_Swapper_InBetween_ItemToMove);
+		console.log(SE_Swapper_InBetween_TemporaryArray); //Debug
+		// Sets the actual category index array into the modified values of the temporary array
+		SE_Array_Category_Index = SE_Swapper_InBetween_TemporaryArray;
+		// Saves to storage
+		localStorage.setItem("DL_CategoryIndex", JSON.stringify(SE_Array_Category_Index));
+		// Resets the stage
+		SE_Swapper_SwapStage = 1;
+		
+	}
 	refresh_ShortcutEditor();
 }
 
@@ -4477,67 +4782,87 @@ var SE_Swapper_Shortcut_Data_URL_1;
 var SE_Swapper_Shortcut_Data_URL_2;
 var SE_Swapper_Shortcut_ElementID_1;
 var SE_Swapper_Shortcut_ElementID_2;
-var SE_Swapper_Shortcut_IndexNumber;
+var SE_Swapper_Shortcut_IndexNumber_1;
+var SE_Swapper_Shortcut_IndexNumber_2;
 
-function SE_Swapper_SelectItem_Shortcut_Stage2(id){
-	SE_Swapper_Shortcut_IndexNumber = id.substr(1);
+function SE_Swapper_SelectItem_Shortcut(id){
 	if (SE_Swapper_Shortcut_SwapStage == 1){
-		SE_Swapper_Shortcut_Data_1 = SE_Swappper_Shortcut_Array[SE_Swapper_Shortcut_IndexNumber];
-		SE_Swapper_Shortcut_Data_URL_1 = SE_Swappper_Shortcut_URL_Array[SE_Swapper_Shortcut_IndexNumber];
-		SE_Swapper_Shortcut_ElementID_1 = id.substr(1);
-		document.getElementById("s"+SE_Swapper_Shortcut_ElementID_1).style.borderLeftWidth = "5px";
-		console.log(SE_Swapper_Shortcut_Data_1);
+		SE_Swapper_Shortcut_ElementID_1 = id;
+		SE_Swapper_Shortcut_IndexNumber_1 = id.substr(20);
+		SE_Swapper_Shortcut_Data_1 = SE_ReArranger_ShortcutContent_Array[SE_Swapper_Shortcut_IndexNumber_1];
+		SE_Swapper_Shortcut_Data_URL_1 = SE_ReArranger_ShortcutURL_Array[SE_Swapper_Shortcut_IndexNumber_1];
+		document.getElementById(SE_Swapper_Shortcut_ElementID_1).style.boxShadow = "var(--Element-BoxShadow-Hover)";
 		SE_Swapper_Shortcut_SwapStage = 2;
-		} else if (SE_Swapper_Shortcut_SwapStage == 2){
-		SE_Swapper_Shortcut_Data_2 = SE_Swappper_Shortcut_Array[SE_Swapper_Shortcut_IndexNumber];
-		SE_Swapper_Shortcut_Data_URL_2 = SE_Swappper_Shortcut_URL_Array[SE_Swapper_Shortcut_IndexNumber];
-		SE_Swapper_Shortcut_ElementID_2 = id.substr(1);
-		document.getElementById("s"+SE_Swapper_Shortcut_ElementID_2).style.borderLeftWidth = "5px";
-		console.log(SE_Swapper_Shortcut_Data_2);
+	} else if (SE_Swapper_Shortcut_SwapStage == 2){
+		SE_Swapper_Shortcut_IndexNumber_2 = id.substr(20);
+		SE_Swapper_Shortcut_Data_2 = SE_ReArranger_ShortcutContent_Array[SE_Swapper_Shortcut_IndexNumber_2];
+		SE_Swapper_Shortcut_Data_URL_2 = SE_ReArranger_ShortcutURL_Array[SE_Swapper_Shortcut_IndexNumber_2];
+		document.getElementById(SE_Swapper_Shortcut_ElementID_1).style.boxShadow = null;
 		SE_Swapper_Shortcut_SwapData();
-		
 	}
 }
 
 function SE_Swapper_Shortcut_SwapData(){
-	SE_Swappper_Shortcut_Array[SE_Swapper_Shortcut_ElementID_1] = SE_Swapper_Shortcut_Data_2;
-	SE_Swappper_Shortcut_Array[SE_Swapper_Shortcut_ElementID_2] = SE_Swapper_Shortcut_Data_1;
-	
-	SE_Swappper_Shortcut_URL_Array[SE_Swapper_Shortcut_ElementID_1] = SE_Swapper_Shortcut_Data_URL_2;
-	SE_Swappper_Shortcut_URL_Array[SE_Swapper_Shortcut_ElementID_2] = SE_Swapper_Shortcut_Data_URL_1;
-	
-	
-	console.log(SE_Swappper_Shortcut_Array);
-	
-	document.getElementById("s"+SE_Swapper_Shortcut_ElementID_1).style.borderLeftWidth = "0px";
-	document.getElementById("s"+SE_Swapper_Shortcut_ElementID_2).style.borderLeftWidth = "0px";
-	document.getElementById("s"+SE_Swapper_Shortcut_ElementID_1).innerHTML = SE_Swapper_Shortcut_Data_2;
-	document.getElementById("s"+SE_Swapper_Shortcut_ElementID_2).innerHTML = SE_Swapper_Shortcut_Data_1;
-	localStorage.setItem("DL_Content_"+SE_Swapper_SelectedCategory, JSON.stringify(SE_Swappper_Shortcut_Array));
-	localStorage.setItem("DL_Content_URL_"+SE_Swapper_SelectedCategory, JSON.stringify(SE_Swappper_Shortcut_URL_Array));
+	console.log(SE_ReArranger_ShortcutURL_Array);
+	SE_ReArranger_ShortcutContent_Array[SE_Swapper_Shortcut_IndexNumber_1] = SE_Swapper_Shortcut_Data_2;
+	SE_ReArranger_ShortcutURL_Array[SE_Swapper_Shortcut_IndexNumber_1] = SE_Swapper_Shortcut_Data_URL_2;
+	SE_ReArranger_ShortcutContent_Array[SE_Swapper_Shortcut_IndexNumber_2] = SE_Swapper_Shortcut_Data_1;
+	SE_ReArranger_ShortcutURL_Array[SE_Swapper_Shortcut_IndexNumber_2] = SE_Swapper_Shortcut_Data_URL_1;
+	console.log(SE_ReArranger_ShortcutURL_Array);
+	localStorage.setItem("DL_Content_"+SE_ReArranger_ChosenCategory, JSON.stringify(SE_ReArranger_ShortcutContent_Array));
+	localStorage.setItem("DL_Content_URL_"+SE_ReArranger_ChosenCategory, JSON.stringify(SE_ReArranger_ShortcutURL_Array));
+	refresh_ShortcutEditor();
+	SE_Swapper_Shortcut_SwapStage = 1;
+}
+
+var SE_Swapper_InBetween_Shortcut_NewIndex;
+var SE_Swapper_InBetween_Shortcut_CurrentIndex;
+var SE_Swapper_InBetween_Shortcut_TemporaryArray = [];
+var SE_Swapper_InBetween_Shortcut_Index;
+var SE_Swapper_InBetween_Shortcut_URL_Index;
+
+function SE_Swapper_SelectItem_Shortcut_InBetween(id){
+	SE_Swapper_InBetween_Shortcut_Index = id;
+	if (SE_Swapper_Shortcut_SwapStage == 2){
+		// Copies the category index to a temporary array
+		SE_Swapper_InBetween_Shortcut_TemporaryArray = SE_ReArranger_ShortcutContent_Array;
+		// Gets the item to move
+		SE_Swapper_InBetween_Shortcut_ItemToMove = SE_ReArranger_ShortcutContent_Array[SE_Swapper_Shortcut_IndexNumber_1];
+		// Deletes the original index of the item to move
+		SE_Swapper_InBetween_Shortcut_TemporaryArray.splice(SE_Swapper_Shortcut_IndexNumber_1, 1);
+		console.log(SE_Swapper_InBetween_Shortcut_TemporaryArray); //Debug
+		// Inserts the item to move into its new index
+		SE_Swapper_InBetween_Shortcut_TemporaryArray.splice(SE_Swapper_InBetween_Shortcut_Index, 0, SE_Swapper_InBetween_Shortcut_ItemToMove);
+		console.log(SE_Swapper_InBetween_Shortcut_TemporaryArray); //Debug
+		// Sets the actual category index array into the modified values of the temporary array
+		SE_ReArranger_ShortcutContent_Array = SE_Swapper_InBetween_Shortcut_TemporaryArray;
+		// Saves to storage
+		localStorage.setItem("DL_Content_"+SE_ReArranger_ChosenCategory, JSON.stringify(SE_ReArranger_ShortcutContent_Array));
+		
+		
+		// Copies the category index to a temporary array
+		SE_Swapper_InBetween_Shortcut_URL_TemporaryArray = SE_ReArranger_ShortcutURL_Array;
+		// Gets the item to move
+		SE_Swapper_InBetween_ShortcutURL_ItemToMove = SE_ReArranger_ShortcutURL_Array[SE_Swapper_Shortcut_IndexNumber_1];
+		// Deletes the original index of the item to move
+		SE_Swapper_InBetween_Shortcut_URL_TemporaryArray.splice(SE_Swapper_Shortcut_IndexNumber_1, 1);
+		console.log(SE_Swapper_InBetween_Shortcut_URL_TemporaryArray); //Debug
+		// Inserts the item to move into its new index
+		SE_Swapper_InBetween_Shortcut_URL_TemporaryArray.splice(SE_Swapper_InBetween_Shortcut_URL_Index, 0, SE_Swapper_InBetween_ShortcutURL_ItemToMove);
+		console.log(SE_Swapper_InBetween_Shortcut_URL_TemporaryArray); //Debug
+		// Sets the actual category index array into the modified values of the temporary array
+		SE_ReArranger_ShortcutURL_Array = SE_Swapper_InBetween_Shortcut_TemporaryArray;
+		// Saves to storage
+		localStorage.setItem("DL_Content_URL_"+SE_ReArranger_ChosenCategory, JSON.stringify(SE_ReArranger_ShortcutURL_Array));
+		
+		// Resets the stage
+		SE_Swapper_Shortcut_SwapStage = 1;
+		
+	}
 	refresh_ShortcutEditor();
 }
 
-function SE_Swapper_Shortcut_GoBackToCategorySelection(){
-	// Change content
-	var list = document.getElementById("pageElement_ShortcutEditor_SwapList_List_Shortcuts");
-	list.parentNode.removeChild(list);
-	
-	var listDiv = document.createElement('div'); //Creates the container div element
-	listDiv.setAttribute("id", "pageElement_ShortcutEditor_SwapList_List_Shortcuts"); //Adds id to div
-	document.getElementById("pageElement_SwapList_Subwindow_Content").appendChild(listDiv);	
-	
-	SE_Swapper_Shortcut_SwapStage = 1;
-	SE_Swapper_Shortcut_Data_1 = "";
-	SE_Swapper_Shortcut_Data_2 = "";
-	SE_Swapper_Shortcut_ElementID_1 = 0;
-	SE_Swapper_Shortcut_ElementID_2 = 0;
-	SE_Swapper_Shortcut_IndexNumber = 0;
-	SE_Swappper_Shortcut_Array = [];
-	SE_Swappper_Shortcut_URL_Array = [];
-	
-	SE_Create_SwapperList_Shortcuts();
-}
+
 
 // Builds the category tabs inside Table View
 function render_Categories_TableView(){
@@ -5643,11 +5968,11 @@ function Login_CheckPassword(){
 
 
 function generate_year_range(start, end) {
-    var years = "";
-    for (var year = start; year <= end; year++) {
-        years += "<option value='" + year + "'>" + year + "</option>";
+	var years = "";
+	for (var year = start; year <= end; year++) {
+		years += "<option value='" + year + "'>" + year + "</option>";
 	}
-    return years;
+	return years;
 }
 
 today = new Date();
@@ -5705,78 +6030,78 @@ createYear = generate_year_range(1970, 2050);
 
 
 function next() {
-    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
-    currentMonth = (currentMonth + 1) % 12;
-    showCalendar(currentMonth, currentYear);
+	currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
+	currentMonth = (currentMonth + 1) % 12;
+	showCalendar(currentMonth, currentYear);
 }
 
 function previous() {
-    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
-    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-    showCalendar(currentMonth, currentYear);
+	currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
+	currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+	showCalendar(currentMonth, currentYear);
 }
 
 function jump() {
-    currentYear = parseInt(selectYear.value);
-    currentMonth = parseInt(selectMonth.value);
-    showCalendar(currentMonth, currentYear);
+	currentYear = parseInt(selectYear.value);
+	currentMonth = parseInt(selectMonth.value);
+	showCalendar(currentMonth, currentYear);
 }
 
 function showCalendar(month, year) {
 	
-    var firstDay = ( new Date( year, month ) ).getDay();
+	var firstDay = ( new Date( year, month ) ).getDay();
 	
-    tbl = document.getElementById("calendar-body");
+	tbl = document.getElementById("calendar-body");
 	
-    
-    tbl.innerHTML = "";
 	
-    
-    monthAndYear.innerHTML = months[month] + " " + year;
-    selectYear.value = year;
-    selectMonth.value = month;
+	tbl.innerHTML = "";
 	
-    // creating all cells
-    var date = 1;
-    for ( var i = 0; i < 6; i++ ) {
-        
-        var row = document.createElement("tr");
+	
+	monthAndYear.innerHTML = months[month] + " " + year;
+	selectYear.value = year;
+	selectMonth.value = month;
+	
+	// creating all cells
+	var date = 1;
+	for ( var i = 0; i < 6; i++ ) {
 		
-        
-        for ( var j = 0; j < 7; j++ ) {
-            if ( i === 0 && j < firstDay ) {
-                cell = document.createElement( "td" );
-                cellText = document.createTextNode("");
-                cell.appendChild(cellText);
-                row.appendChild(cell);
+		var row = document.createElement("tr");
+		
+		
+		for ( var j = 0; j < 7; j++ ) {
+			if ( i === 0 && j < firstDay ) {
+				cell = document.createElement( "td" );
+				cellText = document.createTextNode("");
+				cell.appendChild(cellText);
+				row.appendChild(cell);
 				} else if (date > daysInMonth(month, year)) {
-                break;
+				break;
 				} else {
-                cell = document.createElement("td");
-                cell.setAttribute("data-date", date);
-                cell.setAttribute("data-month", month + 1);
-                cell.setAttribute("data-year", year);
-                cell.setAttribute("data-month_name", months[month]);
-                cell.className = "date-picker";
-                cell.innerHTML = "<span>" + date + "</span>";
+				cell = document.createElement("td");
+				cell.setAttribute("data-date", date);
+				cell.setAttribute("data-month", month + 1);
+				cell.setAttribute("data-year", year);
+				cell.setAttribute("data-month_name", months[month]);
+				cell.className = "date-picker";
+				cell.innerHTML = "<span>" + date + "</span>";
 				
-                if ( date === today.getDate() && year === today.getFullYear() && month === today.getMonth() ) {
-                    cell.className = "date-picker selected";
+				if ( date === today.getDate() && year === today.getFullYear() && month === today.getMonth() ) {
+					cell.className = "date-picker selected";
 				}
-                row.appendChild(cell);
-                date++;
+				row.appendChild(cell);
+				date++;
 			}
 			
 			
 		}
 		
-        tbl.appendChild(row);
+		tbl.appendChild(row);
 	}
 	
 }
 
 function daysInMonth(iMonth, iYear) {
-    return 32 - new Date(iYear, iMonth, 32).getDate();
+	return 32 - new Date(iYear, iMonth, 32).getDate();
 }
 
 

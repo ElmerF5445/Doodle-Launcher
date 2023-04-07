@@ -5,6 +5,7 @@
 * {
 	outline: var(--Debug-ElementOutline);
 	-webkit-tap-highlight-color: transparent;
+	scroll-padding: 70px;
 }
 
 
@@ -336,10 +337,10 @@ img::before{
 	flex-direction: row;
 	cursor: pointer;
 	z-index: 98;
+	/* background: blue; */
 }
 
 .CornerButtons_Button{
-	
 	z-index: 98;
 	filter: var(--Element-Icon-Brightness);
 	background-color: var(--BGColor-Menus);
@@ -352,7 +353,13 @@ img::before{
 	width: 30px;
 	height: 30px;
 	margin-left: 10px;
-	
+	transition: var(--Element-Transition-Delay);
+}
+
+.CornerButtons_Button:hover{
+	background-color: var(--BGColor-Hover);
+	transform: scale(1.05);
+	box-shadow: var(--BoxShadow-Hover);
 }
 .CornerButtons_Button > img {
 	filter: var(--Element-Icon-Brightness);
@@ -1659,6 +1666,7 @@ img::before{
 	display: none;
 	max-width: 100%;
 	max-height: 100%;
+	transition: 1s;
 }
 
 
@@ -2622,7 +2630,7 @@ input:checked + .slider:before {
 	border-bottom-width: 3px;
 	background-color: var(--BGColor-Buttons);
 	cursor: pointer;
-	font-size: 20px;
+	font-size: 17px;
 	text-align: center;
 	user-select: none;
 	transition: var(--Element-Transition-Delay);
@@ -2773,18 +2781,19 @@ th{
 	transition: var(--Element-Transition-Delay);
 	border-radius: 5px;
 	align-items: center;
-	background-color: none;
+	background-color: var(--BGColor-Opacitated);
 	animation-name: ShortcutEditor_TableView_Item_Opening;
 	animation-duration: 0.3s;
 	animation-fill-mode: forwards;
 	cursor: pointer;
 	user-select: none;
+	/*var(--Element-BoxShadow-Hover);*/
 }
 
-.ShortcutEditor_TableView_Item:nth-child(odd){
+/* .ShortcutEditor_TableView_Item:nth-child(odd){
 	background-color: var(--BGColor-Opacitated);
 }
-
+ */
 .ShortcutEditor_TableView_Item:hover{
 	background-color: var(--BGColor-Hover);
 }
@@ -2882,6 +2891,7 @@ th{
 	transition: var(--Element-Transition-Delay);
 	border-radius: 5px;
 	align-items: center;
+	margin-top: 5px;
 	margin-bottom: 5px;
 	margin-left: 20px;
 	margin-right: 20px;

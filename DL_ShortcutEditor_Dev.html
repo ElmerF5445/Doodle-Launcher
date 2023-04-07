@@ -454,7 +454,7 @@
 						This is still experimental and may cause issues.
 					</p></i>
 					<div id="pageElement_CategoryDiv_ReArrange_Categories">
-						<div class="ShortcutEditor_Rearrange_Item_InBetween">
+						<!-- <div class="ShortcutEditor_Rearrange_Item_InBetween">
 							<p class="ShortcutEditor_Rearrange_Item_InBetween_Text">
 								Insert between
 							</p>
@@ -478,7 +478,7 @@
 							<p class="ShortcutEditor_Rearrange_Item_InBetween_Text">
 								Insert between
 							</p>
-						</div>
+						</div> -->
 					</div> 
 				</div>
 				<div class="Tab_Container" id="tab_RearrangeShortcuts">
@@ -491,6 +491,20 @@
 					<i><p class="General_Paragraph">
 						This is still experimental and may cause issues.
 					</p></i>
+					<h3 class="General_Title">
+						Select a category
+					</h3>
+					<p class="Input_Dropdown_SelectedItem" id="ReArranger_Shortcuts_CategoryList" onclick="trigger_toggleDropdown(this.id)">
+						No selected
+					</p>
+					<div class="Input_Dropdown" id="dropdownMenu_ReArranger_Shortcuts_CategoryList" style="display: none">
+						<p class="Input_Dropdown_Item" id="dropdownItem_ReArranger_Shortcuts_CategoryList" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
+							Item 1
+						</p>
+					</div>
+					<div id="pageElement_ReArrange_Shortcuts_CategoryDiv">
+						
+					</div>
 				</div>
 				<div class="Tab_Container" id="tab_ImportExport" style="display: flex; flex-direction: column;">
 					<h1 class="General_Title">

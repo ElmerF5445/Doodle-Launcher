@@ -10,6 +10,8 @@
 		<link rel="stylesheet" href="Scripts/DL_Stylesheet.css">
 		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Animations.css">
 		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Reference.css">
+		<link rel="stylesheet" href="Scripts/STI_App_TNT_Timer.css">
+		<script src="Scripts/STI_App_TNT_Timer.js"></script>
 		<link rel="icon" type="image/png" href="Assets/Icons/favicon_old.png" sizes="96x96" id="pageElement_favicon">
 		<!-- Default intended fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,7 +66,7 @@
 				<div class="Subwindow_Titlebar">
 					<h2 class="Subwindow_TitleBar_Title">
 						Subwindow
-					</h2> 
+					</h2>
 					<img class="Subwindow_Titlebar_Close" src="Assets/Icons/icon_close.png" onclick="close_Subwindow('Test_Subwindow')">
 				</div>
 				<div class="Subwindow_Content">
@@ -105,10 +107,9 @@
 		<div class="ToastNotif" id="pageElement_ToastDrawer">
 		</div>
 		<div class="Page_Overlays">
-			<div class="CornerButtons" id="pageElement_CornerButtons">
-				<img src="Assets/Icons/icon_downArrow.png" class="CornerButtons_Button"></img>
-				<img src="Assets/Icons/icon_upArrow.png" class="CornerButtons_Button"></img>
-			</div>
+			<!-- <div class="CornerButtons" id="pageElement_CornerButtons">
+				d
+			</div> -->
 			<div class="Header_MainMenu_Container" style="display: none" id="pageElement_Header_MainMenu_Textbox">
 				<div id="pageElement_Header_MainMenu_Textbox_Content" style="opacity: 0%">
 					<div class="Header_MainMenu_PageName" id="Header_MainMenu_PageName">
@@ -195,10 +196,10 @@
 			</div>
 			<div class="ToggleableSearchBar" id="pageElement_Toggleable_SearchBar" style="display: none">
 				<div class="ToggleableSearchBar_SearchBar">
-				<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3" onkeydown="if (event.keyCode == 13) {search_Query('toggleable')}"></input>
-				<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
-			</div>
-			<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
+					<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3" onkeydown="if (event.keyCode == 13) {search_Query('toggleable')}"></input>
+					<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
+				</div>
+				<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
 			</div>
 		</div>
 		<header class="Page_Header" id="pageElement_Header">
@@ -213,13 +214,13 @@
 				<!-- <div class="Header_Content_Button" onclick="trigger_createToast('success')">
 					<img class="Header_Content_Button_Icon" src="Assets/Icons/favicon_old.png"></img>
 					<h3 class="Header_Content_Button_Text">
-						Button 1
+					Button 1
 					</h3>
-				</div>
-				<div class="Header_Content_Button">
+					</div>
+					<div class="Header_Content_Button">
 					<img class="Header_Content_Button_Icon" src="Assets/Icons/favicon_old.png"></img>
 					<h3 class="Header_Content_Button_Text">
-						Button 2
+					Button 2
 					</h3>
 				</div> -->
 			</div>
@@ -261,174 +262,56 @@
 		<main class="Page_Content" id="pageElement_Content">
 			
 			<div class="Page_MainContent" id="Page_MainContent">
-				<div class="Tab_Container" id="tab_TabIDHere">
-					<h1 class="Greeting_Text" id="pageElement_Greeting">
-						Good Evening
-					</h1>
-					<h1 class="General_Title">
-						Section
-					</h1>
-					<div id="pageElement_ContentContainer">
-						<div class="General_Button" onclick="open_Subwindow('Test_Subwindow')">
-							Subwindow
-						</div>
-						<div class="General_Button" onclick="open_Subwindow('Test_Modal')">
-							Modal / Confirmation Box
+				<div class="PT_MainContainer" id="PT_MainContainer">
+					<div class="PT_PomodoroStage_Container">
+						<div class="PT_PomodoroStage" id="pageElement_PT_Stage_1">
+							Tagisan ng Talino
 						</div>
 					</div>
-					<h1 class="General_Title">
-						Dropdown
-					</h1>
-					<p class="General_Paragraph">
-						Input_Dropdown_SelectedItem - The clickable dropdown button that displays the currently selected item in the list. Set the ID to a custom dropdown name.<br>
-						Input_Dropdown_Item - Item in the dropdown list. Set the id to dropdownItem_ + the id of Input_Dropdown_SelectedItem. When clicked, the displayed text of the item will be the value of Input_Dropdown_SelectedItem which can then be used for any system using .innerText.
-						
-					</p>
-					<p class="Input_Dropdown_SelectedItem" id="sampleDropdown" onclick="trigger_toggleDropdown(this.id)">
-						Selected dropdown
-					</p>
-					<div class="Input_Dropdown" id="dropdownMenu_sampleDropdown" style="display: none">
-						<p class="Input_Dropdown_Item" id="dropdownItem_sampleDropdown" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
-							Item 1
-						</p>
-						<p class="Input_Dropdown_Item" id="dropdownItem_sampleDropdown" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
-							Item 2
-						</p>
-						<p class="Input_Dropdown_Item" id="dropdownItem_sampleDropdown" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
-							Item 3
-						</p>
-						<p class="Input_Dropdown_Item" id="dropdownItem_sampleDropdown" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
-							Item 4
+					<div class="PT_Timer_Container">
+						<h1 class="PT_Timer" id="pageElement_PT_Timer">
+							3:00
+						</h1>
+						<!-- <h3 class="PT_Status" id="pageElement_PT_Status">
+							Work
+						</h3> -->
+					</div>
+					<div>
+						<p class="General_Paragraph">
+							This timer relies on your browser's performance. Keep this tab open and selected. Close unnecessary programs to free as much resources for this tab.
 						</p>
 					</div>
-					
-					<p class="General_Paragraph">
-						[Intro]
-						Get ready, wake your psyche up, MOB!
-						Get ready, dig your anger up, MOB!
-						Get ready, wake your psyche up, MOB!
-						Get ready!
-						
-						[Verse 1]
-						Coming down
-						Could you fill your satisfaction?
-						You're a MOB
-						Can't you feel your own frustration?
-						Coming down
-						Could you fill your satisfaction?
-						You're a MOB
-						What do you want to be?
-						
-						
-						
-						[Pre-Chorus]
-						Ima, hanran shite iku kanjou o mi ni matotte break it down
-						Genkai koe, mieru keshiki wa
-						(99.9! 99.9!)
-						Shoutai fumei no paasenteeji
-						
-						[Chorus]
-						Kurai my life
-						Kurai my psyche
-						Kurai my heart in such commonplaces!
-						Is that your ideal?
-						Is that your mind?
-						Hyaku ni naru toki hajimaru
-						The MOB is alive
-						The MOB is high
-						The MOB is staying frustrated, aren't you?
-						Is that your ideal?
-						Is that your mind?
-						Ima sugu
-						Your life is your own
-						
-						[Post-Chorus]
-						Get ready, wake your psyche up, MOB!
-						Get ready, dig your anger up, MOB!
-						Get ready, wake your psyche up, MOB!
-						Get ready!
-						
-						You might also like
-						Mob Choir - 99 (Romanized)
-						Genius Romanizations
-						MOB CHOIR - 1 (Romanized)
-						Genius Romanizations
-						99.9
-						MOB CHOIR
-						
-						[Verse 2]
-						Coming down
-						Could you fill your satisfaction?
-						You're a MOB
-						Can't you feel your frustration?
-						Coming down
-						Could you fill your satisfaction?
-						You're a MOB
-						What do you want to be?
-						Kono butai no shuyaku wa boku da
-						
-						[Interlude]
-						Kurai my life
-						Kurai my psyche
-						Kurai my heart in such commonplaces!
-						Is this my ideal?
-						Is this my mind?
-						Mada kotae wo sagashiteru
-						The MOB is alive
-						The MOB is high
-						The MOB is staying frustrated, aren't you?
-						Is this the day?
-						Is this the time?
-						Ah, desperately
-						
-						[Chorus]
-						Kurai my life
-						Kurai my psyche
-						Kurai my heart in such commonplaces!
-						Is that your ideal?
-						Is that your mind?
-						Hyaku ni naru toki hajimaru
-						The MOB is alive
-						The MOB is high
-						The MOB is staying frustrated, aren't you?
-						Is that your ideal?
-						Is that your mind?
-						Ima sugu
-						Your life is your own
-						
-						
-						[Outro]
-						Get ready, wake your psyche up, MOB!
-						Get ready, dig your anger up, MOB!
-						Get ready, wake your psyche up, MOB!
-						Get ready!
-						
-					</p>
+					<div class="PT_Controls_Container">
+						<div class="PT_Controls" id="pageElement_PT_Control_Start" onclick="PT_ResetTimer()">
+							Start
+						</div>
+						<!-- <div class="PT_Controls" id="pageElement_PT_Control_Pause" onclick="PT_PauseUnpauseTimer()"> -->
+						<!-- Pause -->
+						<!-- </div> -->
+						<div class="PT_Controls" id="pageElement_PT_Control_Skip" onclick="PT_UpdateStage()" style="display: none">
+							Refresh
+						</div>
+						<!-- <div class="PT_Controls" id="pageElement_PT_Control_Pause" onclick="PT_Pause()">
+							Pause
+						</div> -->
+					</div>
 				</div>
-				<div class="Tab_Container" id="tab_TabIDHere2">
-					<h1 class="General_Title">
-						Tabs
+				<audio id="PT_Notification_Work" src="Assets/Audio/notification1.ogg"></audio>
+				<audio id="PT_Notification_Break" src="Assets/Audio/notification2.ogg"></audio>
+				<audio id="PT_Notification_Break_Long" src="Assets/Audio/notification4.ogg"></audio>
+				
+				<footer class="Page_Footer" style="visibility: hidden;">
+					<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
+						Doodle Launcher Release 1.0
 					</h1>
-					<p class="General_Paragraph">
-						First create a sidebar item on the sidebar (copy paste code). Replace the ID of the Sidebar_Item div with the name of the tab. <br>
-						If an icon is used, add the id "tabIcon_" + the ID of Sidebar_Item to ".Sidebar_Item_Icon". If a letter is used, add the ID "tabIcon_" + the ID of Sidebar_Item to ".Sidebar_Item_Letter" <br>
-						Enclose the content you want to put inside a tab with a div that has the CSS class ".Tab_Container" and an ID of "tab_" + the ID of Sidebar_Item. <br>
-						The first tab will always be displayed first when the page loads.
-					</p>
-				</div>
-					
-					<footer class="Page_Footer">
-						<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
-							Doodle Launcher Release 1.0
-						</h1>
-						<img class="Footer_Image" src="Assets/Icons/favicon.png"></img>
-						<h1 class="Footer_Text" id="pageElement_Footer_Copyright">
-							Copyright Content By ElmerF 2023
-						</h1>
-					</footer>
-				</div>
-				
-				
-			</main>
-		</body>
-	</html>	
+					<img class="Footer_Image" src="Assets/Icons/favicon.png"></img>
+					<h1 class="Footer_Text" id="pageElement_Footer_Copyright">
+						Copyright Content By ElmerF 2023
+					</h1>
+				</footer>
+			</div>
+			
+			
+		</main>
+	</body>
+</html>	

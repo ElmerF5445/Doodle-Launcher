@@ -25,6 +25,11 @@
 		<script src="Scripts/WA_DomToImage/FileSaver.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js">
 		</script>
+		<!-- Include the FileSaver library -->
+		<script src="https://cdn.jsdelivr.net/npm/file-saver"></script>
+		
+		<!-- Include the dom-to-image library -->
+		<script src="https://cdn.jsdelivr.net/npm/dom-to-image"></script>
 		<script>
 			function reloadDimensions(){
 				var WA_ImageClientWidth = document.getElementById("WA_Image").style.clientWidth;
@@ -157,7 +162,26 @@
 					</div>
 				</div>
 			</div>
-			
+			<div class="Modal" id="subwindow_ConfirmFilterCommit">
+				<div class="Modal_TitleBar">
+					<h2 class="Modal_TitleBar_Title">
+						Commit changes?
+					</h2>
+				</div>
+				<div class="Modal_Content">
+					<p class="General_Paragraph">
+						Proceeding will set your file list on the left to only contain the items you've filtered. There is no way to undo these changes once committed.
+					</p>
+				</div>
+				<div class="Modal_Content_Bottom">
+					<div class="Subwindow_Bottom_Button_SecondaryAction" onclick="close_Subwindow('ConfirmFilterCommit')">
+						Cancel
+					</div>
+					<div class="Subwindow_Bottom_Button_PrimaryAction" onclick="WA_FI_CommitFilterChanges()">
+						Commit
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="ToastNotif" id="pageElement_ToastDrawer">
 		</div>
@@ -248,10 +272,10 @@
 			</div>
 			<div class="ToggleableSearchBar" id="pageElement_Toggleable_SearchBar" style="display: none">
 				<div class="ToggleableSearchBar_SearchBar">
-				<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3" onkeydown="if (event.keyCode == 13) {search_Query('toggleable')}"></input>
-				<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
-			</div>
-			<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
+					<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3" onkeydown="if (event.keyCode == 13) {search_Query('toggleable')}"></input>
+					<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
+				</div>
+				<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
 			</div>
 		</div>
 		<header class="Page_Header" id="pageElement_Header">
@@ -266,13 +290,13 @@
 				<!-- <div class="Header_Content_Button" onclick="trigger_createToast('success')">
 					<img class="Header_Content_Button_Icon" src="Assets/Icons/favicon_old.png"></img>
 					<h3 class="Header_Content_Button_Text">
-						Button 1
+					Button 1
 					</h3>
-				</div>
-				<div class="Header_Content_Button">
+					</div>
+					<div class="Header_Content_Button">
 					<img class="Header_Content_Button_Icon" src="Assets/Icons/favicon_old.png"></img>
 					<h3 class="Header_Content_Button_Text">
-						Button 2
+					Button 2
 					</h3>
 				</div> -->
 			</div>
@@ -296,53 +320,106 @@
 			</div>
 		</header>
 		<div class="Page_Sidebar" id="pageElement_Sidebar" style="overflow-x: hidden;">
-			<div class="General_Button" onclick="WA_Sidebar_ChangeTab('1')" style="padding: 5px">
-				Image File List
+			<div class="Sidebar_Item" id="FilterImages" onclick="trigger_ChangeTab_test(this.id), WA_trigger_ChangeTab()">
+				<img class="Sidebar_Item_Icon" id="tabIcon_FilterImages" src="Assets/Icons/placeholder.png"></img>
+				<p class="Sidebar_Item_Text">
+					Filter Images
+				</p>
 			</div>
-			<div class="General_Button" onclick="WA_Sidebar_ChangeTab('2')" style="padding: 5px">
-				Watermark File List
-			</div>
-			<div id="WA_Sidebar_List_ImageNames" style="padding: 5px">
-				<h3 class="General_Title">
-					Image files
-				</h3>
-				
-			</div>
-			<div id="WA_Sidebar_List_WatermarkNames" style="padding: 5px">
-				<h3 class="General_Title">
-					Watermark files
-				</h3>
-				
+			<div class="Sidebar_Item" id="ApplyWatermark" onclick="trigger_ChangeTab_test(this.id)">
+				<img class="Sidebar_Item_Icon" id="tabIcon_ApplyWatermark" src="Assets/Icons/placeholder.png"></img>
+				<p class="Sidebar_Item_Text">
+					Apply Watermark
+				</p>
 			</div>
 		</div>
-		<main class="Page_Content" id="pageElement_Content">
+		<main class="Page_Content" style="overflow: hidden" id="pageElement_Content">
+			<div class="WA_FileList" style="padding: 0" id="WA_FileList">
+				<div class="General_Button" onclick="WA_Sidebar_ChangeTab('1')" style="padding: 5px">
+					Image File List
+				</div>
+				<div class="General_Button" onclick="WA_Sidebar_ChangeTab('2')" style="padding: 5px">
+					Watermark File List
+				</div>
+				<div id="WA_Sidebar_List_ImageNames" style="padding: 5px">
+					<h3 class="General_Title">
+						Image files
+					</h3>
+				</div>
+				<div id="WA_Sidebar_List_WatermarkNames" style="padding: 5px">
+					<h3 class="General_Title">
+						Watermark files
+					</h3>
+				</div>
+				<input type="file" id="file-input" multiple></input>
+			</div>
+			<div class="Page_MainContent NoPadding" id="Page_MainContent" style="padding: 0">
+				<div class="Tab_Container NoPadding"  style="padding: 0" id="tab_FilterImages">
+					<div class="WA_FI_Container_Main">
+						<div class="WA_FI_Container_ImageGrid" id="pageElement_WA_FI_ImageGrid">
+							<div class="WA_FI_ImageGrid_Item">
+								<img class="WA_FI_ImageGrid_Item_Image" src="Assets/Images/WA_Test_Image_2.png"></img>
+							</div>
+						</div>
+						<div class="WA_FI_Container_ImagePreview">
+							<img class="WA_FI_Container_ImagePreview_Image" src="Assets/Images/WA_Test_Image_2.png" id="pageElement_WA_FI_ImagePreview" loading="lazy"></img>
+						</div>
+						<div class="WA_FI_Container_FilteredList">
+							<h4 class="General_Title">
+								Filtered Images
+							</h4>
+							<div class="General_Button" onclick="open_Subwindow('ConfirmFilterCommit')">
+								Commit
+							</div>
+							<div class="WA_FI_Container_FilteredList_Container" id="pageElement_WA_FI_FilteredList">
+								<div class="WA_FI_Container_FilteredList_Item">
+									Test
+								</div>
+								<div class="WA_FI_Container_FilteredList_Item">
+									Test
+								</div>
+								<div class="WA_FI_Container_FilteredList_Item">
+									Test
+								</div>
+								<div class="WA_FI_Container_FilteredList_Item">
+									Test
+								</div>
+								<div class="WA_FI_Container_FilteredList_Item">
+									Test
+								</div>
+								<div class="WA_FI_Container_FilteredList_Item">
+									Test
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="Tab_Container NoPadding"  style="padding: 0" id="tab_ApplyWatermark">
+					<div class="WA_MainContentContainer">
+						<h3 class="WA_FileName" id="pageElement_WA_FileName">
+							File name
+						</h3>
+						<div class="WA_ImageContainer" id="pageElement_WA_ImageContainer"> <!-- test -->
+							<img src="Assets/Images/WA_Test_Image_2.png" class="WA_Image" id="WA_Image" style="width: 100%"></img>
+							<img src="Assets/Images/WA_Test_Watermark.png" class="WA_Watermark" style="width: 100%" id="WA_Watermark"></img>
+						</div>
+						<div class="WA_Output" id="pageElement_WA_OutputContainer">
+						</div>
+						
+					</div>
+				</div>
+				<footer class="Page_Footer" style="display: none">
+					<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
+						Doodle Launcher Release 1.0
+					</h1>
+					<img class="Footer_Image" src="Assets/Icons/favicon.png"></img>
+					<h1 class="Footer_Text" id="pageElement_Footer_Copyright">
+						Copyright Content By ElmerF 2023
+					</h1>
+				</footer>
+			</div>
 			
-			<div class="Page_MainContent" id="Page_MainContent">
-				<div class="WA_MainContentContainer">
-				<h3 class="WA_FileName" id="pageElement_WA_FileName">
-					File name
-				</h3>
-				<div class="WA_ImageContainer" id="pageElement_WA_ImageContainer"> <!-- test -->
-					<img src="Assets/Images/WA_Test_Image_2.png" class="WA_Image" id="WA_Image" style="width: 100%"></img>
-					<img src="Assets/Images/WA_Test_Watermark.png" class="WA_Watermark" style="width: 100%" id="WA_Watermark"></img>
-				</div>
-				<div class="WA_Output" id="pageElement_WA_OutputContainer">
-				</div>
-				
-			</div>
-					
-					<footer class="Page_Footer">
-						<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
-							Doodle Launcher Release 1.0
-						</h1>
-						<img class="Footer_Image" src="Assets/Icons/favicon.png"></img>
-						<h1 class="Footer_Text" id="pageElement_Footer_Copyright">
-							Copyright Content By ElmerF 2023
-						</h1>
-					</footer>
-			</div>
-				
-				
-			</main>
-		</body>
-	</html>	
+			
+		</main>
+	</body>
+</html>	
