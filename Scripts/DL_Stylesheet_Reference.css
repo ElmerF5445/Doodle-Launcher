@@ -73,32 +73,136 @@
 	--
 	
 	/* Header */
-	--Header-Color-Accent
-	--Header-Color-Accent-Hover
-	--Header-Color-BG
-	--Header-Color-Hover
-	--Header-Color-Onclick
-	--Header-Font-Primary-Text
-	--Header-Font-Secondary-Text
-	--Header-Font-Numbers-Text
-	--Header-Color-Primary-Text
-	--Header-Color-Secondary-Text
-	--Header-Color-Numbers-text
-	--Header-Color-Divider
+	--Header-Container: ;
+	--Header-Divider: ;
+	--Header-Button: ;
+	--Header-Button-Hover: ;
+	--Header-Button-Click: ;
+	--Header-Menu: ;
+	--Header-Menu-Button: ;
+	--Header-Menu-Button-Hover: ;
+	--Header-Menu-Button-Click: ;
+	--Header-Menu-Button-Accent: ;
+	--Header-Menu-Button-Accent-Hover: ;
+	--Header-Menu-Button-Accent-Click: ;
+	--Header-Menu-Button-Glow: ;
+	--Header-Menu-Button-Glow-Hover: ;
+	--Header-Menu-Button-Glow-Click: ;
 	
 	/* Sidebar */
-	--Sidebar-Color-Accent
-	--Sidebar-Color-Accent-Hover
-	--Sidebar-Color-BG
-	--Sidebar-Color-Hover
-	--Sidebar-Color-Onclick
-	--Sidebar-Font-Primary-Text
-	--Sidebar-Font-Secondary-Text
-	--Sidebar-Font-Numbers-Text
-	--Sidebar-Color-Primary-Text
-	--Sidebar-Color-Secondary-Text
-	--Sidebar-Color-Numbers-text
-	--Sidebar-Color-Divider
+	--Sidebar-Container: ;
+	--Sidebar-Button-Icon: ;
+	--Sidebar-Button-Icon-Hover: ;
+	--Sidebar-Button-Icon-Click: ;
+	--Sidebar-Button-Name: ;
+	--Sidebar-Button-Name-Hover: ;
+	--Sidebar-Button-Name-Click: ;
+	
+	/* Subwindow */
+	--Subwindow-Container: ;
+	--Subwindow-Title: ;
+	--Subwindow-Title-Close: ;
+	--Subwindow-Title-Close-Hover: ;
+	--Subwindow-Title-Divider: ;
+	--Subwindow-Button-Primary: ;
+	--Subwindow-Button-Primary-Hover: ;
+	--Subwindow-Button-Primary-Click: ;
+	--Subwindow-Button-Primary-Accent: ;
+	--Subwindow-Button-Primary-Accent-Hover: ;
+	--Subwindow-Button-Primary-Accent-Click: ;
+	--Subwindow-Button-Primary-Glow: ;
+	--Subwindow-Button-Primary-Glow-Hover: ;
+	--Subwindow-Button-Primary-Glow-Click: ;
+	--Subwindow-Button-Secondary: ;
+	--Subwindow-Button-Secondary-Hover: ;
+	--Subwindow-Button-Secondary-Click: ;
+	--Subwindow-Button-Secondary-Accent: ;
+	--Subwindow-Button-Secondary-Accent-Hover: ;
+	--Subwindow-Button-Secondary-Accent-Click: ;
+	--Subwindow-Button-Secondary-Glow: ;
+	--Subwindow-Button-Secondary-Glow-Hover: ;
+	--Subwindow-Button-Secondary-Glow-Click: ;
+	
+	/* Loading Screen */
+	--LoadingScreen-Container: ;
+	--LoadingScreen-Loader: ;
+	
+	/* Scrollbar */
+	--Scrollbar-Container: ;
+	--Scrollbar-Scroll: ;
+	--Scrollbar-Scroll-Hover: ;
+	--Scrollbar-Scroll-Click: ;
+	
+	/* Input */
+	--Input-Dropdown-Container: ;
+	--Input-Dropdown-Hover: ;
+	--Input-Dropdown-Opened: ;
+	--Input-Dropdown-Accent: ;
+	--Input-Dropdown-Accent-Hover: ;
+	--Input-Dropdown-Accent-Opened: ;
+	--Input-Dropdown-Glow: ;
+	--Input-Dropdown-Glow-Hover: ;
+	--Input-Dropdown-Glow-Opened: ;
+	--Input-Dropdown-Choices-Container: ;
+	--Input-Dropdown-Choices-Hover: ;
+	
+	--Input-Toggle-Container: ;
+	--Input-Toggle-Hover: ;
+	--Input-Toggle-Click: ;
+	--Input-Toggle-Indicator-Enabled: ;
+	--Input-Toggle-Indicator-Disabled: ;
+	
+	--Input-Text-Container: ;
+	--Input-Text-Container-Hover: ;
+	--Input-Text-Container-Focus: ;
+	--Input-Text-Container-Accent: ;
+	--Input-Text-Container-Accent-Hover: ;
+	--Input-Text-Container-Accent-Focus: ;
+	--Input-Text-Container-Glow: ;
+	--Input-Text-Container-Glow-Hover: ;
+	--Input-Text-Container-Glow-Focus: ;
+	
+	/* Horizontal Tab */
+	--HorizontalTab-Container: ;
+	--HorizontalTab-Hover: ;
+	--HorizontalTab-Click: ;
+	--HorizontalTab-Accent: ;
+	--HorizontalTab-Accent-Hover: ;
+	--HorizontalTab-Accent-Click: ;
+	--HorizontalTab-Border: ;
+	--HorizontalTab-Border-Hover: ;
+	--HorizontalTab-Border-Click: ;
+	
+	/* List Items */
+	--ListItem-Container: ;
+	--ListItem-Hover: ;
+	--ListItem-Click: ;
+	--ListItem-Action: ;
+	--ListItem-Action-Hover: ;
+	--ListItem-Action-Click: ;
+	
+	/* Shortcut Buttons */
+	--Button-Shortcut-Container: ;
+	--Button-Shortcut-Hover: ;
+	--Button-Shortcut-Click: ;
+	--Button-Shortcut-Accent: ;
+	--Button-Shortcut-Accent-Hover: ;
+	--Button-Shortcut-Accent-Click: ;
+	--Button-Shortcut-Glow: ;
+	--Button-Shortcut-Glow-Hover: ;
+	--Button-Shortcut-Glow-Click: ;
+	
+	/* Buttons */
+	--Button-General-Container: ;
+	--Button-General-Hover: ;
+	--Button-General-Click: ;
+	--Button-General-Accent: ;
+	--Button-General-Accent-Hover: ;
+	--Button-General-Accent-Click: ;
+	--Button-General-Glow: ;
+	--Button-General-Glow-Hover: ;
+	--Button-General-Glow-Click: ;
+	
 	
 	
 	--Color-Accent-Sidebar: #171010;

@@ -4,59 +4,62 @@ v.1.16 [Pre-Release 1] (Pending)
 The first pre-release version of the launcher contains a rework of the layouts and designs throughout the system. It also fixed a lot of visual bugs and optimized the layouts for phones.
 === Additions ===
 - Added a Search Screen, similar to the Google Home page which reduces loading times. You can switch to the normal home page in it. You can also disable the feature on Settings > Behavior > Search Screen.
-- Added the Main Menu, organizing the launcher navigation and page action buttons in one place
-- Added a Library Profile System
-- Added the Shortcut Search option on the search bar that lets you search specific shortcuts
-- Added the URL Search option on the search bar that lets you enter URLs without it being a search query
-- Added an option to customize specific element properties such as color and fonts in Settings > Appearance > Element-Specific
-- Added an option to disable the shadow color changing to the accent hover color in Settings > Behavior > Display
-- Added an option to disable transition animations on Settings > Behavior > Display
-- Added an option to show the seconds on the clock on Settings > Behavior > Clock
-- Added an option to adjust the update duration of the clock, internet status, and battery percentage on Settings > Behavior > Clock
-- Added an option to blur the background of the home screen in Settings > Appearance > Wallpaper
-- Added an option to open shortcuts in the same tab on Settings > Behavior
-- Added an option to compress the header content on Settings > Behavior > Menus
-- Added an option to only display the button icons on the header on Settings > Behavior > Menus
-- Added an option to only display the header and sidebar when hovering over it on Settings > Behavior > Menus
-- Added several options to adjust how the background wallpaper is handled
-- Added Page Action buttons on the Home page
+- Added the Main Menu, organizing the launcher navigation and page action buttons in one place.
+- Added a Library Profile System.
+- Added the Shortcut Search option on the search bar that lets you search specific shortcuts.
+- Added the URL Search option on the search bar that lets you enter URLs without it being a search query.
+- Added an option to customize specific element properties such as color and fonts in Settings > Appearance > Element-Specific.
+- Added an option to disable the shadow color changing to the accent hover color in Settings > Behavior > Display.
+- Added an option to disable transition animations on Settings > Behavior > Display.
+- Added an option to show the seconds on the clock on Settings > Behavior > Clock.
+- Added an option to adjust the update duration of the clock, internet status, and battery percentage on Settings > Behavior > Clock.
+- Added an option to blur the background of the home screen in Settings > Appearance > Wallpaper.
+- Added an option to open shortcuts in the same tab on Settings > Behavior.
+- Added an option to compress the header content on Settings > Behavior > Menus.
+- Added an option to only display the button icons on the header on Settings > Behavior > Menus.
+- Added an option to only display the header and sidebar when hovering over it on Settings > Behavior > Menus.
+- Added several options to adjust how the background wallpaper is handled.
+- Added Page Action buttons on the Home page.
 === Changes ===
-- Updated the general UI system
-- Updated the Header buttons to have an icon beside them
-- Header buttons will now compress into icons only when the screen is small enough
-- Replaced the Launcher Navigation flyout with the Main Menu flyout
-- Updated the page property system
-- Updated the Sidebar UI system to only use one Sidebar type for all types of content
-- Updated several subwindow UIs
-- Updated the category navigation UI
-- Renamed Table View into Edit Items on Shortcut Editor
-- Updated how items are displayed on the Edit Items tab
-- Long strings of text on Edit Items are now restricted to a set width
-- Moved the Re-order Categories and Shortcuts button on its own tab
+- Updated the general UI system.
+- Updated the Header buttons to have an icon beside them.
+- Header buttons will now compress into icons only when the screen is small enough.
+- Replaced the Launcher Navigation flyout with the Main Menu flyout.
+- Updated the page property system.
+- Updated the Sidebar UI system to only use one Sidebar type for all types of content.
+- Updated several subwindow UIs.
+- Updated the category navigation UI.
+- Renamed Table View into Edit Items on Shortcut Editor.
+- Updated how items are displayed on the Edit Items tab.
+- Long strings of text on Edit Items are now restricted to a set width.
+- Moved the Re-order Categories and Shortcuts button on its own tab.
 - Updated the Re-order Categories and Shortcuts system to let you insert the selected item between two items and / or swap its places.
-- The Import list input field on Import / Export Shortcuts tab is no longer restricted to one line of text and is now larger in height and adjustable
-- A pop-up notification will now appear when importing / exporting shortcuts when no categories have been selected
-- A pop-up notification will now appear when attempting to create an item with a semi-colon on its name (this has been made prohibited because it messes with the Import / Export Shortcut system)
-- Onboarding system has been put into its own page
-- Login system has been put into its own page
-- Fixed subwindows not being centered properly
-- Fixed Sidebar item distancing problems when the window is tall enough
-- Made the loading screen icon and the favicon of pages consistent
-- Removed action buttons on pages that don't need them
-- Pressing Enter while in the search box will now do a search
-- Hovering over a button will now change the color of its shadow into the accent hover color
-- Updated button designs to be consistent with the shortcut buttons
-- The clock no longer displays the date when being hovered
-- The clock, battery percentage, and internet icon will now open the same textbox when clicked
+- The Import list input field on Import / Export Shortcuts tab is no longer restricted to one line of text and is now larger in height and adjustable.
+- A pop-up notification will now appear when importing / exporting shortcuts when no categories have been selected.
+- A pop-up notification will now appear when attempting to create an item with a semi-colon on its name (this has been made prohibited because it messes with the Import / Export Shortcut system).
+- Buttons that link to the Settings page will now display the correct tab instead of the home tab.
+- Onboarding system has been put into its own page.
+- Login system has been put into its own page.
+- Fixed subwindows not being centered properly.
+- Fixed Sidebar item distancing problems when the window is tall enough.
+- Made the loading screen icon and the favicon of pages consistent.
+- Removed action buttons on pages that don't need them.
+- Pressing Enter while in the search box will now do a search.
+- Hovering over a button will now change the color of its shadow into the accent hover color.
+- Updated button designs to be consistent with the shortcut buttons.
+- The clock no longer displays the date when being hovered.
+- The clock, battery percentage, and internet icon will now open the same textbox when clicked.
 - The clock, date, and battery percentage will now only update when it's visible.
-- Battery percentage will now display whether the device is plugged in or not, and if not, the estimated remaining time is displayed
-- Fixed the change wallpaper detect button using a primary font instead of the secondary one
-- Fixed page size being too small when viewed on mobile devices
-- Optimized page layout for mobile devices
-- Subwindows will now open in full screen when the window is small enough
+- Battery percentage will now display whether the device is plugged in or not, and if not, the estimated remaining time is displayed.
+- Fixed the change wallpaper detect button using a primary font instead of the secondary one.
+- Fixed page size being too small when viewed on mobile devices.
+- Sidebar will now collapse when the screen is small enough.
+- Optimized page layout for mobile devices.
+- Subwindows will now open in full screen when the window is small enough.
 - Page tabs now change animation based on whether the sidebar tab you clicked is above the currently open tab or below it.
-- Page tabs can now be switched when either Tab + Up Arrow or Down Arrow. 
-- Page tabs now have a closing fading animation when switching to another tab
+- Page tabs can now be switched when either Tab + Up Arrow or Down Arrow.
+- Page tabs now have a closing fading animation when switching to another tab.
+- Removed the page footer; copyright and version information can be found on the loading screen.
 
 v.1.15 [Public Preview 4] (December 1, 2022)
 This version adds a way to launch or open all the shortcuts in a category. It also adds a way to import and export shortcuts using text strings that stores the shortcut name and urls.

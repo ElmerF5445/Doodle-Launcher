@@ -15,8 +15,9 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;800&family=Roboto&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
 	</head>
-	<body class="MainPage" onload="dev_OnloadTasks()">
+	<body class="MainPage" onload="OnloadTasks()">
 		<script src="Scripts/DL_Javascript.js"></script>
 		<div class="LoadingScreen" id="LoadingScreen">
 			<div class="LoadingScreen_UpperSection" id="LoadingScreen_UpperSection">
@@ -58,18 +59,74 @@
 		<div class="Page_Blur" id="pageElement_BlurBG">
 			d
 		</div>
-		<div class="Page_Subwindows">
-			
+		<div class="Page_Subwindows" id="pageElement_Subwindows">
+			<div class="Subwindow" id="subwindow_Test_Subwindow">
+				<div class="Subwindow_Titlebar">
+					<h2 class="Subwindow_TitleBar_Title">
+						Subwindow
+					</h2> 
+					<img class="Subwindow_Titlebar_Close" src="Assets/Icons/icon_close.png" onclick="close_Subwindow('Test_Subwindow')">
+				</div>
+				<div class="Subwindow_Content">
+					<h1 class="General_Title">
+						TEXT
+					</h1>
+				</div>
+				<div class="Subwindow_Bottom">
+					<div class="Subwindow_Bottom_Button_SecondaryAction">
+						Secondary action
+					</div>
+					<div class="Subwindow_Bottom_Button_PrimaryAction">
+						Primary action
+					</div>
+				</div>
+			</div>
+			<div class="Modal" id="subwindow_Test_Modal">
+				<div class="Modal_TitleBar">
+					<h2 class="Modal_TitleBar_Title">
+						Modal / Confirmation
+					</h2>
+				</div>
+				<div class="Modal_Content">
+					<p class="General_Paragraph">
+						In this format, the box closes if either the Esc button is pressed, or the user clicks any of the button in the bottom section of the window.
+					</p>
+				</div>
+				<div class="Modal_Content_Bottom">
+					<div class="Subwindow_Bottom_Button_SecondaryAction">
+						Secondary action
+					</div>
+					<div class="Subwindow_Bottom_Button_PrimaryAction">
+						Primary action
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ToastNotif" id="pageElement_ToastDrawer">
 		</div>
 		<div class="Page_Overlays">
+			<div class="TargetArea_CornerButtons">
+				<div class="CornerButtons" id="pageElement_CornerButtons">
+					<img src="Assets/Icons/icon_downArrow.png" class="CornerButtons_Button" onclick="scrollToPosition('bottom')"></img>
+					<img src="Assets/Icons/icon_upArrow.png" class="CornerButtons_Button" onclick="scrollToPosition('top')"></img>
+				</div>
+			</div>
 			<div class="Header_MainMenu_Container" style="display: none" id="pageElement_Header_MainMenu_Textbox">
 				<div id="pageElement_Header_MainMenu_Textbox_Content" style="opacity: 0%">
-					<div class="Header_MainMenu_Profile" id="pageElement_Header_MainMenu_ProfileButton">
-						<img class="Header_MainMenu_Profile_Image" src="Assets/Icons/icon_user.png"></img>
-						<h3 class="Header_MainMenu_Profile_Name">
-							Jemma Regalados
-						</h3>
+					<div class="Header_MainMenu_PageName" id="Header_MainMenu_PageName">
+						<img class="Header_MainMenu_PageName_Icon" src="Assets/Icons/favicon_old.png" id="Header_MainMenu_PageName_Icon"></img>
+						<h4 class="Header_MainMenu_PageName_Text" id="Header_MainMenu_PageName_Text">
+							Template
+						</h4>
 					</div>
+					<a href="DL_ProfileScreen.html">
+						<div class="Header_MainMenu_Profile" id="pageElement_Header_MainMenu_ProfileButton">
+							<img class="Header_MainMenu_Profile_Image" src="Assets/Icons/icon_user.png" id="MainMenu_Profile_Image"></img>
+							<h3 class="Header_MainMenu_Profile_Name" id="MainMenu_Profile_Name">
+								Jemma Regalados
+							</h3>
+						</div>
+					</a>
 					<!-- <div class="Header_MainMenu_SearchBar">
 						<input type="text" class="Header_MainMenu_SearchBar_Input"></input>
 						<img class="Header_MainMenu_SearchBar_Button" src="Assets/Icons/icon_search.png"></img>
@@ -138,6 +195,13 @@
 					</div>
 				</div>
 			</div>
+			<div class="ToggleableSearchBar" id="pageElement_Toggleable_SearchBar" style="display: none">
+				<div class="ToggleableSearchBar_SearchBar">
+					<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3" onkeydown="if (event.keyCode == 13) {search_Query('toggleable')}"></input>
+					<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
+				</div>
+				<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close" onclick="toggle_SearchBar()"></img>
+			</div>
 		</div>
 		<header class="Page_Header" id="pageElement_Header">
 			<img class="Sidebar_CategoryNavigation_Toggle" id="pageElement_Header_SidebarToggle" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar()"></img>
@@ -147,19 +211,19 @@
 					Home
 				</h2>
 			</div>
-			<div class="Header_Content">
-				<div class="Header_Content_Button">
+			<div class="Header_Content" id="pageElement_Header_Actions">
+				<!-- <div class="Header_Content_Button" onclick="trigger_createToast('success')">
 					<img class="Header_Content_Button_Icon" src="Assets/Icons/favicon_old.png"></img>
 					<h3 class="Header_Content_Button_Text">
-						Button 1
+					Button 1
 					</h3>
-				</div>
-				<div class="Header_Content_Button">
+					</div>
+					<div class="Header_Content_Button">
 					<img class="Header_Content_Button_Icon" src="Assets/Icons/favicon_old.png"></img>
 					<h3 class="Header_Content_Button_Text">
-						Button 2
+					Button 2
 					</h3>
-				</div>
+				</div> -->
 			</div>
 			<div class="Header_StatusTray" onclick="trigger_toggle_Textbox(this.id)" id="pageElement_Header_StatusTray">
 				<div class="Header_Clock" id="pageElement_Header_Clock">
@@ -181,45 +245,686 @@
 			</div>
 		</header>
 		<div class="Page_Sidebar" id="pageElement_Sidebar">
-			<div class="Sidebar_Item" id="Settings_Tab_Appearance" onclick="trigger_ChangeTab(this.id)">
-				<img class="Sidebar_Icon" id="Settings_Tab_Appearance_Icon" src="Assets/Icons/icon_customize.png"></img>
+			<div class="Sidebar_Item" id="Appearance" onclick="trigger_ChangeTab_test(this.id)">
+				<img class="Sidebar_Item_Icon" id="tabIcon_Appearance" src="Assets/Icons/icon_customize.png"></img>
 				<p class="Sidebar_Item_Text">
 					Appearance
 				</p>
 			</div>
-			<div class="Sidebar_Item" id="Settings_Tab_Behavior" onclick="trigger_ChangeTab(this.id)">
-				<img class="Sidebar_Icon" id="Settings_Tab_Behavior_Icon"src="Assets/Icons/icon_lms.png"></img>
+			<div class="Sidebar_Item" id="Behavior" onclick="trigger_ChangeTab_test(this.id)">
+				<img class="Sidebar_Item_Icon" id="tabIcon_Behavior" src="Assets/Icons/icon_lms.png"></img>
 				<p class="Sidebar_Item_Text">
 					Behavior
 				</p>
 			</div>
-			<div class="Sidebar_Item" id="Settings_Tab_Information" onclick="trigger_ChangeTab(this.id)">
-				<img class="Sidebar_Icon" id="Settings_Tab_Information_Icon"src="Assets/Icons/icon_information.png"></img>
+			<div class="Sidebar_Item" id="Information" onclick="trigger_ChangeTab_test(this.id)">
+				<img class="Sidebar_Item_Icon" id="tabIcon_Information" src="Assets/Icons/icon_information.png"></img>
 				<p class="Sidebar_Item_Text">
-					Public Beta Information
+					Information
 				</p>
 			</div>
-			<div class="Sidebar_Item" id="Settings_Tab_Update" onclick="trigger_ChangeTab(this.id)">
-				<img class="Sidebar_Icon" id="Settings_Tab_Update_Icon" src="Assets/Icons/icon_softwareUpdate.png"></img>
+			<div class="Sidebar_Item" id="Update" onclick="trigger_ChangeTab_test(this.id)">
+				<img class="Sidebar_Item_Icon" id="tabIcon_Update" src="Assets/Icons/icon_softwareUpdate.png"></img>
 				<p class="Sidebar_Item_Text">
 					Launcher Update
 				</p>
 			</div>
 		</div>
 		<main class="Page_Content" id="pageElement_Content">
-			<div>
-				<div class="Page_MainContent">
-					<h1 class="Greeting_Text" id="pageElement_Tab_Title">
-						Doodle Launcher Settings
+			
+			<div class="Page_MainContent" id="Page_MainContent">
+				<div class="Tab_Container" id="tab_Appearance">
+					<h1 class="General_Title">
+						Appearance
 					</h1>
-					<p class="General_Paragraph" id="pageElement_Tab_Description">
-						This page lets you tweak different settings and change how the launcher looks and behaves. You can also find relevant information here. <br>
-						Select a tab on the sidebar to access settings on that tab.
+					<p class="General_Paragraph">
+						Personalize how the launcher looks.
 					</p>
-					<div id="pageElement_ContentContainer">
-						
+					<span class="anchor" id="anchor_category_Appearance_Presets"></span>
+					<div class="Category_Label" id="category_Appearance_Presets" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Presets
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Appearance_Presets"></img>	
 					</div>
-					<footer class="Page_Footer">
+					<div id="content_category_Appearance_Presets" class="Category_Content_Container">
+						<div class="Settings_PresetNew_Container">
+							<div class="Settings_PresetNew_Item" onclick="Settings_LoadPresets('darkmode')">
+								<img src="Assets/Background/default_New.png" class="Settings_PresetNew_Wallpaper"></img>
+								<p class="Settings_PresetNew_Item_Name">
+									Dark mode
+								</p>
+								<div class="Settings_PresetNew_ColorBoxes_Container">
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #cf5520"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #a03d13"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #171010"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #242424"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #171010"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #292929"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #171010"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #1E1E24"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #1E1E24"></div>
+								</div>
+							</div>
+							<div class="Settings_PresetNew_Item" onclick="Settings_LoadPresets('lightmode')">
+								<img src="Assets/Background/default_lightmode.jpg" class="Settings_PresetNew_Wallpaper"></img>
+								<p class="Settings_PresetNew_Item_Name">
+									Light mode
+								</p>
+								<div class="Settings_PresetNew_ColorBoxes_Container">
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #a2b4fb"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #4664dd"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #ffffff"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #a6a6a6"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #cccccc"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #cccccc"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #bfbfbf"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #e6e6e6"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #ffffff"></div>
+								</div>
+							</div>
+							<div class="Settings_PresetNew_Item" onclick="Settings_LoadPresets('gardenofwords')">
+								<img src="Assets/Background/gardenofwords.jpg" class="Settings_PresetNew_Wallpaper"></img>
+								<p class="Settings_PresetNew_Item_Name">
+									Garden of Words
+								</p>
+								<div class="Settings_PresetNew_ColorBoxes_Container">
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #9f4f52"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #9f4f52"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #171010"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #242424"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #171010"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #292929"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #171010"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #1E1E24"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #1E1E24"></div>
+								</div>
+							</div>
+							<div class="Settings_PresetNew_Item" onclick="Settings_LoadPresets('underwater')">
+								<img src="Assets/Background/underwater.jpg" class="Settings_PresetNew_Wallpaper"></img>
+								<p class="Settings_PresetNew_Item_Name">
+									Underwater
+								</p>
+								<div class="Settings_PresetNew_ColorBoxes_Container">
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #bd7b87"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #a05482"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #012754"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #03316d"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #012754"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #00305d"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #004775"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #00628e"></div>
+									<div class="Settings_PresetNew_ColorBox" style="background-color: #027cad"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<span class="anchor" id="anchor_category_Appearance_Wallpaper"></span>
+					<div class="Category_Label" id="category_Appearance_Wallpaper" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Wallpaper
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Appearance_Wallpaper"></img>	
+					</div>
+					<div id="content_category_Appearance_Wallpaper" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							Change the wallpaper and how it's displayed.
+						</p>
+						<div class="Toggle" id="Toggle_AP_WP_EnableWallpapers" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Enable wallpapers
+						</div>
+						<img class="Settings_WallpaperImg" src="Assets/Background/gardenofwords.jpg"></img>
+						<br>
+						<h1 class="General_Button" id="ChangeWallpaper" onclick="open_Subwindow(this.id)">
+							Change wallpaper
+						</h1>
+					</div>
+					<span class="anchor" id="anchor_category_Appearance_Text"></span>
+					<div class="Category_Label" id="category_Appearance_Text" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Text
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Appearance_Text"></img>	
+					</div>
+					<div id="content_category_Appearance_Text" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							By default, fonts are pulled from Google Fonts. You can manually change it to any font installed into your device.
+						</p>
+						<div class="Settings_ValuesTable_Text">
+							<label for="AP-TX-Font-Primary" class="Input_Label"> Primary text font</label>
+							<input type="text" id="AP-TX-Font-Primary" class="Input_Text"></input>
+							<label for="AP-TX-Font-Secondary" class="Input_Label"> Secondary text font</label>
+							<input type="text" id="AP-TX-Font-Secondary" class="Input_Text"></input>
+							<label for="AP-TX-Font-Numbers" class="Input_Label"> Numbers text font</label>
+							<input type="text" id="AP-TX-Font-Numbers" class="Input_Text"></input>
+						</div>
+						<div class="Settings_ValuesTable_Color">
+							<input type="color" id="AP-TX-Font-Color" class="Input_Color"></input>
+							<label for="AP-TX-Font-Color" class="Input_Label"> Text color </label>
+						</div>
+					</div>
+					<span class="anchor" id="anchor_category_Appearance_Colors"></span>
+					<div class="Category_Label" id="category_Appearance_Colors" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Colors
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Appearance_Colors"></img>	
+					</div>
+					<div id="content_category_Appearance_Colors" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							Customize all the colors used throughout the system.
+						</p>
+						<div class="Settings_ValuesTable_Color">
+							<input type="color" id="AP-CL-AccentColor" class="Input_Color"></input>
+							<label for="AP-CL-AccentColor" class="Input_Label"> Accent color </label>
+							
+							<input type="color" id="AP-CL-AccentColor-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AccentColor-Hover" class="Input_Label"> Accent hover color </label>
+							
+							<input type="color" id="AP-CL-BGColor-General" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-General" class="Input_Label"> General background color </label>
+							
+							<input type="color" id="AP-CL-HoverColor" class="Input_Color"></input>
+							<label for="AP-CL-HoverColor" class="Input_Label"> Hover color </label>
+							
+							<input type="color" id="AP-CL-BGColor-Menu" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-Menu" class="Input_Label"> Menu background color </label>
+							
+							<input type="color" id="AP-CL-BGColor-Subwindow" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-Subwindow" class="Input_Label"> Subwindow background colors </label>
+							
+							<input type="color" id="AP-CL-BGColor-Dropdown" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-Dropdown" class="Input_Label"> Dropdown menu background color </label>
+							
+							<input type="color" id="AP-CL-BGColor-Opacitated" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-Opacitated" class="Input_Label"> Blur effect background color (it will have an opacity of 50%) </label>
+							
+							<input type="color" id="AP-CL-BGColor-ShortcutButton" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-ShortcutButton" class="Input_Label"> Shortcut button background color </label>
+							
+							<input type="color" id="AP-CL-BGColor-GeneralButton" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-GeneralButton" class="Input_Label"> General button background color </label>
+							
+							<input type="color" id="AP-CL-BGColor-Input" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-Input" class="Input_Label"> Input field background color </label>
+							
+							<input type="color" id="AP-CL-BGColor-Divider" class="Input_Color"></input>
+							<label for="AP-CL-BGColor-Divider" class="Input_Label"> Divider color </label>
+						</div>
+					</div>
+					<span class="anchor" id="anchor_category_Appearance_Advanced_Styling"></span>
+					<div class="Category_Label" id="category_Appearance_Advanced_Styling" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Advanced Styling
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Appearance_Advanced_Styling"></img>	
+					</div>
+					<div id="content_category_Appearance_Advanced_Styling" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							Change the colors of specific screen elements and its corresponding hover and click state colors. Make sure to enable "Use Advanced Styling" so the system will use these values instead of the general values above.
+						</p>
+						<div class="Settings_ValuesTable_Color">
+							<input type="color" id="AP-CL-AS-Header-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Container" class="Input_Label"> Header-Container </label>
+							<input type="color" id="AP-CL-AS-Header-Divider" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Divider" class="Input_Label"> Header-Divider </label>
+							<input type="color" id="AP-CL-AS-Header-Button" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Button" class="Input_Label"> Header-Button </label>
+							<input type="color" id="AP-CL-AS-Header-Button-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Button-Hover" class="Input_Label"> Header-Button-Hover </label>
+							<input type="color" id="AP-CL-AS-Header-Button-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Button-Click" class="Input_Label"> Header-Button-Click </label>
+							<input type="color" id="AP-CL-AS-Header-Menu" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Menu" class="Input_Label"> Header-Menu </label>
+							<input type="color" id="AP-CL-AS-Header-Menu-Button" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Menu-Button" class="Input_Label"> Header-Menu-Button </label>
+							<input type="color" id="AP-CL-AS-Header-Menu-Button-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Menu-Button-Hover" class="Input_Label"> Header-Menu-Button-Hover </label>
+							<input type="color" id="AP-CL-AS-Header-Menu-Button-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Menu-Button-Click" class="Input_Label"> Header-Menu-Button-Click </label>
+							<input type="color" id="AP-CL-AS-Header-Menu-Button-Accent" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Menu-Button-Accent" class="Input_Label"> Header-Menu-Button-Accent </label>
+							<input type="color" id="AP-CL-AS-Header-Menu-Button-Accent-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Menu-Button-Accent-Hover" class="Input_Label"> Header-Menu-Button-Accent-Hover </label>
+							<input type="color" id="AP-CL-AS-Header-Menu-Button-Accent-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Menu-Button-Accent-Click" class="Input_Label"> Header-Menu-Button-Accent-Click </label>
+							<input type="color" id="AP-CL-AS-Header-Menu-Button-Glow" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Menu-Button-Glow" class="Input_Label"> Header-Menu-Button-Glow </label>
+							<input type="color" id="AP-CL-AS-Header-Menu-Button-Glow-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Menu-Button-Glow-Hover" class="Input_Label"> Header-Menu-Button-Glow-Hover </label>
+							<input type="color" id="AP-CL-AS-Header-Menu-Button-Glow-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Header-Menu-Button-Glow-Click" class="Input_Label"> Header-Menu-Button-Glow-Click </label>
+							<input type="color" id="AP-CL-AS-Sidebar-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-Sidebar-Container" class="Input_Label"> Sidebar-Container </label>
+							<input type="color" id="AP-CL-AS-Sidebar-Button-Icon" class="Input_Color"></input>
+							<label for="AP-CL-AS-Sidebar-Button-Icon" class="Input_Label"> Sidebar-Button-Icon </label>
+							<input type="color" id="AP-CL-AS-Sidebar-Button-Icon-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Sidebar-Button-Icon-Hover" class="Input_Label"> Sidebar-Button-Icon-Hover </label>
+							<input type="color" id="AP-CL-AS-Sidebar-Button-Icon-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Sidebar-Button-Icon-Click" class="Input_Label"> Sidebar-Button-Icon-Click </label>
+							<input type="color" id="AP-CL-AS-Sidebar-Button-Name" class="Input_Color"></input>
+							<label for="AP-CL-AS-Sidebar-Button-Name" class="Input_Label"> Sidebar-Button-Name </label>
+							<input type="color" id="AP-CL-AS-Sidebar-Button-Name-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Sidebar-Button-Name-Hover" class="Input_Label"> Sidebar-Button-Name-Hover </label>
+							<input type="color" id="AP-CL-AS-Sidebar-Button-Name-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Sidebar-Button-Name-Click" class="Input_Label"> Sidebar-Button-Name-Click </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Container" class="Input_Label"> Subwindow-Container </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Title" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Title" class="Input_Label"> Subwindow-Title </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Title-Close" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Title-Close" class="Input_Label"> Subwindow-Title-Close </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Title-Close-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Title-Close-Hover" class="Input_Label"> Subwindow-Title-Close-Hover </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Title-Divider" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Title-Divider" class="Input_Label"> Subwindow-Title-Divider </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Primary" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Primary" class="Input_Label"> Subwindow-Button-Primary </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Primary-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Primary-Hover" class="Input_Label"> Subwindow-Button-Primary-Hover </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Primary-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Primary-Click" class="Input_Label"> Subwindow-Button-Primary-Click </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Primary-Accent" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Primary-Accent" class="Input_Label"> Subwindow-Button-Primary-Accent </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Primary-Accent-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Primary-Accent-Hover" class="Input_Label"> Subwindow-Button-Primary-Accent-Hover </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Primary-Accent-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Primary-Accent-Click" class="Input_Label"> Subwindow-Button-Primary-Accent-Click </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Primary-Glow" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Primary-Glow" class="Input_Label"> Subwindow-Button-Primary-Glow </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Primary-Glow-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Primary-Glow-Hover" class="Input_Label"> Subwindow-Button-Primary-Glow-Hover </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Primary-Glow-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Primary-Glow-Click" class="Input_Label"> Subwindow-Button-Primary-Glow-Click </label>
+							
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Secondary" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Secondary" class="Input_Label"> Subwindow-Button-Secondary </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Secondary-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Secondary-Hover" class="Input_Label"> Subwindow-Button-Secondary-Hover </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Secondary-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Secondary-Click" class="Input_Label"> Subwindow-Button-Secondary-Click </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Secondary-Accent" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Secondary-Accent" class="Input_Label"> Subwindow-Button-Secondary-Accent </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Secondary-Accent-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Secondary-Accent-Hover" class="Input_Label"> Subwindow-Button-Secondary-Accent-Hover </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Secondary-Accent-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Secondary-Accent-Click" class="Input_Label"> Subwindow-Button-Secondary-Accent-Click </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Secondary-Glow" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Secondary-Glow" class="Input_Label"> Subwindow-Button-Secondary-Glow </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Secondary-Glow-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Secondary-Glow-Hover" class="Input_Label"> Subwindow-Button-Secondary-Glow-Hover </label>
+							<input type="color" id="AP-CL-AS-Subwindow-Button-Secondary-Glow-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Subwindow-Button-Secondary-Glow-Click" class="Input_Label"> Subwindow-Button-Secondary-Glow-Click </label>
+							
+							<input type="color" id="AP-CL-AS-LoadingScreen-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-LoadingScreen-Container" class="Input_Label"> LoadingScreen-Container </label>
+							<input type="color" id="AP-CL-AS-LoadingScreen-Loader" class="Input_Color"></input>
+							<label for="AP-CL-AS-LoadingScreen-Loader" class="Input_Label"> LoadingScreen-Loader </label>
+							
+							<input type="color" id="AP-CL-AS-Scrollbar-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-Scrollbar-Container" class="Input_Label"> Scrollbar-Container </label>
+							<input type="color" id="AP-CL-AS-Scrollbar-Scroll" class="Input_Color"></input>
+							<label for="AP-CL-AS-Scrollbar-Scroll" class="Input_Label"> Scrollbar-Scroll </label>
+							<input type="color" id="AP-CL-AS-Scrollbar-Scroll-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Scrollbar-Scroll-Hover" class="Input_Label"> Scrollbar-Scroll-Hover </label>
+							<input type="color" id="AP-CL-AS-Scrollbar-Scroll-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Scrollbar-Scroll-Click" class="Input_Label"> Scrollbar-Scroll-Click </label>
+							
+							<input type="color" id="AP-CL-AS-Input-Dropdown-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Dropdown-Container" class="Input_Label"> Input-Dropdown-Container </label>
+							<input type="color" id="AP-CL-AS-Input-Dropdown-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Dropdown-Hover" class="Input_Label"> Input-Dropdown-Hover </label>
+							<input type="color" id="AP-CL-AS-Input-Dropdown-Opened" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Dropdown-Opened" class="Input_Label"> Input-Dropdown-Opened </label>
+							<input type="color" id="AP-CL-AS-Input-Dropdown-Glow-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Dropdown-Glow-Hover" class="Input_Label"> Input-Dropdown-Glow-Hover </label>
+							<input type="color" id="AP-CL-AS-Input-Dropdown-Glow-Opened" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Dropdown-Glow-Opened" class="Input_Label"> Input-Dropdown-Glow-Opened </label>
+							<input type="color" id="AP-CL-AS-Input-Dropdown-Accent" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Dropdown-Accent" class="Input_Label"> Input-Dropdown-Accent </label>
+							<input type="color" id="AP-CL-AS-Input-Dropdown-Accent-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Dropdown-Accent-Hover" class="Input_Label"> Input-Dropdown-Accent-Hover </label>
+							<input type="color" id="AP-CL-AS-Input-Dropdown-Accent-Opened" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Dropdown-Accent-Opened" class="Input_Label"> Input-Dropdown-Accent-Opened </label>
+							<input type="color" id="AP-CL-AS-Input-Dropdown-Choices-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Dropdown-Choices-Container" class="Input_Label"> Input-Dropdown-Choices-Container </label>
+							<input type="color" id="AP-CL-AS-Input-Dropdown-Choices-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Dropdown-Choices-Hover" class="Input_Label"> Input-Dropdown-Choices-Hover </label>
+							
+							<input type="color" id="AP-CL-AS-Input-Toggle-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Toggle-Container" class="Input_Label"> Input-Toggle-Container </label>
+							<input type="color" id="AP-CL-AS-Input-Toggle-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Toggle-Hover" class="Input_Label"> Input-Toggle-Hover </label>
+							<input type="color" id="AP-CL-AS-Input-Toggle-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Toggle-Click" class="Input_Label"> Input-Toggle-Click </label>
+							<input type="color" id="AP-CL-AS-Input-Toggle-Indicator-Enabled" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Toggle-Indicator-Enabled" class="Input_Label"> Input-Toggle-Indicator-Enabled </label>
+							<input type="color" id="AP-CL-AS-Input-Toggle-Indicator-Disabled" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Toggle-Indicator-Disabled" class="Input_Label"> Input-Toggle-Indicator-Disabled </label>
+							
+							<input type="color" id="AP-CL-AS-Input-Text-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Text-Container" class="Input_Label"> Input-Text-Container </label>
+							<input type="color" id="AP-CL-AS-Input-Text-Container-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Text-Container-Hover" class="Input_Label"> Input-Text-Container-Hover </label>
+							<input type="color" id="AP-CL-AS-Input-Text-Container-Focus" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Text-Container-Focus" class="Input_Label"> Input-Text-Container-Focus </label>
+							<input type="color" id="AP-CL-AS-Input-Text-Container-Accent" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Text-Container-Accent" class="Input_Label"> Input-Text-Container-Accent </label>
+							<input type="color" id="AP-CL-AS-Input-Text-Container-Accent-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Text-Container-Accent-Hover" class="Input_Label"> Input-Text-Container-Accent-Hover </label>
+							<input type="color" id="AP-CL-AS-Input-Text-Container-Accent-Focus" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Text-Container-Accent-Focus" class="Input_Label"> Input-Text-Container-Accent-Focus </label>
+							<input type="color" id="AP-CL-AS-Input-Text-Container-Glow" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Text-Container-Glow" class="Input_Label"> Input-Text-Container-Glow </label>
+							<input type="color" id="AP-CL-AS-Input-Text-Container-Glow-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Text-Container-Glow-Hover" class="Input_Label"> Input-Text-Container-Glow-Hover </label>
+							<input type="color" id="AP-CL-AS-Input-Text-Container-Glow-Focus" class="Input_Color"></input>
+							<label for="AP-CL-AS-Input-Text-Container-Glow-Focus" class="Input_Label"> Input-Text-Container-Glow-Focus </label>
+							
+							<input type="color" id="AP-CL-AS-HorizontalTab-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-HorizontalTab-Container" class="Input_Label"> HorizontalTab-Container </label>
+							<input type="color" id="AP-CL-AS-HorizontalTab-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-HorizontalTab-Hover" class="Input_Label"> HorizontalTab-Hover </label>
+							<input type="color" id="AP-CL-AS-HorizontalTab-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-HorizontalTab-Click" class="Input_Label"> HorizontalTab-Click </label>
+							<input type="color" id="AP-CL-AS-HorizontalTab-Accent" class="Input_Color"></input>
+							<label for="AP-CL-AS-HorizontalTab-Accent" class="Input_Label"> HorizontalTab-Accent </label>
+							<input type="color" id="AP-CL-AS-HorizontalTab-Accent-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-HorizontalTab-Accent-Hover" class="Input_Label"> HorizontalTab-Accent-Hover </label>
+							<input type="color" id="AP-CL-AS-HorizontalTab-Accent-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-HorizontalTab-Accent-Click" class="Input_Label"> HorizontalTab-Accent-Click </label>
+							<input type="color" id="AP-CL-AS-HorizontalTab-Border" class="Input_Color"></input>
+							<label for="AP-CL-AS-HorizontalTab-Border" class="Input_Label"> HorizontalTab-Border </label>
+							<input type="color" id="AP-CL-AS-HorizontalTab-Border-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-HorizontalTab-Border-Hover" class="Input_Label"> HorizontalTab-Border-Hover </label>
+							<input type="color" id="AP-CL-AS-HorizontalTab-Border-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-HorizontalTab-Border-Click" class="Input_Label"> HorizontalTab-Border-Click </label>
+							
+							<input type="color" id="AP-CL-AS-ListItem-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-ListItem-Container" class="Input_Label"> ListItem-Container </label>
+							<input type="color" id="AP-CL-AS-ListItem-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-ListItem-Hover" class="Input_Label"> ListItem-Hover </label>
+							<input type="color" id="AP-CL-AS-ListItem-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-ListItem-Click" class="Input_Label"> ListItem-Click </label>
+							<input type="color" id="AP-CL-AS-ListItem-Action" class="Input_Color"></input>
+							<label for="AP-CL-AS-ListItem-Action" class="Input_Label"> ListItem-Action </label>
+							<input type="color" id="AP-CL-AS-ListItem-Action-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-ListItem-Action-Hover" class="Input_Label"> ListItem-Action-Hover </label>
+							<input type="color" id="AP-CL-AS-ListItem-Action-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-ListItem-Action-Click" class="Input_Label"> ListItem-Action-Click </label>
+							
+							<input type="color" id="AP-CL-AS-Button-Shortcut-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-Shortcut-Container" class="Input_Label"> Button-Shortcut-Container </label>
+							<input type="color" id="AP-CL-AS-Button-Shortcut-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-Shortcut-Hover" class="Input_Label"> Button-Shortcut-Hover </label>
+							<input type="color" id="AP-CL-AS-Button-Shortcut-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-Shortcut-Click" class="Input_Label"> Button-Shortcut-Click </label>
+							<input type="color" id="AP-CL-AS-Button-Shortcut-Accent" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-Shortcut-Accent" class="Input_Label"> Button-Shortcut-Accent </label>
+							<input type="color" id="AP-CL-AS-Button-Shortcut-Accent-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-Shortcut-Accent-Hover" class="Input_Label"> Button-Shortcut-Accent-Hover </label>
+							<input type="color" id="AP-CL-AS-Button-Shortcut-Accent-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-Shortcut-Accent-Click" class="Input_Label"> Button-Shortcut-Accent-Click </label>
+							<input type="color" id="AP-CL-AS-Button-Shortcut-Glow" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-Shortcut-Glow" class="Input_Label"> Button-Shortcut-Glow </label>
+							<input type="color" id="AP-CL-AS-Button-Shortcut-Glow-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-Shortcut-Glow-Hover" class="Input_Label"> Button-Shortcut-Glow-Hover </label>
+							<input type="color" id="AP-CL-AS-Button-Shortcut-Glow-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-Shortcut-Glow-Click" class="Input_Label"> Button-Shortcut-Glow-Click </label>
+							
+							<input type="color" id="AP-CL-AS-Button-General-Container" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-General-Container" class="Input_Label"> Button-General-Container </label>
+							<input type="color" id="AP-CL-AS-Button-General-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-General-Hover" class="Input_Label"> Button-General-Hover </label>
+							<input type="color" id="AP-CL-AS-Button-General-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-General-Click" class="Input_Label"> Button-General-Click </label>
+							<input type="color" id="AP-CL-AS-Button-General-Accent" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-General-Accent" class="Input_Label"> Button-General-Accent </label>
+							<input type="color" id="AP-CL-AS-Button-General-Accent-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-General-Accent-Hover" class="Input_Label"> Button-General-Accent-Hover </label>
+							<input type="color" id="AP-CL-AS-Button-General-Accent-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-General-Accent-Click" class="Input_Label"> Button-General-Accent-Click </label>
+							<input type="color" id="AP-CL-AS-Button-General-Glow" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-General-Glow" class="Input_Label"> Button-General-Glow </label>
+							<input type="color" id="AP-CL-AS-Button-General-Glow-Hover" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-General-Glow-Hover" class="Input_Label"> Button-General-Glow-Hover </label>
+							<input type="color" id="AP-CL-AS-Button-General-Glow-Click" class="Input_Color"></input>
+							<label for="AP-CL-AS-Button-General-Glow-Click" class="Input_Label"> Button-General-Glow-Click </label>
+						</div>
+					</div>
+				</div>
+				<div class="Tab_Container" id="tab_Behavior">
+					<h1 class="General_Title">
+						Behavior
+					</h1>
+					<p class="General_Paragraph">
+						Control how the launcher behaves.
+					</p>
+					<span class="anchor" id="anchor_category_Behavior_Effects"></span>
+					<div class="Category_Label" id="category_Behavior_Effects" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Effects
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Behavior_Effects"></img>	
+					</div>
+					<div id="content_category_Behavior_Effects" class="Category_Content_Container">
+						<div class="Toggle" id="Toggle_BH_EF_EnableBlurEffects" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Enable blur effects
+						</div>
+						<div class="Toggle" id="Toggle_BH_EF_EnableTransitionEffects" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Enable transition effects
+						</div>
+						<div class="Toggle" id="Toggle_BH_EF_EnableAnimationEffects" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Enable animation effects
+						</div>
+					</div>
+					<span class="anchor" id="anchor_category_Behavior_ShortcutEditor"></span>
+					<div class="Category_Label" id="category_Behavior_ShortcutEditor" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Shortcut Editor
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Behavior_ShortcutEditor"></img>	
+					</div>
+					<div id="content_category_Behavior_ShortcutEditor" class="Category_Content_Container">
+						<div class="Toggle" id="Toggle_BH_SE_CloseWindowAfterAction" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Close input window after creating/editing an item
+						</div>
+						<div class="Toggle" id="Toggle_BH_SE_ClearFieldsAfterCreation" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Clear input fields after creating an item
+						</div>
+					</div>
+					<span class="anchor" id="anchor_category_Behavior_Greetings"></span>
+					<div class="Category_Label" id="category_Behavior_Greetings" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Greetings
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Behavior_Greetings"></img>	
+					</div>
+					<div id="content_category_Behavior_Greetings" class="Category_Content_Container">
+						<div class="Toggle" id="Toggle_BH_GR_DisplayGreetings" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Display greeting text on the home page
+						</div>
+						<div class="Toggle" id="Toggle_BH_GR_DisplayName" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Display your name on the greeting text (requires Display Greeting Text setting enabled)
+						</div>
+					</div>
+					<span class="anchor" id="anchor_category_Behavior_Menus"></span>
+					<div class="Category_Label" id="category_Behavior_Menus" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Menus
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Behavior_Menus"></img>	
+					</div>
+					<div id="content_category_Behavior_Menus" class="Category_Content_Container">
+						<div class="Toggle" id="Toggle_BH_ME_OnlyDisplayButtonIcons" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Only display button icons on the header
+						</div>
+						<div class="Toggle" id="Toggle_BH_ME_OnlyDisplayButtonText" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Only display button text on the header
+						</div>
+						<div class="Toggle" id="Toggle_BH_ME_PinHeaderSidebar" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Pin header and sidebar
+						</div>
+					</div>
+					<span class="anchor" id="anchor_category_Behavior_Information"></span>
+					<div class="Category_Label" id="category_Behavior_Information" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Information
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Behavior_Information"></img>	
+					</div>
+					<div id="content_category_Behavior_Information" class="Category_Content_Container">
+						<div class="Toggle" id="Toggle_BH_IN_DisplayTime" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Display the time on header
+						</div>
+						<div class="Toggle" id="Toggle_BH_IN_DisplayBattery" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Display the battery percentage on header
+						</div>
+						<div class="Toggle" id="Toggle_BH_IN_DisplayInternetStatus" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Display the internet status on header
+						</div>
+						<div class="Toggle" id="Toggle_BH_IN_DisplayStatusBar" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Display the status bar on header
+						</div>
+						<div class="Toggle" id="Toggle_BH_IN_DisplayToastNotifications" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Display toast notifications
+						</div>
+					</div>
+					<span class="anchor" id="anchor_category_Behavior_Search"></span>
+					<div class="Category_Label" id="category_Behavior_Search" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Search
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Behavior_Search"></img>	
+					</div>
+					<div id="content_category_Behavior_Search" class="Category_Content_Container">
+						<div class="Toggle" id="Toggle_BH_SR_EnableQuickSearch" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Enable the Quick Search Bar
+						</div>
+						<div class="Toggle" id="Toggle_BH_SR_EnableURLSearchMode" onclick="toggle_Button(this.id)">
+							<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+							Use Quick Search Bar as a URL field instead of a search field
+						</div>
+						<p class="Input_Dropdown_SelectedItem" id="Dropdown_BH_SR_SearchEngine" onclick="trigger_toggleDropdown(this.id)">
+							Ecosia
+						</p>
+						<div class="Input_Dropdown" id="dropdownMenu_Dropdown_BH_SR_SearchEngine" style="display: none">
+							<p class="Input_Dropdown_Item" id="dropdownItem_Dropdown_BH_SR_SearchEngine" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
+								Ecosia
+							</p>
+							<p class="Input_Dropdown_Item" id="dropdownItem_Dropdown_BH_SR_SearchEngine" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
+								Google
+							</p>
+							<p class="Input_Dropdown_Item" id="dropdownItem_Dropdown_BH_SR_SearchEngine" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
+								Bing
+							</p>
+							<p class="Input_Dropdown_Item" id="dropdownItem_Dropdown_BH_SR_SearchEngine" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
+								DuckDuckGo
+							</p>
+							<p class="Input_Dropdown_Item" id="dropdownItem_Dropdown_BH_SR_SearchEngine" onclick="trigger_dropdownItemSelected(this.id, this.innerText)">
+								Yahoo!
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="Tab_Container" id="tab_Information">
+					<h1 class="General_Title">
+						Information
+					</h1>
+					<p class="General_Paragraph">
+						Useful information about how to use the launcher, and other information.
+					</p>
+					<span class="anchor" id="anchor_category_Information_KeyboardShortcuts"></span>
+					<div class="Category_Label" id="category_Information_KeyboardShortcuts" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Keyboard Shortcuts
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Information_KeyboardShortcuts"></img>	
+					</div>
+					<div id="content_category_Information_KeyboardShortcuts" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							Personalize how the launcher looks.
+						</p>
+					</div>
+					<span class="anchor" id="anchor_category_Information_Help"></span>
+					<div class="Category_Label" id="category_Information_Help" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Keyboard Shortcuts
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Information_Help"></img>	
+					</div>
+					<div id="content_category_Information_Help" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							Personalize how the launcher looks.
+						</p>
+					</div>
+					<span class="anchor" id="anchor_category_Information_Version"></span>
+					<div class="Category_Label" id="category_Information_Version" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Version
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Information_Version"></img>	
+					</div>
+					<div id="content_category_Information_Version" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							Personalize how the launcher looks.
+						</p>
+					</div>
+					<span class="anchor" id="anchor_category_Information_Attribution"></span>
+					<div class="Category_Label" id="category_Information_Attribution" onclick="toggle_Category(this.id)">
+						<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+						<h1 class="Category_Label_Text">
+							Attribution
+						</h1>
+						<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Information_Attribution"></img>	
+					</div>
+					<div id="content_category_Information_Attribution" class="Category_Content_Container">
+						<p class="General_Paragraph">
+							Personalize how the launcher looks.
+						</p>
+					</div>
+				</div>
+				<div class="Tab_Container" id="tab_Update">
+					<h1 class="General_Title">
+						Launcher Update
+					</h1>
+					<p class="General_Paragraph">
+						Check for updates and download them directly into the launcher.
+					</p>
+				</div>
+				
+				<footer class="Page_Footer">
 					<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
 						Doodle Launcher Release 1.0
 					</h1>
@@ -228,9 +933,9 @@
 						Copyright Content By ElmerF 2023
 					</h1>
 				</footer>
-				</div>
-				
 			</div>
+			
+			
 		</main>
 	</body>
-</html>
+</html>	

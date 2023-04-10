@@ -1,0 +1,228 @@
+APPEARANCE
+1. Presets
+2. Wallpaper
+3. Text
+4. Colors
+5. Advanced Styling
+BEHAVIORS
+1. Effects
+2. Shortcut Editor
+3. Greetings
+4. Menus
+5. Information
+6. Search
+INFORMATION
+1. Keyboard Shortcuts
+2. Help
+3. Version
+4. Attribution
+LAUNCHER UPDATE
+1. Launcher Update
+
+ADVANCED STYLING
+Text Font & Color === 
+Header Page Title
+Header Action Button
+Header Status Clock
+Header Status Battery
+Header Menu Account Name
+Header Menu Section Title
+Header Menu Button 
+Header Menu Paragraph
+Sidebar Button Letter
+Sidebar Button Name
+Loading Title
+Loading Subtitle
+Loading Copyright
+Greetings Title
+Category Title
+Shortcut Title
+Tab Title
+Subwindow Title
+Subwindow Text
+Button Primary Title
+Button Secondary Title
+Input Dropdown Selected
+Input Dropdown Choices
+Input Text
+Input Text Long
+Input Toggle Title
+ShortcutEditor Edit Shortcut Title
+ShortcutEditor Edit Shortcut URL
+ShortcutEditor Edit Insert Between
+ClockScreen Time
+ClockScreen Date
+Colors ===
+Header Container
+Header Divider
+Header Button 
+Header Button Hover
+Header Button Click
+Header Menu
+Header Menu Button
+Header Menu Button Accent
+Header Menu Button Hover
+Header Menu Button Accent Hover
+Header Menu Button Click
+Header Menu Button Accent Click
+Header Menu Button Glow Hover
+Header Menu Button Glow Click
+Sidebar Container
+Sidebar Button Icon
+Sidebar Button Icon Hover
+Sidebar Button Icon Click
+Sidebar Button Name
+Sidebar Button Name Hover
+Sidebar Button Name Click
+Subwindow Container
+Subwindow Title
+Subwindow Title Close
+Subwindow Title Close Hover
+Subwindow Title Divider
+Subwindow Button Primary
+Subwindow Button Primary Hover
+Subwindow Button Primary Click
+Subwindow Button Primary Glow Hover
+Subwindow Button Primary Glow Click
+Subwindow Button Primary Accent
+Subwindow Button Primary Accent Hover
+Subwindow Button Primary Accent Click
+Subwindow Button Secondary
+Subwindow Button Secondary Hover
+Subwindow Button Secondary Click
+Subwindow Button Secondary Glow Hover
+Subwindow Button Secondary Glow Click
+Subwindow Button Secondary Accent
+Subwindow Button Secondary Accent Hover
+Subwindow Button Secondary Accent Click
+Loading Screen Container
+Loaaing Screen Loader
+Scrollbar Container
+Scrollbar Scroll 
+Scrollbar Scroll Hover
+Scrollbar Scroll Click
+Input Dropdown Container
+Input Dropdown Hover 
+Input Dropdown Opened
+Input Dropdown Glow Hover
+Input Dropdown Glow Opened
+Input Dropdown Accent
+Input Dropdown Accent Hover
+Input Dropdown Accent Opened
+Input Dropdown Choices Container
+Input Dropdown Choices Hover
+Input Toggle Container
+Input Toggle Hover
+Input Toggle Click
+Input Toggle Indicator Enabled
+Input Toggle Indicator Disabled
+Input Text Container
+Input Text Container Hover
+Input Text Container Focus
+Input Text Container Accent
+Input Text Container Accent Hover
+Input Text Container Accent Focus
+Input Text Container Glow
+Input Text Container Glow Hover
+Input Text Container Glow Focus
+HorizontalTab Container
+HorizontalTab Hover
+HorizontalTab Click
+HorizontalTab Accent
+HorizontalTab Accent Hover
+HorizontalTab Accent Click
+HorizontalTab Border
+HorizontalTab Border Hover
+HorizontalTab Border Click
+ListItem Container
+ListItem Hover
+ListItem Click
+ListItem Action
+ListItem Action Hover
+ListItem Action Click
+Button Shortcut Container
+Button Shortcut Hover
+Button Shortcut Click
+Button Shortcut Accent
+Button Shortcut Accent Hover
+Button Shortcut Accent Click
+Button Shortcut Glow
+Button Shortcut Glow Hover
+Button Shortcut Glow Click
+General Button Container
+General Button Hover
+General Button Click
+General Button Accent
+General Button Accent Hover
+General Button Accent Click
+General Button Glow
+General Button Glow Hover
+General Button Glow Click
+Background 1
+Background 2
+Background 3
+Background 4
+Background 5
+General Divider
+General Menu
+General Subwindow
+General Dropdown
+General Opacity 1
+General Opacity 2
+General Button Shortcut
+General Input
+General Accent
+General Accent Hover
+General Glow
+General Glow Hover
+
+Override-Container
+Override-Hover
+Override-Click
+Override-Accent
+Override-Accent-Hover
+Override-Accent-Click
+Override-Glow
+Override-Glow-Hover
+Override-Glow-Click
+
+BEHAVIORS
+Effects ===
+Enable blur effects
+Enable transition effects
+Enable animation effects 
+Shortcut Editor === 
+Close input window after creating an item
+Clear input fields after creating an item
+Greetings === 
+Display greeting text on the home page
+Display your name on the greeting text
+Menus ===
+Only display button actions on header
+Only display button text on header
+Pin header and sidebar
+Information ===
+Display the time on header
+Display the battery percentage on header
+Display the internet status on header
+Display the status bar on header
+Display toast notifications
+Search ===
+Enable quick search bar
+Browsing engine
+URL mode
+
+INFORMATION
+Keyboard Shortcuts ===
+Ctrl + Q - Collapse / expand all categories
+Ctrl + B - Open clock screen
+Ctrl + Shift - Open / close quick search bar
+Ctrl + Right Arrow - Open / close sidebar
+Ctrl + Up Arrow - Go to top of page
+Ctrl + Down Arrow - Go to bottom of page
+Alt + Up Arrow - Switch to upper tab
+Alt + Down Arrow - Switch to lower tab
+Escape - Close any active subwindow
+Ctrl + Space - Opens the "Add Item" subwindow (Shortcut Editor)
+Alt + Up Arrow - Switch to upper category link (Home)
+Alt + Down Arrow - Switch to lower category link (Home)

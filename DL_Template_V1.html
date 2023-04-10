@@ -105,9 +105,11 @@
 		<div class="ToastNotif" id="pageElement_ToastDrawer">
 		</div>
 		<div class="Page_Overlays">
-			<div class="CornerButtons" id="pageElement_CornerButtons">
-				<img src="Assets/Icons/icon_downArrow.png" class="CornerButtons_Button"></img>
-				<img src="Assets/Icons/icon_upArrow.png" class="CornerButtons_Button"></img>
+			<div class="TargetArea_CornerButtons">
+				<div class="CornerButtons" id="pageElement_CornerButtons">
+					<img src="Assets/Icons/icon_downArrow.png" class="CornerButtons_Button" onclick="scrollToPosition('bottom')"></img>
+					<img src="Assets/Icons/icon_upArrow.png" class="CornerButtons_Button" onclick="scrollToPosition('top')"></img>
+				</div>
 			</div>
 			<div class="Header_MainMenu_Container" style="display: none" id="pageElement_Header_MainMenu_Textbox">
 				<div id="pageElement_Header_MainMenu_Textbox_Content" style="opacity: 0%">
@@ -275,6 +277,20 @@
 						<div class="General_Button" onclick="open_Subwindow('Test_Modal')">
 							Modal / Confirmation Box
 						</div>
+					</div>
+					<h1 class="General_Title">
+						Toggle buttons
+					</h1>
+					<p class="General_Paragraph">
+						After many tries, I gave up on styling a normal checkbox element using css, so here's the custom one
+					</p>
+					<div class="Toggle" id="toggle_test1" onclick="toggle_Button(this.id)">
+						<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+						This is an activated toggle
+					</div>
+					<div class="Toggle" id="toggle_test2" onclick="toggle_Button(this.id)">
+						<div class="Toggle_Indicator" data-id="Toggle_Deactivated"></div>
+						This is a deactivated toggle
 					</div>
 					<h1 class="General_Title">
 						Dropdown

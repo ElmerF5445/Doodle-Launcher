@@ -105,6 +105,7 @@ img::before{
 .Page_Subwindows{
 	width: 100%;
 	height: 100%;
+	opacity: 0%;
 	display: flex;
 	justify-content: center;
 	backdrop-filter: var(--Element-BackdropBlur);
@@ -153,6 +154,11 @@ img::before{
 	z-index: 50;
 }
 
+.Page_Header[data-id="UI_Compressed"]{
+	height: 30px;
+	padding: 0;
+}
+
 .Page_Content{
 	margin-top: 50px;
 	margin-left: 50px;
@@ -165,6 +171,7 @@ img::before{
 	overflow: auto;
 	display: flex;
 	justify-content: center;
+	scroll-behavior: smooth;
 }
 
 .Page_Sidebar{
@@ -178,6 +185,10 @@ img::before{
 	position: fixed;
 	transition: var(--Element-Transition-Delay);
 	z-index: 50;
+}
+
+.Page_Sidebar[data-id="UI_Compressed"]{
+	margin-top: 30px;
 }
 
 .Page_Sidebar_Content{
@@ -206,11 +217,30 @@ img::before{
 	
 }
 
+.TargetArea_CornerButtons{
+	width: auto;
+	max-width: 500px;
+	height: 70px;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: 97;
+	pointer-events: none;
+}
+
+.TargetArea_CornerButtons:hover > .CornerButtons{
+	opacity: 100%;
+}
+
 .Header_Content{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	overflow-x: auto;
+}
+
+.Header_Content[data-id="UI_Compressed"]{
+	padding: 0;
 }
 
 .Header_Content_Button{
@@ -222,6 +252,10 @@ img::before{
 	cursor: pointer;
 	transform: translateY(-100%);
 	transition: var(--Element-Transition-Delay);
+}
+
+.Header_Content_Button[data-id="UI_Compressed"]{
+	grid-template-columns: 15px auto;
 }
 
 .Header_Content_Button:hover{
@@ -236,12 +270,19 @@ img::before{
 	width: 30px;
 	padding: 10px;
 }
-
+.Header_Content_Button_Icon[data-id="UI_Compressed"]{
+	width: 15px;
+	padding: 0;
+}
 .Header_Content_Button_Text{
 	font-family: var(--Text-Font-Secondary);
 	color: var(--Text-Color);
 	margin: 0;
 	padding-right: 10px;
+}
+
+.Header_Content_Button_Text[data-id="UI_Compressed"]{
+	font-size: 15;
 }
 
 .SearchScreen{
@@ -251,8 +292,14 @@ img::before{
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin: 50px;
 	margin-bottom: 150px;
 	z-index: 99;
+}
+
+.SearchScreen_Logo{
+	width: 750px;
+	width: 65%;
 }
 
 .SearchScreen_Title{
@@ -337,7 +384,9 @@ img::before{
 	flex-direction: row;
 	cursor: pointer;
 	z-index: 98;
-	/* background: blue; */
+/* background: blue; */
+	opacity: 0%;
+	transition: var(--Element-Transition-Delay);
 }
 
 .CornerButtons_Button{
@@ -943,7 +992,9 @@ img::before{
 	transition: var(--Element-Transition-Delay);
 }
 
-
+.Header_PageNavi_Title[data-id="UI_Compressed"]{
+	font-size: 15px;
+}
 /* .Header_PageNavi_Title:active{
 	transform: scale(0.93);
 } */
@@ -951,6 +1002,12 @@ img::before{
 .Header_PageNavi_Icon{
 	width: 30px;
 	height: 30px;
+	margin: 0;
+}
+
+.Header_PageNavi_Icon[data-id="UI_Compressed"]{
+	width: 20px;
+	height: 20px;
 	margin: 0;
 }
 
@@ -1218,6 +1275,10 @@ img::before{
 	cursor: pointer;
 }
 
+.Header_StatusTray[data-id="UI_Compressed"]{
+	padding: 0;
+}
+
 .Header_StatusTray:hover{
 	background-color: var(--BGColor-Hover);
 }
@@ -1247,6 +1308,10 @@ img::before{
 	transition: var(--Element-Transition-Delay);
 }
 
+.Header_Clock_Time[data-id="UI_Compressed"]{
+	font-size: 15px;
+}
+
 .Header_Clock_Date{
 	font-family: var(--Text-Font-Secondary), "Arial", "Helvetica";
 	font-size: 20px;
@@ -1255,6 +1320,10 @@ img::before{
 	text-align: right;
 	display: none;
 	transition: var(--Element-Transition-Delay);
+}
+
+.Header_Clock_Date[data-id="UI_Compressed"]{
+	font-size: 15px;
 }
 
 /* .Header_Clock:hover > .Header_Clock_Date{
@@ -1279,6 +1348,11 @@ img::before{
 	filter: var(--Element-Icon-Brightness);
 }
 
+.Header_RightMenu_Icon[data-id="UI_Compressed"]{
+	width: 20px;
+	height: 20px;
+}
+
 .Header_Battery{
 	font-family: var(--Text-Font-Numbers), "Arial", "Helvetica";
 	font-size: 20px;
@@ -1286,6 +1360,10 @@ img::before{
 	margin: 0;
 	text-align: right;
 	user-select: none;
+}
+
+.Header_Battery[data-id="UI_Compressed"]{
+	font-size: 15px;
 }
 
 .Header_PageNavi_Textbox{
@@ -1544,6 +1622,9 @@ img::before{
 	filter: var(--Element-Icon-Brightness);
 }
 
+.Sidebar_CategoryNavigation_Toggle[data-id="UI_Compressed"]{
+	width: 20px;
+}
 .Sidebar_CategoryNavigation_Toggle:hover{
 	background-color: var(--BGColor-Hover);
 }
@@ -2616,6 +2697,49 @@ input:checked + .slider:before {
 .HomePageBlur {
 	display: none;
 }
+
+.Toggle{
+	max-width: 1000px;
+	
+	height: 25px;
+	min-height: 25px;
+	height: auto;
+	font-family: var(--Text-Font-Secondary);
+	color: var(--Text-Color);
+	display: grid;
+	grid-template-columns: 35px 1fr;
+	align-items: center;
+	padding: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+	user-select: none;
+	transition: var(--Element-Transition-Delay);
+}
+
+.Toggle:hover{
+	background-color: var(--BGColor-Hover);
+}
+
+.Toggle:active{
+	transform: scale(0.98);
+}
+
+.Toggle_Indicator{
+	height: 25px;
+	width: 25px;
+	background-color: red;
+	margin-right: 10px;
+	border-radius: 5px;
+}
+
+[data-id="Toggle_Activated"]{
+	background-color: var(--Accent-Color);
+}
+
+[data-id="Toggle_Deactivated"]{
+	background-color: var(--BGColor-Menus);
+}
+
 
 .General_Button{
 	padding: 10px;

@@ -1,0 +1,755 @@
+<html>
+	<head>
+		<title id="pageElement_PageTitle">
+			Doodle Launcher Public
+		</title>
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet.css">
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Animations.css">
+		<link rel="stylesheet" href="Scripts/DL_Stylesheet_Reference.css">
+		<link rel="icon" type="image/png" href="Assets/Icons/iconNew_edit.png" sizes="96x96">
+		<!-- Default intended fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;800&family=Roboto&display=swap" rel="stylesheet">
+	</head>
+	<body class="MainPage" onload="OnloadTasks()">
+		<script src="Scripts/DL_Javascript.js"></script>
+		<div class="LoadingScreen" id="LoadingScreen">
+			<div class="LoadingScreen_UpperSection" id="LoadingScreen_UpperSection">
+				<img class="LoadingScreen_Icon" src="Assets/Icons/iconNew_edit.png"></img>
+				<h2 class="LoadingScreen_VersionTitle" id="versionTitle">
+					Doodle Launcher
+				</h2>
+				<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+			</div>
+			<div class="LoadingScreen_CopyrightSection" id="LoadingScreen_CopyrightSection">
+				
+				<!-- <h4 class="LoadingScreen_Text" id="LoadingScreen_Text"> -->
+				<!-- Building page... -->
+				<!-- </h4> -->
+				<div style="display: flex; justify-content: center; align-items: center;">
+					<img class="LoadingScreen_Copyright_Logo" src="Assets/Icons/ContentByElmerF.png"></img>
+					<h4 class="LoadingScreen_Copyright" id="copyrightTitle">
+						Content By ElmerF
+					</h4>
+				</div>
+			</div>
+		</div>
+		<div class="SessionScreen" id="pageElement_SessionScreen" onclick="close_SessionScreen()" style="display: none">
+			<h1 class="SessionScreen_Time" id="Clock_Time_SessionScreen">
+				
+			</h1>
+			<h3 class="SessionScreen_Date" id="Clock_Date_SessionScreen">
+				
+			</h3>
+			<p class="SessionScreen_Instruction">
+				Click anywhere to start
+			</p>
+			<div class="SessionScreen_Copyright">
+				<p class="SessionScreen_Copyright_Text" id="pageElement_SessionScreen_Copyright">
+					Doodle Launcher Public Beta | Content By ElmerF 2022
+				</p>
+			</div>
+		</div>
+		<div class="ToggleableSearchBar" id="pageElement_Toggleable_SearchBar" style="display: none">
+			<div class="ToggleableSearchBar_SearchBar">
+				<input class="ToggleableSearchBar_SearchBar_Input" placeholder="Internet search" id="pageElement_SearchQuery_3"></input>
+				<img src="Assets/Icons/icon_search.png" class="ToggleableSearchBar_SearchBar_Search General_Icon" id="toggleable" onclick="search_Query(this.id)" onsubmit="search_Query(this.id)"></img>
+			</div>
+			<img src="Assets/Icons/icon_close.png" class="ToggleableSearchBar_Close General_Icon" onclick="toggle_SearchBar()"></img>
+		</div>
+		
+		<!-- Toast notifications -->
+		<div class="ToastNotif" id="pageElement_ToastDrawer">
+			<!--<div class="ToastNotif_Toast">
+				<img class="ToastNotif_Toast_Icon" src="Assets/Icons/icon_linkAdded.png">
+				</img>
+				<h1 class="ToastNotif_Toast_Title">
+				New shortcut 'title' created
+				</h1>
+				<p class="ToastNotif_Toast_URL">
+				URL Here
+				</p>
+				</div>
+				<div class="ToastNotif_Toast">
+				<img class="ToastNotif_Toast_Icon" src="Assets/Icons/icon_linkAdded.png">
+				</img>
+				<h1 class="ToastNotif_Toast_Title">
+				New shortcut 'title' created
+				</h1>
+				<p class="ToastNotif_Toast_URL">
+				URL Here
+				</p>
+				</div>
+				<div class="ToastNotif_Toast">
+				<img class="ToastNotif_Toast_Icon" src="Assets/Icons/icon_linkAdded.png">
+				</img>
+				<h1 class="ToastNotif_Toast_Title">
+				New shortcut 'title' created
+				</h1>
+				<p class="ToastNotif_Toast_URL">
+				URL Here
+				</p>
+			</div>-->
+		</div> 
+		
+		<div class="Subwindow_Blur" id="subwindow_Tutorial_ShortcutEditor">
+			<div class="Subwindow" style="width: 450px; margin: auto;">
+				<div class="Subwindow_TitleBar">
+					<h1 class="Subwindow_TitleBar_Title">
+						How to use Shortcut Editor
+					</h1>
+					<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="Tutorial_ShortcutEditor" onclick="close_Subwindow(this.id)">
+					</img>
+				</div>
+				<div class="Subwindow_Content">
+					<p class="Subwindow_Content_Text">
+						There are two tabs in Shortcut Editor:
+						<ul class="General_Paragraph">
+							<li>
+								Normal view previews how your shortcuts would look like in the Home page.
+							</li>
+							<li>
+								Table view lets you edit or delete items in your shortcut library.
+							</li>
+						</ul>
+					</p>
+					<p class="Subwindow_Content_Text">
+						There are two types of items you can create:
+						<ul class="General_Paragraph">
+							<li>
+								A category is a toggleable tab where you can group your shortcuts.
+							</li>
+							<li>
+								A shortcut is a button that opens a new tab with the URL you provide when clicked.
+							</li>
+						</ul>
+					</p>
+					<p class="Subwindow_Content_Text">
+						How to create categories:
+						<ul class="General_Paragraph">
+							<li>
+								On the top of the page there is a button named "Add Item". Click it and a window should appear. It doesn't matter what tab you are in.
+							</li>
+							<li>
+								Inside the window, click "Category".
+							</li>
+							<li>
+								Type the name of your category on the input field, then click "Create Item".
+							</li>
+							<li>
+								You should receive confirmation via a toast notification that the item has been successfully made (unless you have toast notifications disabled in the settings).
+							</li>
+						</ul>
+					</p>
+					<p class="Subwindow_Content_Text">
+						How to create shortcuts:
+						<ul class="General_Paragraph">
+							<li>
+								On the top of the page there is a button named "Add Item". Click it and a window should appear. It doesn't matter what tab you are in.
+							</li>
+							<li>
+								Inside the window, click "Shortcut".
+							</li>
+							<li>
+								There will be three input fields present. The shortcut title, URL, and category.
+							</li>
+							<li>
+								The shortcut title is the displayed text of the shortcut button.
+							</li>
+							<li>
+								The shortcut URL is the URL the shortcut button links to when clicked.
+							</li>
+							<li>
+								The shortcut category is the category where this new shortcut button is to be inserted. It is required to choose a category (you must create one if you haven't already).
+							</li>
+							<li>
+								The shortcut category can be clicked, and a dropdown menu will appear. Click the category name where you want your shortcut to be inserted. The dropdown will close and the selected category will appear on the button.
+							</li>
+							<li>
+								All three inputs are required. Once done, click "Create Item".
+							</li>
+							<li>
+								You should receive confirmation via a toast notification that the item has been successfully made (unless you have toast notifications disabled in the settings).
+							</li>
+						</ul>
+					</p>
+					<p class="Subwindow_Content_Text">
+						How to edit items using Table View:
+						<ul class="General_Paragraph">
+							<li>
+								On the side of the screen, click the table icon to switch to Table View.
+							</li>
+							<li>
+								It should now show a table version of your shotcut library. The tables display the shortcut name and its URL, along with the editing controls.
+							</li>
+							<li>
+								The eye icon lets you open the shortcut as if you are clicking the shortcut button in Normal View.
+							</li>
+							<li>
+								The pencil icon lets you edit the data of the item, while the trashcan icon deletes it.
+							</li>
+							<li>
+								Click the pencil icon beside the item you want to modify and it should open a window.
+							</li>
+							<li>
+								Modify the shortcut name or the URL or change the category name if that is what you selected.
+							</li>
+							<li>
+								Once done, click "Save Changes".
+							</li>
+							<li>
+								You should receive confirmation via a toast notification that the item has been successfully made (unless you have toast notifications disabled in the settings).
+							</li>
+							<li>
+								To delete items, simply click the trashcan icon beside the row you want to delete. If a confirmation box appears, click "Delete". You should receive confirmation via a toast notification that the item has been successfully made (unless you have toast notifications disabled in the settings).
+							</li>
+						</ul>
+					</p>
+					
+				</div>
+				<div class="Subwindow_Bottom Grid">
+				</div>
+			</div>
+		</div>
+		
+		<!-- All content goes inside the PageGrid -->
+		<div class="PageGrid">
+			<div class="Header" id="pageElement_Header">
+				<img class="Sidebar_Toggle General_Icon" id="toggle_Sidebar" src="Assets/Icons/icon_hamburgermenu.png" onclick="toggle_Sidebar()"></img>
+				<div class="Header_PageNavi" id="button_PageNavi" onclick="toggle_Navigator(this.id)">
+					<h2 class="Header_PageNavi_Title" id="Header_PageNavi_Title">
+						Shortcut Editor
+					</h2>
+				</div>
+				<div class="Header_Buttons" id="pageElement_Header_Buttons">
+					<!-- <h3 class="Header_Buttons_Item" id="AddItem" onclick="open_Subwindow(this.id)">
+						Add item
+					</h3>
+					<h3 class="Header_Buttons_Item" id="SwapList_Category" onclick="open_Subwindow(this.id)">
+						Re-order categories
+					</h3>
+					<h3 class="Header_Buttons_Item" id="SwapList_Shortcut" onclick="open_Subwindow(this.id)">
+						Re-order shortcuts
+					</h3>
+					<h3 class="Header_Buttons_Item" id="Tutorial_ShortcutEditor" onclick="open_Subwindow(this.id)">
+						How to use
+					</h3> -->
+					<!--<h3 class="Header_Buttons_Item">
+						How to use
+						</h3>
+						<h3 class="Header_Buttons_Item">
+						Public Beta Information
+						</h3>
+						<h3 class="Header_Buttons_Item" onclick="trigger_createToast('success')">
+						Create success toast
+						</h3>
+						<h3 class="Header_Buttons_Item" onclick="trigger_createToast('failed')">
+						Create failed toast
+					</h3>-->
+					
+				</div>
+				<div class="Header_Clock" id="pageElement_Header_Clock">
+					<h1 class="Header_Clock_Time" id="Clock_Time">
+						id="Clock_Time"
+					</h1>
+					<h1 class="Header_Clock_Date" id="Clock_Date">
+						id="Clock_Date"
+					</h1>
+				</div>
+				<div class="Header_Battery" id="pageElement_Header_Battery">
+					<h1 class="Header_Battery" id="Battery_Level">
+						%
+					</h1>
+				</div>
+				<div class="Header_RightMenu">
+					<!--<img class="Header_RightMenu_Icon" src="Assets/Icons/icon_softwareUpdate.png"  id="button_Update" onclick="toggle_Textbox(this.id)"></img>-->
+					<img class="Header_RightMenu_Icon General_Icon" src="Assets/Icons/icon_wifi_online.png"  id="button_Wifi" onclick="toggle_Textbox(this.id)"></img>
+				</div>
+			</div>
+			<div class="Header_Menu" id="pageElement_Header_Menu">
+				<div class="Header_Menu_Top">
+					<div class="Header_Menu_Top_Clock">
+						<h1 class="Header_Menu_Top_Clock_Time" id="Clock_Time_2">
+							id="Clock_Time"
+						</h1>
+						<h1 class="Header_Menu_Top_Clock_Date" id="Clock_Date_2">
+							id="Clock_Date"
+						</h1>
+					</div>
+					<h1 class="Header_Menu_Top_Battery" id="Battery_Level_2">
+						%
+					</h1>
+				</div>
+				<div class="Header_PageNavi_Textbox_Title">
+					Launcher Navigation
+				</div>
+				<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageNaviList">
+					
+				</div>
+				<div class="Header_PageNavi_Textbox_Title">
+					Page Actions
+				</div>
+				<div class="Header_PageNavi_Textbox_List" id="pageElement_Header_Menu_PageActions">
+					<!-- <p class="Header_PageNavi_Textbox_List_Item" id="AddItem" onclick="open_Subwindow(this.id)">
+						Add item
+					</p>
+					<p class="Header_PageNavi_Textbox_List_Item" id="SwapList_Category" onclick="open_Subwindow(this.id)">
+						Re-order categories
+					</p>
+					<p class="Header_PageNavi_Textbox_List_Item" id="Tutorial_ShortcutEditor" onclick="open_Subwindow(this.id)">
+						How to use
+					</p> -->
+				</div>
+			</div>
+			<div class="Header_PageNavi_Textbox" id="button_PageNavi_textbox">
+				<div class="Header_PageNavi_Textbox_Title">
+					Launcher Navigation
+				</div>
+				<div class="Header_PageNavi_Textbox_List" id="pageElement_PageNaviList">
+					
+				</div>
+			</div>
+			<div class="Header_Right_Textbox"  id="button_Wifi_textbox">
+				<div class="Header_Right_Textbox_Title" id="textboxElement_Wifi">
+					No Connection
+				</div>				
+				<p class="Header_Right_Textbox_Text" id="pageElement_Connection">
+					Since you're not connected to the internet, links will not open properly. Connect to a Wi-Fi network and refresh the page.
+				</p>
+				<a href="https://fast.com/" target="_blank" id="pageElement_Connection_Speedtest">
+					<p class="Header_Right_Textbox_Text">
+						<u>Speedtest</u>
+					</p>
+				</a>
+			</div>
+			<div class="Header_Right_Textbox" id="button_Update_textbox">
+				<div class="Header_Right_Textbox_Title">
+					Update is available
+				</div>				
+				<p class="Header_Right_Textbox_Text">
+					A launcher update is available for you to download.
+				</p>
+				<a href="DL_Settings.html#LauncherUpdate">
+					<p class="Header_Right_Textbox_Text">
+						<u>Check for updates</u>
+					</p>
+				</a>
+			</div>
+			<div class="Sidebar" id="pageElement_Sidebar">
+				<div class="Sidebar_Item" id="ShortcutEditor_Tab_NormalView" onclick="trigger_ChangeTab(this.id)">
+					<img class="Sidebar_Icon" id="ShortcutEditor_Tab_NormalView_Icon" src="Assets/Icons/iconNew_link.png"></img>
+					<p class="Sidebar_Icon_Text">
+						Normal view
+					</p>
+				</div>
+				<div class="Sidebar_Item" id="ShortcutEditor_Tab_TableView" onclick="trigger_ChangeTab(this.id)">
+					<img class="Sidebar_Icon" id="ShortcutEditor_Tab_TableView_Icon" src="Assets/Icons/iconNew_table.png"></img>
+					<p class="Sidebar_Icon_Text">
+						Table view
+					</p>
+				</div>
+				<div class="Sidebar_Item" id="ShortcutEditor_Tab_ImportExport" onclick="trigger_ChangeTab(this.id)">
+					<img class="Sidebar_Icon" id="ShortcutEditor_Tab_ImportExport_Icon" src="Assets/Icons/iconNew_download.png"></img>
+					<p class="Sidebar_Icon_Text">
+						Import/export shortcuts
+					</p>
+				</div>
+			</div>
+			
+			
+			
+			<div class="Subwindow_Blur" id="subwindow_AddItem" style="display: none">
+				<div class="Subwindow">
+					<div class="Subwindow_TitleBar">
+						<h1 class="Subwindow_TitleBar_Title">
+							Add item
+						</h1>
+						<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="AddItem" onclick="close_Subwindow(this.id);">
+						</img>
+					</div>
+					<div class="Subwindow_Content">
+						<p class="Subwindow_Content_Text">
+							Select the type of object you want to create.
+						</p>
+						<div class="Toggles_Container">
+							<label class="Toggle_Container">
+								<input type="radio"  name="radio" id="select_Category" onclick="SE_ItemSelection(this.id)">
+								<span class="Toggle_Checkmark">
+									<label class="Toggle_Checkmark_Label">Category</label>
+								</span>
+							</label>
+							<!--<label class="Toggle_Container">
+								<input type="radio" name="radio" id="select_Folder" onclick="SE_ItemSelection(this.id)">
+								<span class="Toggle_Checkmark">
+								<label class="Toggle_Checkmark_Label">Folder</label>
+								</span>
+							</label>-->
+							<label class="Toggle_Container">
+								<input type="radio" name="radio" checked="checked" id="select_Shortcut" onclick="SE_ItemSelection(this.id)">
+								<span class="Toggle_Checkmark">
+									<label class="Toggle_Checkmark_Label">Shortcut</label>
+								</span>
+							</label>
+						</div>
+						<p class="Subwindow_Content_Text" id="SE_AddItem_Description">
+							Click any button above to see its description.
+						</p>
+						<!-- Category -->
+						<div class="Subwindow_Division_4_Label" id="section_Category" style="display: none">
+							<p class="Subwindow_Content_Text">
+								Category title:
+							</p>
+							<input class="Input_Text" placeholder="Title of the category here" id="form_SE_Category"></input>
+						</div>
+						<!-- Folder -->
+						<div class="Subwindow_Division_2" id="section_Folder" style="display: none">
+							<div class="Subwindow_Division_4_Label">
+								<p class="Subwindow_Content_Text">
+									Folder title:
+								</p>
+								<input class="Input_Text" placeholder="Title of the shortcut here"></input>
+							</div>
+							<div class="Subwindow_Division_Container">
+								<p class="Subwindow_Content_Text">
+									Select a category to insert the folder:
+								</p>
+								<p class="Input_Dropdown_SelectedItem" id="dropdownButton_AddItem_Folder" onclick="trigger_toggleDropdown(this.id)">
+									Click to pick a category
+								</p>
+								<div class="Input_Dropdown" id="menu_dropdownButton_AddItem_Folder">
+									<!--<p class="Input_Dropdown_Item">
+										Category 1
+										</p>
+										Content is created by JS function SE_CreateDropdown()
+									-->
+								</div>
+							</div>
+						</div>
+						<!-- Shortcut -->
+						<div class="Subwindow_Division_2" id="section_Shortcut">
+							<div class="Subwindow_Division_4_Label">
+								<label class="Subwindow_Content_Text" for="form_SE_Shortcut_Title">
+									Shortcut title:
+								</label>
+								<input class="Input_Text" placeholder="Title of the shortcut here" id="form_SE_Shortcut_Title"></input>
+								<p class="Subwindow_Content_Text">
+									Shortcut URL:
+								</p>
+								<input class="Input_Text" placeholder="URL of the shortcut here" id="form_SE_Shortcut_URL"></input>
+							</div>
+							<div class="Subwindow_Division_Container">
+								<p class="Subwindow_Content_Text">
+									Select a category to insert the shortcut:
+								</p>
+								<p class="Input_Dropdown_SelectedItem" id="dropdownButton_AddItem_Shortcut1" onclick="trigger_toggleDropdown(this.id)">
+									No selected
+								</p>
+								<div class="Input_Dropdown" id="menu_dropdownButton_AddItem_Shortcut1">
+									<!--<p class="Input_Dropdown_Item">
+										Category 1
+										</p>
+										Content is created by JS function SE_CreateDropdown()
+									-->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="Subwindow_Bottom">
+						<h1 class="Subwindow_Bottom_Button_Main" onclick="SE_CreateItem_StringTextTest()">
+							Create item
+						</h1>
+					</div>
+				</div>
+			</div>
+			<div class="Subwindow_Blur" id="subwindow_EditItem">
+				<div class="Subwindow">
+					<div class="Subwindow_TitleBar">
+						<h1 class="Subwindow_TitleBar_Title" id="EditItem_SubwindowTitle">
+							Edit item '[itemName]'
+						</h1>
+						<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="EditItem" onclick="close_Subwindow(this.id)">
+						</img>
+					</div>
+					<div class="Subwindow_Content">
+						<p class="Subwindow_Content_Text">
+							You're currently editing:
+						</p>
+						<label class="Subwindow_Content_Text" for="form_SE_EditItem_Shortcut_Title">
+							Shortcut title:
+						</label>
+						<input class="Input_Text" placeholder="New title of the shortcut here" id="form_SE_EditItem_Shortcut_Title"></input>
+						<label class="Subwindow_Content_Text" for="form_SE_EditItem_Shortcut_URL">
+							Shortcut URL:
+						</label>
+						<input class="Input_Text" placeholder="New title of the shortcut here" id="form_SE_EditItem_Shortcut_URL"></input>
+						
+					</div>
+					<div class="Subwindow_Bottom">
+						<h1 class="Subwindow_Bottom_Button_Main" onclick="SE_TV_EditElement_SaveChanges()">
+							Save changes
+						</h1>
+					</div>
+				</div>
+			</div>
+			
+			<div class="Subwindow_Blur" id="subwindow_EditCategory">
+				<div class="Subwindow">
+					<div class="Subwindow_TitleBar">
+						<h1 class="Subwindow_TitleBar_Title" id="EditCategory_SubwindowTitle">
+							Edit category '[itemName]'
+						</h1>
+						<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="EditCategory" onclick="close_Subwindow(this.id)">
+						</img>
+					</div>
+					<div class="Subwindow_Content">
+						<label class="Subwindow_Content_Text" for="form_SE_EditCategory_Name">
+							Category name:
+						</label>
+						<input class="Input_Text" placeholder="New title of the category here" id="form_SE_EditCategory_Name"></input>
+						
+					</div>
+					<div class="Subwindow_Bottom">
+						<h1 class="Subwindow_Bottom_Button_Main" onclick="SE_TV_EditCategory_SaveChanges()">
+							Save changes
+						</h1>
+					</div>
+				</div>
+			</div>
+			
+			<div class="Confirmation_Blur" id="subwindow_Confirmation_DeleteItem">
+				<div class="Confirmation">
+					<h3 class="Confirmation_Title">
+						Confirm deletion
+					</h3>
+					<div class="Confirmation_Content">
+						<p class="General_Paragraph" id="pageElement_Confirmation_DeleteItem">
+							Are you sure you want to delete [item_name]?
+						</p>
+					</div>
+					<div class="Confirmation_Bottom">
+						<h4 class="Confirmation_Bottom_Button_SecondaryAction" id="Confirmation_DeleteItem" onclick="close_Subwindow(this.id)">
+							Cancel
+						</h4>
+						<h4 class="Confirmation_Bottom_Button_PrimaryAction" onclick="SE_TV_Confirm_DeleteElement()">
+							Delete Item
+						</h4>
+					</div>
+				</div>
+			</div>
+			
+			<div class="Subwindow_Blur" id="subwindow_SwapList_Category">
+				<div class="Subwindow" style="width: 400px; height: 500px; margin: auto;">
+					<div class="Subwindow_TitleBar">
+						<h1 class="Subwindow_TitleBar_Title">
+							Swap categories
+						</h1>
+						<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="SwapList_Category" onclick="close_Subwindow(this.id)">
+						</img>
+					</div>
+					<div class="Subwindow_Content" id="pageElement_SwapList_Subwindow_Content_Category">
+						<p class="General_Paragraph">
+							This feature is still experimental and may break unexpectedly. Please report any bug you may encounter.
+						</p>
+						<p class="General_Paragraph">
+							Click a list item and another to switch positions of the list items.
+						</p>
+						<div id="pageElement_ShortcutEditor_SwapList_List">
+							
+						</div>
+					</div>
+					<div class="Subwindow_Bottom">
+						
+					</div>
+				</div>
+			</div>
+			
+			<div class="Subwindow_Blur" id="subwindow_SwapList_Shortcut">
+				<div class="Subwindow" style="width: 400px; height: 500px; margin: auto;">
+					<div class="Subwindow_TitleBar">
+						<h1 class="Subwindow_TitleBar_Title">
+							Swap shortcuts
+						</h1>
+						<img src="Assets/Icons/icon_close.png" class="Subwindow_TitleBar_Close" id="SwapList_Shortcut" onclick="close_Subwindow(this.id)">
+						</img>
+					</div>
+					<div class="Subwindow_Content" id="pageElement_SwapList_Subwindow_Content">
+						<p class="General_Paragraph">
+							This feature is still experimental and may break unexpectedly. Please report any bug you may encounter.
+						</p>
+						<p class="General_Paragraph" style="user-select: none; cursor: pointer;" onclick="SE_Swapper_Shortcut_GoBackToCategorySelection()" id="pageElement_ShortcutEditor_SwapList_Shortcut_BackToCategorySelection">
+							<u>Back to category selection</u>
+						</p>
+						<p class="General_Paragraph" id="pageElement_SwapList_Shortcut_Instructions">
+							Choose a category
+						</p>
+						<div id="pageElement_ShortcutEditor_SwapList_List_Shortcuts">
+							
+						</div>
+					</div>
+					<div class="Subwindow_Bottom">
+						
+					</div>
+				</div>
+			</div>
+			
+			<div class="ShortcutEditor_SwapList" id="pageElement_ShortcutEditor_SwapList">
+				<div class="ShortcutEditor_SwapList_List">
+					<h2 class="General_Title ExperimentSelector_Title">
+						Swap categories
+					</h2>
+					
+					
+				</div>
+			</div>
+			
+			<div class="MainContent" id="pageElement_MainContent">
+				<div class="CornerButtons" id="pageElement_CornerButtons">
+					
+					<a href="#pageElement_Bottom" id="pageElement_GoToBottom"> <img src="Assets/Icons/icon_downArrow.png" class="CornerButtons_Button GoToBottom"></img> </a>
+					<a href="#pageElement_Top" id="pageElement_BackToTop"> <img src="Assets/Icons/icon_upArrow.png" class="CornerButtons_Button GoToTop"></img> </a>
+				</div>
+				<span class="anchor" id="pageElement_Top"></span>
+				<div id="ShortcutEditor_Tab_NormalView_Container" class="Tab_Container">
+					<h1 class="Greeting_Text" >
+						Normal view
+					</h1>
+					<div id="pageElement_ContentContainer">
+						
+					</div>
+				</div>
+				<img src="Assets/Images/ShortcutLibraryEmpty_ShortcutEditor.png" class="pageElement_LibraryEmptyNotif" id="pageElement_LibraryEmptyNotif"></img>
+				<div id="ShortcutEditor_Tab_TableView_Container" class="Tab_Container ShortcutEditor_TableView">
+					<h1 class="Greeting_Text">
+						Table view
+					</h1>
+					<div id="pageElement_ContentContainer_TableView">
+						<!--<div class="Category">
+							<span class="anchor" id="anchor_categoryTable_test1"></span>
+							<div class="Category_Label" id="categoryTable_test1" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+							Category
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_categoryTable_test1"></img>
+							</div>
+							<div id="content_categoryTable_test1" class="Category_Content_Container">
+							<table class="ShortcutEditor_Table">
+							<tr class="ShortcutEditor_Table_Row">
+							<th class="ShortcutEditor_Table_Cell_Name">
+							Shortcut
+							</th>
+							<th class="ShortcutEditor_Table_Cell_URL">
+							URL
+							</th>
+							<th class="ShortcutEditor_Table_Cell_Ctrls">
+							Controls
+							</th>
+							</tr>
+							<tr class="ShortcutEditor_Table_Row" id="id_of_the_shortcut_here">
+							<th>
+							ITEM_Cat1_1
+							</th>
+							<th>
+							URL
+							</th>
+							<th class="ShortcutEditor_Table_Ctrl">
+							<img class="ShortcutEditor_Table_Ctrl_Peek" onclick="SE_TV_EditElement(parentNode.parentNode.id)" src="Assets/Icons/iconNew_preview.png"></img>
+							<img class="ShortcutEditor_Table_Ctrl_Edit" onclick="SE_TV_EditElement(parentNode.parentNode.id)" src="Assets/Icons/iconNew_edit.png"></img>
+							<img class="ShortcutEditor_Table_Ctrl_Delete" onclick="render_Categories_TableView()" src="Assets/Icons/iconNew_delete.png"></img>
+							</th>
+							</tr>
+							</table>
+							</div>
+						</div>-->
+					</div>
+					
+				</div>
+				<span class="anchor" id="pageElement_Top"></span>
+				<div id="ShortcutEditor_Tab_ImportExport_Container" class="Tab_Container">
+					<h1 class="Greeting_Text" >
+						Import/Export shortcuts
+					</h1>
+					<div class="Category">
+						<span class="anchor" id="anchor_category_ShortcutEditor"></span>
+						<div class="Category_Label" id="category_Import" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								Import shortcuts
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Import"></img>	
+						</div>
+						<div id="content_category_Import" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Copy and paste the shortcut list text into the input box below. 
+							</p>
+							<p class="Subwindow_Content_Text">
+									Select a category to insert the shortcut:
+							</p>
+							<p class="Input_Dropdown_SelectedItem" id="dropdownButton_Import_Shortcut" onclick="trigger_toggleDropdown(this.id)">
+								No selected
+							</p>
+							<div class="Input_Dropdown" id="menu_dropdownButton_Import_Shortcut">
+								<!--<p class="Input_Dropdown_Item">
+									Category 1
+									</p>
+									Content is created by JS function SE_CreateDropdown()
+								-->
+							</div>
+							<input type="text" class="Input_Text_Long" placeholder="Paste import shortcut list here" id="pageElement_Input_Text"></input>
+							<h1 class="General_Button" onclick="SE_Import_ShortcutList()">
+								Import shortcuts
+							</h1>
+						</div>
+					</div>
+					<div class="Category">
+						<span class="anchor" id="anchor_category_Export"></span>
+						<div class="Category_Label" id="category_Export" onclick="toggle_Category(this.id)">
+							<img class="Category_Label_Icon" src="Assets/Icons/favicon_old.png"></img>
+							<h1 class="Category_Label_Text">
+								Export shortcuts
+							</h1>
+							<img class="Category_Label_Toggle" src="Assets/Icons/icon_downArrow.png" id="arrow_category_Export"></img>		
+						</div>
+						<div id="content_category_Export" class="Category_Content_Container">
+							<p class="General_Paragraph">
+								Click "Generate" below to begin generating the shortcut list text string for each category. You can then copy and paste each shortcut lists to someone else or to another computer or browser to import the links and text for each shortcut. This is only available on Public Preview 4 and up.
+							</p>
+							<p class="Subwindow_Content_Text">
+									Select a category to create a list from:
+							</p>
+							<p class="Input_Dropdown_SelectedItem" id="dropdownButton_Export_Shortcut" onclick="trigger_toggleDropdown(this.id)">
+								No selected
+							</p>
+							<div class="Input_Dropdown" id="menu_dropdownButton_Export_Shortcut">
+								<!--<p class="Input_Dropdown_Item">
+									Category 1
+									</p>
+									Content is created by JS function SE_CreateDropdown()
+								-->
+							</div>
+							<h1 class="General_Button" onclick="SE_Generate_ExportList()">
+								Generate
+							</h1>
+							<div class="ShortcutEditor_Export_Container"onclick="SE_Export_CopyToClipboard()">
+								<p class="ShortcutEditor_Export_Text" id="pageElement_Export_Text" >
+									
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<footer class="Footer">
+					<h1 class="Footer_Text" id="pageElement_Footer_VersionTitle">
+						Doodle Launcher Public Beta
+					</h1>
+					<h1 class="Footer_Text" id="pageElement_Footer_Copyright">
+						Content By ElmerF 2022
+					</h1>
+				</footer>
+			</div>
+			
+		</div>
+		
+	</body>
+</html>							

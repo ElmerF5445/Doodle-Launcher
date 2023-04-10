@@ -118,7 +118,7 @@ function OnloadTasks(){
 		Generator_Render_Categories();
 		
 		break;
-		case "DL_ShortcutEditor_Dev.html":
+		case "DL_ShortcutEditor.html":
 		pageProperty_pageIcon = "iconNew_edit.png";
 		pageProperty_MenuName = "Doodle Launcher";
 		pageProperty_PageTitle = "Shortcut Editor";
@@ -175,6 +175,13 @@ function OnloadTasks(){
 		pageProperty_backgroundState = 2;
 		pageProperty_enableClockScreen = 1;
 		pageProperty_enableCategoryNavigation = 0;
+		pageProperty_enableLoadingScreen = 1;
+		pageProperty_enableHeader = 1;
+		pageProperty_sidebarMoveContent = 0;
+		pageProperty_enableQuickSearch = 1;
+		pageProperty_quickSearch_addTopPadding = 1;
+		pageProperty_sidebar_UsesTabs = 1;
+		tabs_DisplayFirstPage();
 		break;
 		case "WA_Main.html":
 		pageProperty_pageIcon = "ContentByElmerF.png";
@@ -378,9 +385,9 @@ function check_Connection(){
 }
 
 function generate_Launcher_NavigationList(){
-	let navigationListItems = ["Old UI", "Home", "Shortcut Editor", "Settings", "Pomodoro Timer", "Watermark Applier", "Template V1", "Shortcut Editor Dev", "STI TNT Timer"]; //Launcher navigation text
-	let navigationListItems_Link = ["file:///C:/Users/Elmer%20Jr%20G%20Felisilda/Documents/HTML%20Projects/Doodle%20Launcher/DL_Main.html", "DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_PomodoroTimer.html", "WA_Main.html", "DL_Template_V1.html", "DL_ShortcutEditor_Dev.html", "STI_Timer.html"]; //Launcher navigation links
-	let navigationListItems_Icon = ["favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png", "favicon_old.png"];
+	let navigationListItems = ["Old UI", "Home", "Shortcut Editor", "Settings", "Settings Dev", "Pomodoro Timer", "Watermark Applier", "Template V1", "STI TNT Timer"]; //Launcher navigation text
+	let navigationListItems_Link = ["file:///C:/Users/Elmer%20Jr%20G%20Felisilda/Documents/HTML%20Projects/Doodle%20Launcher/DL_Main.html", "DL_Main.html", "DL_ShortcutEditor.html", "DL_Settings.html", "DL_Settings_Dev.html", "DL_PomodoroTimer.html", "WA_Main.html", "DL_Template_V1.html", "STI_Timer.html"]; //Launcher navigation links
+	let navigationListItems_Icon = ["favicon_old.png", "icon_home.png", "iconNew_edit.png", "icon_settings.png", "icon_settings.png", "icon_schedules.png", "favicon_old.png", "favicon_old.png", "favicon_old.png"];
 	
 	for (var i = 0; i < navigationListItems.length; i++) {
 		var navigationListItems_Select = navigationListItems[i]; //Contains the selected pagenavi text
@@ -418,39 +425,46 @@ function generate_Launcher_HeaderButtons(pageName){
 	let Generator_HeaderButtons_OnclickAction = [];
 	switch (pageName){
 		case "DL_Template_V1.html":
-		Generator_HeaderButtons_Text = ["Button 1", "Button 2", "Button 3", "Button 4", "Button 5", "Button 6"];
-		Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
-		Generator_HeaderButtons_ID = ["", "", "", "", "", ""];
-		Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()", "toggle_Sidebar_CategoryNavigation()", "", "", "", ""];
-		var Generator_DisplayInHeader = true;
+			Generator_HeaderButtons_Text = ["Button 1", "Button 2", "Button 3", "Button 4", "Button 5", "Button 6"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
+			Generator_HeaderButtons_ID = ["", "", "", "", "", ""];
+			Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()", "toggle_Sidebar_CategoryNavigation()", "", "", "", ""];
+			var Generator_DisplayInHeader = true;
 		break;
 		case "DL_Main.html":
-		Generator_HeaderButtons_Text = ["Internet search"];
-		Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png"];
-		Generator_HeaderButtons_ID = [""];
-		Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()"];
-		var Generator_DisplayInHeader = false;
+			Generator_HeaderButtons_Text = ["Internet search"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png"];
+			Generator_HeaderButtons_ID = [""];
+			Generator_HeaderButtons_OnclickAction = ["toggle_SearchBar()"];
+			var Generator_DisplayInHeader = false;
 		break;
-		case "DL_ShortcutEditor_Dev.html":
-		Generator_HeaderButtons_Text = ["Add Item", "Re-order categories", "Re-order shortcuts", "How to use"];
-		Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
-		Generator_HeaderButtons_ID = ["AddItem", "SwapList_Category", "Swaplist_Shortcut", "Tutorial_ShortcutEditor"];
-		Generator_HeaderButtons_OnclickAction = ["open_Subwindow('AddItem')", "open_Subwindow(this.id)", "open_Subwindow(this.id)", "open_Subwindow(this.id)"];
-		var Generator_DisplayInHeader = true;
+		case "DL_ShortcutEditor.html":
+			Generator_HeaderButtons_Text = ["Add Item"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/icon_add.png"];
+			Generator_HeaderButtons_ID = ["AddItem"];
+			Generator_HeaderButtons_OnclickAction = ["open_Subwindow('AddItem')"];
+			var Generator_DisplayInHeader = true;
 		break;
 		case "DL_Settings.html":
-		Generator_HeaderButtons_Text = ["Save changes"];
-		Generator_HeaderButtons_Icon = ["Assets/Icons/icon_ExperimentalFeature.png"];
-		Generator_HeaderButtons_ID = [""];
-		Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
-		var Generator_DisplayInHeader = true;
+			Generator_HeaderButtons_Text = ["Save changes"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/iconNew_save.png"];
+			Generator_HeaderButtons_ID = [""];
+			Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
+			var Generator_DisplayInHeader = true;
+		break;
+		case "DL_Settings_Dev.html":
+			Generator_HeaderButtons_Text = ["Save changes"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/iconNew_save.png"];
+			Generator_HeaderButtons_ID = [""];
+			Generator_HeaderButtons_OnclickAction = ["Settings_ApplyChanges()"];
+			var Generator_DisplayInHeader = true;
 		break;
 		case "WA_Main.html":
-		Generator_HeaderButtons_Text = ["Take Screenshot", "Import File Names", "Import Watermark Names" , "Change Image", "Change Watermark", "Reset"];
-		Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
-		Generator_HeaderButtons_ID = ["", "", "", "", "", ""];
-		Generator_HeaderButtons_OnclickAction = ["generateImage()", "open_Subwindow('ImportFileNames')", "open_Subwindow('ImportWatermarkNames')", "open_Subwindow('ChangeImageFile')", "open_Subwindow('ChangeWatermarkFile')", "WA_Reset()"];
-		var Generator_DisplayInHeader = true;
+			Generator_HeaderButtons_Text = ["Take Screenshot", "Import File Names", "Import Watermark Names" , "Change Image", "Change Watermark", "Reset"];
+			Generator_HeaderButtons_Icon = ["Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png", "Assets/Icons/placeholder.png"];
+			Generator_HeaderButtons_ID = ["", "", "", "", "", ""];
+			Generator_HeaderButtons_OnclickAction = ["generateImage()", "open_Subwindow('ImportFileNames')", "open_Subwindow('ImportWatermarkNames')", "open_Subwindow('ChangeImageFile')", "open_Subwindow('ChangeWatermarkFile')", "WA_Reset()"];
+			var Generator_DisplayInHeader = true;
 		break;
 	}
 	
@@ -634,10 +648,10 @@ function trigger_ChangeTab_test(ID){
 		
 	} */
 	for (b = 0; b != Sidebar_Icon.length; b++){
-		Sidebar_Icon[b].style.backgroundColor = "var(--BGColor-Buttons)";
+		Sidebar_Icon[b].style.backgroundColor = null;
 	}
 	for (c = 0; c != Sidebar_Letters.length; c++){
-		Sidebar_Letters[c].style.backgroundColor = "var(--BGColor-Buttons)";
+		Sidebar_Letters[c].style.backgroundColor = null;
 	}
 	
 	closingTab = document.getElementById("tab_"+Tab_Items_IDArray[Tab_Items_CurrentTab]);
@@ -781,7 +795,7 @@ function check_WindowSize_test(){
 		MainMenu_PageName.style.display = "none";
 	}
 	
-	if (PageName == "DL_ShortcutEditor_Dev.html"){
+	if (PageName == "DL_ShortcutEditor.html"){
 		var SE_TableView_Item = document.querySelectorAll(".ShortcutEditor_TableView_Item");
 		var SE_TableView_Item_URL = document.querySelectorAll(".ShortcutEditor_TableView_Item_ShortcutURL");
 		if (windowSizePreset == "small"){
@@ -816,6 +830,66 @@ function check_WindowSize_test(){
 	
 	
 }
+
+function set_UIMode(mode){
+	var Page_Header = document.getElementById("pageElement_Header");
+	var Page_Sidebar = document.getElementById("pageElement_Sidebar");
+	var Page_Header_Content = document.getElementById("pageElement_Header_Actions");
+	var Page_Header_Content_Button = document.querySelectorAll(".Header_Content_Button");
+	var Page_Header_Content_Button_Icon = document.querySelectorAll(".Header_Content_Button_Icon");
+	var Page_Header_Content_Button_Text= document.querySelectorAll(".Header_Content_Button_Text");
+	var Page_Header_PageNavi_Title = document.getElementById("Header_PageNavi_Title");
+	var Page_Header_PageNavi_Icon = document.getElementById("Header_PageIcon");
+	var Page_Header_Clock_Time = document.getElementById("Clock_Time");
+	var Page_Header_Clock_Date = document.getElementById("Clock_Date");
+	var Page_Header_RightMenu_Icon = document.getElementById("button_Wifi");
+	var Page_Header_StatusTray = document.getElementById("pageElement_Header_StatusTray");
+	var Page_Header_Battery = document.getElementById("Battery_Level");
+	var Page_Sidebar_Toggle = document.getElementById("pageElement_Header_SidebarToggle");
+	if (mode == 'Normal'){
+		Page_Header.setAttribute("data-id", null);
+		Page_Sidebar.setAttribute("data-id", null);
+		Page_Header_Content.setAttribute("data-id", null);
+		for (a = 0; a < Page_Header_Content_Button.length; a++){
+			Page_Header_Content_Button[a].setAttribute("data-id", null);
+		}
+		for (a = 0; a < Page_Header_Content_Button_Icon.length; a++){
+			Page_Header_Content_Button_Icon[a].setAttribute("data-id", null);
+		}
+		for (a = 0; a < Page_Header_Content_Button_Text.length; a++){
+			Page_Header_Content_Button_Text[a].setAttribute("data-id", null);
+		}
+		Page_Header_PageNavi_Title.setAttribute("data-id", null);
+		Page_Header_PageNavi_Icon.setAttribute("data-id", null);
+		Page_Header_Clock_Time.setAttribute("data-id", null);
+		Page_Header_Clock_Date.setAttribute("data-id", null);
+		Page_Header_RightMenu_Icon.setAttribute("data-id", null);
+		Page_Header_StatusTray.setAttribute("data-id", null);
+		Page_Header_Battery.setAttribute("data-id", null);
+		Page_Sidebar_Toggle.setAttribute("data-id", null);
+	} else if (mode == "Compressed"){
+		Page_Header.setAttribute("data-id", "UI_Compressed");
+		Page_Sidebar.setAttribute("data-id", "UI_Compressed");
+		Page_Header_Content.setAttribute("data-id", "UI_Compressed");
+		for (a = 0; a < Page_Header_Content_Button.length; a++){
+			Page_Header_Content_Button[a].setAttribute("data-id", null);
+		}
+		for (a = 0; a < Page_Header_Content_Button_Icon.length; a++){
+			Page_Header_Content_Button_Icon[a].setAttribute("data-id", "UI_Compressed");
+		}
+		for (a = 0; a < Page_Header_Content_Button_Text.length; a++){
+			Page_Header_Content_Button_Text[a].setAttribute("data-id", "UI_Compressed");
+		}
+		Page_Header_PageNavi_Title.setAttribute("data-id", "UI_Compressed");
+		Page_Header_PageNavi_Icon.setAttribute("data-id", "UI_Compressed");
+		Page_Header_Clock_Time.setAttribute("data-id", "UI_Compressed");
+		Page_Header_Clock_Date.setAttribute("data-id", "UI_Compressed");
+		Page_Header_RightMenu_Icon.setAttribute("data-id", "UI_Compressed");
+		Page_Header_StatusTray.setAttribute("data-id", "UI_Compressed");
+		Page_Header_Battery.setAttribute("data-id", "UI_Compressed");
+		Page_Sidebar_Toggle.setAttribute("data-id", "UI_Compressed");
+	}
+} 
 
 /*document.onkeypress = function (f) {
     //space = space || window.event;
@@ -880,6 +954,14 @@ document.addEventListener('keydown', (event) => {
 	if (keysPressed['Control'] && event.key == 'i') {
 		trigger_Open_ExperimentSelector();
 		
+	}
+	
+	if (keysPressed['Control'] && event.key == 'ArrowUp') {
+		scrollToPosition('top');
+	}
+	
+	if (keysPressed['Control'] && event.key == 'ArrowDown') {
+		scrollToPosition('bottom');
 	}
 	
 	
@@ -958,6 +1040,17 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keyup', (event) => {
 	delete keysPressed[event.key];
 });
+
+//Toggle buttons
+function toggle_Button(id){
+	var toggle_Button_Element = document.getElementById(id);
+	var toggle_Button_Indicator = toggle_Button_Element.querySelector('.Toggle_Indicator');
+	if (toggle_Button_Indicator.getAttribute('data-id') == "Toggle_Activated"){
+		toggle_Button_Indicator.setAttribute('data-id', "Toggle_Deactivated");
+	} else if (toggle_Button_Indicator.getAttribute('data-id') == "Toggle_Deactivated"){
+		toggle_Button_Indicator.setAttribute('data-id', "Toggle_Activated");
+	}
+}
 
 //Toggle search bar
 function toggle_SearchBar(){
@@ -1084,6 +1177,7 @@ function toggle_Category_All(){
 
 var subwindow_activeSubwindow;
 function open_Subwindow(ID){
+	document.getElementById("pageElement_Subwindows").style.opacity = "0%";
 	document.getElementById("pageElement_Subwindows").style.display = "flex";
 	document.getElementById("pageElement_Subwindows").style.opacity = "100%";
 	var subwindowElement = document.getElementById("subwindow_"+ID);
@@ -1513,12 +1607,21 @@ function scrollFunction() {
 	pageElement_CornerButtons = document.getElementById("pageElement_CornerButtons");
 	if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 20) {
 		pageElement_CornerButtons.style.display = "block";
+		console.log("Displayed");
 		} else {
 		pageElement_CornerButtons.style.display = "none";
+		console.log("Hidden");
 	}
+	console.log("Scrolling!");
 }
 
-
+function scrollToPosition(direction){
+	if (direction == "bottom"){
+		document.getElementById("pageElement_Content").scrollTo(0, document.getElementById("pageElement_Content").scrollHeight);
+	} else if (direction == "top"){
+		document.getElementById("pageElement_Content").scrollTop = 0;
+	}
+}
 
 function trigger_toggleDropdown(ID){	
 	var dropdownMenu = document.getElementById("dropdownMenu_"+ID);
